@@ -80,10 +80,10 @@ endif
 
 LIBS = -L$(libdir) \
 	-lsmartmet-spine \
-	-lsmartmet_textgen \
-	-lsmartmet_newbase \
-	-lsmartmet_macgyver \
-	-lsmartmet_locus \
+	-lsmartmet-textgen \
+	-lsmartmet-newbase \
+	-lsmartmet-macgyver \
+	-lsmartmet-locus \
 	-lmysqlpp \
 	-lboost_date_time \
 	-lboost_timer \
