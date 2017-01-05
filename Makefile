@@ -130,8 +130,7 @@ release: all
 profile: all
 
 configtest:
-	@echo Validating cnf/textgen.conf
-	@cfgvalidate -v cnf/textgen.conf
+	@if [ -x "$$(command -v cfgvalidate)" ]; then cfgvalidate -v cnf/textgen.conf; fi
 
 $(LIBFILE): $(OBJS)
 	$(CXX) $(CFLAGS) -shared -rdynamic -o $(LIBFILE) $(OBJS) $(LIBS)
