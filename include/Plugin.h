@@ -3,7 +3,7 @@
 #include "Config.h"
 
 #include <textgen/Dictionary.h>
-#include <textgen/WeatherArea.h>
+#include <calculator/WeatherArea.h>
 #include <macgyver/Cache.h>
 
 #include <spine/PostGISDataSource.h>

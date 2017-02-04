@@ -10,14 +10,15 @@
 #include <spine/Location.h>
 #include <engines/geonames/Engine.h>
 
+#include <calculator/TimeTools.h>
+#include <calculator/TextGenPosixTime.h>
+#include <calculator/Settings.h>
+
 #include <textgen/DictionaryFactory.h>
 #include <textgen/Document.h>
 #include <textgen/TextFormatter.h>
 #include <textgen/TextFormatterFactory.h>
 #include <textgen/TextGenerator.h>
-#include <textgen/TimeTools.h>
-#include <textgen/TextGenPosixTime.h>
-#include <textgen/Settings.h>
 
 #include <newbase/NFmiCmdLine.h>
 #include <newbase/NFmiFileSystem.h>

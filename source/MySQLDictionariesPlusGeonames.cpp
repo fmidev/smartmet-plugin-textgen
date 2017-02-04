@@ -41,8 +41,8 @@
 // ----------------------------------------------------------------------
 
 #include "MySQLDictionariesPlusGeonames.h"
-#include <textgen/Settings.h>
-#include <textgen/TextGenError.h>
+#include <calculator/Settings.h>
+#include <calculator/TextGenError.h>
 
 #include <spine/Exception.h>
 #include <spine/Reactor.h>

@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 17.1.4
+Version: 17.1.12
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -11,22 +11,24 @@ Source0: %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: boost-devel
 BuildRequires: libconfig-devel
-BuildRequires: smartmet-library-textgen-devel >= 17.1.4
-BuildRequires: smartmet-library-spine-devel >= 17.1.4
+BuildRequires: smartmet-library-calculator-devel >= 17.1.12
+BuildRequires: smartmet-library-textgen-devel >= 17.1.12
+BuildRequires: smartmet-library-spine-devel >= 17.1.10
 BuildRequires: smartmet-engine-observation-devel >= 17.1.4
-BuildRequires: smartmet-engine-querydata-devel >= 17.1.4
+BuildRequires: smartmet-engine-querydata-devel >= 17.1.9
 BuildRequires: smartmet-engine-geonames-devel >= 17.1.4
 BuildRequires: smartmet-library-macgyver-devel >= 16.12.20
 BuildRequires: smartmet-library-locus-devel >= 16.12.20
+Requires: smartmet-library-calculator >= 17.1.12
 Requires: smartmet-library-macgyver >= 16.12.20
 Requires: smartmet-library-locus >= 16.12.20
-Requires: smartmet-library-textgen >= 17.1.4
+Requires: smartmet-library-textgen >= 17.1.12
 Requires: libconfig
 Requires: smartmet-engine-observation >= 17.1.4
 Requires: smartmet-engine-geonames >= 17.1.4
-Requires: smartmet-engine-querydata >= 17.1.4
+Requires: smartmet-engine-querydata >= 17.1.9
 Requires: smartmet-server >= 17.1.4
-Requires: smartmet-library-spine >= 17.1.4
+Requires: smartmet-library-spine >= 17.1.10
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
@@ -44,9 +46,9 @@ SmartMet TextGen plugin
 %prep
 rm -rf $RPM_BUILD_ROOT
 
-%setup -q -n plugins/%{DIRNAME}
+%setup -q -n plugins/%{SPECNAME}
  
-%build -q -n plugins/%{DIRNAME}
+%build -q -n plugins/%{SPECNAME}
 make %{_smp_mflags}
 
 %install
@@ -60,6 +62,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Jan 12 2017 Mika Heiskanen <mika.heiskanen@fmi.fi> - 17.1.12-1.fmi
+- Recompiled with smartmet-library-calculator
+
 * Wed Jan  4 2017 Mika Heiskanen <mika.heiskanen@fmi.fi> - 17.1.4-1.fmi
 - Changed to use renamed SmartMet base libraries
 
