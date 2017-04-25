@@ -8,10 +8,11 @@
 #include <spine/Exception.h>
 #include <stdexcept>
 
-#include <boost/foreach.hpp>
-#include <boost/tokenizer.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/replace.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
 
 #include <iostream>
 
@@ -283,6 +284,9 @@ Config::Config(const string& configfile)
     libconfig::Config lconf;
     lconf.readFile(configfile.c_str());
 
+    // For relative path lookups
+    boost::filesystem::path config_path(configfile);
+
     config_item_vector config_items;
     vector<string> allowed_sections;
     allowed_sections.push_back("*");
@@ -297,6 +301,11 @@ Config::Config(const string& configfile)
       string config_key(config_items[i].first);
       string config_name = config_key.substr(config_key.find(".") + 1);
       string config_value(config_items[i].second);
+
+      // Make relative paths absolute with respect to the configuration file
+      if (!config_value.empty() && config_value[0] != '/')
+        config_value = config_path.parent_path().string() + "/" + config_value;
+
       itsProductConfigs.insert(make_pair(
           config_name, boost::shared_ptr<ProductConfig>(new ProductConfig(config_value))));
     }

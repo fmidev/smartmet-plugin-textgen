@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 17.3.15
+Version: 17.4.25
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -32,6 +32,7 @@ Requires: smartmet-library-spine >= 17.1.10
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
+Requires: boost-filesystem
 Requires: boost-iostreams
 Requires: boost-thread
 Requires: boost-timer
@@ -62,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Apr 25 2017 Mika Heiskanen <mika.heiskanen@fmi.fi> - 17.4.25-1.fmi
+- Product paths are now relative to the configuration file itself
+
 * Wed Mar 15 2017 Mika Heiskanen <mika.heiskanen@fmi.fi> - 17.3.15-1.fmi
 - Recompiled since Spine::Exception changed
 
