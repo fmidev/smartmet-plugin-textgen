@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 17.4.25
+Version: 17.8.28
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -13,24 +13,24 @@ BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost-devel
 BuildRequires: libconfig-devel
-BuildRequires: smartmet-library-calculator-devel >= 17.1.12
-BuildRequires: smartmet-library-textgen-devel >= 17.1.12
-BuildRequires: smartmet-library-spine-devel >= 17.1.10
-BuildRequires: smartmet-engine-observation-devel >= 17.1.4
-BuildRequires: smartmet-engine-querydata-devel >= 17.1.9
-BuildRequires: smartmet-engine-geonames-devel >= 17.1.4
-BuildRequires: smartmet-library-macgyver-devel >= 16.12.20
-BuildRequires: smartmet-library-locus-devel >= 16.12.20
-Requires: smartmet-library-calculator >= 17.1.12
-Requires: smartmet-library-macgyver >= 16.12.20
-Requires: smartmet-library-locus >= 16.12.20
-Requires: smartmet-library-textgen >= 17.1.12
+BuildRequires: smartmet-library-calculator-devel >= 17.8.28
+BuildRequires: smartmet-library-textgen-devel >= 17.8.28
+BuildRequires: smartmet-library-spine-devel >= 17.8.28
+BuildRequires: smartmet-engine-observation-devel >= 17.8.28
+BuildRequires: smartmet-engine-querydata-devel >= 17.8.28
+BuildRequires: smartmet-engine-geonames-devel >= 17.8.28
+BuildRequires: smartmet-library-macgyver-devel >= 17.8.28
+BuildRequires: smartmet-library-locus-devel >= 17.8.28
+Requires: smartmet-library-calculator >= 17.8.28
+Requires: smartmet-library-macgyver >= 17.8.28
+Requires: smartmet-library-locus >= 17.8.28
+Requires: smartmet-library-textgen >= 17.8.28
 Requires: libconfig
-Requires: smartmet-engine-observation >= 17.1.4
-Requires: smartmet-engine-geonames >= 17.1.4
-Requires: smartmet-engine-querydata >= 17.1.9
-Requires: smartmet-server >= 17.1.4
-Requires: smartmet-library-spine >= 17.1.10
+Requires: smartmet-engine-observation >= 17.8.28
+Requires: smartmet-engine-geonames >= 17.8.28
+Requires: smartmet-engine-querydata >= 17.8.28
+Requires: smartmet-server >= 17.8.28
+Requires: smartmet-library-spine >= 17.8.28
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
@@ -65,6 +65,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon Aug 28 2017 Mika Heiskanen <mika.heiskanen@fmi.fi> - 17.8.28-1.fmi
+- Upgrade to boost 1.65
+
 * Tue Apr 25 2017 Mika Heiskanen <mika.heiskanen@fmi.fi> - 17.4.25-1.fmi
 - Product paths are now relative to the configuration file itself
 
