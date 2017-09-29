@@ -13,6 +13,8 @@ BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost-devel
 BuildRequires: libconfig-devel
+BuildRequires: mysql++-devel
+BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 17.8.28
 BuildRequires: smartmet-library-textgen-devel >= 17.8.28
 BuildRequires: smartmet-library-spine-devel >= 17.8.28
