@@ -7,14 +7,14 @@
 #ifndef TEXTGEN_CONFIG_H
 #define TEXTGEN_CONFIG_H
 
-#include <spine/PostGISDataSource.h>
+#include <engines/gis/GeometryStorage.h>
 
-#include <libconfig.h++>
-#include <boost/utility.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/utility.hpp>
+#include <libconfig.h++>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
 
 namespace SmartMet
 {
@@ -43,10 +43,10 @@ class ProductConfig : private boost::noncopyable
   const libconfig::Config& config() const { return itsConfig; }
   const std::string& getAreaTimeZone(const std::string& area) const;
 
-  std::vector<std::string> getPostGISIdentifierKeys() const;
-  const SmartMet::Spine::postgis_identifier& getDefaultPostGISIdentifier() const;
-  const SmartMet::Spine::postgis_identifier& getPostGISIdentifier(const std::string& key) const;
+  const Engine::Gis::postgis_identifier& getDefaultPostGISIdentifier() const;
   std::size_t numberOfPostGISIdentifiers() const { return postgis_identifiers.size(); }
+  Engine::Gis::PostGISIdentifierVector getPostGISIdentifiers() const;
+
   std::size_t numberOfForecastDataConfigs() const { return forecast_data_config_items.size(); }
   // returns forecast name, querydata name pair
   const std::pair<std::string, std::string>& getForecastDataConfig(const unsigned int& index) const;
@@ -70,10 +70,6 @@ class ProductConfig : private boost::noncopyable
 
   void setDefaultConfig(const boost::shared_ptr<ProductConfig> pDefaultConf);
 
-  const std::map<std::string, SmartMet::Spine::postgis_identifier>& getPostGISIdentifiers() const
-  {
-    return postgis_identifiers;
-  }
   const config_item_vector& getForecastDataConfigs() const { return forecast_data_config_items; }
   const config_item_vector& getUnitFormatConfigs() const { return unit_format_config_items; }
   const config_item_vector& getOutputDocumentConfigs() const
@@ -87,10 +83,11 @@ class ProductConfig : private boost::noncopyable
     return forestfirewarning_areacodes;
   }
   bool isFrostSeason() const { return itsFrostSeason; }
+
  private:
   libconfig::Config itsConfig;
   std::map<std::string, std::string> area_timezones;
-  std::map<std::string, SmartMet::Spine::postgis_identifier> postgis_identifiers;
+  std::map<std::string, Engine::Gis::postgis_identifier> postgis_identifiers;
   std::string itsDefaultPostGISIdentifierKey;
   config_item_vector masks;
 
@@ -132,6 +129,7 @@ class Config : private boost::noncopyable
   }
 
   const std::string& defaultUrl() const { return itsDefaultUrl; }
+
  private:
   typedef std::pair<std::string, boost::shared_ptr<ProductConfig> > product_config_item;
   std::map<std::string, boost::shared_ptr<ProductConfig> > itsProductConfigs;
