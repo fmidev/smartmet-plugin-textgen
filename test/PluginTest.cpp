@@ -17,7 +17,7 @@ void prelude(SmartMet::Spine::Reactor& reactor)
   cout << endl << "Testing textforecast plugin" << endl << "============================" << endl;
 }
 
-int main()
+int main() try
 {
   SmartMet::Spine::Options options;
   options.configfile = "cnf/reactor.conf";
@@ -26,4 +26,10 @@ int main()
   SmartMet::Spine::PluginTest::test(options, prelude);
 
   return 0;
+}
+catch (...)
+{
+  SmartMet::Spine::Exception ex(BCP, "Failed to run the tests", nullptr);
+  ex.printError();
+  return 1;
 }
