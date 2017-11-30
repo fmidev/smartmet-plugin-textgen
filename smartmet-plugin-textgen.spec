@@ -2,7 +2,8 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 17.8.28
+Version: 17.11.30
+
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -21,6 +22,7 @@ BuildRequires: smartmet-library-spine-devel >= 17.8.28
 BuildRequires: smartmet-engine-observation-devel >= 17.8.28
 BuildRequires: smartmet-engine-querydata-devel >= 17.8.28
 BuildRequires: smartmet-engine-geonames-devel >= 17.8.28
+BuildRequires: smartmet-engine-gis-devel >= 17.11.30
 BuildRequires: smartmet-library-macgyver-devel >= 17.8.28
 BuildRequires: smartmet-library-locus-devel >= 17.8.28
 Requires: smartmet-library-calculator >= 17.8.28
@@ -31,6 +33,7 @@ Requires: libconfig
 Requires: smartmet-engine-observation >= 17.8.28
 Requires: smartmet-engine-geonames >= 17.8.28
 Requires: smartmet-engine-querydata >= 17.8.28
+Requires: smartmet-engine-gis >= 17.11.30
 Requires: smartmet-server >= 17.8.28
 Requires: smartmet-library-spine >= 17.8.28
 %if 0%{rhel} >= 7
@@ -67,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Nov 30 2017 Anssi Reponen <anssi.reponen@fmi.fi> - 17.11.30-1.fmi
+- Start using GisEngine instead of PostGISDataSource class (BRAINSTORM-722)
+
 * Mon Aug 28 2017 Mika Heiskanen <mika.heiskanen@fmi.fi> - 17.8.28-1.fmi
 - Upgrade to boost 1.65
 

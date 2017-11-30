@@ -2,26 +2,30 @@
 
 #include "Config.h"
 
-#include <textgen/Dictionary.h>
 #include <calculator/WeatherArea.h>
 #include <macgyver/Cache.h>
+#include <textgen/Dictionary.h>
 
-#include <spine/PostGISDataSource.h>
-#include <spine/SmartMetPlugin.h>
-#include <spine/Reactor.h>
-#include <spine/HTTP.h>
-#include <spine/Thread.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
+#include <engines/gis/GeometryStorage.h>
+#include <spine/HTTP.h>
+#include <spine/Reactor.h>
+#include <spine/SmartMetPlugin.h>
+#include <spine/Thread.h>
 #include <map>
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace SmartMet
 {
 namespace Engine
 {
 namespace Geonames
+{
+class Engine;
+}
+namespace Gis
 {
 class Engine;
 }
@@ -69,18 +73,19 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
   };
   Fmi::Cache::Cache<std::string, cache_item> itsForecastTextCache;
 
-  // Only one post gis data source exists
-  SmartMet::Spine::PostGISDataSource itsPostGISDataSource;
   typedef std::map<std::string, boost::shared_ptr<TextGen::WeatherArea> > mask_map;
   // here we store masks by product
   std::map<std::string, mask_map> itsProductMasks;
   // mutex for PostGIS database
   SmartMet::Spine::MutexType itsPostGISMutex;
-  //	static SmartMet::Spine::MutexType itsGeoNamesMutex;
   // mutex for forecast text cache
   SmartMet::Spine::MutexType itsForecastTextCacheMutex;
 
   SmartMet::Engine::Geonames::Engine* itsGeoEngine;
+  SmartMet::Engine::Gis::Engine* itsGisEngine;
+
+  // Geometries and their svg-representations are stored here
+  Engine::Gis::GeometryStorage itsGeometryStorage;
 
 };  // class Plugin
 
