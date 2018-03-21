@@ -2,9 +2,9 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 17.11.30
+Version: 18.3.20
 
-Release: 1%{?dist}.fmi
+Release:11%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -17,25 +17,25 @@ BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 17.8.28
-BuildRequires: smartmet-library-textgen-devel >= 17.11.21
-BuildRequires: smartmet-library-spine-devel >= 17.11.30
-BuildRequires: smartmet-engine-observation-devel >= 17.10.23
-BuildRequires: smartmet-engine-querydata-devel >= 17.11.28
-BuildRequires: smartmet-engine-geonames-devel >= 17.11.1
-BuildRequires: smartmet-engine-gis-devel >= 17.11.30
-BuildRequires: smartmet-library-macgyver-devel >= 17.11.27
-BuildRequires: smartmet-library-locus-devel >= 17.8.28
+BuildRequires: smartmet-library-textgen-devel >= 18.1.17
+BuildRequires: smartmet-library-spine-devel >= 18.3.7
+BuildRequires: smartmet-engine-observation-devel >= 18.3.20
+BuildRequires: smartmet-engine-querydata-devel >= 18.3.20
+BuildRequires: smartmet-engine-geonames-devel >= 18.3.20
+BuildRequires: smartmet-engine-gis-devel >= 18.3.20
+BuildRequires: smartmet-library-macgyver-devel >= 18.2.12
+BuildRequires: smartmet-library-locus-devel >= 18.1.15
 Requires: smartmet-library-calculator >= 17.8.28
-Requires: smartmet-library-macgyver >= 17.11.27
-Requires: smartmet-library-locus >= 17.8.28
-Requires: smartmet-library-textgen >= 17.11.21
+Requires: smartmet-library-macgyver >= 18.2.12
+Requires: smartmet-library-locus >= 18.1.15
+Requires: smartmet-library-textgen >= 18.1.17
 Requires: libconfig
-Requires: smartmet-engine-observation >= 17.10.23
-Requires: smartmet-engine-geonames >= 17.11.1
-Requires: smartmet-engine-querydata >= 17.11.28
-Requires: smartmet-engine-gis >= 17.11.30
+Requires: smartmet-engine-observation >= 18.3.20
+Requires: smartmet-engine-geonames >= 18.3.20
+Requires: smartmet-engine-querydata >= 18.3.20
+Requires: smartmet-engine-gis >= 18.3.20
 Requires: smartmet-server >= 17.11.10
-Requires: smartmet-library-spine >= 17.11.30
+Requires: smartmet-library-spine >= 18.3.7
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Mar 20 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.3.20-1.fmi
+- Full recompile of all server plugins
+
 * Thu Nov 30 2017 Anssi Reponen <anssi.reponen@fmi.fi> - 17.11.30-1.fmi
 - Start using GisEngine instead of PostGISDataSource class (BRAINSTORM-722)
 
