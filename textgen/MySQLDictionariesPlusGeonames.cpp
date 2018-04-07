@@ -44,9 +44,9 @@
 #include <calculator/Settings.h>
 #include <calculator/TextGenError.h>
 
+#include <engines/geonames/Engine.h>
 #include <spine/Exception.h>
 #include <spine/Reactor.h>
-#include <engines/geonames/Engine.h>
 
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
@@ -55,8 +55,8 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <map>
 #include <mysql++/mysql++.h>
+#include <map>
 
 using namespace std;
 using namespace boost;
@@ -91,9 +91,7 @@ class MySQLDictionariesPlusGeonames::Impl
  */
 // ----------------------------------------------------------------------
 
-MySQLDictionariesPlusGeonames::~MySQLDictionariesPlusGeonames()
-{
-}
+MySQLDictionariesPlusGeonames::~MySQLDictionariesPlusGeonames() {}
 
 // ----------------------------------------------------------------------
 /*!

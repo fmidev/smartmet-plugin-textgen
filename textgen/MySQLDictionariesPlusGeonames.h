@@ -8,8 +8,8 @@
 #ifndef TEXTGEN_MYSQLDICTIONARIESPLUSGEONAMES_H
 #define TEXTGEN_MYSQLDICTIONARIESPLUSGEONAMES_H
 
-#include <textgen/MySQLDictionaries.h>
 #include <boost/shared_ptr.hpp>
+#include <textgen/MySQLDictionaries.h>
 #include <string>
 
 namespace SmartMet
