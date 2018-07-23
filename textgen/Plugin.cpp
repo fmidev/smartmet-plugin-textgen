@@ -265,23 +265,23 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
           std::string key(t.substr(0, assign_index));
           std::string value(t.substr(assign_index + 1));
 
-          if (key.compare(POSTGIS_HOST_PARAM) == 0)
+          if (key == POSTGIS_HOST_PARAM)
             pgis_host = value;
-          else if (key.compare(POSTGIS_PORT_PARAM) == 0)
+          else if (key == POSTGIS_PORT_PARAM)
             pgis_port = value;
-          else if (key.compare(POSTGIS_DBNAME_PARAM) == 0)
+          else if (key == POSTGIS_DBNAME_PARAM)
             pgis_dbname = value;
-          else if (key.compare(POSTGIS_SCHEMA_PARAM) == 0)
+          else if (key == POSTGIS_SCHEMA_PARAM)
             pgis_schema = value;
-          else if (key.compare(POSTGIS_TABLE_PARAM) == 0)
+          else if (key == POSTGIS_TABLE_PARAM)
             pgis_table = value;
-          else if (key.compare(POSTGIS_FIELD_PARAM) == 0)
+          else if (key == POSTGIS_FIELD_PARAM)
             pgis_field = value;
-          else if (key.compare(POSTGIS_USERNAME_PARAM) == 0)
+          else if (key == POSTGIS_USERNAME_PARAM)
             pgis_username = value;
-          else if (key.compare(POSTGIS_PASSWORD_PARAM) == 0)
+          else if (key == POSTGIS_PASSWORD_PARAM)
             pgis_password = value;
-          else if (key.compare(POSTGIS_CLIENT_ENCODING_PARAM) == 0)
+          else if (key == POSTGIS_CLIENT_ENCODING_PARAM)
             pgis_client_encoding = value;
         }
 #ifdef MYDEBUG
@@ -625,7 +625,7 @@ string Plugin::query(SmartMet::Spine::Reactor& theReactor,
 
     boost::shared_ptr<TextGen::Dictionary> theDictionary;
     std::string dictionary_name(config.dictionary());
-    if (dictionary_name.compare("multimysqlplusgeonames") == 0)
+    if (dictionary_name == "multimysqlplusgeonames")
       theDictionary = (static_cast<boost::shared_ptr<TextGen::Dictionary> >(
           new MySQLDictionariesPlusGeonames()));
     else

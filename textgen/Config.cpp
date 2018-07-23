@@ -72,7 +72,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
           else if (allowed_key.size() < section_key.size())
             section_key = section_key.substr(0, allowed_key.size());
 
-          if (allowed_key.compare(section_key) == 0 || allowed_key.compare("*") == 0)
+          if (allowed_key == section_key || allowed_key == "*")
           {
             processSection = true;
             break;
@@ -177,8 +177,7 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
       string config_key_original(config_item_container[i].first);
       string config_value_original(config_item_container[i].second);
 
-      if (config_value_original.size() > 4 &&
-          config_value_original.substr(0, 4).compare("use ") == 0)
+      if (config_value_original.size() > 4 && config_value_original.substr(0, 4) == "use ")
       {
         string section_to_include(config_value_original.substr(4));
         // cout << "section_to_include: " << section_to_include << endl;
@@ -187,14 +186,14 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
         {
           string item_key(all_output_document_config_items[k].first);
           if (item_key.size() >= section_to_include.size() &&
-              item_key.substr(0, section_to_include.size()).compare(section_to_include) == 0)
+              item_key.substr(0, section_to_include.size()) == section_to_include)
           {
             string config_key_first_part(
                 config_key_original.substr(0, config_key_original.find_last_of(".")));
             string config_key_second_part(item_key.substr(section_to_include.size()));
             string parsed_config_key(config_key_first_part + config_key_second_part);
             string config_value(all_output_document_config_items[k].second);
-            if (config_value.size() > 4 && config_value.substr(0, 4).compare("use ") == 0)
+            if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
               reProcess = true;
 
             included_config_items.push_back(make_pair(parsed_config_key, config_value));
@@ -246,7 +245,7 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
             {
               std::string name = childSettings.getName();
               std::string value = childSettings;
-              if (value.size() > 4 && value.substr(0, 4).compare("use ") == 0)
+              if (value.size() > 4 && value.substr(0, 4) == "use ")
               {
                 std::string included_value = itsConfig.lookup(value.substr(4));
                 value = included_value;
@@ -575,7 +574,7 @@ ProductConfig::ProductConfig(const string& configfile)
             if (content.getType() == libconfig::Setting::TypeString)
             {
               string story_name = content;
-              if (story_name.compare("none") == 0)
+              if (story_name == "none")
                 allowed_sections.push_back("output_document." + section_name);
               else
               {
@@ -623,7 +622,7 @@ ProductConfig::ProductConfig(const string& configfile)
         string config_key(ci.first);
         string config_value(ci.second);
 
-        if (config_value.size() > 4 && config_value.substr(0, 4).compare("use ") == 0)
+        if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
           continue;
 
         replace_all(config_key, ".", "::");
@@ -646,7 +645,7 @@ ProductConfig::ProductConfig(const string& configfile)
         string config_key(ci.first);
         string config_value(ci.second);
 
-        if (config_value.size() > 4 && config_value.substr(0, 4).compare("use ") == 0)
+        if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
           continue;
 
         replace_all(config_key, ".", "::");
