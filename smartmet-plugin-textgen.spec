@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 18.7.23
+Version: 18.7.25
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -23,10 +23,10 @@ BuildRequires: smartmet-engine-observation-devel >= 18.7.23
 BuildRequires: smartmet-engine-querydata-devel >= 18.7.23
 BuildRequires: smartmet-engine-geonames-devel >= 18.6.20
 BuildRequires: smartmet-engine-gis-devel >= 18.7.23
-BuildRequires: smartmet-library-macgyver-devel >= 18.7.23
+BuildRequires: smartmet-library-macgyver-devel >= 18.7.25
 BuildRequires: smartmet-library-locus-devel >= 18.6.14
 Requires: smartmet-library-calculator >= 18.7.23
-Requires: smartmet-library-macgyver >= 18.7.23
+Requires: smartmet-library-macgyver >= 18.7.25
 Requires: smartmet-library-locus >= 18.6.14
 Requires: smartmet-library-textgen >= 18.7.23
 Requires: libconfig
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Jul 25 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.7.25-1.fmi
+- Prefer nullptr over NULL
+
 * Mon Jul 23 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.7.23-1.fmi
 - Silenced CodeChecker warnings
 

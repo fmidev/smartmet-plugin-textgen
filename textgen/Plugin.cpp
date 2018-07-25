@@ -107,7 +107,7 @@ std::string mmap_string(const SmartMet::Spine::HTTP::ParamMap& mmap,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -140,7 +140,7 @@ bool parse_forecasttime_parameter(const std::string& forecasttime_string,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -208,7 +208,7 @@ bool parse_lonlat_parameter(const std::string& lonlat_string,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -322,7 +322,7 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -350,7 +350,7 @@ TextGen::WeatherArea make_area(const std::string& postGISName,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -385,7 +385,7 @@ bool parse_area_parameter(const std::string& areaParameter,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -455,7 +455,7 @@ bool parse_geoid_parameter(const std::string& geoidParameter,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -552,7 +552,7 @@ void set_textgen_settings(const ProductConfig& config)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -586,7 +586,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -747,7 +747,7 @@ string Plugin::query(SmartMet::Spine::Reactor& theReactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -805,7 +805,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation failed!", NULL);
+      SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
       handle_exception(
           theRequest, theResponse, exception.what(), SmartMet::Spine::HTTP::Status::ok, isdebug);
     }
@@ -815,7 +815,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -842,7 +842,7 @@ Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -857,13 +857,13 @@ void Plugin::init()
   try
   {
     /* GeoEngine */
-    auto engine = itsReactor->getSingleton("Geonames", NULL);
+    auto engine = itsReactor->getSingleton("Geonames", nullptr);
     if (!engine)
       throw SmartMet::Spine::Exception(BCP, "Geonames engine unavailable");
     itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
 
     /* GisEngine */
-    engine = itsReactor->getSingleton("Gis", NULL);
+    engine = itsReactor->getSingleton("Gis", nullptr);
     if (!engine)
       throw Spine::Exception(BCP, "Gis engine unavailable");
     itsGisEngine = reinterpret_cast<Engine::Gis::Engine*>(engine);
@@ -922,7 +922,7 @@ void Plugin::init()
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1016,7 +1016,7 @@ bool Plugin::verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryP
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

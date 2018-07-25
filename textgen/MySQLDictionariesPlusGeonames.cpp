@@ -112,9 +112,9 @@ void MySQLDictionariesPlusGeonames::geoinit(void* theReactor)
   {
     // Get Geoengine
     void* engine =
-        reinterpret_cast<SmartMet::Spine::Reactor*>(theReactor)->getSingleton("Geonames", NULL);
+        reinterpret_cast<SmartMet::Spine::Reactor*>(theReactor)->getSingleton("Geonames", nullptr);
 
-    if (engine == NULL)
+    if (engine == nullptr)
       throw SmartMet::Spine::Exception(BCP, "Geonames engine unavailable");
 
     itsImpl->itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
@@ -122,7 +122,7 @@ void MySQLDictionariesPlusGeonames::geoinit(void* theReactor)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(BCP, "Operation failed!", NULL);
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
