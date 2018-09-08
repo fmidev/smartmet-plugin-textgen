@@ -204,7 +204,7 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
     if (reProcess)
       handleIncludedSections(itsConfig, included_config_items);
 
-    if (included_config_items.size() > 0)
+    if (!included_config_items.empty())
       config_item_container.insert(config_item_container.begin(),
                                    included_config_items.begin(),
                                    included_config_items.end());
@@ -296,7 +296,7 @@ Config::Config(const string& configfile)
     for (const auto& config_item : config_items)
     {
       string config_key = config_item.first;
-      string config_name = config_key.substr(config_key.find(".") + 1);
+      string config_name = config_key.substr(config_key.find('.') + 1);
       string config_value = config_item.second;
 
       // Make relative paths absolute with respect to the configuration file
@@ -671,7 +671,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig> pDef
   {
     pDefaultConfig = pDefaultConf;
 
-    if (postgis_identifiers.size() == 0)
+    if (postgis_identifiers.empty())
     {
       if (!pDefaultConfig || pDefaultConfig->numberOfPostGISIdentifiers() == 0)
         throw SmartMet::Spine::Exception(
@@ -681,7 +681,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig> pDef
       itsDefaultPostGISIdentifierKey = pDefaultConfig->itsDefaultPostGISIdentifierKey;
     }
 
-    if (forecast_data_config_items.size() == 0)
+    if (forecast_data_config_items.empty())
     {
       if (!pDefaultConfig || pDefaultConfig->numberOfForecastDataConfigs() == 0)
         throw SmartMet::Spine::Exception(BCP, "forecast_data-section missing, cannot continue!");
@@ -689,7 +689,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig> pDef
       forecast_data_config_items = pDefaultConfig->forecast_data_config_items;
     }
 
-    if (masks.size() == 0)
+    if (masks.empty())
     {
       if (!pDefaultConfig || pDefaultConfig->numberOfMasks() == 0)
         throw SmartMet::Spine::Exception(BCP, "mask-section missing, cannot continue!");
@@ -712,13 +712,13 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig> pDef
       if (itsMySQLDictionaryPassword.empty())
         itsMySQLDictionaryPassword = pDefaultConfig->itsMySQLDictionaryPassword;
 
-      if (unit_format_config_items.size() == 0)
+      if (unit_format_config_items.empty())
         unit_format_config_items = pDefaultConfig->unit_format_config_items;
 
-      if (forecast_data_config_items.size() == 0)
+      if (forecast_data_config_items.empty())
         forecast_data_config_items = pDefaultConfig->forecast_data_config_items;
 
-      if (area_config_items.size() == 0)
+      if (area_config_items.empty())
         area_config_items = pDefaultConfig->area_config_items;
 
       // area timezones

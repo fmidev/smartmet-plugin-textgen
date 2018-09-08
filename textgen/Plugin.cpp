@@ -783,7 +783,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
       theResponse.setHeader("Expires", expiration.c_str());
       theResponse.setHeader("Last-Modified", modification.c_str());
 
-      if (response.size() == 0)
+      if (response.empty())
       {
         std::cerr << "Warning: Empty input for request " << theRequest.getQueryString() << " from "
                   << theRequest.getClientIP() << std::endl;
