@@ -230,26 +230,26 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
       std::string postgis_string = iter->second;
 
       // format: schema=schema1,port=port1,dbname=dbname1,table=table1
-      if (postgis_string.find(",") != std::string::npos)
+      if (postgis_string.find(',') != std::string::npos)
       {
         const Engine::Gis::postgis_identifier& default_pgis_id =
             config.getDefaultPostGISIdentifier();
 
-        std::string pgis_host(default_pgis_id.host);
-        std::string pgis_port(default_pgis_id.port);
-        std::string pgis_dbname(default_pgis_id.database);
-        std::string pgis_username(default_pgis_id.username);
-        std::string pgis_password(default_pgis_id.password);
-        std::string pgis_schema(default_pgis_id.schema);
-        std::string pgis_table(default_pgis_id.table);
-        std::string pgis_field(default_pgis_id.field);
-        std::string pgis_client_encoding(default_pgis_id.encoding);
+        std::string pgis_host = default_pgis_id.host;
+        std::string pgis_port = default_pgis_id.port;
+        std::string pgis_dbname = default_pgis_id.database;
+        std::string pgis_username = default_pgis_id.username;
+        std::string pgis_password = default_pgis_id.password;
+        std::string pgis_schema = default_pgis_id.schema;
+        std::string pgis_table = default_pgis_id.table;
+        std::string pgis_field = default_pgis_id.field;
+        std::string pgis_client_encoding = default_pgis_id.encoding;
 
         char_separator<char> sep(",");
         tokenizer<char_separator<char> > tokens(postgis_string, sep);
         for (const string& t : tokens)
         {
-          unsigned long assign_index = t.find("=");
+          unsigned long assign_index = t.find('=');
           if (assign_index == std::string::npos)
           {
             errorMessage = "Erroneous PostGIS parameter: " + t;
