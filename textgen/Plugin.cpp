@@ -847,13 +847,13 @@ void Plugin::init()
   {
     /* GeoEngine */
     auto engine = itsReactor->getSingleton("Geonames", nullptr);
-    if (!engine)
+    if (engine == nullptr)
       throw SmartMet::Spine::Exception(BCP, "Geonames engine unavailable");
     itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
 
     /* GisEngine */
     engine = itsReactor->getSingleton("Gis", nullptr);
-    if (!engine)
+    if (engine == nullptr)
       throw Spine::Exception(BCP, "Gis engine unavailable");
     itsGisEngine = reinterpret_cast<Engine::Gis::Engine*>(engine);
 

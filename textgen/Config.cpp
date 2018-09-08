@@ -42,9 +42,9 @@ string parse_config_key(const char* str1 = nullptr,
                         const char* str2 = nullptr,
                         const char* str3 = nullptr)
 {
-  string string1(str1 ? str1 : "");
-  string string2(str2 ? str2 : "");
-  string string3(str3 ? str3 : "");
+  string string1(str1 != nullptr ? str1 : "");
+  string string2(str2 != nullptr ? str2 : "");
+  string string3(str3 != nullptr ? str3 : "");
 
   string retval(string1 + string2 + string3);
 
