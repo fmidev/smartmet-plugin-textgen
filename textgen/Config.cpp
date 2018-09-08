@@ -39,7 +39,9 @@ namespace Textgen
 
 namespace
 {
-string parse_config_key(const char* str1 = 0, const char* str2 = 0, const char* str3 = 0)
+string parse_config_key(const char* str1 = nullptr,
+                        const char* str2 = nullptr,
+                        const char* str3 = nullptr)
 {
   string string1(str1 ? str1 : "");
   string string2(str2 ? str2 : "");
