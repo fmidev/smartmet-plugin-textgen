@@ -41,7 +41,7 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
 {
  public:
   Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
-  virtual ~Plugin();
+  virtual ~Plugin() = default;
 
   const std::string& getPluginName() const;
   int getRequiredAPIVersion() const;

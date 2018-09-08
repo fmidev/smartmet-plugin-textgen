@@ -21,7 +21,7 @@ namespace Textgen
 class MySQLDictionariesPlusGeonames : public TextGen::MySQLDictionaries
 {
  public:
-  virtual ~MySQLDictionariesPlusGeonames();
+  virtual ~MySQLDictionariesPlusGeonames() = default;
   MySQLDictionariesPlusGeonames();
 #ifdef NO_COMPILER_OPTIMIZE
   MySQLDictionariesPlusGeonames(const MySQLDictionariesPlusGeonames& theDict);

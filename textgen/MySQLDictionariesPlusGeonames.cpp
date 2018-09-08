@@ -85,16 +85,6 @@ class MySQLDictionariesPlusGeonames::Impl
 
 // ----------------------------------------------------------------------
 /*!
- * \brief Destructor
- *
- * The destructor does nothing special.
- */
-// ----------------------------------------------------------------------
-
-MySQLDictionariesPlusGeonames::~MySQLDictionariesPlusGeonames() {}
-
-// ----------------------------------------------------------------------
-/*!
  * \brief Constructor
  *
  * The constructor does nothing special.
