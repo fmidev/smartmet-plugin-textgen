@@ -7,7 +7,6 @@
 #include "Config.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 #include <macgyver/StringConversion.h>
@@ -64,10 +63,9 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
       if (itsConfig.lookup(key).isGroup())
       {
         bool processSection(false);
-        for (unsigned int i = 0; i < allowed_sections.size(); i++)
+        for (auto allowed_key : allowed_sections)
         {
-          string allowed_key(allowed_sections[i]);
-          string section_key(key);
+          string section_key = key;
           if (allowed_key.size() > section_key.size())
             allowed_key = allowed_key.substr(0, section_key.size());
           else if (allowed_key.size() < section_key.size())
@@ -183,17 +181,17 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
         string section_to_include(config_value_original.substr(4));
         // cout << "section_to_include: " << section_to_include << endl;
 
-        for (unsigned int k = 0; k < all_output_document_config_items.size(); k++)
+        for (const auto& output_document_config_item : all_output_document_config_items)
         {
-          string item_key(all_output_document_config_items[k].first);
+          string item_key = output_document_config_item.first;
           if (item_key.size() >= section_to_include.size() &&
               item_key.substr(0, section_to_include.size()) == section_to_include)
           {
-            string config_key_first_part(
-                config_key_original.substr(0, config_key_original.find_last_of(".")));
-            string config_key_second_part(item_key.substr(section_to_include.size()));
-            string parsed_config_key(config_key_first_part + config_key_second_part);
-            string config_value(all_output_document_config_items[k].second);
+            string config_key_first_part =
+                config_key_original.substr(0, config_key_original.find_last_of("."));
+            string config_key_second_part = item_key.substr(section_to_include.size());
+            string parsed_config_key = config_key_first_part + config_key_second_part;
+            string config_value = output_document_config_item.second;
             if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
               reProcess = true;
 
@@ -295,11 +293,11 @@ Config::Config(const string& configfile)
 
     parseConfigurationItem(lconf, "product_config", allowed_sections, config_items);
 
-    for (size_t i = 0; i < config_items.size(); i++)
+    for (const auto& config_item : config_items)
     {
-      string config_key(config_items[i].first);
+      string config_key = config_item.first;
       string config_name = config_key.substr(config_key.find(".") + 1);
-      string config_value(config_items[i].second);
+      string config_value = config_item.second;
 
       // Make relative paths absolute with respect to the configuration file
       if (!config_value.empty() && config_value[0] != '/')
@@ -311,7 +309,7 @@ Config::Config(const string& configfile)
 
     // check that certain parameters has been defined either in default configuration file or
     // product-specific configuration file
-    BOOST_FOREACH (const product_config_item& pci, itsProductConfigs)
+    for (const product_config_item& pci : itsProductConfigs)
     {
       if (pci.first == default_textgen_config_name)
         continue;
@@ -363,7 +361,7 @@ vector<string> Config::getProductNames() const
   {
     vector<string> retval;
 
-    BOOST_FOREACH (const product_config_item& pci, itsProductConfigs)
+    for (const product_config_item& pci : itsProductConfigs)
     {
       retval.push_back(pci.first);
     }
@@ -618,7 +616,7 @@ ProductConfig::ProductConfig(const string& configfile)
 
       handleIncludedSections(itsConfig, output_document_config_item_container);
 
-      BOOST_FOREACH (config_item& ci, output_document_config_item_container)
+      for (config_item& ci : output_document_config_item_container)
       {
         string config_key(ci.first);
         string config_value(ci.second);
@@ -641,7 +639,7 @@ ProductConfig::ProductConfig(const string& configfile)
       // sections
       parseConfigurationItem(itsConfig, "area", allowed_sections, area_config_item_container);
 
-      BOOST_FOREACH (config_item& ci, area_config_item_container)
+      for (config_item& ci : area_config_item_container)
       {
         string config_key(ci.first);
         string config_value(ci.second);
@@ -724,7 +722,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig> pDef
         area_config_items = pDefaultConfig->area_config_items;
 
       // area timezones
-      BOOST_FOREACH (const config_item& timezone_item, pDefaultConfig->area_timezones)
+      for (const config_item& timezone_item : pDefaultConfig->area_timezones)
       {
         if (area_timezones.find(timezone_item.first) == area_timezones.end())
           area_timezones.insert(timezone_item);

@@ -4,7 +4,6 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/foreach.hpp>
 #include <boost/locale.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/tokenizer.hpp>
@@ -248,7 +247,7 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
 
         char_separator<char> sep(",");
         tokenizer<char_separator<char> > tokens(postgis_string, sep);
-        BOOST_FOREACH (const string& t, tokens)
+        for (const string& t : tokens)
         {
           unsigned long assign_index = t.find("=");
           if (assign_index == std::string::npos)
@@ -358,10 +357,9 @@ bool parse_area_parameter(const std::string& areaParameter,
   {
     const vector<string> area_name_vector = NFmiStringTools::Split(areaParameter);
 
-    for (unsigned int i = 0; i < area_name_vector.size(); i++)
+    for (const auto& area_name : area_name_vector)
     {
       SmartMet::Spine::ReadLock lock(thePostGISMutex);
-      const std::string area_name(area_name_vector[i]);
       if (geometryStorage.geoObjectExists(area_name))
       {
         weatherAreaVector.emplace_back(WeatherArea(make_area(area_name, geometryStorage)));
@@ -394,16 +392,16 @@ bool parse_geoid_parameter(const std::string& geoidParameter,
   {
     const vector<string> geoid_vector = NFmiStringTools::Split(geoidParameter);
 
-    int geoid(0);
-    for (unsigned int i = 0; i < geoid_vector.size(); i++)
+    int geoid = 0;
+    for (const auto& geoid_string : geoid_vector)
     {
       try
       {
-        geoid = boost::lexical_cast<int>(geoid_vector[i]);
+        geoid = boost::lexical_cast<int>(geoid_string);
       }
       catch (...)
       {
-        errorMessage = (geoid_vector[i] + " is not valid geoid!");
+        errorMessage = (geoid_string + " is not valid geoid!");
         return false;
       }
 
@@ -411,7 +409,7 @@ bool parse_geoid_parameter(const std::string& geoidParameter,
 
       if (!loc)
       {
-        errorMessage = (geoid_vector[i] + " not found in database!");
+        errorMessage = (geoid_string + " not found in database!");
         return false;
       }
 
@@ -687,12 +685,13 @@ string Plugin::query(SmartMet::Spine::Reactor& theReactor,
                                              *(theMaskContainer[COAST_MASK_NAME]))
                     : TextGen::TextGenerator());
 
-    std::string forecast_text("");
-    for (unsigned int i = 0; i < weatherAreaVector.size(); i++)
+    std::string forecast_text;
+
+    for (const auto& area : weatherAreaVector)
     {
-      std::string forecast_text_area("");
-      std::string area_name((weatherAreaVector[i]).name());
-      std::string cache_key(cache_key_common_part + ";" + area_name);
+      std::string forecast_text_area;
+      std::string area_name = area.name();
+      std::string cache_key = cache_key_common_part + ";" + area_name;
 
       // set timezone for the area (stored in thread local storage)
       TextGenPosixTime::SetThreadTimeZone(config.getAreaTimeZone(area_name));
@@ -709,8 +708,6 @@ string Plugin::query(SmartMet::Spine::Reactor& theReactor,
       }
       else
       {
-        const WeatherArea& area = weatherAreaVector[i];
-
         // create formatter
         boost::shared_ptr<TextGen::TextFormatter> formatter(
             TextGen::TextFormatterFactory::create(formatter_name));

@@ -41,22 +41,18 @@
 // ----------------------------------------------------------------------
 
 #include "MySQLDictionariesPlusGeonames.h"
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 #include <calculator/Settings.h>
 #include <calculator/TextGenError.h>
-
 #include <engines/geonames/Engine.h>
+#include <mysql++/mysql++.h>
 #include <spine/Exception.h>
 #include <spine/Reactor.h>
-
-#include <boost/algorithm/string.hpp>
-#include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 #include <cassert>
+#include <map>
 #include <sstream>
 #include <stdexcept>
-
-#include <mysql++/mysql++.h>
-#include <map>
 
 using namespace std;
 using namespace boost;
