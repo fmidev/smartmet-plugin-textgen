@@ -118,11 +118,11 @@ bool parse_forecasttime_parameter(const std::string& forecasttime_string,
         errorMessage = "forecasttime parameter format is YYYYMMDDHHMM[SS]";
         return false;
       }
-      short year = boost::lexical_cast<short>(forecasttime_string.substr(0, 4).c_str());
-      short month = boost::lexical_cast<short>(forecasttime_string.substr(4, 2).c_str());
-      short day = boost::lexical_cast<short>(forecasttime_string.substr(6, 2).c_str());
-      short hour = boost::lexical_cast<short>(forecasttime_string.substr(8, 2).c_str());
-      short min = boost::lexical_cast<short>(forecasttime_string.substr(10, 2).c_str());
+      auto year = boost::lexical_cast<short>(forecasttime_string.substr(0, 4).c_str());
+      auto month = boost::lexical_cast<short>(forecasttime_string.substr(4, 2).c_str());
+      auto day = boost::lexical_cast<short>(forecasttime_string.substr(6, 2).c_str());
+      auto hour = boost::lexical_cast<short>(forecasttime_string.substr(8, 2).c_str());
+      auto min = boost::lexical_cast<short>(forecasttime_string.substr(10, 2).c_str());
       short sec = 0;
       if (forecasttime_string.size() > 12)
         sec = boost::lexical_cast<short>(forecasttime_string.substr(12, 2).c_str());
