@@ -63,7 +63,7 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
   bool verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryParameters,
                                    std::string& errorMessage);
 
-  SmartMet::Spine::Reactor* itsReactor;
+  SmartMet::Spine::Reactor* itsReactor = nullptr;
   const std::string itsModuleName;
   Config itsConfig;
 
@@ -81,8 +81,8 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
   // mutex for forecast text cache
   SmartMet::Spine::MutexType itsForecastTextCacheMutex;
 
-  SmartMet::Engine::Geonames::Engine* itsGeoEngine;
-  SmartMet::Engine::Gis::Engine* itsGisEngine;
+  SmartMet::Engine::Geonames::Engine* itsGeoEngine = nullptr;
+  SmartMet::Engine::Gis::Engine* itsGisEngine = nullptr;
 
   // Geometries and their svg-representations are stored here
   Engine::Gis::GeometryStorage itsGeometryStorage;
