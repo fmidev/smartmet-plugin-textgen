@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 18.8.13
+Version: 18.9.8
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,26 +16,26 @@ BuildRequires: boost-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 18.8.1
+BuildRequires: smartmet-library-calculator-devel >= 18.9.8
 BuildRequires: smartmet-library-textgen-devel >= 18.8.1
-BuildRequires: smartmet-library-spine-devel >= 18.8.13
-BuildRequires: smartmet-engine-observation-devel >= 18.8.13
-BuildRequires: smartmet-engine-querydata-devel >= 18.8.13
-BuildRequires: smartmet-engine-geonames-devel >= 18.8.13
-BuildRequires: smartmet-engine-gis-devel >= 18.7.25
-BuildRequires: smartmet-library-macgyver-devel >= 18.8.4
-BuildRequires: smartmet-library-locus-devel >= 18.8.6
-Requires: smartmet-library-calculator >= 18.8.1
-Requires: smartmet-library-macgyver >= 18.8.4
-Requires: smartmet-library-locus >= 18.8.6
+BuildRequires: smartmet-library-spine-devel >= 18.9.5
+BuildRequires: smartmet-engine-observation-devel >= 18.9.3
+BuildRequires: smartmet-engine-querydata-devel >= 18.8.20
+BuildRequires: smartmet-engine-geonames-devel >= 18.8.30
+BuildRequires: smartmet-engine-gis-devel >= 18.9.7
+BuildRequires: smartmet-library-macgyver-devel >= 18.9.5
+BuildRequires: smartmet-library-locus-devel >= 18.8.21
+Requires: smartmet-library-calculator >= 18.9.8
+Requires: smartmet-library-macgyver >= 18.9.5
+Requires: smartmet-library-locus >= 18.8.21
 Requires: smartmet-library-textgen >= 18.8.1
 Requires: libconfig
-Requires: smartmet-engine-observation >= 18.8.13
-Requires: smartmet-engine-geonames >= 18.8.13
-Requires: smartmet-engine-querydata >= 18.8.13
-Requires: smartmet-engine-gis >= 18.7.25
-Requires: smartmet-server >= 18.8.8
-Requires: smartmet-library-spine >= 18.8.13
+Requires: smartmet-engine-observation >= 18.9.3
+Requires: smartmet-engine-geonames >= 18.8.30
+Requires: smartmet-engine-querydata >= 18.8.20
+Requires: smartmet-engine-gis >= 18.9.7
+Requires: smartmet-server >= 18.8.22
+Requires: smartmet-library-spine >= 18.9.5
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Sat Sep  8 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.8-1.fmi
+- Silenced CodeChecker warnings
+
 * Mon Aug 13 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.8.13-1.fmi
 - Repackaged since Spine::Location size changed
 
