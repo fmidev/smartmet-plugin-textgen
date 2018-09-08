@@ -191,7 +191,7 @@ bool parse_lonlat_parameter(const std::string& lonlat_string,
         std::string geoname(theDictionary->geofind(longitude, latitude, radius));
 
         normalize_string(geoname);
-        weatherAreaVector.push_back(
+        weatherAreaVector.emplace_back(
             TextGen::WeatherArea(NFmiPoint(longitude, latitude),
                                  geoname,
                                  (radius_defined && radius >= 5.0) ? radius : 0.0));
@@ -364,7 +364,7 @@ bool parse_area_parameter(const std::string& areaParameter,
       const std::string area_name(area_name_vector[i]);
       if (geometryStorage.geoObjectExists(area_name))
       {
-        weatherAreaVector.push_back(WeatherArea(make_area(area_name, geometryStorage)));
+        weatherAreaVector.emplace_back(WeatherArea(make_area(area_name, geometryStorage)));
       }
       else
       {
@@ -422,13 +422,13 @@ bool parse_geoid_parameter(const std::string& geoidParameter,
       // fetch area definition form there
       if (feature_code.substr(0, 3) == "ADM" && geometryStorage.geoObjectExists(loc_name))
       {
-        weatherAreaVector.push_back(WeatherArea(make_area(loc_name, geometryStorage)));
+        weatherAreaVector.emplace_back(WeatherArea(make_area(loc_name, geometryStorage)));
       }
       else
       {
         normalize_string(loc_name);
         // otherwise use the lonlat coordinates
-        weatherAreaVector.push_back(
+        weatherAreaVector.emplace_back(
             TextGen::WeatherArea(NFmiPoint(loc->longitude, loc->latitude), loc_name, 0.0));
       }
 

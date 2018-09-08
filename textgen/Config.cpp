@@ -286,7 +286,7 @@ Config::Config(const string& configfile)
 
     config_item_vector config_items;
     vector<string> allowed_sections;
-    allowed_sections.push_back("*");
+    allowed_sections.emplace_back("*");
 
     lconf.lookupValue("forecast_text_cache_size", itsForecastTextCacheSize);
     lconf.lookupValue("url", itsDefaultUrl);
@@ -635,7 +635,7 @@ ProductConfig::ProductConfig(const string& configfile)
     {
       config_item_vector area_config_item_container;
       vector<string> allowed_sections;
-      allowed_sections.push_back("*");
+      allowed_sections.emplace_back("*");
       // sections
       parseConfigurationItem(itsConfig, "area", allowed_sections, area_config_item_container);
 
