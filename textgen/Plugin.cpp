@@ -334,12 +334,11 @@ TextGen::WeatherArea make_area(const std::string& postGISName,
       svgPath.Read(svg_string_stream);
       return WeatherArea(svgPath, areaName);
     }
-    else  // if not polygon, it must be a point
-    {
-      std::pair<float, float> std_point(geometryStorage.getPoint(postGISName));
-      NFmiPoint point(std_point.first, std_point.second);
-      return WeatherArea(point, areaName);
-    }
+
+    // if not polygon, it must be a point
+    std::pair<float, float> std_point(geometryStorage.getPoint(postGISName));
+    NFmiPoint point(std_point.first, std_point.second);
+    return WeatherArea(point, areaName);
   }
   catch (...)
   {
