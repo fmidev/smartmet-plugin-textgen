@@ -87,10 +87,7 @@ class MySQLDictionariesPlusGeonames::Impl
  */
 // ----------------------------------------------------------------------
 
-MySQLDictionariesPlusGeonames::MySQLDictionariesPlusGeonames()
-    : TextGen::MySQLDictionaries(), itsImpl(new Impl())
-{
-}
+MySQLDictionariesPlusGeonames::MySQLDictionariesPlusGeonames() : itsImpl(new Impl()) {}
 
 void MySQLDictionariesPlusGeonames::geoinit(void* theReactor)
 {
