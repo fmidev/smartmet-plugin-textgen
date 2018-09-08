@@ -573,7 +573,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
     std::string msg = what;
     boost::algorithm::replace_all(msg, "\n", " ");
     msg = msg.substr(0, 100);
-    theResponse.setHeader("X-TextGen-Error", msg.c_str());
+    theResponse.setHeader("X-TextGen-Error", msg);
   }
   catch (...)
   {
