@@ -815,8 +815,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 // ----------------------------------------------------------------------
 
 Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
-    : SmartMetPlugin(),
-      itsReactor(theReactor),
+    : itsReactor(theReactor),
       itsModuleName("Textgen"),
       itsConfig(theConfig),
       itsForecastTextCache(boost::numeric_cast<size_t>(itsConfig.getForecastTextCacheSize()))
