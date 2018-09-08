@@ -1,32 +1,5 @@
 #include "Plugin.h"
 #include "MySQLDictionariesPlusGeonames.h"
-
-#include <engines/geonames/Engine.h>
-#include <engines/gis/Engine.h>
-#include <spine/Convenience.h>
-#include <spine/Exception.h>
-#include <spine/Location.h>
-#include <spine/SmartMet.h>
-#include <spine/Table.h>
-#include <spine/TableFormatterFactory.h>
-#include <spine/ValueFormatter.h>
-
-#include <calculator/Settings.h>
-#include <calculator/TextGenPosixTime.h>
-#include <calculator/TimeTools.h>
-
-#include <textgen/DictionaryFactory.h>
-#include <textgen/Document.h>
-#include <textgen/TextFormatter.h>
-#include <textgen/TextFormatterFactory.h>
-#include <textgen/TextGenerator.h>
-
-#include <newbase/NFmiCmdLine.h>
-#include <newbase/NFmiFileSystem.h>
-#include <newbase/NFmiStringTools.h>
-
-#include <macgyver/TimeFormatter.h>
-
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/bind.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
@@ -35,7 +8,28 @@
 #include <boost/locale.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/tokenizer.hpp>
-
+#include <calculator/Settings.h>
+#include <calculator/TextGenPosixTime.h>
+#include <calculator/TimeTools.h>
+#include <engines/geonames/Engine.h>
+#include <engines/gis/Engine.h>
+#include <macgyver/StringConversion.h>
+#include <macgyver/TimeFormatter.h>
+#include <newbase/NFmiCmdLine.h>
+#include <newbase/NFmiFileSystem.h>
+#include <newbase/NFmiStringTools.h>
+#include <spine/Convenience.h>
+#include <spine/Exception.h>
+#include <spine/Location.h>
+#include <spine/SmartMet.h>
+#include <spine/Table.h>
+#include <spine/TableFormatterFactory.h>
+#include <spine/ValueFormatter.h>
+#include <textgen/DictionaryFactory.h>
+#include <textgen/Document.h>
+#include <textgen/TextFormatter.h>
+#include <textgen/TextFormatterFactory.h>
+#include <textgen/TextGenerator.h>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
@@ -783,8 +777,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
       // The headers themselves
       boost::shared_ptr<Fmi::TimeFormatter> tformat(Fmi::TimeFormatter::create("http"));
 
-      std::string cachecontrol =
-          "public, max-age=" + boost::lexical_cast<std::string>(expires_seconds);
+      std::string cachecontrol = "public, max-age=" + Fmi::to_string(expires_seconds);
       std::string expiration = tformat->format(t_expires);
       std::string modification = tformat->format(t_now);
 

@@ -5,16 +5,15 @@
 // ======================================================================
 
 #include "Config.h"
-#include <spine/Exception.h>
-#include <stdexcept>
-
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
-
+#include <macgyver/StringConversion.h>
+#include <spine/Exception.h>
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 using namespace boost;
@@ -440,7 +439,7 @@ ProductConfig::ProductConfig(const string& configfile)
         throw SmartMet::Spine::Exception(
             BCP,
             "postgis.config_items not an array in textgenplugin configuration file line " +
-                boost::lexical_cast<string>(config_items.getSourceLine()));
+                Fmi::to_string(config_items.getSourceLine()));
       }
 
       for (int i = 0; i < config_items.getLength(); ++i)
@@ -544,7 +543,7 @@ ProductConfig::ProductConfig(const string& configfile)
         throw SmartMet::Spine::Exception(
             BCP,
             "output_document.sections not an array in textgenplugin configuration file line " +
-                boost::lexical_cast<string>(sections.getSourceLine()));
+                Fmi::to_string(sections.getSourceLine()));
         ;
       }
 
@@ -801,7 +800,7 @@ const std::pair<string, string>& ProductConfig::getForecastDataConfig(
       throw SmartMet::Spine::Exception(
           BCP,
           "ProductConfig::getForecastDataConfig(index)-function invalid index parameter: " +
-              boost::lexical_cast<string>(index));
+              Fmi::to_string(index));
 
     return forecast_data_config_items.at(index);
   }
@@ -820,7 +819,7 @@ const std::pair<std::string, std::string>& ProductConfig::getUnitFormatConfig(
       throw SmartMet::Spine::Exception(
           BCP,
           "ProductConfig::getUnitFormatDataConfig(index)-function invalid index parameter: " +
-              boost::lexical_cast<string>(index));
+              Fmi::to_string(index));
 
     return unit_format_config_items.at(index);
   }
@@ -839,7 +838,7 @@ const std::pair<std::string, std::string>& ProductConfig::getOutputDocumentConfi
       throw SmartMet::Spine::Exception(
           BCP,
           "ProductConfig::getOutputDocumentConfig(index)-function invalid index parameter: " +
-              boost::lexical_cast<string>(index));
+              Fmi::to_string(index));
 
     return output_document_config_items.at(index);
   }
@@ -858,7 +857,7 @@ const std::pair<std::string, std::string>& ProductConfig::getAreaConfig(
       throw SmartMet::Spine::Exception(
           BCP,
           "ProductConfig::getAreaConfig(index)-function invalid index parameter: " +
-              boost::lexical_cast<string>(index));
+              Fmi::to_string(index));
 
     return area_config_items.at(index);
   }
@@ -876,7 +875,7 @@ const std::pair<std::string, std::string>& ProductConfig::getMask(const unsigned
       throw SmartMet::Spine::Exception(
           BCP,
           "ProductConfig::getMask(index)-function invalid index parameter: " +
-              boost::lexical_cast<string>(index));
+              Fmi::to_string(index));
 
     return masks.at(index);
   }
@@ -895,7 +894,7 @@ const std::pair<std::string, std::string>& ProductConfig::getFireWarningAreaCode
       throw SmartMet::Spine::Exception(
           BCP,
           "ProductConfig::getFireWarningAreaCode(index)-function invalid index parameter: " +
-              boost::lexical_cast<string>(index));
+              Fmi::to_string(index));
 
     return forestfirewarning_areacodes.at(index);
   }
