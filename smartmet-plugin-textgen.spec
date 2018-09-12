@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 18.9.8
+Version: 18.9.12
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Sep 12 2018  Anssi Reponen <anssi.reponen@fmi.fi> - 18.9.12-1.fmi
+- Configuration files re-read automatically after changes (BRAINSTORM-853)
+
 * Sat Sep  8 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.8-1.fmi
 - Silenced CodeChecker warnings
 

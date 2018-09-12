@@ -9,6 +9,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
+#include <macgyver/AnsiEscapeCodes.h>
 #include <macgyver/StringConversion.h>
 #include <spine/Exception.h>
 #include <iostream>
@@ -54,7 +55,7 @@ string parse_config_key(const char* str1 = nullptr,
 void parseConfigurationItem(const libconfig::Config& itsConfig,
                             const std::string& key,
                             const vector<string>& allowed_sections,
-                            config_item_vector& config_item_container)
+                            ConfigItemVector& config_item_container)
 {
   try
   {
@@ -156,11 +157,11 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
 }
 
 void handleIncludedSections(const libconfig::Config& itsConfig,
-                            config_item_vector& config_item_container)
+                            ConfigItemVector& config_item_container)
 {
   try
   {
-    config_item_vector all_output_document_config_items;
+    ConfigItemVector all_output_document_config_items;
     vector<string> allowed_sections;
     allowed_sections.push_back("*");
     parseConfigurationItem(
@@ -168,7 +169,7 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
 
     size_t numberOfConfigs = config_item_container.size();
     // these configurations are included by another and thus not use directly
-    config_item_vector included_config_items;
+    ConfigItemVector included_config_items;
 
     bool reProcess(false);
     for (unsigned int i = 0; i < numberOfConfigs; i++)
@@ -179,7 +180,6 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
       if (config_value_original.size() > 4 && config_value_original.substr(0, 4) == "use ")
       {
         string section_to_include(config_value_original.substr(4));
-        // cout << "section_to_include: " << section_to_include << endl;
 
         for (const auto& output_document_config_item : all_output_document_config_items)
         {
@@ -220,7 +220,7 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
 // read all string type parameters
 void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
                                      const std::string& key,
-                                     config_item_vector& config_item_container)
+                                     ConfigItemVector& config_item_container)
 {
   try
   {
@@ -274,64 +274,201 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
 }  // namespace
 
 Config::Config(const string& configfile)
-    : itsDefaultUrl(default_url), itsForecastTextCacheSize(DEFAULT_FORECAST_TEXT_CACHE_SIZE)
+    : itsDefaultUrl(default_url),
+      itsForecastTextCacheSize(DEFAULT_FORECAST_TEXT_CACHE_SIZE),
+      itsMainConfigFile(configfile)
 {
   try
   {
     libconfig::Config lconf;
     lconf.readFile(configfile.c_str());
 
-    // For relative path lookups
-    boost::filesystem::path config_path(configfile);
-
-    config_item_vector config_items;
-    vector<string> allowed_sections;
-    allowed_sections.emplace_back("*");
-
     lconf.lookupValue("forecast_text_cache_size", itsForecastTextCacheSize);
     lconf.lookupValue("url", itsDefaultUrl);
 
-    parseConfigurationItem(lconf, "product_config", allowed_sections, config_items);
-
-    for (const auto& config_item : config_items)
+    // Set monitoring directories
+    ConfigItemVector configItems = readMainConfig();
+    boost::regex pattern("^[\\w,\\s-]+\\.[A-Za-z]+$");
+    for (auto dir : getDirectoriesToMonitor(configItems))  // directoriesToMonitor)
     {
-      string config_key = config_item.first;
-      string config_name = config_key.substr(config_key.find('.') + 1);
-      string config_value = config_item.second;
+      itsMonitor.watch(dir,
+                       pattern,
+                       boost::bind(&Config::update, this, _1, _2, _3, _4),
+                       boost::bind(&Config::error, this, _1, _2, _3, _4),
+                       10,
+                       Fmi::DirectoryMonitor::ALL);
+    }
+    itsMonitorThread = boost::thread(boost::bind(&Fmi::DirectoryMonitor::run, &itsMonitor));
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
 
-      // Make relative paths absolute with respect to the configuration file
+void Config::setDefaultConfigValues(ProductConfigMap& productConfigs)
+{
+  // Check that certain parameters has been defined either in default configuration file or
+  // product-specific configuration file
+  for (auto pci : productConfigs)
+  {
+    if (pci.first == default_textgen_config_name)
+      continue;
+
+    boost::shared_ptr<ProductConfig> pProductConfig = pci.second;
+
+    if (productConfigs.find(default_textgen_config_name) != productConfigs.end())
+      pProductConfig->setDefaultConfig(productConfigs.at(default_textgen_config_name));
+
+    // Use hard-coded default values
+    if (pProductConfig->itsLanguage.empty())
+      pProductConfig->itsLanguage = default_language;
+    if (pProductConfig->itsFormatter.empty())
+      pProductConfig->itsFormatter = default_formatter;
+    if (pProductConfig->itsLocale.empty())
+      pProductConfig->itsLocale = default_locale;
+    if (pProductConfig->itsTimeFormat.empty())
+      pProductConfig->itsTimeFormat = default_timeformat;
+    if (pProductConfig->itsDictionary.empty())
+      pProductConfig->itsDictionary = default_dictionary;
+    if (pProductConfig->itsDictionary.empty())
+      pProductConfig->itsDictionary = default_dictionary;
+  }
+}
+
+std::set<std::string> Config::getDirectoriesToMonitor(const ConfigItemVector& configItems) const
+{
+  std::set<std::string> ret;
+
+  boost::filesystem::path mainPath = itsMainConfigFile;
+  std::string mainPathString = mainPath.parent_path().string() + "/";
+  for (auto item : configItems)
+  {
+    boost::filesystem::path p = item.second;
+    std::string path = (p.is_relative() ? mainPathString : "") + p.parent_path().string();
+    ret.insert(path);
+  }
+
+  return ret;
+}
+
+ConfigItemVector Config::readMainConfig() const
+{
+  try
+  {
+    libconfig::Config lconf;
+    lconf.readFile(itsMainConfigFile.c_str());
+    ConfigItemVector ret;
+    vector<string> allowed_sections;
+    allowed_sections.push_back("*");
+    parseConfigurationItem(lconf, "product_config", allowed_sections, ret);
+    return ret;
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception(
+        BCP, "Error reading main configuration file '" + itsMainConfigFile + "'");
+  }
+}
+std::unique_ptr<ProductConfigMap> Config::readProductConfigs(
+    const ConfigItemVector& configItems) const
+{
+  string config_value;
+  itsProductFiles.clear();
+  try
+  {
+    std::unique_ptr<ProductConfigMap> ret(new ProductConfigMap());
+    boost::filesystem::path config_path(itsMainConfigFile);
+    for (auto item : configItems)
+    {
+      string config_key(item.first);
+      string config_name = config_key.substr(config_key.find(".") + 1);
+      config_value = item.second;
+
+      // Make relative paths absolute
       if (!config_value.empty() && config_value[0] != '/')
         config_value = config_path.parent_path().string() + "/" + config_value;
-
-      itsProductConfigs.insert(make_pair(
-          config_name, boost::shared_ptr<ProductConfig>(new ProductConfig(config_value))));
+      try
+      {
+        boost::shared_ptr<ProductConfig> newProductConfig(new ProductConfig(config_value));
+        ret->insert(make_pair(config_name, newProductConfig));
+        itsProductFiles.insert(config_value);
+      }
+      catch (const SmartMet::Spine::Exception& e)
+      {
+        // If non-fatal error occurred, report it and continue processing the next file
+        if (e.getDetailCount() > 0)
+          std::cout << ANSI_FG_RED << e.getDetailByIndex(0) << ANSI_FG_DEFAULT << std::endl;
+      }
+      catch (...)
+      {
+        throw SmartMet::Spine::Exception(
+            BCP, "Error reading product configuration file '" + config_value + "'");
+      }
     }
+    return ret;
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception(
+        BCP, "Error reading product configuration file '" + config_value + "'");
+  }
+}
 
-    // check that certain parameters has been defined either in default configuration file or
-    // product-specific configuration file
-    for (const product_config_item& pci : itsProductConfigs)
+void Config::update(Fmi::DirectoryMonitor::Watcher id,
+                    const boost::filesystem::path& dir,
+                    const boost::regex& pattern,
+                    const Fmi::DirectoryMonitor::Status& status)
+{
+  try
+  {
+    bool reloadConfig = false;
+    ConfigItemVector configItems = readMainConfig();
+    // newProductFileDetected is true when new product config file has been created or
+    // syntax error has been corrected in an existing file
+    bool newProductFileDetected = configItems.size() > itsProductFiles.size();
+    for (const auto& file_status : *status)
     {
-      if (pci.first == default_textgen_config_name)
-        continue;
+      std::string filename = file_status.first.string();
+      bool mainConfigChanged = (filename == itsMainConfigFile);
+      if (file_status.second == Fmi::DirectoryMonitor::DELETE)
+      {
+        if (mainConfigChanged)
+          throw SmartMet::Spine::Exception(BCP,
+                                           "Main config file '" + itsMainConfigFile + "' deleted");
 
-      boost::shared_ptr<ProductConfig> pProductConfig = pci.second;
+        if (itsProductFiles.find(filename) == itsProductFiles.end())
+          continue;
 
-      if (itsProductConfigs.find(default_textgen_config_name) != itsProductConfigs.end())
-        pProductConfig->setDefaultConfig(itsProductConfigs.at(default_textgen_config_name));
+        reloadConfig = true;
+      }
 
-      // last resort: use hard-coded default values
-      if (pProductConfig->itsLanguage.empty())
-        pProductConfig->itsLanguage = default_language;
-      if (pProductConfig->itsFormatter.empty())
-        pProductConfig->itsFormatter = default_formatter;
-      if (pProductConfig->itsLocale.empty())
-        pProductConfig->itsLocale = default_locale;
-      if (pProductConfig->itsTimeFormat.empty())
-        pProductConfig->itsTimeFormat = default_timeformat;
-      if (pProductConfig->itsDictionary.empty())
-        pProductConfig->itsDictionary = default_dictionary;
-      if (pProductConfig->itsDictionary.empty())
-        pProductConfig->itsDictionary = default_dictionary;
+      if (file_status.second == Fmi::DirectoryMonitor::CREATE)
+      {
+        // If there is a new product config file and it is listed
+        // in main config file we read it, otherwise we can ignore it
+        if (newProductFileDetected)
+          reloadConfig = true;
+        else
+          continue;
+      }
+
+      if (file_status.second == Fmi::DirectoryMonitor::MODIFY)
+      {
+        // When product config file is edited, but it is not listed in main config file
+        // there is no need for actions, except when the file was invalid due to syntax error
+        // and then later corrected
+        if (filename != itsMainConfigFile &&
+            (itsProductFiles.find(filename) == itsProductFiles.end() && !newProductFileDetected))
+          continue;
+        reloadConfig = true;
+      }
+    }
+    if (reloadConfig)
+    {
+      std::unique_ptr<ProductConfigMap> newProductConfigs = readProductConfigs(configItems);
+      setDefaultConfigValues(*newProductConfigs);
+      itsProductConfigs.reset(newProductConfigs.release());
     }
   }
   catch (...)
@@ -340,14 +477,30 @@ Config::Config(const string& configfile)
   }
 }
 
+void Config::error(Fmi::DirectoryMonitor::Watcher id,
+                   const boost::filesystem::path& dir,
+                   const boost::regex& pattern,
+                   const std::string& message)
+{
+  try
+  {
+    std::cout << ANSI_FG_RED << "Error in directory " << dir << " : " << message << ANSI_FG_DEFAULT
+              << std::endl;
+  }
+  catch (...)
+  {
+    throw Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
 const ProductConfig& Config::getProductConfig(const std::string& config_name) const
 {
   try
   {
-    if (itsProductConfigs.find(config_name) == itsProductConfigs.end())
+    if (itsProductConfigs->find(config_name) == itsProductConfigs->end())
       throw SmartMet::Spine::Exception(BCP, config_name + " configuration not found!");
 
-    return *(itsProductConfigs.at(config_name));
+    return *(itsProductConfigs->at(config_name));
   }
   catch (...)
   {
@@ -361,7 +514,7 @@ vector<string> Config::getProductNames() const
   {
     vector<string> retval;
 
-    for (const product_config_item& pci : itsProductConfigs)
+    for (const ProductConfigItem& pci : *itsProductConfigs)
     {
       retval.push_back(pci.first);
     }
@@ -389,10 +542,18 @@ ProductConfig::ProductConfig(const string& configfile)
       itsForestFireWarningDirectory(""),
       itsFrostSeason(DEFAULT_FROSTSEASON)
 {
+  std::string exceptionDetails;
   try
   {
     if (configfile.empty())
       return;
+
+    if (!boost::filesystem::exists(configfile))
+    {
+      exceptionDetails =
+          "Product configuration file '" + configfile + "' not found, please check the filename!";
+      throw SmartMet::Spine::Exception(BCP, configfile + " file does not exist!");
+    }
 
     itsConfig.readFile(configfile.c_str());
 
@@ -432,44 +593,44 @@ ProductConfig::ProductConfig(const string& configfile)
 
     if (itsConfig.exists("postgis.config_items"))
     {
-      libconfig::Setting& config_items = itsConfig.lookup("postgis.config_items");
+      libconfig::Setting& configItems = itsConfig.lookup("postgis.config_items");
 
-      if (!config_items.isArray())
+      if (!configItems.isArray())
       {
         throw SmartMet::Spine::Exception(
             BCP,
             "postgis.config_items not an array in textgenplugin configuration file line " +
-                Fmi::to_string(config_items.getSourceLine()));
+                Fmi::to_string(configItems.getSourceLine()));
       }
 
-      for (int i = 0; i < config_items.getLength(); ++i)
+      for (int i = 0; i < configItems.getLength(); ++i)
       {
-        if (!itsConfig.exists(parse_config_key("postgis.", config_items[i])))
+        if (!itsConfig.exists(parse_config_key("postgis.", configItems[i])))
           throw SmartMet::Spine::Exception(BCP,
-                                           parse_config_key("postgis.", config_items[i]) +
+                                           parse_config_key("postgis.", configItems[i]) +
                                                " -section does not exists in configuration file");
 
         Engine::Gis::postgis_identifier postgis_id(
             postgis_identifiers[itsDefaultPostGISIdentifierKey]);
 
-        itsConfig.lookupValue(parse_config_key("postgis.", config_items[i], ".host").c_str(),
+        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".host").c_str(),
                               postgis_id.host);
-        itsConfig.lookupValue(parse_config_key("postgis.", config_items[i], ".port").c_str(),
+        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".port").c_str(),
                               postgis_id.port);
-        itsConfig.lookupValue(parse_config_key("postgis.", config_items[i], ".database").c_str(),
+        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".database").c_str(),
                               postgis_id.database);
-        itsConfig.lookupValue(parse_config_key("postgis.", config_items[i], ".username").c_str(),
+        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".username").c_str(),
                               postgis_id.username);
-        itsConfig.lookupValue(parse_config_key("postgis.", config_items[i], ".password").c_str(),
+        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".password").c_str(),
                               postgis_id.password);
         itsConfig.lookupValue(
-            parse_config_key("postgis.", config_items[i], ".client_encoding").c_str(),
+            parse_config_key("postgis.", configItems[i], ".client_encoding").c_str(),
             postgis_id.encoding);
-        itsConfig.lookupValue(parse_config_key("postgis.", config_items[i], ".schema").c_str(),
+        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".schema").c_str(),
                               postgis_id.schema);
-        itsConfig.lookupValue(parse_config_key("postgis.", config_items[i], ".table").c_str(),
+        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".table").c_str(),
                               postgis_id.table);
-        itsConfig.lookupValue(parse_config_key("postgis.", config_items[i], ".field").c_str(),
+        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".field").c_str(),
                               postgis_id.field);
 
         std::string key(postgis_id.key());
@@ -534,7 +695,7 @@ ProductConfig::ProductConfig(const string& configfile)
     // ouput document
     if (itsConfig.exists("output_document"))
     {
-      config_item_vector output_document_config_item_container;
+      ConfigItemVector output_document_config_item_container;
       // sections
       libconfig::Setting& sections = itsConfig.lookup("output_document.sections");
 
@@ -544,7 +705,6 @@ ProductConfig::ProductConfig(const string& configfile)
             BCP,
             "output_document.sections not an array in textgenplugin configuration file line " +
                 Fmi::to_string(sections.getSourceLine()));
-        ;
       }
 
       string sections_parameter_value;
@@ -596,9 +756,6 @@ ProductConfig::ProductConfig(const string& configfile)
                 content_parameter_value += ",";
               content_parameter_value += story_name;
 
-              //						  cout << "CONTENT: " << story_name
-              //<< endl;
-
               allowed_sections.push_back("output_document." + section_name + ".story." +
                                          story_name);
             }
@@ -616,7 +773,7 @@ ProductConfig::ProductConfig(const string& configfile)
 
       handleIncludedSections(itsConfig, output_document_config_item_container);
 
-      for (config_item& ci : output_document_config_item_container)
+      for (ConfigItem& ci : output_document_config_item_container)
       {
         string config_key(ci.first);
         string config_value(ci.second);
@@ -633,13 +790,13 @@ ProductConfig::ProductConfig(const string& configfile)
     // area configuration
     if (itsConfig.exists("area"))
     {
-      config_item_vector area_config_item_container;
+      ConfigItemVector area_config_item_container;
       vector<string> allowed_sections;
       allowed_sections.emplace_back("*");
       // sections
       parseConfigurationItem(itsConfig, "area", allowed_sections, area_config_item_container);
 
-      for (config_item& ci : area_config_item_container)
+      for (ConfigItem& ci : area_config_item_container)
       {
         string config_key(ci.first);
         string config_value(ci.second);
@@ -661,7 +818,13 @@ ProductConfig::ProductConfig(const string& configfile)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    if (exceptionDetails.empty())
+      exceptionDetails =
+          "Error reading product configuration file '" + configfile + "', please check the syntax!";
+
+    throw SmartMet::Spine::Exception::Trace(
+        BCP, "Error processing product configuration file " + configfile)
+        .addDetail(exceptionDetails);
   }
 }
 
@@ -722,7 +885,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig> pDef
         area_config_items = pDefaultConfig->area_config_items;
 
       // area timezones
-      for (const config_item& timezone_item : pDefaultConfig->area_timezones)
+      for (const ConfigItem& timezone_item : pDefaultConfig->area_timezones)
       {
         if (area_timezones.find(timezone_item.first) == area_timezones.end())
           area_timezones.insert(timezone_item);

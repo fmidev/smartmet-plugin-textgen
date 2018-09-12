@@ -8,9 +8,11 @@
 #define TEXTGEN_CONFIG_H
 
 #include <engines/gis/GeometryStorage.h>
+#include <macgyver/DirectoryMonitor.h>
 
 #include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
+#include <spine/Thread.h>
 #include <libconfig.h++>
 #include <map>
 #include <string>
@@ -22,8 +24,21 @@ namespace Plugin
 {
 namespace Textgen
 {
-typedef std::pair<std::string, std::string> config_item;
-typedef std::vector<config_item> config_item_vector;
+struct product_config_pair
+{
+  product_config_pair(const std::string& p, const boost::filesystem::path& c)
+      : product(p), configfile(c)
+  {
+  }
+  std::string product;
+  boost::filesystem::path configfile;
+};
+
+class ProductConfig;
+using ConfigItem = std::pair<std::string, std::string>;
+using ConfigItemVector = std::vector<ConfigItem>;
+using ProductConfigItem = std::pair<std::string, boost::shared_ptr<ProductConfig> >;
+using ProductConfigMap = std::map<std::string, boost::shared_ptr<ProductConfig> >;
 
 class ProductConfig : private boost::noncopyable
 {
@@ -70,15 +85,12 @@ class ProductConfig : private boost::noncopyable
 
   void setDefaultConfig(const boost::shared_ptr<ProductConfig> pDefaultConf);
 
-  const config_item_vector& getForecastDataConfigs() const { return forecast_data_config_items; }
-  const config_item_vector& getUnitFormatConfigs() const { return unit_format_config_items; }
-  const config_item_vector& getOutputDocumentConfigs() const
-  {
-    return output_document_config_items;
-  }
-  const config_item_vector& getAreaConfigs() const { return area_config_items; }
-  const config_item_vector& getMasks() const { return masks; }
-  const config_item_vector& getForestFireWarningAreaCodes() const
+  const ConfigItemVector& getForecastDataConfigs() const { return forecast_data_config_items; }
+  const ConfigItemVector& getUnitFormatConfigs() const { return unit_format_config_items; }
+  const ConfigItemVector& getOutputDocumentConfigs() const { return output_document_config_items; }
+  const ConfigItemVector& getAreaConfigs() const { return area_config_items; }
+  const ConfigItemVector& getMasks() const { return masks; }
+  const ConfigItemVector& getForestFireWarningAreaCodes() const
   {
     return forestfirewarning_areacodes;
   }
@@ -89,13 +101,13 @@ class ProductConfig : private boost::noncopyable
   std::map<std::string, std::string> area_timezones;
   std::map<std::string, Engine::Gis::postgis_identifier> postgis_identifiers;
   std::string itsDefaultPostGISIdentifierKey;
-  config_item_vector masks;
+  ConfigItemVector masks;
 
-  config_item_vector forecast_data_config_items;
-  config_item_vector unit_format_config_items;
-  config_item_vector output_document_config_items;
-  config_item_vector area_config_items;
-  config_item_vector forestfirewarning_areacodes;
+  ConfigItemVector forecast_data_config_items;
+  ConfigItemVector unit_format_config_items;
+  ConfigItemVector output_document_config_items;
+  ConfigItemVector area_config_items;
+  ConfigItemVector forestfirewarning_areacodes;
 
   std::string itsLanguage;
   std::string itsFormatter;
@@ -125,16 +137,34 @@ class Config : private boost::noncopyable
   std::vector<std::string> getProductNames() const;
   bool productConfigExists(const std::string& config_name)
   {
-    return itsProductConfigs.find(config_name) != itsProductConfigs.end();
+    return itsProductConfigs->find(config_name) != itsProductConfigs->end();
   }
 
   const std::string& defaultUrl() const { return itsDefaultUrl; }
 
  private:
-  typedef std::pair<std::string, boost::shared_ptr<ProductConfig> > product_config_item;
-  std::map<std::string, boost::shared_ptr<ProductConfig> > itsProductConfigs;
+  std::unique_ptr<ProductConfigMap> itsProductConfigs;
   std::string itsDefaultUrl;
   int itsForecastTextCacheSize;
+
+  Fmi::DirectoryMonitor itsMonitor;
+  boost::thread itsMonitorThread;
+  // callback requests
+  void update(Fmi::DirectoryMonitor::Watcher id,
+              const boost::filesystem::path& dir,
+              const boost::regex& pattern,
+              const Fmi::DirectoryMonitor::Status& status);
+  void error(Fmi::DirectoryMonitor::Watcher id,
+             const boost::filesystem::path& dir,
+             const boost::regex& pattern,
+             const std::string& message);
+  ConfigItemVector readMainConfig() const;
+  std::unique_ptr<ProductConfigMap> readProductConfigs(const ConfigItemVector& configItems) const;
+  std::set<std::string> getDirectoriesToMonitor(const ConfigItemVector& configItems) const;
+  void setDefaultConfigValues(ProductConfigMap& productConfigs);
+
+  std::string itsMainConfigFile;
+  mutable std::set<std::string> itsProductFiles;
 };  // class Config
 
 }  // namespace Textgen
