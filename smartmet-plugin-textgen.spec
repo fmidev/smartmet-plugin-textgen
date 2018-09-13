@@ -18,9 +18,9 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 18.9.8
 BuildRequires: smartmet-library-textgen-devel >= 18.8.1
-BuildRequires: smartmet-library-spine-devel >= 18.9.5
+BuildRequires: smartmet-library-spine-devel >= 18.9.13
 BuildRequires: smartmet-engine-observation-devel >= 18.9.3
-BuildRequires: smartmet-engine-querydata-devel >= 18.8.20
+BuildRequires: smartmet-engine-querydata-devel >= 18.9.11
 BuildRequires: smartmet-engine-geonames-devel >= 18.8.30
 BuildRequires: smartmet-engine-gis-devel >= 18.9.7
 BuildRequires: smartmet-library-macgyver-devel >= 18.9.5
@@ -32,10 +32,10 @@ Requires: smartmet-library-textgen >= 18.8.1
 Requires: libconfig
 Requires: smartmet-engine-observation >= 18.9.3
 Requires: smartmet-engine-geonames >= 18.8.30
-Requires: smartmet-engine-querydata >= 18.8.20
+Requires: smartmet-engine-querydata >= 18.9.11
 Requires: smartmet-engine-gis >= 18.9.7
-Requires: smartmet-server >= 18.8.22
-Requires: smartmet-library-spine >= 18.9.5
+Requires: smartmet-server >= 18.9.12
+Requires: smartmet-library-spine >= 18.9.13
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
