@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 18.9.12
+Version: 18.9.13
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -17,7 +17,7 @@ BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 18.9.8
-BuildRequires: smartmet-library-textgen-devel >= 18.8.1
+BuildRequires: smartmet-library-textgen-devel >= 18.9.13
 BuildRequires: smartmet-library-spine-devel >= 18.9.13
 BuildRequires: smartmet-engine-observation-devel >= 18.9.3
 BuildRequires: smartmet-engine-querydata-devel >= 18.9.11
@@ -28,7 +28,7 @@ BuildRequires: smartmet-library-locus-devel >= 18.8.21
 Requires: smartmet-library-calculator >= 18.9.8
 Requires: smartmet-library-macgyver >= 18.9.5
 Requires: smartmet-library-locus >= 18.8.21
-Requires: smartmet-library-textgen >= 18.8.1
+Requires: smartmet-library-textgen >= 18.9.13
 Requires: libconfig
 Requires: smartmet-engine-observation >= 18.9.3
 Requires: smartmet-engine-geonames >= 18.8.30
@@ -70,6 +70,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Sep 13 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.13-1.fmi
+- Added printlog option, with printlog=1 you get the execution log to stdout
+- Added debug option, with debug=1 you get the log to html response
+
 * Wed Sep 12 2018  Anssi Reponen <anssi.reponen@fmi.fi> - 18.9.12-1.fmi
 - Configuration files re-read automatically after changes (BRAINSTORM-853)
 
