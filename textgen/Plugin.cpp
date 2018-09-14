@@ -772,7 +772,10 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     {
       std::string response = query(theReactor, theRequest, theResponse);
       theResponse.setStatus(SmartMet::Spine::HTTP::Status::ok);
-      theResponse.setContent(response);
+      if (!isdebug)
+        theResponse.setContent(response);
+      else
+        theResponse.setContent(response + "\n<pre>" + logger.str() + "</pre>");
 
       // Build cache expiration time info
       ptime t_expires = t_now + seconds(expires_seconds);

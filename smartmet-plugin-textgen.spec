@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 18.9.13
+Version: 18.9.14
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri Sep 14 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.14-1.fmi
+- debug option now prints execution log even if there weren't any errors
+
 * Thu Sep 13 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.13-1.fmi
 - Added printlog option, with printlog=1 you get the execution log to stdout
 - Added debug option, with debug=1 you get the log to html response
