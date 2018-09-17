@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 18.9.14
+Version: 18.9.17
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,24 +16,24 @@ BuildRequires: boost-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 18.9.8
-BuildRequires: smartmet-library-textgen-devel >= 18.9.13
+BuildRequires: smartmet-library-calculator-devel >= 18.9.16
+BuildRequires: smartmet-library-textgen-devel >= 18.9.16
 BuildRequires: smartmet-library-spine-devel >= 18.9.13
 BuildRequires: smartmet-engine-observation-devel >= 18.9.3
 BuildRequires: smartmet-engine-querydata-devel >= 18.9.11
 BuildRequires: smartmet-engine-geonames-devel >= 18.8.30
-BuildRequires: smartmet-engine-gis-devel >= 18.9.7
+BuildRequires: smartmet-engine-gis-devel >= 18.9.17
 BuildRequires: smartmet-library-macgyver-devel >= 18.9.5
 BuildRequires: smartmet-library-locus-devel >= 18.8.21
-Requires: smartmet-library-calculator >= 18.9.8
+Requires: smartmet-library-calculator >= 18.9.16
 Requires: smartmet-library-macgyver >= 18.9.5
 Requires: smartmet-library-locus >= 18.8.21
-Requires: smartmet-library-textgen >= 18.9.13
+Requires: smartmet-library-textgen >= 18.9.16
 Requires: libconfig
 Requires: smartmet-engine-observation >= 18.9.3
 Requires: smartmet-engine-geonames >= 18.8.30
 Requires: smartmet-engine-querydata >= 18.9.11
-Requires: smartmet-engine-gis >= 18.9.7
+Requires: smartmet-engine-gis >= 18.9.17
 Requires: smartmet-server >= 18.9.12
 Requires: smartmet-library-spine >= 18.9.13
 %if 0%{rhel} >= 7
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon Sep 17 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.17-1.fmi
+- Improved log messages when configuration changes are noticed (BRAINSTORM-853)
+
 * Fri Sep 14 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.14-1.fmi
 - debug option now prints execution log even if there weren't any errors
 
