@@ -521,22 +521,6 @@ void Config::error(Fmi::DirectoryMonitor::Watcher id,
   }
 }
 
-void Config::error(Fmi::DirectoryMonitor::Watcher id,
-                   const boost::filesystem::path& dir,
-                   const boost::regex& pattern,
-                   const std::string& message)
-{
-  try
-  {
-    std::cout << ANSI_FG_RED << "Error in directory " << dir << " : " << message << ANSI_FG_DEFAULT
-              << std::endl;
-  }
-  catch (...)
-  {
-    throw Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
 const ProductConfig& Config::getProductConfig(const std::string& config_name) const
 {
   try
