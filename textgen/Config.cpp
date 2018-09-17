@@ -288,8 +288,11 @@ Config::Config(const string& configfile)
 
     // Set monitoring directories
     ConfigItemVector configItems = readMainConfig();
+    std::set<std::string> emptyset;
+    updateProductConfigs(configItems, emptyset, emptyset);
+
     boost::regex pattern("^[\\w,\\s-]+\\.[A-Za-z]+$");
-    for (auto dir : getDirectoriesToMonitor(configItems))  // directoriesToMonitor)
+    for (auto dir : getDirectoriesToMonitor(configItems))
     {
       itsMonitor.watch(dir,
                        pattern,
@@ -366,18 +369,26 @@ ConfigItemVector Config::readMainConfig() const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(
-        BCP, "Error reading main configuration file '" + itsMainConfigFile + "'");
+    std::string details;
+    if (!boost::filesystem::exists(itsMainConfigFile))
+      details = "File '" + itsMainConfigFile + "' does not exist!";
+    else
+      details = "Syntax error in file '" + itsMainConfigFile + "'!";
+
+    throw SmartMet::Spine::Exception(BCP, "Error reading configuration file!").addDetail(details);
   }
 }
-std::unique_ptr<ProductConfigMap> Config::readProductConfigs(
-    const ConfigItemVector& configItems) const
+void Config::updateProductConfigs(const ConfigItemVector& configItems,
+                                  const std::set<std::string>& deletedFiles,
+                                  const std::set<std::string>& modifiedFiles)
 {
   string config_value;
   itsProductFiles.clear();
+  std::set<std::string> erroneousFiles;
+
   try
   {
-    std::unique_ptr<ProductConfigMap> ret(new ProductConfigMap());
+    std::unique_ptr<ProductConfigMap> newProductConfigs(new ProductConfigMap());
     boost::filesystem::path config_path(itsMainConfigFile);
     for (auto item : configItems)
     {
@@ -390,23 +401,38 @@ std::unique_ptr<ProductConfigMap> Config::readProductConfigs(
         config_value = config_path.parent_path().string() + "/" + config_value;
       try
       {
-        boost::shared_ptr<ProductConfig> newProductConfig(new ProductConfig(config_value));
-        ret->insert(make_pair(config_name, newProductConfig));
+        boost::shared_ptr<ProductConfig> productConfig(new ProductConfig(config_value));
+        newProductConfigs->insert(make_pair(config_name, productConfig));
         itsProductFiles.insert(config_value);
       }
       catch (const SmartMet::Spine::Exception& e)
       {
         // If non-fatal error occurred, report it and continue processing the next file
         if (e.getDetailCount() > 0)
+        {
           std::cout << ANSI_FG_RED << e.getDetailByIndex(0) << ANSI_FG_DEFAULT << std::endl;
+          erroneousFiles.insert(config_value);
+        }
       }
       catch (...)
       {
         throw SmartMet::Spine::Exception(
             BCP, "Error reading product configuration file '" + config_value + "'");
+        erroneousFiles.insert(config_value);
       }
     }
-    return ret;
+
+    setDefaultConfigValues(*newProductConfigs);
+    itsProductConfigs.reset(newProductConfigs.release());
+
+    for (auto f : deletedFiles)
+      std::cout << ANSI_FG_RED << "File '" << f << "' deleted!" << ANSI_FG_DEFAULT << std::endl;
+    for (auto f : modifiedFiles)
+    {
+      // Report successful update
+      if (erroneousFiles.find(f) == erroneousFiles.end())
+        std::cout << ANSI_FG_GREEN << "File '" << f << "' updated!" << ANSI_FG_DEFAULT << std::endl;
+    }
   }
   catch (...)
   {
@@ -420,62 +446,64 @@ void Config::update(Fmi::DirectoryMonitor::Watcher id,
                     const boost::regex& pattern,
                     const Fmi::DirectoryMonitor::Status& status)
 {
+  ConfigItemVector configItems;
   try
   {
-    bool reloadConfig = false;
-    ConfigItemVector configItems = readMainConfig();
-    // newProductFileDetected is true when new product config file has been created or
-    // syntax error has been corrected in an existing file
-    bool newProductFileDetected = configItems.size() > itsProductFiles.size();
-    for (const auto& file_status : *status)
-    {
-      std::string filename = file_status.first.string();
-      bool mainConfigChanged = (filename == itsMainConfigFile);
-      if (file_status.second == Fmi::DirectoryMonitor::DELETE)
-      {
-        if (mainConfigChanged)
-          throw SmartMet::Spine::Exception(BCP,
-                                           "Main config file '" + itsMainConfigFile + "' deleted");
-
-        if (itsProductFiles.find(filename) == itsProductFiles.end())
-          continue;
-
-        reloadConfig = true;
-      }
-
-      if (file_status.second == Fmi::DirectoryMonitor::CREATE)
-      {
-        // If there is a new product config file and it is listed
-        // in main config file we read it, otherwise we can ignore it
-        if (newProductFileDetected)
-          reloadConfig = true;
-        else
-          continue;
-      }
-
-      if (file_status.second == Fmi::DirectoryMonitor::MODIFY)
-      {
-        // When product config file is edited, but it is not listed in main config file
-        // there is no need for actions, except when the file was invalid due to syntax error
-        // and then later corrected
-        if (filename != itsMainConfigFile &&
-            (itsProductFiles.find(filename) == itsProductFiles.end() && !newProductFileDetected))
-          continue;
-        reloadConfig = true;
-      }
-    }
-    if (reloadConfig)
-    {
-      std::unique_ptr<ProductConfigMap> newProductConfigs = readProductConfigs(configItems);
-      setDefaultConfigValues(*newProductConfigs);
-      itsProductConfigs.reset(newProductConfigs.release());
-    }
+    configItems = readMainConfig();
   }
-  catch (...)
+  catch (const SmartMet::Spine::Exception& e)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    std::string details = e.getDetailByIndex(0);
+    std::cout << ANSI_FG_RED
+              << (std::string(e.getDetailByIndex(0)) + " Textgen plugin is now inactive!")
+              << ANSI_FG_DEFAULT << std::endl;
+    itsProductConfigs->clear();
+    return;
   }
-}
+
+  // When new product config file has been created or syntax error has been
+  // corrected in an existing file, newProductFileDetected is set true
+  bool newProductFileDetected = configItems.size() > itsProductFiles.size();
+  std::set<std::string> modifiedFiles;
+  std::set<std::string> deletedFiles;
+  bool reloadConfig = false;
+  for (const auto& file_status : *status)
+  {
+    std::string filename = file_status.first.string();
+    bool mainConfigChanged = (filename == itsMainConfigFile);
+    if (file_status.second == Fmi::DirectoryMonitor::DELETE)
+    {
+      if (itsProductFiles.find(filename) == itsProductFiles.end())
+        continue;
+
+      deletedFiles.insert(filename);
+      reloadConfig = true;
+    }
+
+    if (file_status.second == Fmi::DirectoryMonitor::CREATE)
+    {
+      if (mainConfigChanged)
+        configItems = readMainConfig();
+      reloadConfig = true;
+    }
+
+    if (file_status.second == Fmi::DirectoryMonitor::MODIFY)
+    {
+      // When product config file is edited, but it is not listed in main config file
+      // there is no need for actions, except when the file was invalid due to syntax error
+      // and then later corrected
+      if (filename != itsMainConfigFile &&
+          (itsProductFiles.find(filename) == itsProductFiles.end() && !newProductFileDetected))
+        continue;
+      modifiedFiles.insert(filename);
+      reloadConfig = true;
+    }
+  }
+
+  if (reloadConfig)
+    updateProductConfigs(configItems, deletedFiles, modifiedFiles);
+
+}  // namespace Textgen
 
 void Config::error(Fmi::DirectoryMonitor::Watcher id,
                    const boost::filesystem::path& dir,

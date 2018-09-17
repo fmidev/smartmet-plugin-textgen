@@ -24,16 +24,6 @@ namespace Plugin
 {
 namespace Textgen
 {
-struct product_config_pair
-{
-  product_config_pair(const std::string& p, const boost::filesystem::path& c)
-      : product(p), configfile(c)
-  {
-  }
-  std::string product;
-  boost::filesystem::path configfile;
-};
-
 class ProductConfig;
 using ConfigItem = std::pair<std::string, std::string>;
 using ConfigItemVector = std::vector<ConfigItem>;
@@ -159,7 +149,9 @@ class Config : private boost::noncopyable
              const boost::regex& pattern,
              const std::string& message);
   ConfigItemVector readMainConfig() const;
-  std::unique_ptr<ProductConfigMap> readProductConfigs(const ConfigItemVector& configItems) const;
+  void updateProductConfigs(const ConfigItemVector& configItems,
+                            const std::set<std::string>& deletedFiles,
+                            const std::set<std::string>& modifiedFiles);
   std::set<std::string> getDirectoriesToMonitor(const ConfigItemVector& configItems) const;
   void setDefaultConfigValues(ProductConfigMap& productConfigs);
 
