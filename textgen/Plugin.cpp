@@ -26,6 +26,7 @@
 #include <spine/ValueFormatter.h>
 #include <textgen/DictionaryFactory.h>
 #include <textgen/Document.h>
+#include <textgen/MessageLogger.h>
 #include <textgen/TextFormatter.h>
 #include <textgen/TextFormatterFactory.h>
 #include <textgen/TextGenerator.h>
@@ -550,6 +551,7 @@ void set_textgen_settings(const ProductConfig& config)
 void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
                       SmartMet::Spine::HTTP::Response& theResponse,
                       const std::string& what,
+                      const std::string& log,
                       SmartMet::Spine::HTTP::Status debugStatus,
                       bool isdebug)
 {
@@ -561,7 +563,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
     if (isdebug)
     {
       string msg = string("Error: ") + what;
-      theResponse.setContent(msg);
+      theResponse.setContent(msg + "\n\n" + log);
       theResponse.setStatus(debugStatus);
     }
     else
@@ -751,9 +753,14 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
                             const SmartMet::Spine::HTTP::Request& theRequest,
                             SmartMet::Spine::HTTP::Response& theResponse)
 {
+  // thead specific stringstream logging
+  MessageLogger logger("SmartMet::Plugin::TextGen::requestHandler");
+  logger.open();
+
   try
   {
-    bool isdebug = SmartMet::Spine::optional_bool(theRequest.getParameter("debug"), false);
+    const bool isdebug = SmartMet::Spine::optional_bool(theRequest.getParameter("debug"), false);
+    const bool print_log = Spine::optional_bool(theRequest.getParameter("printlog"), false);
 
     // Default expiration time
     const int expires_seconds = 60;
@@ -765,7 +772,10 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     {
       std::string response = query(theReactor, theRequest, theResponse);
       theResponse.setStatus(SmartMet::Spine::HTTP::Status::ok);
-      theResponse.setContent(response);
+      if (!isdebug)
+        theResponse.setContent(response);
+      else
+        theResponse.setContent(response + "\n<pre>" + logger.str() + "</pre>");
 
       // Build cache expiration time info
       ptime t_expires = t_now + seconds(expires_seconds);
@@ -795,9 +805,16 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     catch (...)
     {
       SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
-      handle_exception(
-          theRequest, theResponse, exception.what(), SmartMet::Spine::HTTP::Status::ok, isdebug);
+      handle_exception(theRequest,
+                       theResponse,
+                       exception.what(),
+                       logger.str(),
+                       SmartMet::Spine::HTTP::Status::ok,
+                       isdebug);
     }
+
+    if (print_log)
+      std::cout << logger.str() << std::endl;
 
     // delete textgen settings of current thread
     Settings::release();
