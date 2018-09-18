@@ -289,7 +289,7 @@ Config::Config(const string& configfile)
     // Set monitoring directories
     ConfigItemVector configItems = readMainConfig();
     std::set<std::string> emptyset;
-    updateProductConfigs(configItems, emptyset, emptyset);
+    updateProductConfigs(configItems, emptyset, emptyset, emptyset);
 
     boost::regex pattern("^[\\w,\\s-]+\\.[A-Za-z]+$");
     for (auto dir : getDirectoriesToMonitor(configItems))
@@ -364,7 +364,24 @@ ConfigItemVector Config::readMainConfig() const
     ConfigItemVector ret;
     vector<string> allowed_sections;
     allowed_sections.push_back("*");
-    parseConfigurationItem(lconf, "product_config", allowed_sections, ret);
+
+    libconfig::Setting& setting = lconf.lookup("products");
+    if (setting.isArray())
+    {
+      for (int i = 0; i < setting.getLength(); i++)
+      {
+        std::string value = setting[i];
+        boost::filesystem::path p = value;
+        std::string product_name = p.stem().string();
+        std::string product_file = p.string();
+        ret.push_back(make_pair(product_name, product_file));
+      }
+    }
+    else
+    {
+      parseConfigurationItem(lconf, "product_config", allowed_sections, ret);
+    }
+
     return ret;
   }
   catch (...)
@@ -380,7 +397,8 @@ ConfigItemVector Config::readMainConfig() const
 }
 void Config::updateProductConfigs(const ConfigItemVector& configItems,
                                   const std::set<std::string>& deletedFiles,
-                                  const std::set<std::string>& modifiedFiles)
+                                  const std::set<std::string>& modifiedFiles,
+                                  const std::set<std::string>& newFiles)
 {
   string config_value;
   itsProductFiles.clear();
@@ -425,14 +443,29 @@ void Config::updateProductConfigs(const ConfigItemVector& configItems,
     setDefaultConfigValues(*newProductConfigs);
     itsProductConfigs.reset(newProductConfigs.release());
 
-    for (auto f : deletedFiles)
-      std::cout << ANSI_FG_RED << "File '" << f << "' deleted!" << ANSI_FG_DEFAULT << std::endl;
-    for (auto f : modifiedFiles)
+    if (deletedFiles.empty() && modifiedFiles.empty() && newFiles.empty())
+      return;
+
+    if (itsShowFileMessages)
     {
-      // Report successful update
-      if (erroneousFiles.find(f) == erroneousFiles.end())
-        std::cout << ANSI_FG_GREEN << "File '" << f << "' updated!" << ANSI_FG_DEFAULT << std::endl;
+      for (auto f : deletedFiles)
+        std::cout << ANSI_FG_RED << "File '" << f << "' deleted!" << ANSI_FG_DEFAULT << std::endl;
+      for (auto f : modifiedFiles)
+      {
+        // Report successful update
+        if (erroneousFiles.find(f) == erroneousFiles.end())
+          std::cout << ANSI_FG_GREEN << "File '" << f << "' updated!" << ANSI_FG_DEFAULT
+                    << std::endl;
+      }
+      for (auto f : newFiles)
+      {
+        // Report successful update
+        if (erroneousFiles.find(f) == erroneousFiles.end())
+          std::cout << ANSI_FG_GREEN << "New file '" << f << "' created!" << ANSI_FG_DEFAULT
+                    << std::endl;
+      }
     }
+    itsShowFileMessages = true;
   }
   catch (...)
   {
@@ -446,6 +479,22 @@ void Config::update(Fmi::DirectoryMonitor::Watcher id,
                     const boost::regex& pattern,
                     const Fmi::DirectoryMonitor::Status& status)
 {
+  std::set<std::string> modifiedFiles;
+  std::set<std::string> deletedFiles;
+  std::set<std::string> newFiles;
+  for (const auto& file_status : *status)
+  {
+    std::string filename = file_status.first.string();
+    if (file_status.second == Fmi::DirectoryMonitor::DELETE)
+      deletedFiles.insert(filename);
+
+    if (file_status.second == Fmi::DirectoryMonitor::CREATE)
+      newFiles.insert(filename);
+
+    if (file_status.second == Fmi::DirectoryMonitor::MODIFY)
+      modifiedFiles.insert(filename);
+  }
+
   ConfigItemVector configItems;
   try
   {
@@ -460,48 +509,7 @@ void Config::update(Fmi::DirectoryMonitor::Watcher id,
     itsProductConfigs->clear();
     return;
   }
-
-  // When new product config file has been created or syntax error has been
-  // corrected in an existing file, newProductFileDetected is set true
-  bool newProductFileDetected = configItems.size() > itsProductFiles.size();
-  std::set<std::string> modifiedFiles;
-  std::set<std::string> deletedFiles;
-  bool reloadConfig = false;
-  for (const auto& file_status : *status)
-  {
-    std::string filename = file_status.first.string();
-    bool mainConfigChanged = (filename == itsMainConfigFile);
-    if (file_status.second == Fmi::DirectoryMonitor::DELETE)
-    {
-      if (itsProductFiles.find(filename) == itsProductFiles.end())
-        continue;
-
-      deletedFiles.insert(filename);
-      reloadConfig = true;
-    }
-
-    if (file_status.second == Fmi::DirectoryMonitor::CREATE)
-    {
-      if (mainConfigChanged)
-        configItems = readMainConfig();
-      reloadConfig = true;
-    }
-
-    if (file_status.second == Fmi::DirectoryMonitor::MODIFY)
-    {
-      // When product config file is edited, but it is not listed in main config file
-      // there is no need for actions, except when the file was invalid due to syntax error
-      // and then later corrected
-      if (filename != itsMainConfigFile &&
-          (itsProductFiles.find(filename) == itsProductFiles.end() && !newProductFileDetected))
-        continue;
-      modifiedFiles.insert(filename);
-      reloadConfig = true;
-    }
-  }
-
-  if (reloadConfig)
-    updateProductConfigs(configItems, deletedFiles, modifiedFiles);
+  updateProductConfigs(configItems, deletedFiles, modifiedFiles, newFiles);
 
 }  // namespace Textgen
 

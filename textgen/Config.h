@@ -151,10 +151,12 @@ class Config : private boost::noncopyable
   ConfigItemVector readMainConfig() const;
   void updateProductConfigs(const ConfigItemVector& configItems,
                             const std::set<std::string>& deletedFiles,
-                            const std::set<std::string>& modifiedFiles);
+                            const std::set<std::string>& modifiedFiles,
+                            const std::set<std::string>& newFiles);
   std::set<std::string> getDirectoriesToMonitor(const ConfigItemVector& configItems) const;
   void setDefaultConfigValues(ProductConfigMap& productConfigs);
 
+  bool itsShowFileMessages{false};
   std::string itsMainConfigFile;
   mutable std::set<std::string> itsProductFiles;
 };  // class Config
