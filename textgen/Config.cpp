@@ -365,16 +365,19 @@ ConfigItemVector Config::readMainConfig() const
     vector<string> allowed_sections;
     allowed_sections.push_back("*");
 
-    libconfig::Setting& setting = lconf.lookup("products");
-    if (setting.isArray())
+    if (lconf.exists("products"))
     {
-      for (int i = 0; i < setting.getLength(); i++)
+      libconfig::Setting& setting = lconf.lookup("products");
+      if (setting.isArray())
       {
-        std::string value = setting[i];
-        boost::filesystem::path p = value;
-        std::string product_name = p.stem().string();
-        std::string product_file = p.string();
-        ret.push_back(make_pair(product_name, product_file));
+        for (int i = 0; i < setting.getLength(); i++)
+        {
+          std::string value = setting[i];
+          boost::filesystem::path p = value;
+          std::string product_name = p.stem().string();
+          std::string product_file = p.string();
+          ret.push_back(make_pair(product_name, product_file));
+        }
       }
     }
     else
