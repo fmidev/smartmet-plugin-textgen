@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 18.9.18
+Version: 18.9.23
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -21,8 +21,8 @@ BuildRequires: smartmet-library-textgen-devel >= 18.9.16
 BuildRequires: smartmet-library-spine-devel >= 18.9.13
 BuildRequires: smartmet-engine-observation-devel >= 18.9.3
 BuildRequires: smartmet-engine-querydata-devel >= 18.9.11
-BuildRequires: smartmet-engine-geonames-devel >= 18.8.30
-BuildRequires: smartmet-engine-gis-devel >= 18.9.17
+BuildRequires: smartmet-engine-geonames-devel >= 18.9.23
+BuildRequires: smartmet-engine-gis-devel >= 18.9.19
 BuildRequires: smartmet-library-macgyver-devel >= 18.9.5
 BuildRequires: smartmet-library-locus-devel >= 18.8.21
 Requires: smartmet-library-calculator >= 18.9.16
@@ -31,9 +31,9 @@ Requires: smartmet-library-locus >= 18.8.21
 Requires: smartmet-library-textgen >= 18.9.16
 Requires: libconfig
 Requires: smartmet-engine-observation >= 18.9.3
-Requires: smartmet-engine-geonames >= 18.8.30
+Requires: smartmet-engine-geonames >= 18.9.23
 Requires: smartmet-engine-querydata >= 18.9.11
-Requires: smartmet-engine-gis >= 18.9.17
+Requires: smartmet-engine-gis >= 18.9.19
 Requires: smartmet-server >= 18.9.12
 Requires: smartmet-library-spine >= 18.9.13
 %if 0%{rhel} >= 7
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Sun Sep 23 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.23-1.fmi
+- Silenced CodeChecker warnings
+
 * Tue Sep 18 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.18-1.fmi
 - Improved (more) log messages when configuration changes are noticed (BRAINSTORM-853)
 

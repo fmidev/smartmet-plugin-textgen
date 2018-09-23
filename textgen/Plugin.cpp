@@ -38,14 +38,6 @@
 #include <stdexcept>
 #include <string>
 
-using namespace std;
-using namespace boost;
-using namespace boost::posix_time;
-using namespace boost::gregorian;
-using namespace NFmiStringTools;
-
-using namespace TextGen;
-
 namespace SmartMet
 {
 namespace Plugin
@@ -140,7 +132,7 @@ bool parse_forecasttime_parameter(const std::string& forecasttime_string,
 
 bool parse_lonlat_parameter(const std::string& lonlat_string,
                             const boost::shared_ptr<TextGen::Dictionary>& theDictionary,
-                            vector<WeatherArea>& weatherAreaVector,
+                            std::vector<TextGen::WeatherArea>& weatherAreaVector,
                             std::string& errorMessage)
 {
   try
@@ -149,7 +141,7 @@ bool parse_lonlat_parameter(const std::string& lonlat_string,
     {
       // format: longitude,latitude[:radius km];longitude,latitude[:radius km]
       // for example 24.1514,61.4356:2.5,25.6547,66.1009
-      vector<string> parts;
+      std::vector<std::string> parts;
       boost::algorithm::split(parts, lonlat_string, boost::algorithm::is_any_of(","));
       if (parts.size() % 2 != 0)
       {
@@ -160,8 +152,8 @@ bool parse_lonlat_parameter(const std::string& lonlat_string,
 
       for (unsigned int j = 0; j < parts.size(); j += 2)
       {
-        string longitude_string(parts[j]);
-        string latitude_string(parts[j + 1]);
+        std::string longitude_string(parts[j]);
+        std::string latitude_string(parts[j + 1]);
 
         // 5 km by default
         float radius(5.0);
@@ -221,8 +213,8 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
       throw SmartMet::Spine::Exception(BCP, "PostGIS parameters not defined, cannot continue!");
     }
 
-    pair<SmartMet::Spine::HTTP::ParamMap::const_iterator,
-         SmartMet::Spine::HTTP::ParamMap::const_iterator>
+    std::pair<SmartMet::Spine::HTTP::ParamMap::const_iterator,
+              SmartMet::Spine::HTTP::ParamMap::const_iterator>
         iter_range = queryParameters.equal_range(POSTGIS_PARAM);
     SmartMet::Spine::HTTP::ParamMap::const_iterator iter;
 
@@ -246,9 +238,9 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
         std::string pgis_field = default_pgis_id.field;
         std::string pgis_client_encoding = default_pgis_id.encoding;
 
-        char_separator<char> sep(",");
-        tokenizer<char_separator<char> > tokens(postgis_string, sep);
-        for (const string& t : tokens)
+        boost::char_separator<char> sep(",");
+        boost::tokenizer<boost::char_separator<char> > tokens(postgis_string, sep);
+        for (const std::string& t : tokens)
         {
           unsigned long assign_index = t.find('=');
           if (assign_index == std::string::npos)
@@ -330,16 +322,16 @@ TextGen::WeatherArea make_area(const std::string& postGISName,
 
     if (geometryStorage.isPolygon(postGISName))
     {
-      stringstream svg_string_stream(geometryStorage.getSVGPath(postGISName));
+      std::stringstream svg_string_stream(geometryStorage.getSVGPath(postGISName));
       NFmiSvgPath svgPath;
       svgPath.Read(svg_string_stream);
-      return WeatherArea(svgPath, areaName);
+      return {svgPath, areaName};
     }
 
     // if not polygon, it must be a point
     std::pair<float, float> std_point(geometryStorage.getPoint(postGISName));
     NFmiPoint point(std_point.first, std_point.second);
-    return WeatherArea(point, areaName);
+    return {point, areaName};
   }
   catch (...)
   {
@@ -349,20 +341,20 @@ TextGen::WeatherArea make_area(const std::string& postGISName,
 
 bool parse_area_parameter(const std::string& areaParameter,
                           const Engine::Gis::GeometryStorage& geometryStorage,
-                          vector<WeatherArea>& weatherAreaVector,
+                          std::vector<TextGen::WeatherArea>& weatherAreaVector,
                           SmartMet::Spine::MutexType& thePostGISMutex,
                           std::string& errorMessage)
 {
   try
   {
-    const vector<string> area_name_vector = NFmiStringTools::Split(areaParameter);
+    const std::vector<std::string> area_name_vector = NFmiStringTools::Split(areaParameter);
 
     for (const auto& area_name : area_name_vector)
     {
       SmartMet::Spine::ReadLock lock(thePostGISMutex);
       if (geometryStorage.geoObjectExists(area_name))
       {
-        weatherAreaVector.emplace_back(WeatherArea(make_area(area_name, geometryStorage)));
+        weatherAreaVector.emplace_back(TextGen::WeatherArea(make_area(area_name, geometryStorage)));
       }
       else
       {
@@ -385,12 +377,12 @@ bool parse_geoid_parameter(const std::string& geoidParameter,
                            const Engine::Gis::GeometryStorage& geometryStorage,
                            const SmartMet::Engine::Geonames::Engine& geoEngine,
                            const std::string& language,
-                           vector<WeatherArea>& weatherAreaVector,
+                           std::vector<TextGen::WeatherArea>& weatherAreaVector,
                            std::string& errorMessage)
 {
   try
   {
-    const vector<string> geoid_vector = NFmiStringTools::Split(geoidParameter);
+    const std::vector<std::string> geoid_vector = NFmiStringTools::Split(geoidParameter);
 
     int geoid = 0;
     for (const auto& geoid_string : geoid_vector)
@@ -420,7 +412,7 @@ bool parse_geoid_parameter(const std::string& geoidParameter,
       // fetch area definition form there
       if (feature_code.substr(0, 3) == "ADM" && geometryStorage.geoObjectExists(loc_name))
       {
-        weatherAreaVector.emplace_back(WeatherArea(make_area(loc_name, geometryStorage)));
+        weatherAreaVector.emplace_back(TextGen::WeatherArea(make_area(loc_name, geometryStorage)));
       }
       else
       {
@@ -480,7 +472,7 @@ void set_textgen_settings(const ProductConfig& config)
     // forecasts and the querydata
     for (unsigned int i = 0; i < config.numberOfForecastDataConfigs(); i++)
     {
-      const std::pair<string, string>& forecast_item = config.getForecastDataConfig(i);
+      const auto& forecast_item = config.getForecastDataConfig(i);
       Settings::set("textgen::" + forecast_item.first, forecast_item.second);
 #ifdef MYDEBUG
       if (i == 0)
@@ -492,7 +484,7 @@ void set_textgen_settings(const ProductConfig& config)
     // unit formats
     for (unsigned int i = 0; i < config.numberOfUnitFormatConfigs(); i++)
     {
-      const std::pair<string, string>& unit_format_item = config.getUnitFormatConfig(i);
+      const auto& unit_format_item = config.getUnitFormatConfig(i);
       Settings::set("textgen::units::" + unit_format_item.first + "::format",
                     unit_format_item.second);
 #ifdef MYDEBUG
@@ -506,8 +498,7 @@ void set_textgen_settings(const ProductConfig& config)
     // output document
     for (unsigned int i = 0; i < config.numberOfOutputDocumentConfigs(); i++)
     {
-      const std::pair<string, string>& output_document_config_item =
-          config.getOutputDocumentConfig(i);
+      const auto& output_document_config_item = config.getOutputDocumentConfig(i);
       Settings::set(output_document_config_item.first, output_document_config_item.second);
 #ifdef MYDEBUG
       if (i == 0)
@@ -520,7 +511,7 @@ void set_textgen_settings(const ProductConfig& config)
     // area parameters
     for (unsigned int i = 0; i < config.numberOfAreaConfigs(); i++)
     {
-      const std::pair<string, string>& area_config_item = config.getAreaConfig(i);
+      const auto& area_config_item = config.getAreaConfig(i);
       Settings::set(area_config_item.first, area_config_item.second);
 #ifdef MYDEBUG
       if (i == 0)
@@ -533,7 +524,7 @@ void set_textgen_settings(const ProductConfig& config)
     Settings::set("qdtext::forestfirewarning::directory", config.forestfirewarning_directory());
     for (unsigned int i = 0; i < config.numberOfFireWarningAreaCodes(); i++)
     {
-      const std::pair<string, string>& area_code_config_item = config.getFireWarningAreaCode(i);
+      const auto& area_code_config_item = config.getFireWarningAreaCode(i);
       Settings::set(area_code_config_item.first, area_code_config_item.second);
 #ifdef MYDEBUG
       if (i == 0)
@@ -562,7 +553,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
 
     if (isdebug)
     {
-      string msg = string("Error: ") + what;
+      std::string msg = "Error: " + what;
       theResponse.setContent(msg + "\n\n" + log);
       theResponse.setStatus(debugStatus);
     }
@@ -596,14 +587,14 @@ bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const
  * \brief Perform a TextGen query
  */
 // ----------------------------------------------------------------------
-string Plugin::query(SmartMet::Spine::Reactor& theReactor,
-                     const SmartMet::Spine::HTTP::Request& theRequest,
-                     SmartMet::Spine::HTTP::Response& /* theResponse */)
+std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
+                          const SmartMet::Spine::HTTP::Request& theRequest,
+                          SmartMet::Spine::HTTP::Response& /* theResponse */)
 {
   try
   {
     TextGenPosixTime timestamp;
-    vector<WeatherArea> weatherAreaVector;
+    std::vector<TextGen::WeatherArea> weatherAreaVector;
     SmartMet::Spine::HTTP::ParamMap queryParameters(theRequest.getParameterMap());
     std::string errorMessage;
 
@@ -617,7 +608,7 @@ string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     set_textgen_settings(config);
 
     boost::shared_ptr<TextGen::Dictionary> theDictionary;
-    std::string dictionary_name(config.dictionary());
+    const auto& dictionary_name = config.dictionary();
     if (dictionary_name == "multimysqlplusgeonames")
       theDictionary = (static_cast<boost::shared_ptr<TextGen::Dictionary> >(
           new MySQLDictionariesPlusGeonames()));
@@ -662,14 +653,14 @@ string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     }
 
     // set locale
-    const string loc = mmap_string(queryParameters, LOCALE_PARAM, config.locale());
+    const std::string loc = mmap_string(queryParameters, LOCALE_PARAM, config.locale());
 
     boost::locale::generator gen;
     std::locale::global(gen(loc));
 
     std::string formatter_name(mmap_string(queryParameters, FORMATTER_PARAM));
 
-    stringstream timestamp_cachekey_ss;
+    std::stringstream timestamp_cachekey_ss;
     // generate forecast at least every 60 secods
     timestamp_cachekey_ss << (timestamp.EpochTime() / 60);
     std::string cache_key_common_part(
@@ -691,7 +682,7 @@ string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     for (const auto& area : weatherAreaVector)
     {
       std::string forecast_text_area;
-      std::string area_name = area.name();
+      const auto& area_name = area.name();
       std::string cache_key = cache_key_common_part + ";" + area_name;
 
       // set timezone for the area (stored in thread local storage)
@@ -766,7 +757,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     const int expires_seconds = 60;
 
     // Now
-    ptime t_now = second_clock::universal_time();
+    auto t_now = boost::posix_time::second_clock::universal_time();
 
     try
     {
@@ -778,7 +769,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
         theResponse.setContent(response + "\n<pre>" + logger.str() + "</pre>");
 
       // Build cache expiration time info
-      ptime t_expires = t_now + seconds(expires_seconds);
+      auto t_expires = t_now + boost::posix_time::seconds(expires_seconds);
 
       // The headers themselves
       boost::shared_ptr<Fmi::TimeFormatter> tformat(Fmi::TimeFormatter::create("http"));
@@ -788,9 +779,9 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
       std::string modification = tformat->format(t_now);
 
       theResponse.setHeader("Content-Type", "text/html; charset=UTF-8");
-      theResponse.setHeader("Cache-Control", cachecontrol.c_str());
+      theResponse.setHeader("Cache-Control", cachecontrol);
       theResponse.setHeader("Expires", expiration.c_str());
-      theResponse.setHeader("Last-Modified", modification.c_str());
+      theResponse.setHeader("Last-Modified", modification);
 
       if (response.empty())
       {
@@ -874,7 +865,7 @@ void Plugin::init()
     itsGisEngine = reinterpret_cast<Engine::Gis::Engine*>(engine);
 
     // PostGIS
-    vector<string> product_names(itsConfig.getProductNames());
+    std::vector<std::string> product_names(itsConfig.getProductNames());
     for (auto product_name : product_names)
     {
       const ProductConfig& config = itsConfig.getProductConfig(product_name);
@@ -897,9 +888,10 @@ void Plugin::init()
         if (itsGeometryStorage.geoObjectExists(value))
         {
           std::string area_name(value);
-          prod_mask.insert(make_pair(name,
-                                     boost::shared_ptr<TextGen::WeatherArea>(new WeatherArea(
-                                         make_area(area_name, itsGeometryStorage)))));
+          prod_mask.insert(
+              make_pair(name,
+                        boost::shared_ptr<TextGen::WeatherArea>(
+                            new TextGen::WeatherArea(make_area(area_name, itsGeometryStorage)))));
         }
         else
         {
@@ -910,7 +902,8 @@ void Plugin::init()
           if (NFmiFileSystem::FileExists(filename))
           {
             prod_mask.insert(make_pair(
-                name, boost::shared_ptr<TextGen::WeatherArea>(new WeatherArea(value, name))));
+                name,
+                boost::shared_ptr<TextGen::WeatherArea>(new TextGen::WeatherArea(value, name))));
           }
         }
       }
@@ -967,7 +960,7 @@ int Plugin::getRequiredAPIVersion() const
 // check that minimum number of parameters are defined and set default values
 
 bool Plugin::verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryParameters,
-                                         string& errorMessage)
+                                         std::string& errorMessage)
 {
   try
   {
@@ -999,17 +992,8 @@ bool Plugin::verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryP
     if (queryParameters.find(LOCALE_PARAM) == queryParameters.end())
       queryParameters.insert(make_pair(LOCALE_PARAM, config.locale()));
 
-    if (!parse_postgis_parameters(queryParameters,
-                                  config,
-                                  itsGisEngine,
-                                  itsGeometryStorage,
-                                  itsPostGISMutex,
-                                  errorMessage))
-    {
-      return false;
-    }
-
-    return true;
+    return parse_postgis_parameters(
+        queryParameters, config, itsGisEngine, itsGeometryStorage, itsPostGISMutex, errorMessage);
   }
   catch (...)
   {
@@ -1034,5 +1018,5 @@ extern "C" SmartMetPlugin* create(SmartMet::Spine::Reactor* them, const char* co
 extern "C" void destroy(SmartMetPlugin* us)
 {
   // This will call 'Plugin::~Plugin()' since the destructor is virtual
-  delete us;
+  delete us;  // NOLINT
 }

@@ -73,7 +73,7 @@ class ProductConfig : private boost::noncopyable
   const std::pair<std::string, std::string>& getFireWarningAreaCode(
       const unsigned int& index) const;
 
-  void setDefaultConfig(const boost::shared_ptr<ProductConfig> pDefaultConf);
+  void setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDefaultConf);
 
   const ConfigItemVector& getForecastDataConfigs() const { return forecast_data_config_items; }
   const ConfigItemVector& getUnitFormatConfigs() const { return unit_format_config_items; }

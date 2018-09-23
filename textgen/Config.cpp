@@ -15,9 +15,6 @@
 #include <iostream>
 #include <stdexcept>
 
-using namespace std;
-using namespace boost;
-
 static const char* default_url = "/textgen";
 static const char* default_language = "fi";
 static const char* default_locale = "fi_FI.UTF-8";
@@ -39,22 +36,22 @@ namespace Textgen
 
 namespace
 {
-string parse_config_key(const char* str1 = nullptr,
-                        const char* str2 = nullptr,
-                        const char* str3 = nullptr)
+std::string parse_config_key(const char* str1 = nullptr,
+                             const char* str2 = nullptr,
+                             const char* str3 = nullptr)
 {
-  string string1(str1 != nullptr ? str1 : "");
-  string string2(str2 != nullptr ? str2 : "");
-  string string3(str3 != nullptr ? str3 : "");
+  std::string string1(str1 != nullptr ? str1 : "");
+  std::string string2(str2 != nullptr ? str2 : "");
+  std::string string3(str3 != nullptr ? str3 : "");
 
-  string retval(string1 + string2 + string3);
+  std::string retval(string1 + string2 + string3);
 
   return retval;
 }
 
 void parseConfigurationItem(const libconfig::Config& itsConfig,
                             const std::string& key,
-                            const vector<string>& allowed_sections,
+                            const std::vector<std::string>& allowed_sections,
                             ConfigItemVector& config_item_container)
 {
   try
@@ -66,7 +63,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
         bool processSection(false);
         for (auto allowed_key : allowed_sections)
         {
-          string section_key = key;
+          std::string section_key = key;
           if (allowed_key.size() > section_key.size())
             allowed_key = allowed_key.substr(0, section_key.size());
           else if (allowed_key.size() < section_key.size())
@@ -105,7 +102,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
       }
       else
       {
-        stringstream ss;
+        std::stringstream ss;
         switch (setting.getType())
         {
           case libconfig::Setting::TypeInt:
@@ -128,7 +125,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
           }
           case libconfig::Setting::TypeString:
           {
-            string stringValue = itsConfig.lookup(key);
+            std::string stringValue = itsConfig.lookup(key);
             ss << stringValue;
             break;
           }
@@ -146,7 +143,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
                                              "TextGen: Invalid setting type for '" + key + "'");
         };
 
-        config_item_container.push_back(make_pair(key, ss.str()));
+        config_item_container.push_back(std::make_pair(key, ss.str()));
       }
     }
   }
@@ -162,8 +159,8 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
   try
   {
     ConfigItemVector all_output_document_config_items;
-    vector<string> allowed_sections;
-    allowed_sections.push_back("*");
+    std::vector<std::string> allowed_sections;
+    allowed_sections.emplace_back("*");
     parseConfigurationItem(
         itsConfig, "output_document", allowed_sections, all_output_document_config_items);
 
@@ -174,28 +171,28 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
     bool reProcess(false);
     for (unsigned int i = 0; i < numberOfConfigs; i++)
     {
-      string config_key_original(config_item_container[i].first);
-      string config_value_original(config_item_container[i].second);
+      std::string config_key_original(config_item_container[i].first);
+      std::string config_value_original(config_item_container[i].second);
 
       if (config_value_original.size() > 4 && config_value_original.substr(0, 4) == "use ")
       {
-        string section_to_include(config_value_original.substr(4));
+        std::string section_to_include(config_value_original.substr(4));
 
         for (const auto& output_document_config_item : all_output_document_config_items)
         {
-          string item_key = output_document_config_item.first;
+          std::string item_key = output_document_config_item.first;
           if (item_key.size() >= section_to_include.size() &&
               item_key.substr(0, section_to_include.size()) == section_to_include)
           {
-            string config_key_first_part =
-                config_key_original.substr(0, config_key_original.find_last_of("."));
-            string config_key_second_part = item_key.substr(section_to_include.size());
-            string parsed_config_key = config_key_first_part + config_key_second_part;
-            string config_value = output_document_config_item.second;
+            std::string config_key_first_part =
+                config_key_original.substr(0, config_key_original.find_last_of('.'));
+            std::string config_key_second_part = item_key.substr(section_to_include.size());
+            std::string parsed_config_key = config_key_first_part + config_key_second_part;
+            std::string config_value = output_document_config_item.second;
             if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
               reProcess = true;
 
-            included_config_items.push_back(make_pair(parsed_config_key, config_value));
+            included_config_items.push_back(std::make_pair(parsed_config_key, config_value));
           }
         }
       }
@@ -249,7 +246,7 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
                 std::string included_value = itsConfig.lookup(value.substr(4));
                 value = included_value;
               }
-              config_item_container.push_back(make_pair(name, value));
+              config_item_container.push_back(std::make_pair(name, value));
             }
           }
         }
@@ -260,7 +257,7 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
         {
           std::string name = settings.getName();
           std::string value = settings;
-          config_item_container.push_back(make_pair(name, value));
+          config_item_container.push_back(std::make_pair(name, value));
         }
       }
     }
@@ -273,7 +270,7 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
 
 }  // namespace
 
-Config::Config(const string& configfile)
+Config::Config(const std::string& configfile)
     : itsDefaultUrl(default_url),
       itsForecastTextCacheSize(DEFAULT_FORECAST_TEXT_CACHE_SIZE),
       itsMainConfigFile(configfile)
@@ -313,7 +310,7 @@ void Config::setDefaultConfigValues(ProductConfigMap& productConfigs)
 {
   // Check that certain parameters has been defined either in default configuration file or
   // product-specific configuration file
-  for (auto pci : productConfigs)
+  for (const auto& pci : productConfigs)
   {
     if (pci.first == default_textgen_config_name)
       continue;
@@ -362,8 +359,8 @@ ConfigItemVector Config::readMainConfig() const
     libconfig::Config lconf;
     lconf.readFile(itsMainConfigFile.c_str());
     ConfigItemVector ret;
-    vector<string> allowed_sections;
-    allowed_sections.push_back("*");
+    std::vector<std::string> allowed_sections;
+    allowed_sections.emplace_back("*");
 
     if (lconf.exists("products"))
     {
@@ -376,7 +373,7 @@ ConfigItemVector Config::readMainConfig() const
           boost::filesystem::path p = value;
           std::string product_name = p.stem().string();
           std::string product_file = p.string();
-          ret.push_back(make_pair(product_name, product_file));
+          ret.emplace_back(std::make_pair(product_name, product_file));
         }
       }
     }
@@ -403,7 +400,7 @@ void Config::updateProductConfigs(const ConfigItemVector& configItems,
                                   const std::set<std::string>& modifiedFiles,
                                   const std::set<std::string>& newFiles)
 {
-  string config_value;
+  std::string config_value;
   itsProductFiles.clear();
   std::set<std::string> erroneousFiles;
 
@@ -411,10 +408,10 @@ void Config::updateProductConfigs(const ConfigItemVector& configItems,
   {
     std::unique_ptr<ProductConfigMap> newProductConfigs(new ProductConfigMap());
     boost::filesystem::path config_path(itsMainConfigFile);
-    for (auto item : configItems)
+    for (const auto& item : configItems)
     {
-      string config_key(item.first);
-      string config_name = config_key.substr(config_key.find(".") + 1);
+      std::string config_key(item.first);
+      std::string config_name = config_key.substr(config_key.find('.') + 1);
       config_value = item.second;
 
       // Make relative paths absolute
@@ -423,7 +420,7 @@ void Config::updateProductConfigs(const ConfigItemVector& configItems,
       try
       {
         boost::shared_ptr<ProductConfig> productConfig(new ProductConfig(config_value));
-        newProductConfigs->insert(make_pair(config_name, productConfig));
+        newProductConfigs->insert(std::make_pair(config_name, productConfig));
         itsProductFiles.insert(config_value);
       }
       catch (const SmartMet::Spine::Exception& e)
@@ -444,23 +441,23 @@ void Config::updateProductConfigs(const ConfigItemVector& configItems,
     }
 
     setDefaultConfigValues(*newProductConfigs);
-    itsProductConfigs.reset(newProductConfigs.release());
+    itsProductConfigs = std::move(newProductConfigs);
 
     if (deletedFiles.empty() && modifiedFiles.empty() && newFiles.empty())
       return;
 
     if (itsShowFileMessages)
     {
-      for (auto f : deletedFiles)
+      for (const auto& f : deletedFiles)
         std::cout << ANSI_FG_RED << "File '" << f << "' deleted!" << ANSI_FG_DEFAULT << std::endl;
-      for (auto f : modifiedFiles)
+      for (const auto& f : modifiedFiles)
       {
         // Report successful update
         if (erroneousFiles.find(f) == erroneousFiles.end())
           std::cout << ANSI_FG_GREEN << "File '" << f << "' updated!" << ANSI_FG_DEFAULT
                     << std::endl;
       }
-      for (auto f : newFiles)
+      for (const auto& f : newFiles)
       {
         // Report successful update
         if (erroneousFiles.find(f) == erroneousFiles.end())
@@ -547,13 +544,13 @@ const ProductConfig& Config::getProductConfig(const std::string& config_name) co
   }
 }
 
-vector<string> Config::getProductNames() const
+std::vector<std::string> Config::getProductNames() const
 {
   try
   {
-    vector<string> retval;
+    std::vector<std::string> retval;
 
-    for (const ProductConfigItem& pci : *itsProductConfigs)
+    for (const auto& pci : *itsProductConfigs)
     {
       retval.push_back(pci.first);
     }
@@ -572,7 +569,7 @@ vector<string> Config::getProductNames() const
  */
 // ----------------------------------------------------------------------
 
-ProductConfig::ProductConfig(const string& configfile)
+ProductConfig::ProductConfig(const std::string& configfile)
     : itsLanguage(""),
       itsFormatter(""),
       itsLocale(""),
@@ -627,7 +624,8 @@ ProductConfig::ProductConfig(const string& configfile)
       itsConfig.lookupValue("postgis.default.field", postgis_default_identifier.field);
       std::string postgis_identifier_key(postgis_default_identifier.key());
       itsDefaultPostGISIdentifierKey = postgis_identifier_key;
-      postgis_identifiers.insert(make_pair(postgis_identifier_key, postgis_default_identifier));
+      postgis_identifiers.insert(
+          std::make_pair(postgis_identifier_key, postgis_default_identifier));
     }
 
     if (itsConfig.exists("postgis.config_items"))
@@ -674,7 +672,7 @@ ProductConfig::ProductConfig(const string& configfile)
 
         std::string key(postgis_id.key());
         if (postgis_identifiers.find(key) == postgis_identifiers.end())
-          postgis_identifiers.insert(make_pair(postgis_id.key(), postgis_id));
+          postgis_identifiers.insert(std::make_pair(postgis_id.key(), postgis_id));
       }
     }
 
@@ -692,7 +690,7 @@ ProductConfig::ProductConfig(const string& configfile)
           {
             std::string maskName = childSetting.getName();
             std::string maskValue = itsConfig.lookup("mask." + maskName);
-            masks.push_back(make_pair(maskName, maskValue));
+            masks.emplace_back(std::make_pair(maskName, maskValue));
           }
         }
       }
@@ -711,10 +709,10 @@ ProductConfig::ProductConfig(const string& configfile)
           std::string name(childSetting.getName());
           std::string key(std::string("forestfirewarning.areacodes.") + childSetting.getName());
           int value = itsConfig.lookup(key);
-          stringstream ss;
+          std::stringstream ss;
           ss << value;
-          forestfirewarning_areacodes.push_back(
-              make_pair("qdtext::forestfirewarning::areacodes::" + name, ss.str()));
+          forestfirewarning_areacodes.emplace_back(
+              std::make_pair("qdtext::forestfirewarning::areacodes::" + name, ss.str()));
         }
       }
     }
@@ -746,19 +744,19 @@ ProductConfig::ProductConfig(const string& configfile)
                 Fmi::to_string(sections.getSourceLine()));
       }
 
-      string sections_parameter_value;
-      vector<string> allowed_sections;
+      std::string sections_parameter_value;
+      std::vector<std::string> allowed_sections;
       // allowed_sections.clear();
       for (int i = 0; i < sections.getLength(); ++i)
       {
-        string section_name = sections[i];
+        std::string section_name = sections[i];
 
         if (i > 0)
           sections_parameter_value += ",";
         sections_parameter_value += section_name;
-        allowed_sections.push_back("output_document." + section_name + ".period");
-        allowed_sections.push_back("output_document." + section_name + ".subperiod");
-        allowed_sections.push_back("output_document." + section_name + ".header");
+        allowed_sections.emplace_back("output_document." + section_name + ".period");
+        allowed_sections.emplace_back("output_document." + section_name + ".subperiod");
+        allowed_sections.emplace_back("output_document." + section_name + ".header");
 
         bool contentExists(itsConfig.exists("output_document." + section_name + ".content"));
 
@@ -771,35 +769,35 @@ ProductConfig::ProductConfig(const string& configfile)
           {
             if (content.getType() == libconfig::Setting::TypeString)
             {
-              string story_name = content;
+              std::string story_name = content;
               if (story_name == "none")
-                allowed_sections.push_back("output_document." + section_name);
+                allowed_sections.emplace_back("output_document." + section_name);
               else
               {
-                allowed_sections.push_back("output_document." + section_name + ".story." +
-                                           story_name);
-                allowed_sections.push_back("output_document." + section_name + ".day1.story." +
-                                           story_name);
-                allowed_sections.push_back("output_document." + section_name + ".day2.story." +
-                                           story_name);
+                allowed_sections.emplace_back("output_document." + section_name + ".story." +
+                                              story_name);
+                allowed_sections.emplace_back("output_document." + section_name + ".day1.story." +
+                                              story_name);
+                allowed_sections.emplace_back("output_document." + section_name + ".day2.story." +
+                                              story_name);
               }
             }
           }
           else
           {
-            string content_parameter_value;
+            std::string content_parameter_value;
             for (int k = 0; k < content.getLength(); ++k)
             {
-              string story_name = content[k];
+              std::string story_name = content[k];
               if (k > 0)
                 content_parameter_value += ",";
               content_parameter_value += story_name;
 
-              allowed_sections.push_back("output_document." + section_name + ".story." +
-                                         story_name);
+              allowed_sections.emplace_back("output_document." + section_name + ".story." +
+                                            story_name);
             }
-            output_document_config_item_container.push_back(
-                make_pair("output_document." + section_name + ".content", content_parameter_value));
+            output_document_config_item_container.emplace_back(std::make_pair(
+                "output_document." + section_name + ".content", content_parameter_value));
           }
         }
         parseConfigurationItem(itsConfig,
@@ -807,22 +805,22 @@ ProductConfig::ProductConfig(const string& configfile)
                                allowed_sections,
                                output_document_config_item_container);
       }
-      output_document_config_item_container.push_back(
-          make_pair("output_document.sections", sections_parameter_value));
+      output_document_config_item_container.emplace_back(
+          std::make_pair("output_document.sections", sections_parameter_value));
 
       handleIncludedSections(itsConfig, output_document_config_item_container);
 
       for (ConfigItem& ci : output_document_config_item_container)
       {
-        string config_key(ci.first);
-        string config_value(ci.second);
+        std::string config_key(ci.first);
+        std::string config_value(ci.second);
 
         if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
           continue;
 
-        replace_all(config_key, ".", "::");
-        replace_all(config_key, "output_document", "textgen");
-        output_document_config_items.push_back(make_pair(config_key, config_value));
+        boost::algorithm::replace_all(config_key, ".", "::");
+        boost::algorithm::replace_all(config_key, "output_document", "textgen");
+        output_document_config_items.emplace_back(std::make_pair(config_key, config_value));
       }
     }
 
@@ -830,30 +828,30 @@ ProductConfig::ProductConfig(const string& configfile)
     if (itsConfig.exists("area"))
     {
       ConfigItemVector area_config_item_container;
-      vector<string> allowed_sections;
+      std::vector<std::string> allowed_sections;
       allowed_sections.emplace_back("*");
       // sections
       parseConfigurationItem(itsConfig, "area", allowed_sections, area_config_item_container);
 
       for (ConfigItem& ci : area_config_item_container)
       {
-        string config_key(ci.first);
-        string config_value(ci.second);
+        std::string config_key(ci.first);
+        std::string config_value(ci.second);
 
         if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
           continue;
 
-        replace_all(config_key, ".", "::");
-        replace_all(config_key, "area", "qdtext");
+        boost::algorithm::replace_all(config_key, ".", "::");
+        boost::algorithm::replace_all(config_key, "area", "qdtext");
         if (config_key.compare(0, 18, "qdtext::timezone::") == 0)
-          area_timezones.insert(make_pair(config_key, config_value));
+          area_timezones.insert(std::make_pair(config_key, config_value));
         else
-          area_config_items.push_back(make_pair(config_key, config_value));
+          area_config_items.emplace_back(std::make_pair(config_key, config_value));
       }
     }
     // add default timezone if it doesn't exists
     if (area_timezones.find("qdtext::timezone::default") == area_timezones.end())
-      area_timezones.insert(make_pair("qdtext::timezone::default", default_timezone));
+      area_timezones.insert(std::make_pair("qdtext::timezone::default", default_timezone));
   }
   catch (...)
   {
@@ -867,7 +865,7 @@ ProductConfig::ProductConfig(const string& configfile)
   }
 }
 
-void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig> pDefaultConf)
+void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDefaultConf)
 {
   try
   {
@@ -924,7 +922,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig> pDef
         area_config_items = pDefaultConfig->area_config_items;
 
       // area timezones
-      for (const ConfigItem& timezone_item : pDefaultConfig->area_timezones)
+      for (const auto& timezone_item : pDefaultConfig->area_timezones)
       {
         if (area_timezones.find(timezone_item.first) == area_timezones.end())
           area_timezones.insert(timezone_item);
@@ -975,7 +973,7 @@ const std::string& ProductConfig::getAreaTimeZone(const std::string& area) const
 Engine::Gis::PostGISIdentifierVector ProductConfig::getPostGISIdentifiers() const
 {
   Engine::Gis::PostGISIdentifierVector ret;
-  for (auto item : postgis_identifiers)
+  for (const auto& item : postgis_identifiers)
     ret.push_back(item.second);
 
   return ret;
@@ -993,7 +991,7 @@ const Engine::Gis::postgis_identifier& ProductConfig::getDefaultPostGISIdentifie
   }
 }
 
-const std::pair<string, string>& ProductConfig::getForecastDataConfig(
+const std::pair<std::string, std::string>& ProductConfig::getForecastDataConfig(
     const unsigned int& index) const
 {
   try

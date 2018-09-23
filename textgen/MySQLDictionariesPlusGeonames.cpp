@@ -72,7 +72,7 @@ namespace Textgen
 class MySQLDictionariesPlusGeonames::Impl
 {
  public:
-  Impl() : itsInitialized(false), itsGeoEngine(0), itsEmptyString("") {}
+  Impl() : itsInitialized(false), itsGeoEngine(nullptr) {}
   bool itsInitialized;
   SmartMet::Engine::Geonames::Engine* itsGeoEngine;
   std::string itsEmptyString;
