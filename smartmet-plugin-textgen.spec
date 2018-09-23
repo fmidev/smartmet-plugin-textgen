@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 18.9.17
+Version: 18.9.18
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Sep 18 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.18-1.fmi
+- Improved (more) log messages when configuration changes are noticed (BRAINSTORM-853)
+
 * Mon Sep 17 2018 Mika Heiskanen <mika.heiskanen@fmi.fi> - 18.9.17-1.fmi
 - Improved log messages when configuration changes are noticed (BRAINSTORM-853)
 
