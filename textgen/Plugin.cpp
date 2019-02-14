@@ -549,7 +549,9 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
   try
   {
     std::cerr << boost::posix_time::second_clock::local_time() << " error: " << what << std::endl
-              << "Query: " << theRequest.getURI() << std::endl;
+              << "Query: " << theRequest.getURI() << std::endl
+              << "ClientIP: " << theRequest.getClientIP() << std::endl;
+
 
     if (isdebug)
     {
