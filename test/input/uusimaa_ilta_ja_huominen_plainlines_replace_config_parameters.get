@@ -1,0 +1,1 @@
+GET /textgen?formatter=plainlines&area=Uusimaa&product=ilta_ja_huominen&forecasttime=200808051400&part1::content=temperature_max36hours,wind_daily_ranges&celsius=SI HTTP/1.0

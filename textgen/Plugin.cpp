@@ -443,7 +443,34 @@ bool parse_geoid_parameter(const std::string& geoidParameter,
   }
 }
 
-void set_textgen_settings(const ProductConfig& config)
+std::string get_setting_string(const std::string& key,
+                               const std::string& default_value,
+                               const SmartMet::Spine::HTTP::ParamMap& params,
+                               std::string& modified_params)
+{
+  for (auto p : params)
+  {
+    if (boost::iends_with(key, p.first))
+    {
+      if (p.second != default_value)
+      {
+#ifdef MYDEBUG
+        std::cout << key << " -> replacing " << default_value << " with " << p.second << std::endl;
+#endif
+        if (modified_params.empty())
+          modified_params += ";";
+        modified_params += (key + "=" + p.second);
+      }
+      return p.second;
+    }
+  }
+
+  return default_value;
+}
+
+void set_textgen_settings(const ProductConfig& config,
+                          const SmartMet::Spine::HTTP::ParamMap& params,
+                          std::string& modified_params)
 {
   try
   {
@@ -485,8 +512,10 @@ void set_textgen_settings(const ProductConfig& config)
     for (unsigned int i = 0; i < config.numberOfUnitFormatConfigs(); i++)
     {
       const auto& unit_format_item = config.getUnitFormatConfig(i);
-      Settings::set("textgen::units::" + unit_format_item.first + "::format",
-                    unit_format_item.second);
+      std::string setting_string = get_setting_string(
+          unit_format_item.first, unit_format_item.second, params, modified_params);
+
+      Settings::set("textgen::units::" + unit_format_item.first + "::format", setting_string);
 #ifdef MYDEBUG
       if (i == 0)
         std::cout << std::endl << "Units: " << std::endl;
@@ -499,7 +528,11 @@ void set_textgen_settings(const ProductConfig& config)
     for (unsigned int i = 0; i < config.numberOfOutputDocumentConfigs(); i++)
     {
       const auto& output_document_config_item = config.getOutputDocumentConfig(i);
-      Settings::set(output_document_config_item.first, output_document_config_item.second);
+      std::string setting_string = get_setting_string(output_document_config_item.first,
+                                                      output_document_config_item.second,
+                                                      params,
+                                                      modified_params);
+      Settings::set(output_document_config_item.first, setting_string);
 #ifdef MYDEBUG
       if (i == 0)
         std::cout << std::endl << "Output document: " << std::endl;
@@ -551,7 +584,6 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
     std::cerr << boost::posix_time::second_clock::local_time() << " error: " << what << std::endl
               << "Query: " << theRequest.getURI() << std::endl
               << "ClientIP: " << theRequest.getClientIP() << std::endl;
-
 
     if (isdebug)
     {
@@ -607,7 +639,8 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     const ProductConfig& config = itsConfig.getProductConfig(product_name);
 
     // set text generator settings (stored in thread local storage)
-    set_textgen_settings(config);
+    std::string modified_params;
+    set_textgen_settings(config, queryParameters, modified_params);
 
     boost::shared_ptr<TextGen::Dictionary> theDictionary;
     const auto& dictionary_name = config.dictionary();
@@ -685,7 +718,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     {
       std::string forecast_text_area;
       const auto& area_name = area.name();
-      std::string cache_key = cache_key_common_part + ";" + area_name;
+      std::string cache_key = cache_key_common_part + ";" + area_name + ";" + modified_params;
 
       // set timezone for the area (stored in thread local storage)
       TextGenPosixTime::SetThreadTimeZone(config.getAreaTimeZone(area_name));
@@ -696,7 +729,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
       if (cache_result)
       {
 #ifdef MYDEBUG
-        std::cout << "Fetching forecast from cache." << std::endl;
+        std::cout << "Fetching forecast from cache " << cache_key << std::endl;
 #endif
         forecast_text_area = cache_result->member;
       }
