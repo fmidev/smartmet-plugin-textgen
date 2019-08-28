@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 19.8.8
+Version: 19.8.28
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -18,24 +18,24 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 18.11.24
 BuildRequires: smartmet-library-textgen-devel >= 18.10.1
-BuildRequires: smartmet-library-spine-devel >= 18.12.13
-BuildRequires: smartmet-engine-observation-devel >= 18.12.4
-BuildRequires: smartmet-engine-querydata-devel >= 19.2.8
-BuildRequires: smartmet-engine-geonames-devel >= 19.1.28
-BuildRequires: smartmet-engine-gis-devel >= 18.11.22
-BuildRequires: smartmet-library-macgyver-devel >= 18.11.24
-BuildRequires: smartmet-library-locus-devel >= 18.11.16
+BuildRequires: smartmet-library-spine-devel >= 19.8.28
+BuildRequires: smartmet-engine-observation-devel >= 19.8.28
+BuildRequires: smartmet-engine-querydata-devel >= 19.8.28
+BuildRequires: smartmet-engine-geonames-devel >= 19.8.28
+BuildRequires: smartmet-engine-gis-devel >= 19.5.29
+BuildRequires: smartmet-library-macgyver-devel >= 19.8.2
+BuildRequires: smartmet-library-locus-devel >= 19.8.28
 Requires: smartmet-library-calculator >= 18.11.24
-Requires: smartmet-library-macgyver >= 18.11.24
-Requires: smartmet-library-locus >= 18.11.16
+Requires: smartmet-library-macgyver >= 19.8.2
+Requires: smartmet-library-locus >= 19.8.28
 Requires: smartmet-library-textgen >= 18.10.1
 Requires: libconfig
-Requires: smartmet-engine-observation >= 18.12.4
-Requires: smartmet-engine-geonames >= 19.1.28
-Requires: smartmet-engine-querydata >= 19.2.8
-Requires: smartmet-engine-gis >= 18.11.22
-Requires: smartmet-server >= 18.12.14
-Requires: smartmet-library-spine >= 18.12.13
+Requires: smartmet-engine-observation >= 19.8.28
+Requires: smartmet-engine-geonames >= 19.8.28
+Requires: smartmet-engine-querydata >= 19.8.28
+Requires: smartmet-engine-gis >= 19.5.29
+Requires: smartmet-server >= 19.8.9
+Requires: smartmet-library-spine >= 19.8.28
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Aug 28 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.8.28-1.fmi
+- Repackaged since Spine::Location ABI changed
+
 * Thu Aug 8  2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.8.8-1.fmi
 - Enable configuration parameter replacement in URL (BRAINSTORM-1653)
 
