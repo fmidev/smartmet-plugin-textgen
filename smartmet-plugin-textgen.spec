@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 19.8.28
+Version: 19.9.2
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -17,7 +17,7 @@ BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 18.11.24
-BuildRequires: smartmet-library-textgen-devel >= 18.10.1
+BuildRequires: smartmet-library-textgen-devel >= 19.9.2
 BuildRequires: smartmet-library-spine-devel >= 19.8.28
 BuildRequires: smartmet-engine-observation-devel >= 19.8.28
 BuildRequires: smartmet-engine-querydata-devel >= 19.8.28
@@ -28,7 +28,7 @@ BuildRequires: smartmet-library-locus-devel >= 19.8.28
 Requires: smartmet-library-calculator >= 18.11.24
 Requires: smartmet-library-macgyver >= 19.8.2
 Requires: smartmet-library-locus >= 19.8.28
-Requires: smartmet-library-textgen >= 18.10.1
+Requires: smartmet-library-textgen >= 19.9.2
 Requires: libconfig
 Requires: smartmet-engine-observation >= 19.8.28
 Requires: smartmet-engine-geonames >= 19.8.28
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon Sep  2 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.2-1.fmi
+- Fixed a memory corruption issue
+
 * Wed Aug 28 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.8.28-1.fmi
 - Repackaged since Spine::Location ABI changed
 
