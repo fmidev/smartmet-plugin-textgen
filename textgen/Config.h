@@ -85,6 +85,7 @@ class ProductConfig : private boost::noncopyable
     return forestfirewarning_areacodes;
   }
   bool isFrostSeason() const { return itsFrostSeason; }
+  bool isModified(size_t interval) const;
 
  private:
   libconfig::Config itsConfig;
@@ -111,6 +112,7 @@ class ProductConfig : private boost::noncopyable
   std::string itsForestFireWarningDirectory;
 
   bool itsFrostSeason;
+  size_t itsLastModifiedTime{0};  // epoch seconds
 
   boost::shared_ptr<ProductConfig> pDefaultConfig;
 

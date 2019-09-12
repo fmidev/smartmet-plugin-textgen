@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 19.9.2
+Version: 19.9.12
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -70,6 +70,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Sep 12 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.9.12-1.fmi
+- Even if forecast is found in cache, generate a new forecast if 
+product configuration was modified recently (within cache interval). 
+When developing and testing new product configuration, the result of
+a query must reflect the changed product configuration even if query 
+parameters remain unchanged. (BRAINSTORM-1676)
+
 * Mon Sep  2 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.2-1.fmi
 - Fixed a memory corruption issue
 
