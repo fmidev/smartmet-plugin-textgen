@@ -18,11 +18,11 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 18.11.24
 BuildRequires: smartmet-library-textgen-devel >= 19.9.2
-BuildRequires: smartmet-library-spine-devel >= 19.8.28
-BuildRequires: smartmet-engine-observation-devel >= 19.8.28
+BuildRequires: smartmet-library-spine-devel >= 19.9.17
+BuildRequires: smartmet-engine-observation-devel >= 19.9.13
 BuildRequires: smartmet-engine-querydata-devel >= 19.8.28
 BuildRequires: smartmet-engine-geonames-devel >= 19.8.28
-BuildRequires: smartmet-engine-gis-devel >= 19.5.29
+BuildRequires: smartmet-engine-gis-devel >= 19.9.13
 BuildRequires: smartmet-library-macgyver-devel >= 19.8.2
 BuildRequires: smartmet-library-locus-devel >= 19.8.28
 Requires: smartmet-library-calculator >= 18.11.24
@@ -30,12 +30,12 @@ Requires: smartmet-library-macgyver >= 19.8.2
 Requires: smartmet-library-locus >= 19.8.28
 Requires: smartmet-library-textgen >= 19.9.2
 Requires: libconfig
-Requires: smartmet-engine-observation >= 19.8.28
+Requires: smartmet-engine-observation >= 19.9.13
 Requires: smartmet-engine-geonames >= 19.8.28
 Requires: smartmet-engine-querydata >= 19.8.28
-Requires: smartmet-engine-gis >= 19.5.29
-Requires: smartmet-server >= 19.8.9
-Requires: smartmet-library-spine >= 19.8.28
+Requires: smartmet-engine-gis >= 19.9.13
+Requires: smartmet-server >= 19.9.17
+Requires: smartmet-library-spine >= 19.9.17
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
