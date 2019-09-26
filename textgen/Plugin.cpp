@@ -44,6 +44,7 @@ namespace Plugin
 {
 namespace Textgen
 {
+#define CACHE_EXPIRATION_TIME_SEC 60
 #define LAND_MASK_NAME "land"
 #define COAST_MASK_NAME "coast"
 #define PRODUCT_PARAM "product"
@@ -637,6 +638,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
 
     std::string product_name(mmap_string(queryParameters, PRODUCT_PARAM, DEFAULT_PRODUCT_NAME));
     const ProductConfig& config = itsConfig.getProductConfig(product_name);
+    bool configIsModified = config.isModified(CACHE_EXPIRATION_TIME_SEC);
 
     // set text generator settings (stored in thread local storage)
     std::string modified_params;
@@ -696,8 +698,8 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     std::string formatter_name(mmap_string(queryParameters, FORMATTER_PARAM));
 
     std::stringstream timestamp_cachekey_ss;
-    // generate forecast at least every 60 secods
-    timestamp_cachekey_ss << (timestamp.EpochTime() / 60);
+    // generate forecast at least every CACHE_EXPIRATION_TIME_SEC secods
+    timestamp_cachekey_ss << (timestamp.EpochTime() / CACHE_EXPIRATION_TIME_SEC);
     std::string cache_key_common_part(
         mmap_string(queryParameters, PRODUCT_PARAM) + ";" +
         mmap_string(queryParameters, LANGUAGE_PARAM) + ";" + formatter_name + ";" +
@@ -726,7 +728,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
       SmartMet::Spine::UpgradeReadLock cacheReadLock(itsForecastTextCacheMutex);
 
       auto cache_result = itsForecastTextCache.find(cache_key);
-      if (cache_result)
+      if (!configIsModified && cache_result)
       {
 #ifdef MYDEBUG
         std::cout << "Fetching forecast from cache " << cache_key << std::endl;
@@ -789,7 +791,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     const bool print_log = Spine::optional_bool(theRequest.getParameter("printlog"), false);
 
     // Default expiration time
-    const int expires_seconds = 60;
+    const int expires_seconds = CACHE_EXPIRATION_TIME_SEC;
 
     // Now
     auto t_now = boost::posix_time::second_clock::universal_time();

@@ -73,6 +73,13 @@ rm -rf $RPM_BUILD_ROOT
 * Thu Sep 26 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.26-1.fmi
 - Added support for ASAN & TSAN builds
 
+* Thu Sep 12 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.9.12-1.fmi
+- Even if forecast is found in cache, generate a new forecast if 
+product configuration was modified recently (within cache interval). 
+When developing and testing new product configuration, the result of
+a query must reflect the changed product configuration even if query 
+parameters remain unchanged. (BRAINSTORM-1676)
+
 * Mon Sep  2 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.9.2-1.fmi
 - Fixed a memory corruption issue
 
