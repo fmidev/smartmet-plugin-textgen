@@ -9,6 +9,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
+#include <calculator/TextGenPosixTime.h>
 #include <macgyver/AnsiEscapeCodes.h>
 #include <macgyver/StringConversion.h>
 #include <spine/Exception.h>
@@ -422,6 +423,11 @@ void Config::updateProductConfigs(const ConfigItemVector& configItems,
         boost::shared_ptr<ProductConfig> productConfig(new ProductConfig(config_value));
         newProductConfigs->insert(std::make_pair(config_name, productConfig));
         itsProductFiles.insert(config_value);
+        if (modifiedFiles.find(config_value) != modifiedFiles.end())
+        {
+          TextGenPosixTime timestamp;
+          productConfig->itsLastModifiedTime = timestamp.EpochTime();
+        }
       }
       catch (const SmartMet::Spine::Exception& e)
       {
@@ -1102,6 +1108,14 @@ const std::pair<std::string, std::string>& ProductConfig::getFireWarningAreaCode
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
+}
+
+// Checks if configuration has been modified within given interval (seconds)
+bool ProductConfig::isModified(size_t interval) const
+{
+  TextGenPosixTime timestamp;
+
+  return (timestamp.EpochTime() - itsLastModifiedTime <= interval);
 }
 
 }  // namespace Textgen

@@ -118,7 +118,7 @@ bool MySQLDictionariesPlusGeonames::geocontains(const std::string& theKey) const
 
   try
   {
-    SmartMet::Spine::LocationPtr locPtr = itsImpl->itsGeoEngine->nameSearch(theKey, language());
+    auto locPtr = itsImpl->itsGeoEngine->nameSearch(theKey, language());
 
     if (locPtr->name.empty())
       return false;
@@ -137,7 +137,7 @@ bool MySQLDictionariesPlusGeonames::geocontains(const double& theLongitude,
 {
   try
   {
-    SmartMet::Spine::LocationPtr locPtr =
+    auto locPtr =
         itsImpl->itsGeoEngine->lonlatSearch(theLongitude, theLatitude, language(), theMaxDistance);
 
     if (locPtr->geoid == 0)
@@ -154,12 +154,11 @@ bool MySQLDictionariesPlusGeonames::geocontains(const double& theLongitude,
   }
 }
 
-const std::string& MySQLDictionariesPlusGeonames::geofind(const std::string& theKey) const
+std::string MySQLDictionariesPlusGeonames::geofind(const std::string& theKey) const
 {
   try
   {
-    SmartMet::Spine::LocationPtr locPtr = itsImpl->itsGeoEngine->nameSearch(theKey, language());
-
+    auto locPtr = itsImpl->itsGeoEngine->nameSearch(theKey, language());
     return locPtr->name;
   }
   catch (...)
@@ -168,19 +167,17 @@ const std::string& MySQLDictionariesPlusGeonames::geofind(const std::string& the
   }
 }
 
-const std::string& MySQLDictionariesPlusGeonames::geofind(const double& theLongitude,
-                                                          const double& theLatitude,
-                                                          const double& theMaxDistance) const
+std::string MySQLDictionariesPlusGeonames::geofind(double theLongitude,
+                                                   double theLatitude,
+                                                   double theMaxDistance) const
 {
   try
   {
-    SmartMet::Spine::LocationPtr locPtr =
+    auto locPtr =
         itsImpl->itsGeoEngine->lonlatSearch(theLongitude, theLatitude, language(), theMaxDistance);
 
     if (locPtr->geoid == 0)
-    {
       return itsImpl->itsEmptyString;
-    }
 
     return locPtr->name;
   }

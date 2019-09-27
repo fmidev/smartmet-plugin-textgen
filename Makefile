@@ -28,6 +28,9 @@ objdir = obj
 
 DEFINES = -DUNIX -D_REENTRANT
 
+-include $(HOME)/.smartmet.mk
+GCC_DIAG_COLOR ?= always
+
 ifeq ($(CXX), clang++)
 
  FLAGS = \
@@ -45,7 +48,7 @@ ifeq ($(CXX), clang++)
 
 else
 
- FLAGS = -std=c++11 -fPIC -MD -Wall -W -Wno-unused-parameter -fno-omit-frame-pointer -fdiagnostics-color=always
+ FLAGS = -std=c++11 -fPIC -MD -Wall -W -Wno-unused-parameter -fno-omit-frame-pointer -fdiagnostics-color=$(GCC_DIAG_COLOR) -Wnon-virtual-dtor
 
  FLAGS_DEBUG = \
 	-Wcast-align \
@@ -67,6 +70,13 @@ else
 
 endif
 
+ifeq ($(TSAN), yes)
+  FLAGS += -fsanitize=thread
+endif
+ifeq ($(ASAN), yes)
+  FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
+endif
+
 # Compile options in detault, debug and profile modes
 
 CFLAGS_RELEASE = $(DEFINES) $(FLAGS) $(FLAGS_RELEASE) -DNDEBUG -O2 -g
@@ -79,11 +89,11 @@ else
 endif
 
 LIBS = -L$(libdir) \
+	-lsmartmet-macgyver \
 	-lsmartmet-spine \
 	-lsmartmet-calculator \
 	-lsmartmet-textgen \
 	-lsmartmet-newbase \
-	-lsmartmet-macgyver \
 	-lsmartmet-locus \
 	-lmysqlpp \
 	-lboost_date_time \

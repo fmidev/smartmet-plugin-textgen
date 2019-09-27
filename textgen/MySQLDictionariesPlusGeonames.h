@@ -33,10 +33,8 @@ class MySQLDictionariesPlusGeonames : public TextGen::MySQLDictionaries
   virtual bool geocontains(const double& theLongitude,
                            const double& theLatitude,
                            const double& theMaxDistance) const;
-  virtual const std::string& geofind(const std::string& theKey) const;
-  virtual const std::string& geofind(const double& theLongitude,
-                                     const double& theLatitude,
-                                     const double& theMaxDistance) const;
+  virtual std::string geofind(const std::string& theKey) const;
+  virtual std::string geofind(double theLongitude, double theLatitude, double theMaxDistance) const;
 
  private:
   class Impl;
