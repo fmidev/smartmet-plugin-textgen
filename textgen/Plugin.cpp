@@ -211,7 +211,7 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
     if (queryParameters.find(POSTGIS_PARAM) == queryParameters.end() &&
         config.numberOfPostGISIdentifiers() == 0)
     {
-      throw SmartMet::Spine::Exception(BCP, "PostGIS parameters not defined, cannot continue!");
+      return true;
     }
 
     std::pair<SmartMet::Spine::HTTP::ParamMap::const_iterator,
