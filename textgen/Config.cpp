@@ -880,11 +880,14 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
     if (postgis_identifiers.empty())
     {
       if (!pDefaultConfig || pDefaultConfig->numberOfPostGISIdentifiers() == 0)
-        throw SmartMet::Spine::Exception(
-            BCP, "PostGIS configuration error: postgis.default-section missing, cannot continue!");
-
-      postgis_identifiers = pDefaultConfig->postgis_identifiers;
-      itsDefaultPostGISIdentifierKey = pDefaultConfig->itsDefaultPostGISIdentifierKey;
+      {
+        // not fatal
+      }
+      else
+      {
+        postgis_identifiers = pDefaultConfig->postgis_identifiers;
+        itsDefaultPostGISIdentifierKey = pDefaultConfig->itsDefaultPostGISIdentifierKey;
+      }
     }
 
     if (forecast_data_config_items.empty())
