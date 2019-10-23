@@ -72,6 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Oct 23 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.23-1.fmi
 - Added support for file dictionaries
+- Refactored database details into local.conf 
 
 * Tue Oct 22 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.22-1.fmi
 - Allow running without any polygons, just geonames
