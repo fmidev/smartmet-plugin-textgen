@@ -211,13 +211,9 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         }
         break;
       }
-      case Spine::Location::LocationType::Path:
-      {
-        errorMessage += "paths not supported";
-        return false;
-      }
       case Spine::Location::LocationType::BoundingBox:
       {
+        auto bbox_str = tagged_loc.tag;
         errorMessage += "bounding boxes not supported";
         return false;
       }
@@ -226,78 +222,15 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         errorMessage += "WKT areas not supported";
         return false;
       }
+      case Spine::Location::LocationType::Path:
+      {
+        errorMessage += "paths not supported";
+        return false;
+      }
     }
   }
 
   return true;
-}
-
-bool parse_lonlat_parameter(const std::string& lonlat_string,
-                            const boost::shared_ptr<TextGen::Dictionary>& theDictionary,
-                            std::vector<TextGen::WeatherArea>& weatherAreaVector,
-                            std::string& errorMessage)
-{
-  try
-  {
-    if (!lonlat_string.empty())
-    {
-      // format: longitude,latitude[:radius km];longitude,latitude[:radius km]
-      // for example 24.1514,61.4356:2.5,25.6547,66.1009
-      std::vector<std::string> parts;
-      boost::algorithm::split(parts, lonlat_string, boost::algorithm::is_any_of(","));
-      if (parts.size() % 2 != 0)
-      {
-        errorMessage =
-            "format of lonlat parameter is ff.ff,ff.ff[:ff.ff] (longitude latitude:radius)";
-        return false;
-      }
-
-      for (unsigned int j = 0; j < parts.size(); j += 2)
-      {
-        std::string longitude_string(parts[j]);
-        std::string latitude_string(parts[j + 1]);
-
-        // 5 km by default
-        float radius(5.0);
-        unsigned long radius_index(latitude_string.find(':'));
-        bool radius_defined(radius_index != std::string::npos);
-        if (radius_defined)
-        {
-          radius = boost::lexical_cast<float>(latitude_string.substr(radius_index + 1).c_str());
-        }
-
-        unsigned long latitude_end_index(radius_defined ? radius_index : longitude_string.size());
-        if (radius_defined)
-          latitude_string = latitude_string.substr(0, latitude_end_index);
-        float longitude(kFloatMissing);
-        float latitude(kFloatMissing);
-        try
-        {
-          longitude = boost::lexical_cast<float>(longitude_string);
-          latitude = boost::lexical_cast<float>(latitude_string);
-        }
-        catch (...)
-        {
-          errorMessage = "Invalid lonlat-option: " + longitude_string + ", " + latitude_string;
-          return false;
-        }
-
-        std::string geoname(theDictionary->geofind(longitude, latitude, radius));
-
-        normalize_string(geoname);
-        weatherAreaVector.emplace_back(
-            TextGen::WeatherArea(NFmiPoint(longitude, latitude),
-                                 geoname,
-                                 (radius_defined && radius >= 5.0) ? radius : 0.0));
-      }
-    }
-
-    return true;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
 }
 
 bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParameters,
@@ -404,110 +337,6 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
 
         gisEngine->populateGeometryStorage(pgIdVector, geometryStorage);
       }
-    }
-
-    return true;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool parse_area_parameter(const std::string& areaParameter,
-                          const Engine::Gis::GeometryStorage& geometryStorage,
-                          std::vector<TextGen::WeatherArea>& weatherAreaVector,
-                          SmartMet::Spine::MutexType& thePostGISMutex,
-                          std::string& errorMessage)
-{
-  try
-  {
-    const std::vector<std::string> area_name_vector = NFmiStringTools::Split(areaParameter);
-
-    for (const auto& area_name : area_name_vector)
-    {
-      SmartMet::Spine::ReadLock lock(thePostGISMutex);
-      if (geometryStorage.geoObjectExists(area_name))
-      {
-        weatherAreaVector.emplace_back(TextGen::WeatherArea(make_area(area_name, geometryStorage)));
-      }
-      else
-      {
-        errorMessage += "Area ";
-        errorMessage += area_name;
-        errorMessage += " not found in PostGIS database!";
-        return false;
-      }
-    }
-
-    return true;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-bool parse_geoid_parameter(const std::string& geoidParameter,
-                           const Engine::Gis::GeometryStorage& geometryStorage,
-                           const SmartMet::Engine::Geonames::Engine& geoEngine,
-                           const std::string& language,
-                           std::vector<TextGen::WeatherArea>& weatherAreaVector,
-                           std::string& errorMessage)
-{
-  try
-  {
-    const std::vector<std::string> geoid_vector = NFmiStringTools::Split(geoidParameter);
-
-    int geoid = 0;
-    for (const auto& geoid_string : geoid_vector)
-    {
-      try
-      {
-        geoid = boost::lexical_cast<int>(geoid_string);
-      }
-      catch (...)
-      {
-        errorMessage = (geoid_string + " is not valid geoid!");
-        return false;
-      }
-
-      SmartMet::Spine::LocationPtr loc = geoEngine.idSearch(geoid, language);
-
-      if (!loc)
-      {
-        errorMessage = (geoid_string + " not found in database!");
-        return false;
-      }
-
-      std::string feature_code(loc->feature);
-      std::string loc_name(loc->name);
-
-      // if feature code is ADM1,ADM2,ADM3 and name is found in PostGIS database
-      // fetch area definition form there
-      if (feature_code.substr(0, 3) == "ADM" && geometryStorage.geoObjectExists(loc_name))
-      {
-        weatherAreaVector.emplace_back(TextGen::WeatherArea(make_area(loc_name, geometryStorage)));
-      }
-      else
-      {
-        normalize_string(loc_name);
-        // otherwise use the lonlat coordinates
-        weatherAreaVector.emplace_back(
-            TextGen::WeatherArea(NFmiPoint(loc->longitude, loc->latitude), loc_name, 0.0));
-      }
-
-#ifdef MYDEBUG
-      std::cout << "name: " << loc->name << std::endl;
-      std::cout << "lon,lat: " << loc->longitude << ", " << loc->latitude << std::endl;
-      std::cout << "country: " << loc->country << std::endl;
-      std::cout << "feature: " << loc->feature << std::endl;
-      std::cout << "timezone: " << loc->timezone << std::endl;
-      std::cout << "population: " << loc->population << std::endl;
-      std::cout << "iso2: " << loc->iso2 << std::endl;
-      std::cout << "id: " << loc->geoid << std::endl;
-      std::cout << "elevation: " << loc->elevation << std::endl;
-#endif
     }
 
     return true;
@@ -750,35 +579,6 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     {
       throw SmartMet::Spine::Exception(BCP, errorMessage);
     }
-
-#if 0    
-    if (!parse_area_parameter(mmap_string(queryParameters, AREA_PARAM),
-                              itsGeometryStorage,
-                              weatherAreaVector,
-                              itsPostGISMutex,
-                              errorMessage))
-    {
-      throw SmartMet::Spine::Exception(BCP, errorMessage);
-    }
-
-    if (!parse_lonlat_parameter(mmap_string(queryParameters, LONLAT_PARAM),
-                                theDictionary,
-                                weatherAreaVector,
-                                errorMessage))
-    {
-      throw SmartMet::Spine::Exception(BCP, errorMessage);
-    }
-
-    if (!parse_geoid_parameter(mmap_string(queryParameters, GEOID_PARAM),
-                               itsGeometryStorage,
-                               *itsGeoEngine,
-                               mmap_string(queryParameters, LANGUAGE_PARAM),
-                               weatherAreaVector,
-                               errorMessage))
-    {
-      throw SmartMet::Spine::Exception(BCP, errorMessage);
-    }
-#endif
 
     // set locale
     const std::string loc = mmap_string(queryParameters, LOCALE_PARAM, config.locale());
