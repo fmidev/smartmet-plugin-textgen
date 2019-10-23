@@ -133,6 +133,105 @@ bool parse_forecasttime_parameter(const std::string& forecasttime_string,
   }
 }
 
+TextGen::WeatherArea make_area(const std::string& postGISName,
+                               const Engine::Gis::GeometryStorage& geometryStorage)
+{
+  try
+  {
+    std::string areaName(postGISName);
+    normalize_string(areaName);
+
+    if (geometryStorage.isPolygon(postGISName))
+    {
+      std::stringstream svg_string_stream(geometryStorage.getSVGPath(postGISName));
+      NFmiSvgPath svgPath;
+      svgPath.Read(svg_string_stream);
+      return {svgPath, areaName};
+    }
+
+    // if not polygon, it must be a point
+    std::pair<float, float> std_point(geometryStorage.getPoint(postGISName));
+    NFmiPoint point(std_point.first, std_point.second);
+    return {point, areaName};
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
+                               SmartMet::Spine::MutexType& thePostGISMutex,
+                               const Engine::Gis::GeometryStorage& geometryStorage,
+                               const SmartMet::Engine::Geonames::Engine& geoEngine,
+                               const boost::shared_ptr<TextGen::Dictionary>& theDictionary,
+                               const std::string& language,
+                               std::vector<TextGen::WeatherArea>& weatherAreaVector,
+                               std::string& errorMessage)
+{
+  auto tagged_locations = geoEngine.parseLocations(theRequest);
+  if (tagged_locations.empty())
+  {
+    errorMessage += "No locations specified";
+    return false;
+  }
+
+  for (const auto& tagged_loc : tagged_locations.locations())
+  {
+    const auto& loc = *tagged_loc.loc;
+    switch (loc.type)
+    {
+      case Spine::Location::LocationType::Place:
+      case Spine::Location::LocationType::CoordinatePoint:
+      {
+        if (loc.feature.substr(0, 3) == "ADM" && geometryStorage.geoObjectExists(loc.name))
+          weatherAreaVector.emplace_back(
+              TextGen::WeatherArea(make_area(loc.name, geometryStorage)));
+        else
+        {
+          auto geoname = loc.name;
+          normalize_string(geoname);
+          weatherAreaVector.emplace_back(
+              TextGen::WeatherArea(NFmiPoint(loc.longitude, loc.latitude),
+                                   geoname,
+                                   (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
+        }
+        break;
+      }
+      case Spine::Location::LocationType::Area:
+      {
+        SmartMet::Spine::ReadLock lock(thePostGISMutex);
+        if (geometryStorage.geoObjectExists(loc.name))
+          weatherAreaVector.emplace_back(
+              TextGen::WeatherArea(make_area(loc.name, geometryStorage)));
+        else
+        {
+          errorMessage += "Area " + loc.name + " not found in PostGIS database!";
+          return false;
+        }
+        break;
+      }
+      case Spine::Location::LocationType::Path:
+      {
+        errorMessage += "paths not supported";
+        return false;
+      }
+      case Spine::Location::LocationType::BoundingBox:
+      {
+        errorMessage += "bounding boxes not supported";
+        return false;
+      }
+      case Spine::Location::LocationType::Wkt:
+      {
+        errorMessage += "WKT areas not supported";
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 bool parse_lonlat_parameter(const std::string& lonlat_string,
                             const boost::shared_ptr<TextGen::Dictionary>& theDictionary,
                             std::vector<TextGen::WeatherArea>& weatherAreaVector,
@@ -308,33 +407,6 @@ bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParame
     }
 
     return true;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-TextGen::WeatherArea make_area(const std::string& postGISName,
-                               const Engine::Gis::GeometryStorage& geometryStorage)
-{
-  try
-  {
-    std::string areaName(postGISName);
-    normalize_string(areaName);
-
-    if (geometryStorage.isPolygon(postGISName))
-    {
-      std::stringstream svg_string_stream(geometryStorage.getSVGPath(postGISName));
-      NFmiSvgPath svgPath;
-      svgPath.Read(svg_string_stream);
-      return {svgPath, areaName};
-    }
-
-    // if not polygon, it must be a point
-    std::pair<float, float> std_point(geometryStorage.getPoint(postGISName));
-    NFmiPoint point(std_point.first, std_point.second);
-    return {point, areaName};
   }
   catch (...)
   {
@@ -667,6 +739,19 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
       throw SmartMet::Spine::Exception(BCP, errorMessage);
     }
 
+    if (!parse_location_parameters(theRequest,
+                                   itsPostGISMutex,
+                                   itsGeometryStorage,
+                                   *itsGeoEngine,
+                                   theDictionary,
+                                   mmap_string(queryParameters, LANGUAGE_PARAM),
+                                   weatherAreaVector,
+                                   errorMessage))
+    {
+      throw SmartMet::Spine::Exception(BCP, errorMessage);
+    }
+
+#if 0    
     if (!parse_area_parameter(mmap_string(queryParameters, AREA_PARAM),
                               itsGeometryStorage,
                               weatherAreaVector,
@@ -693,6 +778,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     {
       throw SmartMet::Spine::Exception(BCP, errorMessage);
     }
+#endif
 
     // set locale
     const std::string loc = mmap_string(queryParameters, LOCALE_PARAM, config.locale());
@@ -1018,14 +1104,6 @@ bool Plugin::verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryP
     }
 
     const ProductConfig& config(itsConfig.getProductConfig(product_name));
-
-    if (queryParameters.find(AREA_PARAM) == queryParameters.end() &&
-        queryParameters.find(LONLAT_PARAM) == queryParameters.end() &&
-        queryParameters.find(GEOID_PARAM) == queryParameters.end())
-    {
-      errorMessage = "area, lonlat or geoid parameter must be defined!";
-      return false;
-    }
 
     // set default values
     if (queryParameters.find(LANGUAGE_PARAM) == queryParameters.end())
