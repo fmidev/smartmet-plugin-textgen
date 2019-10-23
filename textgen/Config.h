@@ -39,6 +39,7 @@ class ProductConfig : private boost::noncopyable
   const std::string& mySQLDictionaryDatabase() const { return itsMySQLDictionaryDatabase; }
   const std::string& mySQLDictionaryUsername() const { return itsMySQLDictionaryUsername; }
   const std::string& mySQLDictionaryPassword() const { return itsMySQLDictionaryPassword; }
+  const std::string& fileDictionaries() const { return itsFileDictionaries; }
   const std::string& language() const { return itsLanguage; }
   const std::string& formatter() const { return itsFormatter; }
   const std::string& locale() const { return itsLocale; }
@@ -109,6 +110,7 @@ class ProductConfig : private boost::noncopyable
   std::string itsMySQLDictionaryDatabase;
   std::string itsMySQLDictionaryUsername;
   std::string itsMySQLDictionaryPassword;
+  std::string itsFileDictionaries;
   std::string itsForestFireWarningDirectory;
 
   bool itsFrostSeason;

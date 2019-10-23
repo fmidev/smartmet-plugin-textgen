@@ -332,8 +332,6 @@ void Config::setDefaultConfigValues(ProductConfigMap& productConfigs)
       pProductConfig->itsTimeFormat = default_timeformat;
     if (pProductConfig->itsDictionary.empty())
       pProductConfig->itsDictionary = default_dictionary;
-    if (pProductConfig->itsDictionary.empty())
-      pProductConfig->itsDictionary = default_dictionary;
   }
 }
 
@@ -605,8 +603,10 @@ ProductConfig::ProductConfig(const std::string& configfile)
     itsConfig.lookupValue("misc.language", itsLanguage);
     itsConfig.lookupValue("misc.locale", itsLocale);
     itsConfig.lookupValue("misc.dictionary", itsDictionary);
-    itsConfig.lookupValue("forestfirewarning.directory", itsForestFireWarningDirectory);
+    itsConfig.lookupValue("misc.filedictionaries", itsFileDictionaries);
     itsConfig.lookupValue("misc.formatter", itsFormatter);
+
+    itsConfig.lookupValue("forestfirewarning.directory", itsForestFireWarningDirectory);
 
     // mysql-dictionary
     itsConfig.lookupValue("mysql_dictionary.host", itsMySQLDictionaryHost);
@@ -952,8 +952,8 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
       if (itsDictionary.empty())
         itsDictionary = pDefaultConfig->itsDictionary;
 
-      if (itsDictionary.empty())
-        itsDictionary = pDefaultConfig->itsDictionary;
+      if (itsFileDictionaries.empty())
+        itsFileDictionaries = pDefaultConfig->itsFileDictionaries;
     }
   }
   catch (...)

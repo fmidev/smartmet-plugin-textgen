@@ -1,10 +1,12 @@
 #include "Plugin.h"
+#include "FileDictionaryPlusGeonames.h"
 #include "MySQLDictionariesPlusGeonames.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/bind.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/locale.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/tokenizer.hpp>
 #include <calculator/Settings.h>
@@ -486,6 +488,7 @@ void set_textgen_settings(const ProductConfig& config,
     Settings::set("textgen::user", config.mySQLDictionaryUsername());
     Settings::set("textgen::passwd", config.mySQLDictionaryPassword());
     Settings::set("textgen::database", config.mySQLDictionaryDatabase());
+    Settings::set("textgen::filedictionaries", config.fileDictionaries());
 
 #ifdef MYDEBUG
     std::cout << "MySQL dictionary: " << std::endl
@@ -493,6 +496,7 @@ void set_textgen_settings(const ProductConfig& config,
               << "textgen::user=" << config.mySQLDictionaryUsername() << std::endl
               << "textgen::passwd=" << config.mySQLDictionaryPassword() << std::endl
               << "textgen::database=" << config.mySQLDictionaryDatabase() << std::endl
+              << "textgen::filedictionaries=" << config.fileDictionaries() << std::endl
               << "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false") << std::endl
               << std::endl;
 #endif
@@ -582,7 +586,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
 {
   try
   {
-    std::cerr << boost::posix_time::second_clock::local_time() << " error: " << what << std::endl
+    std::cerr << Spine::log_time_str() << " error: " << what << std::endl
               << "Query: " << theRequest.getURI() << std::endl
               << "ClientIP: " << theRequest.getClientIP() << std::endl;
 
@@ -647,11 +651,12 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     boost::shared_ptr<TextGen::Dictionary> theDictionary;
     const auto& dictionary_name = config.dictionary();
     if (dictionary_name == "multimysqlplusgeonames")
-      theDictionary = (static_cast<boost::shared_ptr<TextGen::Dictionary> >(
-          new MySQLDictionariesPlusGeonames()));
+      theDictionary = boost::make_shared<MySQLDictionariesPlusGeonames>();
+    else if (dictionary_name == "fileplusgeonames")
+      theDictionary = boost::make_shared<FileDictionaryPlusGeonames>();
     else
-      theDictionary = (static_cast<boost::shared_ptr<TextGen::Dictionary> >(
-          (TextGen::DictionaryFactory::create(dictionary_name))));
+      theDictionary = static_cast<boost::shared_ptr<TextGen::Dictionary> >(
+          (TextGen::DictionaryFactory::create(dictionary_name)));
 
     theDictionary->init(mmap_string(queryParameters, LANGUAGE_PARAM));
     theDictionary->geoinit(&theReactor);
@@ -692,8 +697,11 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     // set locale
     const std::string loc = mmap_string(queryParameters, LOCALE_PARAM, config.locale());
 
-    boost::locale::generator gen;
-    std::locale::global(gen(loc));
+    if (!loc.empty())
+    {
+      boost::locale::generator gen;
+      std::locale::global(gen(loc));
+    }
 
     std::string formatter_name(mmap_string(queryParameters, FORMATTER_PARAM));
 
