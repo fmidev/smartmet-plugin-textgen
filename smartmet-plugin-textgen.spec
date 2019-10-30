@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 19.10.23
+Version: 19.10.31
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,26 +16,26 @@ BuildRequires: boost-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 19.9.26
-BuildRequires: smartmet-library-textgen-devel >= 19.9.26
-BuildRequires: smartmet-library-spine-devel >= 19.9.26
-BuildRequires: smartmet-engine-observation-devel >= 19.9.26
-BuildRequires: smartmet-engine-querydata-devel >= 19.9.26
-BuildRequires: smartmet-engine-geonames-devel >= 19.9.26
-BuildRequires: smartmet-engine-gis-devel >= 19.9.26
+BuildRequires: smartmet-library-calculator-devel >= 19.10.31
+BuildRequires: smartmet-library-textgen-devel >= 19.10.31
+BuildRequires: smartmet-library-spine-devel >= 19.10.31
+BuildRequires: smartmet-engine-observation-devel >= 19.10.31
+BuildRequires: smartmet-engine-querydata-devel >= 19.10.31
+BuildRequires: smartmet-engine-geonames-devel >= 19.10.25
+BuildRequires: smartmet-engine-gis-devel >= 19.10.31
 BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
 BuildRequires: smartmet-library-locus-devel >= 19.9.26
-Requires: smartmet-library-calculator >= 19.9.26
+Requires: smartmet-library-calculator >= 19.10.31
 Requires: smartmet-library-macgyver >= 19.9.26
 Requires: smartmet-library-locus >= 19.9.26
-Requires: smartmet-library-textgen >= 19.9.26
+Requires: smartmet-library-textgen >= 19.10.31
 Requires: libconfig
-Requires: smartmet-engine-observation >= 19.9.26
-Requires: smartmet-engine-geonames >= 19.9.26
-Requires: smartmet-engine-querydata >= 19.9.26
-Requires: smartmet-engine-gis >= 19.9.26
-Requires: smartmet-server >= 19.9.26
-Requires: smartmet-library-spine >= 19.9.26
+Requires: smartmet-engine-observation >= 19.10.31
+Requires: smartmet-engine-geonames >= 19.10.25
+Requires: smartmet-engine-querydata >= 19.10.31
+Requires: smartmet-engine-gis >= 19.10.31
+Requires: smartmet-server >= 19.10.1
+Requires: smartmet-library-spine >= 19.10.31
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Oct 31 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.31-1.fmi
+- Rebuilt due to newbase API/ABI changes
+
 * Wed Oct 23 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.23-1.fmi
 - Added support for file dictionaries
 - Refactored database details into local.conf 
