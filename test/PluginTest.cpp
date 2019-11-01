@@ -23,7 +23,7 @@ int main() try
   options.configfile = "cnf/reactor.conf";
   options.quiet = true;
 
-  SmartMet::Spine::PluginTest::test(options, prelude, false, 10);
+  SmartMet::Spine::PluginTest::test(options, prelude, false, 1);
 
   return 0;
 }

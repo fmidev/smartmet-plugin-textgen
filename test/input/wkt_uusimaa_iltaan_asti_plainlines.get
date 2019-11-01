@@ -1,0 +1,1 @@
+GET /textgen?formatter=plainlines&wkt=POLYGON%28%2822.8+59.8%2C+26.5+59.8%2C+26.5+60.8%2C+22.8+60.8%2C+22.8+59.8%29%29&product=iltaan_asti&forecasttime=200808050800 HTTP/1.0
