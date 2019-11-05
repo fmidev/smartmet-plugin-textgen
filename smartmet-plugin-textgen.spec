@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 19.10.23
+Version: 19.11.5
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,7 +16,7 @@ BuildRequires: boost-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 19.9.26
+BuildRequires: smartmet-library-calculator-devel >= 19.11.5
 BuildRequires: smartmet-library-textgen-devel >= 19.9.26
 BuildRequires: smartmet-library-spine-devel >= 19.9.26
 BuildRequires: smartmet-engine-observation-devel >= 19.9.26
@@ -25,7 +25,7 @@ BuildRequires: smartmet-engine-geonames-devel >= 19.9.26
 BuildRequires: smartmet-engine-gis-devel >= 19.9.26
 BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
 BuildRequires: smartmet-library-locus-devel >= 19.9.26
-Requires: smartmet-library-calculator >= 19.9.26
+Requires: smartmet-library-calculator >= 19.11.5
 Requires: smartmet-library-macgyver >= 19.9.26
 Requires: smartmet-library-locus >= 19.9.26
 Requires: smartmet-library-textgen >= 19.9.26
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Nov 5 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.11.5-1.fmi
+- Support for parameter mapping. Changed structure of configuration file for database servers (BRAINSTORM-1719)
+
 * Wed Oct 23 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.23-1.fmi
 - Added support for file dictionaries
 - Refactored database details into local.conf 

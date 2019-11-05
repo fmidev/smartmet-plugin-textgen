@@ -29,6 +29,7 @@ using ConfigItem = std::pair<std::string, std::string>;
 using ConfigItemVector = std::vector<ConfigItem>;
 using ProductConfigItem = std::pair<std::string, boost::shared_ptr<ProductConfig> >;
 using ProductConfigMap = std::map<std::string, boost::shared_ptr<ProductConfig> >;
+using ParameterMappings = std::map<std::string, std::string>;
 
 class ProductConfig : private boost::noncopyable
 {
@@ -73,6 +74,7 @@ class ProductConfig : private boost::noncopyable
   // returns areacode name and number
   const std::pair<std::string, std::string>& getFireWarningAreaCode(
       const unsigned int& index) const;
+  const ParameterMappings& getParameterMappings() const { return itsParameterMappings; }
 
   void setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDefaultConf);
 
@@ -112,6 +114,7 @@ class ProductConfig : private boost::noncopyable
   std::string itsMySQLDictionaryPassword;
   std::string itsFileDictionaries;
   std::string itsForestFireWarningDirectory;
+  ParameterMappings itsParameterMappings;
 
   bool itsFrostSeason;
   size_t itsLastModifiedTime{0};  // epoch seconds
