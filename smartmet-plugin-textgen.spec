@@ -17,25 +17,25 @@ BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 19.11.5
-BuildRequires: smartmet-library-textgen-devel >= 19.9.26
-BuildRequires: smartmet-library-spine-devel >= 19.9.26
-BuildRequires: smartmet-engine-observation-devel >= 19.9.26
-BuildRequires: smartmet-engine-querydata-devel >= 19.9.26
-BuildRequires: smartmet-engine-geonames-devel >= 19.9.26
-BuildRequires: smartmet-engine-gis-devel >= 19.9.26
+BuildRequires: smartmet-library-textgen-devel >= 19.10.31
+BuildRequires: smartmet-library-spine-devel >= 19.10.31
+BuildRequires: smartmet-engine-observation-devel >= 19.10.31
+BuildRequires: smartmet-engine-querydata-devel >= 19.10.31
+BuildRequires: smartmet-engine-geonames-devel >= 19.10.25
+BuildRequires: smartmet-engine-gis-devel >= 19.10.31
 BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
 BuildRequires: smartmet-library-locus-devel >= 19.9.26
 Requires: smartmet-library-calculator >= 19.11.5
 Requires: smartmet-library-macgyver >= 19.9.26
 Requires: smartmet-library-locus >= 19.9.26
-Requires: smartmet-library-textgen >= 19.9.26
+Requires: smartmet-library-textgen >= 19.10.31
 Requires: libconfig
-Requires: smartmet-engine-observation >= 19.9.26
-Requires: smartmet-engine-geonames >= 19.9.26
-Requires: smartmet-engine-querydata >= 19.9.26
-Requires: smartmet-engine-gis >= 19.9.26
-Requires: smartmet-server >= 19.9.26
-Requires: smartmet-library-spine >= 19.9.26
+Requires: smartmet-engine-observation >= 19.10.31
+Requires: smartmet-engine-geonames >= 19.10.25
+Requires: smartmet-engine-querydata >= 19.10.31
+Requires: smartmet-engine-gis >= 19.10.31
+Requires: smartmet-server >= 19.10.1
+Requires: smartmet-library-spine >= 19.10.31
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
@@ -72,6 +72,9 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Tue Nov 5 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.11.5-1.fmi
 - Support for parameter mapping. Changed structure of configuration file for database servers (BRAINSTORM-1719)
+
+* Thu Oct 31 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.31-1.fmi
+- Rebuilt due to newbase API/ABI changes
 
 * Wed Oct 23 2019 Mika Heiskanen <mika.heiskanen@fmi.fi> - 19.10.23-1.fmi
 - Added support for file dictionaries
