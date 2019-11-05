@@ -5,6 +5,7 @@
 // ======================================================================
 
 #include "Config.h"
+#include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
@@ -12,6 +13,7 @@
 #include <calculator/TextGenPosixTime.h>
 #include <macgyver/AnsiEscapeCodes.h>
 #include <macgyver/StringConversion.h>
+#include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <iostream>
 #include <stdexcept>
@@ -288,6 +290,27 @@ Config::Config(const std::string& configfile)
     ConfigItemVector configItems = readMainConfig();
     std::set<std::string> emptyset;
     updateProductConfigs(configItems, emptyset, emptyset, emptyset);
+
+    for (const auto& item : *itsProductConfigs)
+    {
+      std::string config_name = item.first;
+      boost::shared_ptr<ProductConfig> pProductConfig = item.second;
+      std::string dictionary = pProductConfig->dictionary();
+
+      if (boost::algorithm::starts_with(dictionary, "multimysql") &&
+          (pProductConfig->mySQLDictionaryHost().empty() &&
+           pProductConfig->mySQLDictionaryDatabase().empty() &&
+           pProductConfig->mySQLDictionaryUsername().empty() &&
+           pProductConfig->mySQLDictionaryPassword().empty()))
+      {
+        std::string messageDetails =
+            "database_servers.mysql_dictionary section missing in textgenplugin configuration file "
+            "'" +
+            config_name + "'";
+        throw SmartMet::Spine::Exception::Trace(BCP, "Textgenplugin configuration error!")
+            .addDetail(messageDetails);
+      }
+    }
 
     boost::regex pattern("^[\\w,\\s-]+\\.[A-Za-z]+$");
     for (auto dir : getDirectoriesToMonitor(configItems))
@@ -597,7 +620,23 @@ ProductConfig::ProductConfig(const std::string& configfile)
 
     itsConfig.readFile(configfile.c_str());
 
-    // miscellaneous parameters
+    // Parameter mappings
+    if (itsConfig.exists("parameter_mapping"))
+    {
+      ConfigItemVector parameter_mappings;
+      std::vector<std::string> allowed_sections;
+      allowed_sections.emplace_back("*");
+      parseConfigurationItem(itsConfig, "parameter_mapping", allowed_sections, parameter_mappings);
+      for (auto item : parameter_mappings)
+      {
+        std::string configname = item.first;
+        std::string qdname = item.second;
+        boost::algorithm::replace_all(configname, "parameter_mapping.", "textgen::");
+        itsParameterMappings[configname] = qdname;
+      }
+    }
+
+    // Miscellaneous parameters
     itsConfig.lookupValue("misc.frostseason", itsFrostSeason);
     itsConfig.lookupValue("misc.timeformat", itsTimeFormat);
     itsConfig.lookupValue("misc.language", itsLanguage);
@@ -608,77 +647,126 @@ ProductConfig::ProductConfig(const std::string& configfile)
 
     itsConfig.lookupValue("forestfirewarning.directory", itsForestFireWarningDirectory);
 
-    // mysql-dictionary
-    itsConfig.lookupValue("mysql_dictionary.host", itsMySQLDictionaryHost);
-    itsConfig.lookupValue("mysql_dictionary.database", itsMySQLDictionaryDatabase);
-    itsConfig.lookupValue("mysql_dictionary.username", itsMySQLDictionaryUsername);
-    itsConfig.lookupValue("mysql_dictionary.password", itsMySQLDictionaryPassword);
-
-    // PostGIS
-    if (itsConfig.exists("postgis.default"))
+    // MySQL-dictionary
+    if (itsConfig.exists("database_servers.mysql_dictionary"))
     {
-      Engine::Gis::postgis_identifier postgis_default_identifier;
-      postgis_default_identifier.encoding = default_postgis_client_encoding;
-      itsConfig.lookupValue("postgis.default.host", postgis_default_identifier.host);
-      itsConfig.lookupValue("postgis.default.port", postgis_default_identifier.port);
-      itsConfig.lookupValue("postgis.default.database", postgis_default_identifier.database);
-      itsConfig.lookupValue("postgis.default.username", postgis_default_identifier.username);
-      itsConfig.lookupValue("postgis.default.password", postgis_default_identifier.password);
-      itsConfig.lookupValue("postgis.default.client_encoding", postgis_default_identifier.encoding);
-      itsConfig.lookupValue("postgis.default.schema", postgis_default_identifier.schema);
-      itsConfig.lookupValue("postgis.default.table", postgis_default_identifier.table);
-      itsConfig.lookupValue("postgis.default.field", postgis_default_identifier.field);
-      std::string postgis_identifier_key(postgis_default_identifier.key());
-      itsDefaultPostGISIdentifierKey = postgis_identifier_key;
-      postgis_identifiers.insert(
-          std::make_pair(postgis_identifier_key, postgis_default_identifier));
+      itsConfig.lookupValue("database_servers.mysql_dictionary.host", itsMySQLDictionaryHost);
+      itsConfig.lookupValue("database_servers.mysql_dictionary.database",
+                            itsMySQLDictionaryDatabase);
+      itsConfig.lookupValue("database_servers.mysql_dictionary.username",
+                            itsMySQLDictionaryUsername);
+      itsConfig.lookupValue("database_servers.mysql_dictionary.password",
+                            itsMySQLDictionaryPassword);
     }
 
-    if (itsConfig.exists("postgis.config_items"))
+    // PostGIS
+
+    // Database connection
+    std::map<std::string, Engine::Gis::postgis_identifier> pgIdentifiers;
+    if (itsConfig.exists("database_servers.postgis"))
     {
-      libconfig::Setting& configItems = itsConfig.lookup("postgis.config_items");
-
-      if (!configItems.isArray())
+      const libconfig::Setting& postgis = itsConfig.lookup("database_servers.postgis");
+      int numofservers = postgis.getLength();
+      for (int i = 0; i < numofservers; i++)
       {
-        throw SmartMet::Spine::Exception(
-            BCP,
-            "postgis.config_items not an array in textgenplugin configuration file line " +
-                Fmi::to_string(configItems.getSourceLine()));
+        const libconfig::Setting& pgServer = postgis[i];
+        std::string server_name;
+        Engine::Gis::postgis_identifier postgis_id;
+        postgis_id.encoding = default_postgis_client_encoding;
+        pgServer.lookupValue("name", server_name);
+        pgServer.lookupValue("host", postgis_id.host);
+        pgServer.lookupValue("port", postgis_id.port);
+        pgServer.lookupValue("database", postgis_id.database);
+        pgServer.lookupValue("username", postgis_id.username);
+        pgServer.lookupValue("password", postgis_id.password);
+        pgServer.lookupValue("client_encoding", postgis_id.encoding);
+        if (server_name.empty())
+          server_name = postgis_id.host;
+        pgIdentifiers[server_name] = postgis_id;
       }
-
-      for (int i = 0; i < configItems.getLength(); ++i)
+    }
+    if (pgIdentifiers.size() > 0)
+    {
+      // Geometry tables
+      if (itsConfig.exists("geometry_tables"))
       {
-        if (!itsConfig.exists(parse_config_key("postgis.", configItems[i])))
-          throw SmartMet::Spine::Exception(BCP,
-                                           parse_config_key("postgis.", configItems[i]) +
-                                               " -section does not exists in configuration file");
+        Engine::Gis::postgis_identifier default_postgis_id;
+        default_postgis_id.encoding = default_postgis_client_encoding;
+        std::string default_server;
+        std::string default_schema;
+        std::string default_table;
+        std::string default_field;
+        itsConfig.lookupValue("geometry_tables.server", default_server);
+        itsConfig.lookupValue("geometry_tables.schema", default_schema);
+        itsConfig.lookupValue("geometry_tables.table", default_table);
+        itsConfig.lookupValue("geometry_tables.field", default_field);
 
-        Engine::Gis::postgis_identifier postgis_id(
-            postgis_identifiers[itsDefaultPostGISIdentifierKey]);
+        if (!default_server.empty() && pgIdentifiers.find(default_server) == pgIdentifiers.end())
+        {
+          exceptionDetails = "Invalid server name '" + default_server +
+                             "' in textgenplugin configuration file '" + configfile + "'";
+          throw SmartMet::Spine::Exception(BCP, "Textgenplugin configuration error!");
+        }
+        else if (!default_server.empty())
+        {
+          default_postgis_id = pgIdentifiers.at(default_server);
+        }
+        if (!default_schema.empty() && !default_table.empty() && !default_field.empty())
+        {
+          default_postgis_id.schema = default_schema;
+          default_postgis_id.table = default_table;
+          default_postgis_id.field = default_field;
+          std::string key(default_postgis_id.key());
+          itsDefaultPostGISIdentifierKey = key;
+          postgis_identifiers.insert(std::make_pair(key, default_postgis_id));
+        }
 
-        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".host").c_str(),
-                              postgis_id.host);
-        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".port").c_str(),
-                              postgis_id.port);
-        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".database").c_str(),
-                              postgis_id.database);
-        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".username").c_str(),
-                              postgis_id.username);
-        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".password").c_str(),
-                              postgis_id.password);
-        itsConfig.lookupValue(
-            parse_config_key("postgis.", configItems[i], ".client_encoding").c_str(),
-            postgis_id.encoding);
-        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".schema").c_str(),
-                              postgis_id.schema);
-        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".table").c_str(),
-                              postgis_id.table);
-        itsConfig.lookupValue(parse_config_key("postgis.", configItems[i], ".field").c_str(),
-                              postgis_id.field);
+        if (itsConfig.exists("geometry_tables.additional_tables"))
+        {
+          libconfig::Setting& additionalTables =
+              itsConfig.lookup("geometry_tables.additional_tables");
 
-        std::string key(postgis_id.key());
-        if (postgis_identifiers.find(key) == postgis_identifiers.end())
-          postgis_identifiers.insert(std::make_pair(postgis_id.key(), postgis_id));
+          for (int i = 0; i < additionalTables.getLength(); i++)
+          {
+            libconfig::Setting& tableConfig = additionalTables[i];
+            std::string server;
+            std::string schema;
+            std::string table;
+            std::string field;
+            tableConfig.lookupValue("server", server);
+            tableConfig.lookupValue("schema", schema);
+            tableConfig.lookupValue("table", table);
+            tableConfig.lookupValue("field", field);
+
+            Engine::Gis::postgis_identifier postgis_id = default_postgis_id;
+            if (!server.empty() && pgIdentifiers.find(server) != pgIdentifiers.end())
+              postgis_id = pgIdentifiers.at(server);
+
+            postgis_id.schema = (schema.empty() ? default_schema : schema);
+            postgis_id.table = (table.empty() ? default_table : table);
+            postgis_id.field = (field.empty() ? default_field : field);
+
+            std::string key(postgis_id.key());
+            if (itsDefaultPostGISIdentifierKey.empty())
+              itsDefaultPostGISIdentifierKey = key;
+            postgis_identifiers.insert(std::make_pair(key, postgis_id));
+
+            std::string err_msg;
+            if (default_schema.empty() && schema.empty())
+              err_msg = "No 'schema' defined. ";
+            if (default_table.empty() && table.empty())
+              err_msg += "No 'table' defined. ";
+            if (default_field.empty() && field.empty())
+              err_msg += "No 'field' defined.";
+
+            if (!err_msg.empty())
+            {
+              exceptionDetails =
+                  "Textgenplugin configuration error in geometry_tables section: " + err_msg;
+              throw SmartMet::Spine::Exception(BCP, "Textgenplugin configuration error!");
+            }
+          }
+        }
       }
     }
 
@@ -877,6 +965,10 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
   {
     pDefaultConfig = pDefaultConf;
 
+    for (const auto& item : pDefaultConfig->itsParameterMappings)
+      if (itsParameterMappings.find(item.first) == itsParameterMappings.end())
+        itsParameterMappings[item.first] = item.second;
+
     if (postgis_identifiers.empty())
     {
       if (!pDefaultConfig || pDefaultConfig->numberOfPostGISIdentifiers() == 0)
@@ -983,7 +1075,9 @@ Engine::Gis::PostGISIdentifierVector ProductConfig::getPostGISIdentifiers() cons
 {
   Engine::Gis::PostGISIdentifierVector ret;
   for (const auto& item : postgis_identifiers)
+  {
     ret.push_back(item.second);
+  }
 
   return ret;
 }

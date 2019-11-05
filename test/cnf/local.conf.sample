@@ -1,42 +1,25 @@
-# mysql dictionary database definitions
-mysql_dictionary:
+
+database_servers:
 {
-	host		= "mysql_host";
-	username	= "mysql_user_name";
-	password	= "mysql_password";
-	database	= "mysql_database_name";
-};
-
-# PostGIS database definitions
-postgis:
-{
-	default:
+	# MySQL dictionary database definitions
+	mysql_dictionary:
 	{
-		host		= "postgis_default_host";
-		port    	= "postgis_default_port";
-		database	= "postgis_default_database_name";
-		username	= "postgis_default_user_name";
-		password	= "postgis_default_password";
-		client_encoding	= "postgis_default_client_encoding";
-		schema		= "postgis_default_schema";
-		table		= "postgis_default_table_name";
-		field		= "postgis_default_field_name";	
+		host		= "mysql_host";
+		username	= "mysql_user_name";
+		password	= "mysql_password";
+		database	= "mysql_database_name";
 	};
 
-	# Additional data sources
-	config_items = ["addtional_config_item1","adiddtional_config_item2","..."];
-
-	addtional_config_item1:
-	{
-		# Here the user may re-define all fields of default-section,
-		# but in this example we just define different table and field name
-		table	= "postgis_table_name";
-		field	= "postgis_field_name";
-	};
-
-	adiddtional_config_item2:
-	{
-		table	= "postgis_table_name";
-		field	= "postgis_field_name";
-	};
-};
+	# PostGIS database definitions
+	postgis:
+	(
+		{
+			host		= "postgis_default_host";
+			port    	= "postgis_default_port";				
+			database	= "postgis_default_database_name";
+			username	= "postgis_default_user_name";
+			password	= "postgis_default_password";
+			client_encoding	= "postgis_default_client_encoding";
+		}
+	);
+}

@@ -384,6 +384,15 @@ void set_textgen_settings(const ProductConfig& config,
     // frostseason-parameter is used by old stories
     Settings::set("textgen::frostseason", (config.isFrostSeason() ? "true" : "false"));
 
+    // Parameter mappings
+    ParameterMappings pm = config.getParameterMappings();
+    for (const auto& item : pm)
+    {
+      std::string configname = item.first;
+      std::string qdname = item.second;
+      Settings::set(configname, qdname);
+    }
+
     // MySQL database
     Settings::set("textgen::host", config.mySQLDictionaryHost());
     Settings::set("textgen::user", config.mySQLDictionaryUsername());
