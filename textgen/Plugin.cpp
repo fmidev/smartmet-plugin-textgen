@@ -13,6 +13,7 @@
 #include <calculator/TextGenPosixTime.h>
 #include <calculator/TimeTools.h>
 #include <engines/geonames/Engine.h>
+#include <engines/geonames/WktGeometry.h>
 #include <engines/gis/Engine.h>
 #include <macgyver/StringConversion.h>
 #include <macgyver/TimeFormatter.h>
@@ -169,68 +170,156 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
                                std::vector<TextGen::WeatherArea>& weatherAreaVector,
                                std::string& errorMessage)
 {
-  auto tagged_locations = geoEngine.parseLocations(theRequest);
-  if (tagged_locations.empty())
+  try
   {
-    errorMessage += "No locations specified";
-    return false;
-  }
+    Spine::HTTP::Request httpRequest = theRequest;
 
-  for (const auto& tagged_loc : tagged_locations.locations())
-  {
-    const auto& loc = *tagged_loc.loc;
-    switch (loc.type)
+    // If bbox-parameter exists, convert it to wkt-parameter
+    boost::optional<std::string> bbox_param_value = httpRequest.getParameter("bbox");
+    if (bbox_param_value)
     {
-      case Spine::Location::LocationType::Place:
-      case Spine::Location::LocationType::CoordinatePoint:
+      std::string bbox_name = "";
+      std::string bbox_string = *bbox_param_value;
+      size_t name_pos = bbox_string.find(" as ");
+      if (name_pos != std::string::npos)
       {
-        if (loc.feature.substr(0, 3) == "ADM" && geometryStorage.geoObjectExists(loc.name))
-          weatherAreaVector.emplace_back(
-              TextGen::WeatherArea(make_area(loc.name, geometryStorage)));
-        else
-        {
-          auto geoname = loc.name;
-          normalize_string(geoname);
-          weatherAreaVector.emplace_back(
-              TextGen::WeatherArea(NFmiPoint(loc.longitude, loc.latitude),
-                                   geoname,
-                                   (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
-        }
-        break;
+        bbox_name = bbox_string.substr(name_pos + 4);
+        bbox_string = bbox_string.substr(0, name_pos);
       }
-      case Spine::Location::LocationType::Area:
+      size_t radius_pos = bbox_string.find(":");
+      std::string radius = "";
+      if (radius_pos != std::string::npos)
       {
-        SmartMet::Spine::ReadLock lock(thePostGISMutex);
-        if (geometryStorage.geoObjectExists(loc.name))
-          weatherAreaVector.emplace_back(
-              TextGen::WeatherArea(make_area(loc.name, geometryStorage)));
-        else
+        radius = bbox_string.substr(radius_pos + 1);
+        bbox_string = bbox_string.substr(0, radius_pos);
+      }
+      std::vector<std::string> parts;
+      boost::algorithm::split(parts, bbox_string, boost::algorithm::is_any_of(","));
+      if (parts.size() != 4)
+        throw Spine::Exception(BCP,
+                               "Invalid bbox parameter " + bbox_string +
+                                   ", should be in format 'lon,lat,lon,lat[:radius] [as name]'!");
+
+      std::string wktString("POLYGON((");
+      wktString += (parts[0] + " " + parts[1] + ", ");
+      wktString += (parts[0] + " " + parts[3] + ", ");
+      wktString += (parts[2] + " " + parts[3] + ", ");
+      wktString += (parts[2] + " " + parts[1] + ", ");
+      wktString += (parts[0] + " " + parts[1] + "))");
+      if (!radius.empty())
+        wktString += (":" + radius);
+      if (!bbox_name.empty())
+        wktString += (" as " + bbox_name);
+
+      httpRequest.removeParameter("bbox");
+      httpRequest.setParameter("wkt", wktString);
+    }
+
+    auto tagged_locations = geoEngine.parseLocations(httpRequest);
+
+    if (tagged_locations.empty())
+    {
+      errorMessage += "No locations specified";
+      return false;
+    }
+
+    for (const auto& tagged_loc : tagged_locations.locations())
+    {
+      const auto& loc = *tagged_loc.loc;
+      switch (loc.type)
+      {
+        case Spine::Location::LocationType::Place:
+        case Spine::Location::LocationType::CoordinatePoint:
         {
-          errorMessage += "Area " + loc.name + " not found in PostGIS database!";
+          if (loc.feature.substr(0, 3) == "ADM" && geometryStorage.geoObjectExists(loc.name))
+            weatherAreaVector.emplace_back(
+                TextGen::WeatherArea(make_area(loc.name, geometryStorage)));
+          else
+          {
+            auto geoname = loc.name;
+            normalize_string(geoname);
+            weatherAreaVector.emplace_back(
+                TextGen::WeatherArea(NFmiPoint(loc.longitude, loc.latitude),
+                                     geoname,
+                                     (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
+          }
+          break;
+        }
+        case Spine::Location::LocationType::Area:
+        {
+          SmartMet::Spine::ReadLock lock(thePostGISMutex);
+          if (geometryStorage.geoObjectExists(loc.name))
+            weatherAreaVector.emplace_back(
+                TextGen::WeatherArea(make_area(loc.name, geometryStorage)));
+          else
+          {
+            errorMessage += "Area " + loc.name + " not found in PostGIS database!";
+            return false;
+          }
+          break;
+        }
+        case Spine::Location::LocationType::BoundingBox:
+        {
+          // We should never end up here because bbox parameter is converted to wkt parameter
+          throw Spine::Exception(BCP,
+                                 "Something wrong: BoundingBox should be handled as WKT POLYGON!");
+          break;
+        }
+        case Spine::Location::LocationType::Wkt:
+        {
+          Engine::Geonames::WktGeometries wktGeometries =
+              geoEngine.getWktGeometries(tagged_locations, language);
+
+          Spine::LocationPtr wktLocation = wktGeometries.getLocation(loc.name);
+          Spine::Location::LocationType wktType = wktLocation->type;
+          //        TextGen::WeatherArea wktWeatherArea(NFmiPoint(0.0, 0.0));
+          std::string wktName = loc.name;
+          size_t wktNamePos = wktName.find(" as ");
+          if (wktNamePos != std::string::npos)
+            wktName = wktName.substr(wktNamePos + 4);
+          switch (wktType)
+          {
+            case Spine::Location::LocationType::CoordinatePoint:
+            {
+              int coordinate_string_len = (loc.name.find(")") - loc.name.find("(")) - 1;
+              std::string coordinates =
+                  loc.name.substr(loc.name.find("(") + 1, coordinate_string_len);
+              double lon = Fmi::stod(coordinates.substr(0, coordinates.find(" ")));
+              double lat = Fmi::stod(coordinates.substr(coordinates.find(" ") + 1));
+              weatherAreaVector.emplace_back(
+                  TextGen::WeatherArea(NFmiPoint(lon, lat),
+                                       wktName,
+                                       (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
+            }
+            break;
+            case Spine::Location::LocationType::Area:
+            case Spine::Location::LocationType::Path:
+            {
+              weatherAreaVector.emplace_back(
+                  TextGen::WeatherArea(wktGeometries.getSvgPath(loc.name), wktName));
+            }
+            break;
+            default:
+              std::cout << "WKT type not supported: " << wktType << std::endl;
+              return false;
+              break;
+          }
+          break;
+        }
+        case Spine::Location::LocationType::Path:
+        {
+          errorMessage += "paths not supported";
           return false;
         }
-        break;
-      }
-      case Spine::Location::LocationType::BoundingBox:
-      {
-        auto bbox_str = tagged_loc.tag;
-        errorMessage += "bounding boxes not supported";
-        return false;
-      }
-      case Spine::Location::LocationType::Wkt:
-      {
-        errorMessage += "WKT areas not supported";
-        return false;
-      }
-      case Spine::Location::LocationType::Path:
-      {
-        errorMessage += "paths not supported";
-        return false;
       }
     }
-  }
 
-  return true;
+    return true;
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Location parameter parsing failed!");
+  }
 }
 
 bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParameters,
@@ -523,7 +612,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
   }
 }
 
-}  // anonymous namespace
+}  // namespace
 
 bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const
 {
@@ -618,6 +707,10 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
                     : TextGen::TextGenerator());
 
     std::string forecast_text;
+
+    auto wktParam = queryParameters.find("wkt");
+    if (wktParam != queryParameters.end())
+      modified_params += (";" + wktParam->second);
 
     for (const auto& area : weatherAreaVector)
     {
