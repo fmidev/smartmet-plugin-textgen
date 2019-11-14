@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 19.11.5
+Version: 19.11.14
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -21,7 +21,7 @@ BuildRequires: smartmet-library-textgen-devel >= 19.10.31
 BuildRequires: smartmet-library-spine-devel >= 19.10.31
 BuildRequires: smartmet-engine-observation-devel >= 19.10.31
 BuildRequires: smartmet-engine-querydata-devel >= 19.10.31
-BuildRequires: smartmet-engine-geonames-devel >= 19.10.25
+BuildRequires: smartmet-engine-geonames-devel >= 19.11.14
 BuildRequires: smartmet-engine-gis-devel >= 19.10.31
 BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
 BuildRequires: smartmet-library-locus-devel >= 19.9.26
@@ -31,7 +31,7 @@ Requires: smartmet-library-locus >= 19.9.26
 Requires: smartmet-library-textgen >= 19.10.31
 Requires: libconfig
 Requires: smartmet-engine-observation >= 19.10.31
-Requires: smartmet-engine-geonames >= 19.10.25
+Requires: smartmet-engine-geonames >= 19.11.14
 Requires: smartmet-engine-querydata >= 19.10.31
 Requires: smartmet-engine-gis >= 19.10.31
 Requires: smartmet-server >= 19.10.1
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Nov 14 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.11.14-1.fmi
+- Added support for bbox and wkt parameters (BRAINSTORM-1720)
+
 * Tue Nov 5 2019 Anssi Reponen <anssi.reponen@fmi.fi> - 19.11.5-1.fmi
 - Support for parameter mapping. Changed structure of configuration file for database servers (BRAINSTORM-1719)
 
