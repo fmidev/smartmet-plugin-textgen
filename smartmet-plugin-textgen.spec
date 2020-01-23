@@ -16,26 +16,26 @@ BuildRequires: boost-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 19.11.5
-BuildRequires: smartmet-library-textgen-devel >= 19.10.31
-BuildRequires: smartmet-library-spine-devel >= 19.10.31
-BuildRequires: smartmet-engine-observation-devel >= 19.10.31
-BuildRequires: smartmet-engine-querydata-devel >= 19.10.31
-BuildRequires: smartmet-engine-geonames-devel >= 19.11.14
+BuildRequires: smartmet-library-calculator-devel >= 19.12.4
+BuildRequires: smartmet-library-textgen-devel >= 19.12.4
+BuildRequires: smartmet-library-spine-devel >= 20.1.15
+BuildRequires: smartmet-engine-observation-devel >= 19.12.19
+BuildRequires: smartmet-engine-querydata-devel >= 19.11.20
+BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
 BuildRequires: smartmet-engine-gis-devel >= 20.1.23
-BuildRequires: smartmet-library-macgyver-devel >= 19.9.26
-BuildRequires: smartmet-library-locus-devel >= 19.9.26
-Requires: smartmet-library-calculator >= 19.11.5
-Requires: smartmet-library-macgyver >= 19.9.26
-Requires: smartmet-library-locus >= 19.9.26
-Requires: smartmet-library-textgen >= 19.10.31
+BuildRequires: smartmet-library-macgyver-devel >= 20.1.9
+BuildRequires: smartmet-library-locus-devel >= 19.12.4
+Requires: smartmet-library-calculator >= 19.12.4
+Requires: smartmet-library-macgyver >= 20.1.9
+Requires: smartmet-library-locus >= 19.12.4
+Requires: smartmet-library-textgen >= 19.12.4
 Requires: libconfig
-Requires: smartmet-engine-observation >= 19.10.31
-Requires: smartmet-engine-geonames >= 19.11.14
-Requires: smartmet-engine-querydata >= 19.10.31
+Requires: smartmet-engine-observation >= 19.12.19
+Requires: smartmet-engine-geonames >= 19.12.5
+Requires: smartmet-engine-querydata >= 19.11.20
 Requires: smartmet-engine-gis >= 20.1.23
-Requires: smartmet-server >= 19.10.1
-Requires: smartmet-library-spine >= 19.10.31
+Requires: smartmet-server >= 20.1.15
+Requires: smartmet-library-spine >= 20.1.15
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
