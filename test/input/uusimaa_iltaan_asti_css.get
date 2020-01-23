@@ -1,1 +1,1 @@
-GET /textgen?formatter=css&area=Uusimaa&product=iltaan_asti&forecasttime=200808050800 HTTP/1.0
+GET /textgen?formatter=css&area=Uusimaa&product=iltaan_asti&forecasttime=200808060800 HTTP/1.0

@@ -2,20 +2,10 @@
 
 #include "Config.h"
 
-#include <calculator/WeatherArea.h>
 #include <macgyver/Cache.h>
-#include <textgen/Dictionary.h>
-
-#include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
-#include <engines/gis/GeometryStorage.h>
 #include <spine/HTTP.h>
 #include <spine/Reactor.h>
 #include <spine/SmartMetPlugin.h>
-#include <spine/Thread.h>
-#include <map>
-#include <string>
-#include <vector>
 
 namespace SmartMet
 {
@@ -73,20 +63,10 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
   };
   Fmi::Cache::Cache<std::string, cache_item> itsForecastTextCache;
 
-  typedef std::map<std::string, boost::shared_ptr<TextGen::WeatherArea> > mask_map;
-  // here we store masks by product
-  std::map<std::string, mask_map> itsProductMasks;
-  // mutex for PostGIS database
-  SmartMet::Spine::MutexType itsPostGISMutex;
-  // mutex for forecast text cache
+  // Mutex for forecast text cache
   SmartMet::Spine::MutexType itsForecastTextCacheMutex;
 
   SmartMet::Engine::Geonames::Engine* itsGeoEngine = nullptr;
-  SmartMet::Engine::Gis::Engine* itsGisEngine = nullptr;
-
-  // Geometries and their svg-representations are stored here
-  Engine::Gis::GeometryStorage itsGeometryStorage;
-
 };  // class Plugin
 
 }  // namespace Textgen
