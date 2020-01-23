@@ -44,7 +44,8 @@ ifeq ($(CXX), clang++)
  INCLUDES = \
 	-isystem $(includedir) \
 	-isystem $(includedir)/smartmet \
-	-isystem $(includedir)/mysql
+	-isystem $(includedir)/mysql \
+	-isystem $(PREFIX)/gdal30/include
 
 else
 
@@ -66,7 +67,8 @@ else
  INCLUDES = \
 	-I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/mysql
+	-I$(includedir)/mysql \
+        -I$(PREFIX)/gdal30/include
 
 endif
 
@@ -102,6 +104,10 @@ LIBS = -L$(libdir) \
 	-lboost_thread \
 	-lboost_iostreams \
 	-lbz2 -lz -lrt
+
+ifneq ($(DISABLED_GDAL),yes)
+  LIBS += -L$(PREFIX)/gdal30/lib `pkg-config --libs gdal30`
+endif
 
 # What to install
 
