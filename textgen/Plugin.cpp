@@ -1,45 +1,20 @@
 #include "Plugin.h"
 #include "FileDictionaryPlusGeonames.h"
 #include "MySQLDictionariesPlusGeonames.h"
-#include <boost/algorithm/string/replace.hpp>
-#include <boost/bind.hpp>
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/locale.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/tokenizer.hpp>
 #include <calculator/Settings.h>
-#include <calculator/TextGenPosixTime.h>
-#include <calculator/TimeTools.h>
 #include <engines/geonames/Engine.h>
-#include <engines/geonames/WktGeometry.h>
 #include <engines/gis/Engine.h>
-#include <macgyver/StringConversion.h>
 #include <macgyver/TimeFormatter.h>
-#include <newbase/NFmiCmdLine.h>
-#include <newbase/NFmiFileSystem.h>
-#include <newbase/NFmiStringTools.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <spine/Location.h>
-#include <spine/SmartMet.h>
-#include <spine/Table.h>
-#include <spine/TableFormatterFactory.h>
-#include <spine/ValueFormatter.h>
 #include <textgen/DictionaryFactory.h>
 #include <textgen/Document.h>
 #include <textgen/MessageLogger.h>
 #include <textgen/TextFormatter.h>
 #include <textgen/TextFormatterFactory.h>
 #include <textgen/TextGenerator.h>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <limits>
-#include <stdexcept>
-#include <string>
 
 namespace SmartMet
 {
@@ -134,36 +109,8 @@ bool parse_forecasttime_parameter(const std::string& forecasttime_string,
   }
 }
 
-TextGen::WeatherArea make_area(const std::string& postGISName,
-                               const Engine::Gis::GeometryStorage& geometryStorage)
-{
-  try
-  {
-    std::string areaName(postGISName);
-    normalize_string(areaName);
-
-    if (geometryStorage.isPolygon(postGISName))
-    {
-      std::stringstream svg_string_stream(geometryStorage.getSVGPath(postGISName));
-      NFmiSvgPath svgPath;
-      svgPath.Read(svg_string_stream);
-      return {svgPath, areaName};
-    }
-
-    // if not polygon, it must be a point
-    std::pair<float, float> std_point(geometryStorage.getPoint(postGISName));
-    NFmiPoint point(std_point.first, std_point.second);
-    return {point, areaName};
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
 bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
-                               SmartMet::Spine::MutexType& thePostGISMutex,
-                               const Engine::Gis::GeometryStorage& geometryStorage,
+                               const Config& config,
                                const SmartMet::Engine::Geonames::Engine& geoEngine,
                                const boost::shared_ptr<TextGen::Dictionary>& theDictionary,
                                const std::string& language,
@@ -231,9 +178,8 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         case Spine::Location::LocationType::Place:
         case Spine::Location::LocationType::CoordinatePoint:
         {
-          if (loc.feature.substr(0, 3) == "ADM" && geometryStorage.geoObjectExists(loc.name))
-            weatherAreaVector.emplace_back(
-                TextGen::WeatherArea(make_area(loc.name, geometryStorage)));
+          if (loc.feature.substr(0, 3) == "ADM" && config.geoObjectExists(loc.name))
+            weatherAreaVector.emplace_back(config.makePostGisArea(loc.name));
           else
           {
             auto geoname = loc.name;
@@ -247,10 +193,8 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         }
         case Spine::Location::LocationType::Area:
         {
-          SmartMet::Spine::ReadLock lock(thePostGISMutex);
-          if (geometryStorage.geoObjectExists(loc.name))
-            weatherAreaVector.emplace_back(
-                TextGen::WeatherArea(make_area(loc.name, geometryStorage)));
+          if (config.geoObjectExists(loc.name))
+            weatherAreaVector.emplace_back(config.makePostGisArea(loc.name));
           else
           {
             errorMessage += "Area " + loc.name + " not found in PostGIS database!";
@@ -319,120 +263,6 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Location parameter parsing failed!");
-  }
-}
-
-bool parse_postgis_parameters(const SmartMet::Spine::HTTP::ParamMap& queryParameters,
-                              const ProductConfig& config,
-                              const SmartMet::Engine::Gis::Engine* gisEngine,
-                              Engine::Gis::GeometryStorage& geometryStorage,
-                              SmartMet::Spine::MutexType& thePostGISMutex,
-                              std::string& errorMessage)
-{
-  try
-  {
-    if (queryParameters.find(POSTGIS_PARAM) == queryParameters.end() &&
-        config.numberOfPostGISIdentifiers() == 0)
-    {
-      return true;
-    }
-
-    std::pair<SmartMet::Spine::HTTP::ParamMap::const_iterator,
-              SmartMet::Spine::HTTP::ParamMap::const_iterator>
-        iter_range = queryParameters.equal_range(POSTGIS_PARAM);
-    SmartMet::Spine::HTTP::ParamMap::const_iterator iter;
-
-    for (iter = iter_range.first; iter != iter_range.second; ++iter)
-    {
-      std::string postgis_string = iter->second;
-
-      // format: schema=schema1,port=port1,dbname=dbname1,table=table1
-      if (postgis_string.find(',') != std::string::npos)
-      {
-        const Engine::Gis::postgis_identifier& default_pgis_id =
-            config.getDefaultPostGISIdentifier();
-
-        std::string pgis_host = default_pgis_id.host;
-        std::string pgis_port = default_pgis_id.port;
-        std::string pgis_dbname = default_pgis_id.database;
-        std::string pgis_username = default_pgis_id.username;
-        std::string pgis_password = default_pgis_id.password;
-        std::string pgis_schema = default_pgis_id.schema;
-        std::string pgis_table = default_pgis_id.table;
-        std::string pgis_field = default_pgis_id.field;
-        std::string pgis_client_encoding = default_pgis_id.encoding;
-
-        boost::char_separator<char> sep(",");
-        boost::tokenizer<boost::char_separator<char> > tokens(postgis_string, sep);
-        for (const std::string& t : tokens)
-        {
-          unsigned long assign_index = t.find('=');
-          if (assign_index == std::string::npos)
-          {
-            errorMessage = "Erroneous PostGIS parameter: " + t;
-            return false;
-          }
-          std::string key(t.substr(0, assign_index));
-          std::string value(t.substr(assign_index + 1));
-
-          if (key == POSTGIS_HOST_PARAM)
-            pgis_host = value;
-          else if (key == POSTGIS_PORT_PARAM)
-            pgis_port = value;
-          else if (key == POSTGIS_DBNAME_PARAM)
-            pgis_dbname = value;
-          else if (key == POSTGIS_SCHEMA_PARAM)
-            pgis_schema = value;
-          else if (key == POSTGIS_TABLE_PARAM)
-            pgis_table = value;
-          else if (key == POSTGIS_FIELD_PARAM)
-            pgis_field = value;
-          else if (key == POSTGIS_USERNAME_PARAM)
-            pgis_username = value;
-          else if (key == POSTGIS_PASSWORD_PARAM)
-            pgis_password = value;
-          else if (key == POSTGIS_CLIENT_ENCODING_PARAM)
-            pgis_client_encoding = value;
-        }
-#ifdef MYDEBUG
-        std::cout << "Reading data from PostGIS: " << std::endl
-                  << "host: " << pgis_host << std::endl
-                  << "port: " << pgis_port << std::endl
-                  << "dbname: " << pgis_dbname << std::endl
-                  << "username: " << pgis_username << std::endl
-                  << "password: " << pgis_password << std::endl
-                  << "schema: " << pgis_schema << std::endl
-                  << "encoding: " << pgis_client_encoding << std::endl
-                  << "table: " << pgis_table << std::endl
-                  << "field: " << pgis_field << std::endl
-                  << std::endl;
-#endif
-
-        Engine::Gis::postgis_identifier pgid;
-        pgid.host = pgis_host;
-        pgid.port = pgis_port;
-        pgid.database = pgis_dbname;
-        pgid.username = pgis_username;
-        pgid.password = pgis_password;
-        pgid.schema = pgis_schema;
-        pgid.table = pgis_table;
-        pgid.field = pgis_field;
-        pgid.encoding = pgis_client_encoding;
-        Engine::Gis::PostGISIdentifierVector pgIdVector;
-        pgIdVector.push_back(pgid);
-
-        SmartMet::Spine::WriteLock lock(thePostGISMutex);
-        std::string log_message;
-
-        gisEngine->populateGeometryStorage(pgIdVector, geometryStorage);
-      }
-    }
-
-    return true;
-  }
-  catch (...)
-  {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -639,6 +469,8 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     if (!verifyHttpRequestParameters(queryParameters, errorMessage))
       throw SmartMet::Spine::Exception(BCP, errorMessage);
 
+    SmartMet::Spine::ReadLock lock(itsConfig.itsConfigUpdateMutex);
+
     std::string product_name(mmap_string(queryParameters, PRODUCT_PARAM, DEFAULT_PRODUCT_NAME));
     const ProductConfig& config = itsConfig.getProductConfig(product_name);
     bool configIsModified = config.isModified(CACHE_EXPIRATION_TIME_SEC);
@@ -667,8 +499,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     }
 
     if (!parse_location_parameters(theRequest,
-                                   itsPostGISMutex,
-                                   itsGeometryStorage,
+                                   itsConfig,
                                    *itsGeoEngine,
                                    theDictionary,
                                    mmap_string(queryParameters, LANGUAGE_PARAM),
@@ -697,13 +528,14 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
         mmap_string(queryParameters, LANGUAGE_PARAM) + ";" + formatter_name + ";" +
         mmap_string(queryParameters, POSTGIS_PARAM) + ";" + timestamp_cachekey_ss.str());
 
-    mask_map theMaskContainer = itsProductMasks[product_name];
+    const WeatherAreas& theMaskContainer = itsConfig.getProductMasks(product_name);
+
     bool masksExists(theMaskContainer.find(LAND_MASK_NAME) != theMaskContainer.end() &&
                      theMaskContainer.find(COAST_MASK_NAME) != theMaskContainer.end());
 
     TextGen::TextGenerator generator(
-        masksExists ? TextGen::TextGenerator(*(theMaskContainer[LAND_MASK_NAME]),
-                                             *(theMaskContainer[COAST_MASK_NAME]))
+        masksExists ? TextGen::TextGenerator(theMaskContainer.at(LAND_MASK_NAME),
+                                             theMaskContainer.at(COAST_MASK_NAME))
                     : TextGen::TextGenerator());
 
     std::string forecast_text;
@@ -724,6 +556,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
       SmartMet::Spine::UpgradeReadLock cacheReadLock(itsForecastTextCacheMutex);
 
       auto cache_result = itsForecastTextCache.find(cache_key);
+
       if (!configIsModified && cache_result)
       {
 #ifdef MYDEBUG
@@ -749,6 +582,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
         generator.time(forecasttime);
 
         const TextGen::Document document = generator.generate(area);
+
         forecast_text_area = formatter->format(document);
 
         cache_item ci;
@@ -895,56 +729,8 @@ void Plugin::init()
     engine = itsReactor->getSingleton("Gis", nullptr);
     if (engine == nullptr)
       throw Spine::Exception(BCP, "Gis engine unavailable");
-    itsGisEngine = reinterpret_cast<Engine::Gis::Engine*>(engine);
 
-    // PostGIS
-    std::vector<std::string> product_names(itsConfig.getProductNames());
-    for (auto product_name : product_names)
-    {
-      const ProductConfig& config = itsConfig.getProductConfig(product_name);
-      itsGisEngine->populateGeometryStorage(config.getPostGISIdentifiers(), itsGeometryStorage);
-
-#ifdef MYDEBUG
-      std::cout << "Masks for product " << product_name << ":" << std::endl;
-#endif
-      // masks
-      mask_map prod_mask;
-      for (unsigned int i = 0; i < config.numberOfMasks(); i++)
-      {
-        std::string name(config.getMask(i).first);
-        std::string value(config.getMask(i).second);
-
-#ifdef MYDEBUG
-        std::cout << name << "=" << value << std::endl;
-#endif
-        // first check if mask can be found in PostGIS database
-        if (itsGeometryStorage.geoObjectExists(value))
-        {
-          std::string area_name(value);
-          prod_mask.insert(
-              make_pair(name,
-                        boost::shared_ptr<TextGen::WeatherArea>(
-                            new TextGen::WeatherArea(make_area(area_name, itsGeometryStorage)))));
-        }
-        else
-        {
-          std::string filename(value);
-          if (filename.find(':') != std::string::npos)
-            filename = filename.substr(0, filename.find(':'));
-          // mask is probably a svg-file
-          if (NFmiFileSystem::FileExists(filename))
-          {
-            prod_mask.insert(make_pair(
-                name,
-                boost::shared_ptr<TextGen::WeatherArea>(new TextGen::WeatherArea(value, name))));
-          }
-        }
-      }
-      itsProductMasks.insert(make_pair(product_name, prod_mask));
-#ifdef MYDEBUG
-      std::cout << std::endl;
-#endif
-    }
+    itsConfig.init(reinterpret_cast<Engine::Gis::Engine*>(engine));
 
     if (!itsReactor->addContentHandler(this,
                                        itsConfig.defaultUrl(),
@@ -1017,8 +803,7 @@ bool Plugin::verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryP
     if (queryParameters.find(LOCALE_PARAM) == queryParameters.end())
       queryParameters.insert(make_pair(LOCALE_PARAM, config.locale()));
 
-    return parse_postgis_parameters(
-        queryParameters, config, itsGisEngine, itsGeometryStorage, itsPostGISMutex, errorMessage);
+    return true;
   }
   catch (...)
   {

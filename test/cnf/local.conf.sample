@@ -9,17 +9,4 @@ database_servers:
 		password	= "mysql_password";
 		database	= "mysql_database_name";
 	};
-
-	# PostGIS database definitions
-	postgis:
-	(
-		{
-			host		= "postgis_default_host";
-			port    	= "postgis_default_port";				
-			database	= "postgis_default_database_name";
-			username	= "postgis_default_user_name";
-			password	= "postgis_default_password";
-			client_encoding	= "postgis_default_client_encoding";
-		}
-	);
 }

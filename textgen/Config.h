@@ -7,6 +7,8 @@
 #ifndef TEXTGEN_CONFIG_H
 #define TEXTGEN_CONFIG_H
 
+#include <calculator/WeatherArea.h>
+#include <engines/gis/Engine.h>
 #include <engines/gis/GeometryStorage.h>
 #include <macgyver/DirectoryMonitor.h>
 
@@ -27,14 +29,16 @@ namespace Textgen
 class ProductConfig;
 using ConfigItem = std::pair<std::string, std::string>;
 using ConfigItemVector = std::vector<ConfigItem>;
-using ProductConfigItem = std::pair<std::string, boost::shared_ptr<ProductConfig> >;
 using ProductConfigMap = std::map<std::string, boost::shared_ptr<ProductConfig> >;
 using ParameterMappings = std::map<std::string, std::string>;
+using WeatherAreas = std::map<std::string, TextGen::WeatherArea>;
+using ProductWeatherAreaMap = std::map<std::string, WeatherAreas>;
 
 class ProductConfig : private boost::noncopyable
 {
  public:
-  ProductConfig(const std::string& configfile);
+  ProductConfig(const std::string& configfile,
+                const boost::shared_ptr<ProductConfig>& pDefaultConf);
 
   const std::string& mySQLDictionaryHost() const { return itsMySQLDictionaryHost; }
   const std::string& mySQLDictionaryDatabase() const { return itsMySQLDictionaryDatabase; }
@@ -115,11 +119,14 @@ class ProductConfig : private boost::noncopyable
   std::string itsFileDictionaries;
   std::string itsForestFireWarningDirectory;
   ParameterMappings itsParameterMappings;
-
   bool itsFrostSeason;
   size_t itsLastModifiedTime{0};  // epoch seconds
 
   boost::shared_ptr<ProductConfig> pDefaultConfig;
+  const std::map<std::string, Engine::Gis::postgis_identifier>& getPostGISIdentifiersPrivate()
+  {
+    return postgis_identifiers;
+  }
 
   friend class Config;
 };
@@ -128,19 +135,28 @@ class Config : private boost::noncopyable
 {
  public:
   Config(const std::string& configfile);
+  void init(SmartMet::Engine::Gis::Engine* pGisEngine);
 
   int getForecastTextCacheSize() { return itsForecastTextCacheSize; }
   const ProductConfig& getProductConfig(const std::string& config_name) const;
-  std::vector<std::string> getProductNames() const;
-  bool productConfigExists(const std::string& config_name)
-  {
-    return itsProductConfigs->find(config_name) != itsProductConfigs->end();
-  }
+  bool geoObjectExists(const std::string& name) const;
+  TextGen::WeatherArea makePostGisArea(const std::string& postGISName) const;
+  const WeatherAreas& getProductMasks(const std::string& product_name) const;
+
+  bool productConfigExists(const std::string& config_name) const;
 
   const std::string& defaultUrl() const { return itsDefaultUrl; }
 
+  // Mutex for updating Configuration
+  SmartMet::Spine::MutexType itsConfigUpdateMutex;
+
  private:
   std::unique_ptr<ProductConfigMap> itsProductConfigs;
+  // Geometries and their svg-representations are stored here
+  std::unique_ptr<Engine::Gis::GeometryStorage> itsGeometryStorage;
+  // Here we store masks by product
+  std::unique_ptr<ProductWeatherAreaMap> itsProductMasks;
+
   std::string itsDefaultUrl;
   int itsForecastTextCacheSize;
 
@@ -156,16 +172,23 @@ class Config : private boost::noncopyable
              const boost::regex& pattern,
              const std::string& message);
   ConfigItemVector readMainConfig() const;
-  void updateProductConfigs(const ConfigItemVector& configItems,
-                            const std::set<std::string>& deletedFiles,
-                            const std::set<std::string>& modifiedFiles,
-                            const std::set<std::string>& newFiles);
+  std::unique_ptr<ProductConfigMap> updateProductConfigs(const ConfigItemVector& configItems,
+                                                         const std::set<std::string>& deletedFiles,
+                                                         const std::set<std::string>& modifiedFiles,
+                                                         const std::set<std::string>& newFiles);
   std::set<std::string> getDirectoriesToMonitor(const ConfigItemVector& configItems) const;
   void setDefaultConfigValues(ProductConfigMap& productConfigs);
+  std::unique_ptr<Engine::Gis::GeometryStorage> loadGeometries(
+      const std::unique_ptr<ProductConfigMap>& pgs);
+  std::unique_ptr<ProductWeatherAreaMap> readMasks(
+      const std::unique_ptr<Engine::Gis::GeometryStorage>& gs,
+      const std::unique_ptr<ProductConfigMap>& pgs);
+  std::vector<std::string> getProductNames(const std::unique_ptr<ProductConfigMap>& pgs) const;
 
   bool itsShowFileMessages{false};
   std::string itsMainConfigFile;
-  mutable std::set<std::string> itsProductFiles;
+  SmartMet::Engine::Gis::Engine* itsGisEngine = nullptr;
+
 };  // class Config
 
 }  // namespace Textgen

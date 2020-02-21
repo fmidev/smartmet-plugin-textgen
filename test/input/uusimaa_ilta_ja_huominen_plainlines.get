@@ -1,1 +1,1 @@
-GET /textgen?formatter=plainlines&area=Uusimaa&product=ilta_ja_huominen&forecasttime=200808051400 HTTP/1.0
+GET /textgen?formatter=plainlines&area=Uusimaa&product=ilta_ja_huominen&forecasttime=200808061400 HTTP/1.0

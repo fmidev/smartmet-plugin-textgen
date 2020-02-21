@@ -11,11 +11,14 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 #include <calculator/TextGenPosixTime.h>
+#include <engines/gis/Engine.h>
 #include <macgyver/AnsiEscapeCodes.h>
 #include <macgyver/StringConversion.h>
+#include <newbase/NFmiFileSystem.h>
 #include <spine/Convenience.h>
 #include <spine/Exception.h>
 #include <iostream>
+#include <memory>
 #include <stdexcept>
 
 static const char* default_url = "/textgen";
@@ -25,7 +28,6 @@ static const char* default_formatter = "html";
 static const char* default_timeformat = "iso";
 static const char* default_dictionary = "multimysql";
 static const char* default_timezone = "Europe/Helsinki";
-static const char* default_postgis_client_encoding = "latin1";
 static const char* default_textgen_config_name = "default";
 
 namespace SmartMet
@@ -39,6 +41,44 @@ namespace Textgen
 
 namespace
 {
+void normalize_string(std::string& str)
+{
+  // convert to lower case and skandinavian characters
+  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+  boost::algorithm::replace_all(str, "Ä", "a");
+  boost::algorithm::replace_all(str, "ä", "a");
+  boost::algorithm::replace_all(str, "Å", "a");
+  boost::algorithm::replace_all(str, "å", "a");
+  boost::algorithm::replace_all(str, "Ö", "o");
+  boost::algorithm::replace_all(str, "ö", "o");
+}
+
+TextGen::WeatherArea make_area(const std::string& postGISName,
+                               const std::unique_ptr<Engine::Gis::GeometryStorage>& geometryStorage)
+{
+  try
+  {
+    std::string areaName(postGISName);
+    normalize_string(areaName);
+
+    if (geometryStorage->isPolygon(postGISName))
+    {
+      std::stringstream svg_string_stream(geometryStorage->getSVGPath(postGISName));
+      NFmiSvgPath svgPath;
+      svgPath.Read(svg_string_stream);
+      return {svgPath, areaName};
+    }
+
+    // if not polygon, it must be a point
+    std::pair<float, float> std_point(geometryStorage->getPoint(postGISName));
+    NFmiPoint point(std_point.first, std_point.second);
+    return {point, areaName};
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
 std::string parse_config_key(const char* str1 = nullptr,
                              const char* str2 = nullptr,
                              const char* str3 = nullptr)
@@ -278,10 +318,16 @@ Config::Config(const std::string& configfile)
       itsForecastTextCacheSize(DEFAULT_FORECAST_TEXT_CACHE_SIZE),
       itsMainConfigFile(configfile)
 {
+}
+
+void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
+{
   try
   {
+    itsGisEngine = pGisEngine;
+
     libconfig::Config lconf;
-    lconf.readFile(configfile.c_str());
+    lconf.readFile(itsMainConfigFile.c_str());
 
     lconf.lookupValue("forecast_text_cache_size", itsForecastTextCacheSize);
     lconf.lookupValue("url", itsDefaultUrl);
@@ -289,19 +335,22 @@ Config::Config(const std::string& configfile)
     // Set monitoring directories
     ConfigItemVector configItems = readMainConfig();
     std::set<std::string> emptyset;
-    updateProductConfigs(configItems, emptyset, emptyset, emptyset);
+    itsProductConfigs.reset(
+        updateProductConfigs(configItems, emptyset, emptyset, emptyset).release());
+    itsGeometryStorage.reset(loadGeometries(itsProductConfigs).release());
+    itsProductMasks.reset(readMasks(itsGeometryStorage, itsProductConfigs).release());
 
     for (const auto& item : *itsProductConfigs)
     {
       std::string config_name = item.first;
-      boost::shared_ptr<ProductConfig> pProductConfig = item.second;
-      std::string dictionary = pProductConfig->dictionary();
+      const boost::shared_ptr<ProductConfig>& productConfig = item.second;
+      std::string dictionary = productConfig->dictionary();
 
       if (boost::algorithm::starts_with(dictionary, "multimysql") &&
-          (pProductConfig->mySQLDictionaryHost().empty() &&
-           pProductConfig->mySQLDictionaryDatabase().empty() &&
-           pProductConfig->mySQLDictionaryUsername().empty() &&
-           pProductConfig->mySQLDictionaryPassword().empty()))
+          (productConfig->mySQLDictionaryHost().empty() &&
+           productConfig->mySQLDictionaryDatabase().empty() &&
+           productConfig->mySQLDictionaryUsername().empty() &&
+           productConfig->mySQLDictionaryPassword().empty()))
       {
         std::string messageDetails =
             "database_servers.mysql_dictionary section missing in textgenplugin configuration file "
@@ -327,34 +376,6 @@ Config::Config(const std::string& configfile)
   catch (...)
   {
     throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-void Config::setDefaultConfigValues(ProductConfigMap& productConfigs)
-{
-  // Check that certain parameters has been defined either in default configuration file or
-  // product-specific configuration file
-  for (const auto& pci : productConfigs)
-  {
-    if (pci.first == default_textgen_config_name)
-      continue;
-
-    boost::shared_ptr<ProductConfig> pProductConfig = pci.second;
-
-    if (productConfigs.find(default_textgen_config_name) != productConfigs.end())
-      pProductConfig->setDefaultConfig(productConfigs.at(default_textgen_config_name));
-
-    // Use hard-coded default values
-    if (pProductConfig->itsLanguage.empty())
-      pProductConfig->itsLanguage = default_language;
-    if (pProductConfig->itsFormatter.empty())
-      pProductConfig->itsFormatter = default_formatter;
-    if (pProductConfig->itsLocale.empty())
-      pProductConfig->itsLocale = default_locale;
-    if (pProductConfig->itsTimeFormat.empty())
-      pProductConfig->itsTimeFormat = default_timeformat;
-    if (pProductConfig->itsDictionary.empty())
-      pProductConfig->itsDictionary = default_dictionary;
   }
 }
 
@@ -417,34 +438,63 @@ ConfigItemVector Config::readMainConfig() const
     throw SmartMet::Spine::Exception(BCP, "Error reading configuration file!").addDetail(details);
   }
 }
-void Config::updateProductConfigs(const ConfigItemVector& configItems,
-                                  const std::set<std::string>& deletedFiles,
-                                  const std::set<std::string>& modifiedFiles,
-                                  const std::set<std::string>& newFiles)
+
+std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
+    const ConfigItemVector& configItems,
+    const std::set<std::string>& deletedFiles,
+    const std::set<std::string>& modifiedFiles,
+    const std::set<std::string>& newFiles)
 {
   std::string config_value;
-  itsProductFiles.clear();
   std::set<std::string> erroneousFiles;
 
   try
   {
-    std::unique_ptr<ProductConfigMap> newProductConfigs(new ProductConfigMap());
     boost::filesystem::path config_path(itsMainConfigFile);
+    // Read configured products
+    std::map<std::string, std::string> products;  // name -> config file
     for (const auto& item : configItems)
     {
       std::string config_key(item.first);
-      std::string config_name = config_key.substr(config_key.find('.') + 1);
-      config_value = item.second;
+      std::string product_name = config_key.substr(config_key.find('.') + 1);
+      std::string product_file = item.second;
 
       // Make relative paths absolute
-      if (!config_value.empty() && config_value[0] != '/')
-        config_value = config_path.parent_path().string() + "/" + config_value;
+      if (!product_file.empty() && product_file[0] != '/')
+        product_file = config_path.parent_path().string() + "/" + product_file;
+      products[product_name] = product_file;
+    }
+
+    auto newProductConfigs = std::unique_ptr<ProductConfigMap>(new ProductConfigMap());
+    boost::shared_ptr<ProductConfig> pDefultConfig;
+    if (products.find(default_textgen_config_name) != products.end())
+    {
+      boost::shared_ptr<ProductConfig> productConfig(
+          new ProductConfig(products.at(default_textgen_config_name), pDefultConfig));
+      newProductConfigs->insert(std::make_pair(default_textgen_config_name, productConfig));
+      if (modifiedFiles.find(default_textgen_config_name) != modifiedFiles.end())
+      {
+        TextGenPosixTime timestamp;
+        productConfig->itsLastModifiedTime = timestamp.EpochTime();
+      }
+      pDefultConfig = newProductConfigs->at(default_textgen_config_name);
+    }
+
+    std::string config_file;
+    for (const auto& product : products)
+    {
       try
       {
-        boost::shared_ptr<ProductConfig> productConfig(new ProductConfig(config_value));
+        if (product.first == default_textgen_config_name)
+          continue;
+        std::string config_name = product.first;
+        config_file = product.second;
+
+        boost::shared_ptr<ProductConfig> productConfig(
+            new ProductConfig(config_file, pDefultConfig));
+        productConfig->setDefaultConfig(pDefultConfig);
         newProductConfigs->insert(std::make_pair(config_name, productConfig));
-        itsProductFiles.insert(config_value);
-        if (modifiedFiles.find(config_value) != modifiedFiles.end())
+        if (modifiedFiles.find(config_file) != modifiedFiles.end())
         {
           TextGenPosixTime timestamp;
           productConfig->itsLastModifiedTime = timestamp.EpochTime();
@@ -456,22 +506,19 @@ void Config::updateProductConfigs(const ConfigItemVector& configItems,
         if (e.getDetailCount() > 0)
         {
           std::cout << ANSI_FG_RED << e.getDetailByIndex(0) << ANSI_FG_DEFAULT << std::endl;
-          erroneousFiles.insert(config_value);
+          erroneousFiles.insert(config_file);
         }
       }
       catch (...)
       {
         throw SmartMet::Spine::Exception(
-            BCP, "Error reading product configuration file '" + config_value + "'");
-        erroneousFiles.insert(config_value);
+            BCP, "Error reading product configuration file '" + config_file + "'");
+        erroneousFiles.insert(config_file);
       }
     }
 
-    setDefaultConfigValues(*newProductConfigs);
-    itsProductConfigs = std::move(newProductConfigs);
-
     if (deletedFiles.empty() && modifiedFiles.empty() && newFiles.empty())
-      return;
+      return newProductConfigs;
 
     if (itsShowFileMessages)
     {
@@ -493,13 +540,15 @@ void Config::updateProductConfigs(const ConfigItemVector& configItems,
       }
     }
     itsShowFileMessages = true;
+
+    return newProductConfigs;
   }
   catch (...)
   {
     throw SmartMet::Spine::Exception(
         BCP, "Error reading product configuration file '" + config_value + "'");
   }
-}
+}  // namespace Textgen
 
 void Config::update(Fmi::DirectoryMonitor::Watcher id,
                     const boost::filesystem::path& dir,
@@ -536,9 +585,18 @@ void Config::update(Fmi::DirectoryMonitor::Watcher id,
     itsProductConfigs->clear();
     return;
   }
-  updateProductConfigs(configItems, deletedFiles, modifiedFiles, newFiles);
 
-}  // namespace Textgen
+  std::unique_ptr<ProductConfigMap> prodConf =
+      updateProductConfigs(configItems, deletedFiles, modifiedFiles, newFiles);
+  std::unique_ptr<Engine::Gis::GeometryStorage> geomStorage = loadGeometries(prodConf);
+  std::unique_ptr<ProductWeatherAreaMap> productMasks = readMasks(geomStorage, prodConf);
+
+  SmartMet::Spine::WriteLock lock(itsConfigUpdateMutex);
+
+  itsProductConfigs.reset(prodConf.release());
+  itsGeometryStorage.reset(geomStorage.release());
+  itsProductMasks.reset(productMasks.release());
+}
 
 void Config::error(Fmi::DirectoryMonitor::Watcher id,
                    const boost::filesystem::path& dir,
@@ -571,18 +629,128 @@ const ProductConfig& Config::getProductConfig(const std::string& config_name) co
   }
 }
 
-std::vector<std::string> Config::getProductNames() const
+std::vector<std::string> Config::getProductNames(const std::unique_ptr<ProductConfigMap>& pgs) const
 {
   try
   {
     std::vector<std::string> retval;
 
-    for (const auto& pci : *itsProductConfigs)
+    for (const auto& pci : *pgs)
     {
       retval.push_back(pci.first);
     }
 
     return retval;
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+std::unique_ptr<Engine::Gis::GeometryStorage> Config::loadGeometries(
+    const std::unique_ptr<ProductConfigMap>& pgs)
+{
+  auto newGeometryStorage =
+      std::unique_ptr<Engine::Gis::GeometryStorage>(new Engine::Gis::GeometryStorage());
+
+  for (const auto& pci : *pgs)
+  {
+    boost::shared_ptr<ProductConfig> productConfig = pci.second;
+    itsGisEngine->populateGeometryStorage(productConfig->getPostGISIdentifiers(),
+                                          *newGeometryStorage);
+  }
+
+  return newGeometryStorage;
+}
+
+std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
+    const std::unique_ptr<Engine::Gis::GeometryStorage>& gs,
+    const std::unique_ptr<ProductConfigMap>& pgs)
+{
+  try
+  {
+    auto newProductMasks = std::unique_ptr<ProductWeatherAreaMap>(new ProductWeatherAreaMap());
+
+    // PostGIS
+    std::vector<std::string> product_names(getProductNames(pgs));
+    for (auto product_name : product_names)
+    {
+      if (pgs->find(product_name) == pgs->end())
+        throw SmartMet::Spine::Exception(BCP, product_name + " configuration not found!");
+
+      const ProductConfig& config = *(pgs->at(product_name));
+
+      // masks
+      WeatherAreas prod_mask;
+      for (unsigned int i = 0; i < config.numberOfMasks(); i++)
+      {
+        std::string name(config.getMask(i).first);
+        std::string value(config.getMask(i).second);
+
+        // first check if mask can be found in PostGIS database
+        if (gs->geoObjectExists(value))
+        {
+          std::string area_name(value);
+          prod_mask.insert(make_pair(name, TextGen::WeatherArea(make_area(area_name, gs))));
+        }
+        else
+        {
+          std::string filename(value);
+          if (filename.find(':') != std::string::npos)
+            filename = filename.substr(0, filename.find(':'));
+          // mask is probably a svg-file
+          if (NFmiFileSystem::FileExists(filename))
+          {
+            prod_mask.insert(make_pair(name, TextGen::WeatherArea(value, name)));
+          }
+        }
+      }
+      newProductMasks->insert(make_pair(product_name, prod_mask));
+    }
+
+    return newProductMasks;
+  }
+  catch (...)
+  {
+    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+bool Config::geoObjectExists(const std::string& name) const
+{
+  return itsGeometryStorage->geoObjectExists(name);
+}
+
+const WeatherAreas& Config::getProductMasks(const std::string& product_name) const
+{
+  return itsProductMasks->at(product_name);
+}
+
+bool Config::productConfigExists(const std::string& config_name) const
+{
+  return itsProductConfigs->find(config_name) != itsProductConfigs->end();
+}
+
+TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName) const
+{
+  try
+  {
+    std::string areaName(postGISName);
+    normalize_string(areaName);
+
+    if (itsGeometryStorage->isPolygon(postGISName))
+    {
+      std::stringstream svg_string_stream(itsGeometryStorage->getSVGPath(postGISName));
+      NFmiSvgPath svgPath;
+      svgPath.Read(svg_string_stream);
+      return {svgPath, areaName};
+    }
+
+    // if not polygon, it must be a point
+    std::pair<float, float> std_point(itsGeometryStorage->getPoint(postGISName));
+    NFmiPoint point(std_point.first, std_point.second);
+    return {point, areaName};
   }
   catch (...)
   {
@@ -596,7 +764,8 @@ std::vector<std::string> Config::getProductNames() const
  */
 // ----------------------------------------------------------------------
 
-ProductConfig::ProductConfig(const std::string& configfile)
+ProductConfig::ProductConfig(const std::string& configfile,
+                             const boost::shared_ptr<ProductConfig>& pDefaultConf)
     : itsLanguage(""),
       itsFormatter(""),
       itsLocale(""),
@@ -662,109 +831,77 @@ ProductConfig::ProductConfig(const std::string& configfile)
     // PostGIS
 
     // Database connection
-    std::map<std::string, Engine::Gis::postgis_identifier> pgIdentifiers;
-    if (itsConfig.exists("database_servers.postgis"))
+    Engine::Gis::postgis_identifier default_postgis_id;
+    if (pDefaultConf)
+      default_postgis_id = pDefaultConf->getDefaultPostGISIdentifier();
+
+    // Geometry tables
+    if (itsConfig.exists("geometry_tables"))
     {
-      const libconfig::Setting& postgis = itsConfig.lookup("database_servers.postgis");
-      int numofservers = postgis.getLength();
-      for (int i = 0; i < numofservers; i++)
+      std::string default_server;
+      std::string default_schema;
+      std::string default_table;
+      std::string default_field;
+      itsConfig.lookupValue("geometry_tables.server", default_server);
+      itsConfig.lookupValue("geometry_tables.schema", default_schema);
+      itsConfig.lookupValue("geometry_tables.table", default_table);
+      itsConfig.lookupValue("geometry_tables.field", default_field);
+
+      if (!default_schema.empty() && !default_table.empty() && !default_field.empty())
       {
-        const libconfig::Setting& pgServer = postgis[i];
-        std::string server_name;
-        Engine::Gis::postgis_identifier postgis_id;
-        postgis_id.encoding = default_postgis_client_encoding;
-        pgServer.lookupValue("name", server_name);
-        pgServer.lookupValue("host", postgis_id.host);
-        pgServer.lookupValue("port", postgis_id.port);
-        pgServer.lookupValue("database", postgis_id.database);
-        pgServer.lookupValue("username", postgis_id.username);
-        pgServer.lookupValue("password", postgis_id.password);
-        pgServer.lookupValue("client_encoding", postgis_id.encoding);
-        if (server_name.empty())
-          server_name = postgis_id.host;
-        pgIdentifiers[server_name] = postgis_id;
+        default_postgis_id.pgname = default_server;
+        default_postgis_id.schema = default_schema;
+        default_postgis_id.table = default_table;
+        default_postgis_id.field = default_field;
+        std::string key(default_postgis_id.key());
+        itsDefaultPostGISIdentifierKey = key;
+        postgis_identifiers.insert(std::make_pair(key, default_postgis_id));
       }
-    }
-    if (pgIdentifiers.size() > 0)
-    {
-      // Geometry tables
-      if (itsConfig.exists("geometry_tables"))
+
+      if (itsConfig.exists("geometry_tables.additional_tables"))
       {
-        Engine::Gis::postgis_identifier default_postgis_id;
-        default_postgis_id.encoding = default_postgis_client_encoding;
-        std::string default_server;
-        std::string default_schema;
-        std::string default_table;
-        std::string default_field;
-        itsConfig.lookupValue("geometry_tables.server", default_server);
-        itsConfig.lookupValue("geometry_tables.schema", default_schema);
-        itsConfig.lookupValue("geometry_tables.table", default_table);
-        itsConfig.lookupValue("geometry_tables.field", default_field);
+        libconfig::Setting& additionalTables =
+            itsConfig.lookup("geometry_tables.additional_tables");
 
-        if (!default_server.empty() && pgIdentifiers.find(default_server) == pgIdentifiers.end())
+        for (int i = 0; i < additionalTables.getLength(); i++)
         {
-          exceptionDetails = "Invalid server name '" + default_server +
-                             "' in textgenplugin configuration file '" + configfile + "'";
-          throw SmartMet::Spine::Exception(BCP, "Textgenplugin configuration error!");
-        }
-        else if (!default_server.empty())
-        {
-          default_postgis_id = pgIdentifiers.at(default_server);
-        }
-        if (!default_schema.empty() && !default_table.empty() && !default_field.empty())
-        {
-          default_postgis_id.schema = default_schema;
-          default_postgis_id.table = default_table;
-          default_postgis_id.field = default_field;
-          std::string key(default_postgis_id.key());
-          itsDefaultPostGISIdentifierKey = key;
-          postgis_identifiers.insert(std::make_pair(key, default_postgis_id));
-        }
+          libconfig::Setting& tableConfig = additionalTables[i];
+          std::string server =
+              (default_server.empty() ? default_postgis_id.pgname : default_server);
+          std::string schema =
+              (default_schema.empty() ? default_postgis_id.schema : default_schema);
+          std::string table = (default_table.empty() ? default_postgis_id.table : default_table);
+          std::string field = (default_field.empty() ? default_postgis_id.field : default_field);
 
-        if (itsConfig.exists("geometry_tables.additional_tables"))
-        {
-          libconfig::Setting& additionalTables =
-              itsConfig.lookup("geometry_tables.additional_tables");
+          tableConfig.lookupValue("server", server);
+          tableConfig.lookupValue("schema", schema);
+          tableConfig.lookupValue("table", table);
+          tableConfig.lookupValue("field", field);
 
-          for (int i = 0; i < additionalTables.getLength(); i++)
+          Engine::Gis::postgis_identifier postgis_id;
+          postgis_id.pgname = server;
+          postgis_id.schema = schema;
+          postgis_id.table = table;
+          postgis_id.field = field;
+
+          std::string key(postgis_id.key());
+          if (itsDefaultPostGISIdentifierKey.empty())
+            itsDefaultPostGISIdentifierKey = key;
+          postgis_identifiers.insert(std::make_pair(key, postgis_id));
+
+          std::string err_msg;
+          if (default_schema.empty() && schema.empty())
+            err_msg = "No 'schema' defined. ";
+          if (default_table.empty() && table.empty())
+            err_msg += "No 'table' defined. ";
+          if (default_field.empty() && field.empty())
+            err_msg += "No 'field' defined.";
+
+          if (!err_msg.empty())
           {
-            libconfig::Setting& tableConfig = additionalTables[i];
-            std::string server;
-            std::string schema;
-            std::string table;
-            std::string field;
-            tableConfig.lookupValue("server", server);
-            tableConfig.lookupValue("schema", schema);
-            tableConfig.lookupValue("table", table);
-            tableConfig.lookupValue("field", field);
-
-            Engine::Gis::postgis_identifier postgis_id = default_postgis_id;
-            if (!server.empty() && pgIdentifiers.find(server) != pgIdentifiers.end())
-              postgis_id = pgIdentifiers.at(server);
-
-            postgis_id.schema = (schema.empty() ? default_schema : schema);
-            postgis_id.table = (table.empty() ? default_table : table);
-            postgis_id.field = (field.empty() ? default_field : field);
-
-            std::string key(postgis_id.key());
-            if (itsDefaultPostGISIdentifierKey.empty())
-              itsDefaultPostGISIdentifierKey = key;
-            postgis_identifiers.insert(std::make_pair(key, postgis_id));
-
-            std::string err_msg;
-            if (default_schema.empty() && schema.empty())
-              err_msg = "No 'schema' defined. ";
-            if (default_table.empty() && table.empty())
-              err_msg += "No 'table' defined. ";
-            if (default_field.empty() && field.empty())
-              err_msg += "No 'field' defined.";
-
-            if (!err_msg.empty())
-            {
-              exceptionDetails =
-                  "Textgenplugin configuration error in geometry_tables section: " + err_msg;
-              throw SmartMet::Spine::Exception(BCP, "Textgenplugin configuration error!");
-            }
+            exceptionDetails =
+                "Textgenplugin configuration error in geometry_tables section: " + err_msg;
+            throw SmartMet::Spine::Exception(BCP, "Textgenplugin configuration error!");
           }
         }
       }
@@ -1046,6 +1183,18 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
 
       if (itsFileDictionaries.empty())
         itsFileDictionaries = pDefaultConfig->itsFileDictionaries;
+
+      // Use hard-coded default values
+      if (itsLanguage.empty())
+        itsLanguage = default_language;
+      if (itsFormatter.empty())
+        itsFormatter = default_formatter;
+      if (itsLocale.empty())
+        itsLocale = default_locale;
+      if (itsTimeFormat.empty())
+        itsTimeFormat = default_timeformat;
+      if (itsDictionary.empty())
+        itsDictionary = default_dictionary;
     }
   }
   catch (...)

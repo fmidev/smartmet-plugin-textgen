@@ -42,10 +42,10 @@ ifeq ($(CXX), clang++)
 	-Wno-missing-prototypes
 
  INCLUDES = \
+	-isystem $(PREFIX)/gdal30/include \
 	-isystem $(includedir) \
 	-isystem $(includedir)/smartmet \
-	-isystem $(includedir)/mysql \
-	-isystem $(PREFIX)/gdal30/include
+	-isystem $(includedir)/mysql
 
 else
 
@@ -65,10 +65,10 @@ else
  FLAGS_RELEASE = -Wuninitialized
 
  INCLUDES = \
+        -I$(PREFIX)/gdal30/include \
 	-I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/mysql \
-        -I$(PREFIX)/gdal30/include
+	-I$(includedir)/mysql
 
 endif
 
@@ -90,7 +90,12 @@ else
   override CFLAGS += $(CFLAGS_RELEASE)
 endif
 
-LIBS = -L$(libdir) \
+ifneq ($(DISABLED_GDAL),yes)
+  LIBS += -L$(PREFIX)/gdal30/lib `pkg-config --libs gdal30`
+endif
+
+LIBS += \
+	-L$(libdir) \
 	-lsmartmet-macgyver \
 	-lsmartmet-spine \
 	-lsmartmet-calculator \
@@ -105,9 +110,6 @@ LIBS = -L$(libdir) \
 	-lboost_iostreams \
 	-lbz2 -lz -lrt
 
-ifneq ($(DISABLED_GDAL),yes)
-  LIBS += -L$(PREFIX)/gdal30/lib `pkg-config --libs gdal30`
-endif
 
 # What to install
 
@@ -135,13 +137,10 @@ INCLUDES := -I$(SUBNAME) $(INCLUDES)
 
 # The rules
 
-all: configtest objdir $(LIBFILE)
+all: objdir $(LIBFILE)
 debug: all
 release: all
 profile: all
-
-configtest:
-	@if [ -x "$$(command -v cfgvalidate)" ]; then cfgvalidate -v cnf/textgen.conf; fi
 
 $(LIBFILE): $(OBJS)
 	$(CXX) $(CFLAGS) -shared -rdynamic -o $(LIBFILE) $(OBJS) $(LIBS)
@@ -165,7 +164,7 @@ objdir:
 
 rpm: clean $(SPEC).spec
 	rm -f $(SPEC).tar.gz # Clean a possible leftover from previous attempt
-	tar -czvf $(SPEC).tar.gz --transform "s,^,$(SPEC)/," *
+	tar -czvf $(SPEC).tar.gz --exclude test --exclude-vcs --transform "s,^,$(SPEC)/," *
 	rpmbuild -ta $(SPEC).tar.gz
 	rm -f $(SPEC).tar.gz
 
