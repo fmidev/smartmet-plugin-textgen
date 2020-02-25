@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.2.21
+Version: 20.2.25
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Feb 25 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.25-1.fmi
+- Added CORS header
+
 * Fri Feb 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.21-1.fmi
 - Upgrade to GDAL 3.0
 

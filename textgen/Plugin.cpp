@@ -628,6 +628,8 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 
     try
     {
+      theResponse.setHeader("Access-Control-Allow-Origin", "*");
+
       std::string response = query(theReactor, theRequest, theResponse);
       theResponse.setStatus(SmartMet::Spine::HTTP::Status::ok);
       if (!isdebug)
