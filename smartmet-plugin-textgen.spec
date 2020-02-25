@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.1.23
+Version: 20.2.25
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -17,25 +17,25 @@ BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 19.12.4
-BuildRequires: smartmet-library-textgen-devel >= 19.12.4
-BuildRequires: smartmet-library-spine-devel >= 20.1.15
-BuildRequires: smartmet-engine-observation-devel >= 19.12.19
-BuildRequires: smartmet-engine-querydata-devel >= 19.11.20
+BuildRequires: smartmet-library-textgen-devel >= 20.2.12
+BuildRequires: smartmet-library-spine-devel >= 20.2.13
+BuildRequires: smartmet-engine-observation-devel >= 20.2.20
+BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
 BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
-BuildRequires: smartmet-engine-gis-devel >= 20.1.23
-BuildRequires: smartmet-library-macgyver-devel >= 20.1.9
+BuildRequires: smartmet-engine-gis-devel >= 20.2.18
+BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
 BuildRequires: smartmet-library-locus-devel >= 19.12.4
 Requires: smartmet-library-calculator >= 19.12.4
-Requires: smartmet-library-macgyver >= 20.1.9
+Requires: smartmet-library-macgyver >= 20.2.5
 Requires: smartmet-library-locus >= 19.12.4
-Requires: smartmet-library-textgen >= 19.12.4
+Requires: smartmet-library-textgen >= 20.2.12
 Requires: libconfig
-Requires: smartmet-engine-observation >= 19.12.19
+Requires: smartmet-engine-observation >= 20.2.20
 Requires: smartmet-engine-geonames >= 19.12.5
-Requires: smartmet-engine-querydata >= 19.11.20
-Requires: smartmet-engine-gis >= 20.1.23
-Requires: smartmet-server >= 20.1.15
-Requires: smartmet-library-spine >= 20.1.15
+Requires: smartmet-engine-querydata >= 20.1.30
+Requires: smartmet-engine-gis >= 20.2.18
+Requires: smartmet-server >= 20.2.13
+Requires: smartmet-library-spine >= 20.2.13
 %if 0%{rhel} >= 7
 Requires: boost-chrono
 Requires: boost-date-time
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Feb 25 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.25-1.fmi
+- Added CORS header
+
 * Thu Jan 23 2020 Anssi Reponen <anssi.reponen@fmi.fi> - 20.1.23-2.fmi
 - Fixed configuration file reading bug. (BRAINSTORM-1746)
 - Broken testcases updated
