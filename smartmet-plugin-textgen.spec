@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.2.25
+Version: 20.4.18
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -12,37 +12,37 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: rpm-build
 BuildRequires: gcc-c++
 BuildRequires: make
-BuildRequires: boost-devel
+BuildRequires: boost169-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 19.12.4
-BuildRequires: smartmet-library-textgen-devel >= 20.2.12
-BuildRequires: smartmet-library-spine-devel >= 20.2.13
-BuildRequires: smartmet-engine-observation-devel >= 20.2.20
-BuildRequires: smartmet-engine-querydata-devel >= 20.1.30
-BuildRequires: smartmet-engine-geonames-devel >= 19.12.5
-BuildRequires: smartmet-engine-gis-devel >= 20.2.18
-BuildRequires: smartmet-library-macgyver-devel >= 20.2.5
-BuildRequires: smartmet-library-locus-devel >= 19.12.4
-Requires: smartmet-library-calculator >= 19.12.4
-Requires: smartmet-library-macgyver >= 20.2.5
-Requires: smartmet-library-locus >= 19.12.4
-Requires: smartmet-library-textgen >= 20.2.12
+BuildRequires: smartmet-library-calculator-devel >= 20.4.18
+BuildRequires: smartmet-library-textgen-devel >= 20.4.18
+BuildRequires: smartmet-library-spine-devel >= 20.4.18
+BuildRequires: smartmet-engine-observation-devel >= 20.4.18
+BuildRequires: smartmet-engine-querydata-devel >= 20.4.18
+BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
+BuildRequires: smartmet-engine-gis-devel >= 20.4.18
+BuildRequires: smartmet-library-macgyver-devel >= 20.4.18
+BuildRequires: smartmet-library-locus-devel >= 20.4.18
+Requires: smartmet-library-calculator >= 20.4.18
+Requires: smartmet-library-macgyver >= 20.4.18
+Requires: smartmet-library-locus >= 20.4.18
+Requires: smartmet-library-textgen >= 20.4.18
 Requires: libconfig
-Requires: smartmet-engine-observation >= 20.2.20
-Requires: smartmet-engine-geonames >= 19.12.5
-Requires: smartmet-engine-querydata >= 20.1.30
-Requires: smartmet-engine-gis >= 20.2.18
-Requires: smartmet-server >= 20.2.13
-Requires: smartmet-library-spine >= 20.2.13
+Requires: smartmet-engine-observation >= 20.4.18
+Requires: smartmet-engine-geonames >= 20.4.18
+Requires: smartmet-engine-querydata >= 20.4.18
+Requires: smartmet-engine-gis >= 20.4.18
+Requires: smartmet-server >= 20.4.18
+Requires: smartmet-library-spine >= 20.4.18
 %if 0%{rhel} >= 7
-Requires: boost-chrono
-Requires: boost-date-time
-Requires: boost-filesystem
-Requires: boost-iostreams
-Requires: boost-thread
-Requires: boost-timer
+Requires: boost169-chrono
+Requires: boost169-date-time
+Requires: boost169-filesystem
+Requires: boost169-iostreams
+Requires: boost169-thread
+Requires: boost169-timer
 %endif
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
+- Upgraded to Boost 1.69
+
 * Tue Feb 25 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.2.25-1.fmi
 - Added CORS header
 
