@@ -95,7 +95,6 @@ else
   override CFLAGS += $(CFLAGS_RELEASE)
 endif
 
-<<<<<<< HEAD
 ifneq ($(DISABLED_GDAL),yes)
   LIBS += -L$(PREFIX)/gdal30/lib `pkg-config --libs gdal30`
 endif

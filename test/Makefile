@@ -30,6 +30,7 @@ endif
 INCLUDES += \
 	-I ../textgen \
 	-I /usr/include/mysql \
+        -I /usr/gdal30/include \
 	-I /usr/include/smartmet \
 	`pkg-config --cflags libconfig++`
 
