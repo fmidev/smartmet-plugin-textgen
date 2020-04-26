@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.4.18
+Version: 20.4.26
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,24 +16,24 @@ BuildRequires: boost169-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 20.4.18
-BuildRequires: smartmet-library-textgen-devel >= 20.4.18
+BuildRequires: smartmet-library-calculator-devel >= 20.4.24
+BuildRequires: smartmet-library-textgen-devel >= 20.4.26
 BuildRequires: smartmet-library-spine-devel >= 20.4.18
 BuildRequires: smartmet-engine-observation-devel >= 20.4.18
-BuildRequires: smartmet-engine-querydata-devel >= 20.4.18
-BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
-BuildRequires: smartmet-engine-gis-devel >= 20.4.18
+BuildRequires: smartmet-engine-querydata-devel >= 20.4.23
+BuildRequires: smartmet-engine-geonames-devel >= 20.4.20
+BuildRequires: smartmet-engine-gis-devel >= 20.4.20
 BuildRequires: smartmet-library-macgyver-devel >= 20.4.18
 BuildRequires: smartmet-library-locus-devel >= 20.4.18
-Requires: smartmet-library-calculator >= 20.4.18
+Requires: smartmet-library-calculator >= 20.4.24
 Requires: smartmet-library-macgyver >= 20.4.18
 Requires: smartmet-library-locus >= 20.4.18
-Requires: smartmet-library-textgen >= 20.4.18
+Requires: smartmet-library-textgen >= 20.4.26
 Requires: libconfig
 Requires: smartmet-engine-observation >= 20.4.18
-Requires: smartmet-engine-geonames >= 20.4.18
-Requires: smartmet-engine-querydata >= 20.4.18
-Requires: smartmet-engine-gis >= 20.4.18
+Requires: smartmet-engine-geonames >= 20.4.20
+Requires: smartmet-engine-querydata >= 20.4.23
+Requires: smartmet-engine-gis >= 20.4.20
 Requires: smartmet-server >= 20.4.18
 Requires: smartmet-library-spine >= 20.4.18
 Requires: boost169-chrono
@@ -68,6 +68,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Sun Apr 26 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.26-1.fmi
+- Repackaged
+
 * Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
 - Upgraded to Boost 1.69
 
