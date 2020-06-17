@@ -323,6 +323,7 @@ Config::Config(const std::string& configfile)
 void Config::shutdown()
 {
   itsMonitor.stop();
+  itsMonitorThread.join();
 }
 
 void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
