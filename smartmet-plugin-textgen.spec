@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.4.18
+Version: 20.6.17
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -18,24 +18,24 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 20.4.18
 BuildRequires: smartmet-library-textgen-devel >= 20.4.18
-BuildRequires: smartmet-library-spine-devel >= 20.4.18
-BuildRequires: smartmet-engine-observation-devel >= 20.4.18
-BuildRequires: smartmet-engine-querydata-devel >= 20.4.18
-BuildRequires: smartmet-engine-geonames-devel >= 20.4.18
-BuildRequires: smartmet-engine-gis-devel >= 20.4.18
-BuildRequires: smartmet-library-macgyver-devel >= 20.4.18
-BuildRequires: smartmet-library-locus-devel >= 20.4.18
+BuildRequires: smartmet-library-spine-devel >= 20.6.8
+BuildRequires: smartmet-engine-observation-devel >= 20.6.8
+BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
+BuildRequires: smartmet-engine-geonames-devel >= 20.6.8
+BuildRequires: smartmet-engine-gis-devel >= 20.5.7
+BuildRequires: smartmet-library-macgyver-devel >= 20.6.8
+BuildRequires: smartmet-library-locus-devel >= 20.6.8
 Requires: smartmet-library-calculator >= 20.4.18
-Requires: smartmet-library-macgyver >= 20.4.18
-Requires: smartmet-library-locus >= 20.4.18
+Requires: smartmet-library-macgyver >= 20.6.8
+Requires: smartmet-library-locus >= 20.6.8
 Requires: smartmet-library-textgen >= 20.4.18
 Requires: libconfig
-Requires: smartmet-engine-observation >= 20.4.18
-Requires: smartmet-engine-geonames >= 20.4.18
-Requires: smartmet-engine-querydata >= 20.4.18
-Requires: smartmet-engine-gis >= 20.4.18
+Requires: smartmet-engine-observation >= 20.6.8
+Requires: smartmet-engine-geonames >= 20.6.8
+Requires: smartmet-engine-querydata >= 20.5.13
+Requires: smartmet-engine-gis >= 20.5.7
 Requires: smartmet-server >= 20.4.18
-Requires: smartmet-library-spine >= 20.4.18
+Requires: smartmet-library-spine >= 20.6.8
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Jun 17 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.17-1.fmi
+- Fixed shutdown to stop monitoring configuration files
+
 * Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
 - Upgraded to Boost 1.69
 

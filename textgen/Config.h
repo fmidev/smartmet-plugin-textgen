@@ -136,6 +136,7 @@ class Config : private boost::noncopyable
  public:
   Config(const std::string& configfile);
   void init(SmartMet::Engine::Gis::Engine* pGisEngine);
+  void shutdown();
 
   int getForecastTextCacheSize() { return itsForecastTextCacheSize; }
   const ProductConfig& getProductConfig(const std::string& config_name) const;
