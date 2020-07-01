@@ -72,6 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Jun 17 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.17-1.fmi
 - Fixed shutdown to stop monitoring configuration files
+- Monitor configuration files every 5 seconds instead of 10 to enable faster shutdown
 
 * Sat Apr 18 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.18-1.fmi
 - Upgraded to Boost 1.69

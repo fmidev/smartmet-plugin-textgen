@@ -374,7 +374,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
                        pattern,
                        boost::bind(&Config::update, this, _1, _2, _3, _4),
                        boost::bind(&Config::error, this, _1, _2, _3, _4),
-                       10,
+                       5,
                        Fmi::DirectoryMonitor::ALL);
     }
     itsMonitorThread = boost::thread(boost::bind(&Fmi::DirectoryMonitor::run, &itsMonitor));
