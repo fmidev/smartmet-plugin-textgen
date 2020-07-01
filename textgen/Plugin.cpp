@@ -754,6 +754,7 @@ void Plugin::init()
 void Plugin::shutdown()
 {
   std::cout << "  -- Shutdown requested (textgenplugin)\n";
+  itsConfig.shutdown();
 }
 
 // ----------------------------------------------------------------------

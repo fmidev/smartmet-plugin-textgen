@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.4.26
+Version: 20.6.17
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -68,6 +68,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Jun 17 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.17-1.fmi
+- Fixed shutdown to stop monitoring configuration files
+- Monitor configuration files every 5 seconds instead of 10 to enable faster shutdown
+
 * Sun Apr 26 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.4.26-1.fmi
 - Repackaged
 

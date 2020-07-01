@@ -7,13 +7,12 @@
 #ifndef TEXTGEN_CONFIG_H
 #define TEXTGEN_CONFIG_H
 
+#include <boost/shared_ptr.hpp>
+#include <boost/utility.hpp>
 #include <calculator/WeatherArea.h>
 #include <engines/gis/Engine.h>
 #include <engines/gis/GeometryStorage.h>
 #include <macgyver/DirectoryMonitor.h>
-
-#include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
 #include <spine/Thread.h>
 #include <libconfig.h++>
 #include <map>
@@ -136,6 +135,7 @@ class Config : private boost::noncopyable
  public:
   Config(const std::string& configfile);
   void init(SmartMet::Engine::Gis::Engine* pGisEngine);
+  void shutdown();
 
   int getForecastTextCacheSize() { return itsForecastTextCacheSize; }
   const ProductConfig& getProductConfig(const std::string& config_name) const;
@@ -162,6 +162,7 @@ class Config : private boost::noncopyable
 
   Fmi::DirectoryMonitor itsMonitor;
   boost::thread itsMonitorThread;
+
   // callback requests
   void update(Fmi::DirectoryMonitor::Watcher id,
               const boost::filesystem::path& dir,
