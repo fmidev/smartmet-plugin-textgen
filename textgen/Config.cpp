@@ -320,10 +320,16 @@ Config::Config(const std::string& configfile)
 {
 }
 
+Config::~Config()
+{
+  if (itsMonitorThread.joinable()) {
+    itsMonitor.stop();
+    itsMonitorThread.join();
+  }
+}
+
 void Config::shutdown()
 {
-  itsMonitor.stop();
-  itsMonitorThread.join();
 }
 
 void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
