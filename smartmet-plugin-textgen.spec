@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.6.17
+Version: 20.8.10
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -23,10 +23,10 @@ BuildRequires: smartmet-engine-observation-devel >= 20.6.8
 BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
 BuildRequires: smartmet-engine-geonames-devel >= 20.6.8
 BuildRequires: smartmet-engine-gis-devel >= 20.5.7
-BuildRequires: smartmet-library-macgyver-devel >= 20.6.8
+BuildRequires: smartmet-library-macgyver-devel >= 20.8.7
 BuildRequires: smartmet-library-locus-devel >= 20.6.8
 Requires: smartmet-library-calculator >= 20.4.18
-Requires: smartmet-library-macgyver >= 20.6.8
+Requires: smartmet-library-macgyver >= 20.8.7
 Requires: smartmet-library-locus >= 20.6.8
 Requires: smartmet-library-textgen >= 20.4.18
 Requires: libconfig
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon Aug 10 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.8.10-1.fmi
+- Ensure that directory monitor thread is stopped when destroying plugin object
+
 * Wed Jun 17 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.17-1.fmi
 - Fixed shutdown to stop monitoring configuration files
 - Monitor configuration files every 5 seconds instead of 10 to enable faster shutdown
