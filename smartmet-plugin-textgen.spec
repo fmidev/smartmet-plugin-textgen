@@ -73,6 +73,9 @@ rm -rf $RPM_BUILD_ROOT
 * Fri Aug 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.21-1.fmi
 - Upgrade to fmt 6.2
 
+* Mon Aug 10 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.8.10-1.fmi
+- Ensure that directory monitor thread is stopped when destroying plugin object
+
 * Wed Jun 17 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.17-1.fmi
 - Fixed shutdown to stop monitoring configuration files
 - Monitor configuration files every 5 seconds instead of 10 to enable faster shutdown
