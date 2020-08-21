@@ -134,6 +134,7 @@ class Config : private boost::noncopyable
 {
  public:
   Config(const std::string& configfile);
+  virtual ~Config();
   void init(SmartMet::Engine::Gis::Engine* pGisEngine);
   void shutdown();
 

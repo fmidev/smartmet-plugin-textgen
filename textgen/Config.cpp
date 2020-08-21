@@ -320,10 +320,16 @@ Config::Config(const std::string& configfile)
 {
 }
 
+Config::~Config()
+{
+  if (itsMonitorThread.joinable()) {
+    itsMonitor.stop();
+    itsMonitorThread.join();
+  }
+}
+
 void Config::shutdown()
 {
-  itsMonitor.stop();
-  itsMonitorThread.join();
 }
 
 void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
@@ -377,7 +383,11 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
                        5,
                        Fmi::DirectoryMonitor::ALL);
     }
-    itsMonitorThread = boost::thread(boost::bind(&Fmi::DirectoryMonitor::run, &itsMonitor));
+    itsMonitorThread = boost::thread(
+        [this]()
+        {
+            itsMonitor.run();
+        });
   }
   catch (...)
   {

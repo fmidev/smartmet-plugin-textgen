@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.6.17
+Version: 20.8.21
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,26 +16,26 @@ BuildRequires: boost169-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 20.4.24
-BuildRequires: smartmet-library-textgen-devel >= 20.4.26
-BuildRequires: smartmet-library-spine-devel >= 20.6.8
-BuildRequires: smartmet-engine-observation-devel >= 20.6.17
-BuildRequires: smartmet-engine-querydata-devel >= 20.5.13
-BuildRequires: smartmet-engine-geonames-devel >= 20.4.20
-BuildRequires: smartmet-engine-gis-devel >= 20.6.30
-BuildRequires: smartmet-library-macgyver-devel >= 20.4.18
-BuildRequires: smartmet-library-locus-devel >= 20.5.20
-Requires: smartmet-library-calculator >= 20.4.24
-Requires: smartmet-library-macgyver >= 20.4.18
-Requires: smartmet-library-locus >= 20.5.20
-Requires: smartmet-library-textgen >= 20.4.26
+BuildRequires: smartmet-library-calculator-devel >= 20.8.21
+BuildRequires: smartmet-library-textgen-devel >= 20.8.21
+BuildRequires: smartmet-library-spine-devel >= 20.8.21
+BuildRequires: smartmet-engine-observation-devel >= 20.8.21
+BuildRequires: smartmet-engine-querydata-devel >= 20.8.21
+BuildRequires: smartmet-engine-geonames-devel >= 20.8.21
+BuildRequires: smartmet-engine-gis-devel >= 20.8.21
+BuildRequires: smartmet-library-macgyver-devel >= 20.8.21
+BuildRequires: smartmet-library-locus-devel >= 20.8.21
+Requires: smartmet-library-calculator >= 20.8.21
+Requires: smartmet-library-macgyver >= 20.8.21
+Requires: smartmet-library-locus >= 20.8.21
+Requires: smartmet-library-textgen >= 20.8.21
 Requires: libconfig
-Requires: smartmet-engine-observation >= 20.6.17
-Requires: smartmet-engine-geonames >= 20.4.20
-Requires: smartmet-engine-querydata >= 20.5.13
-Requires: smartmet-engine-gis >= 20.6.30
-Requires: smartmet-server >= 20.4.18
-Requires: smartmet-library-spine >= 20.6.8
+Requires: smartmet-engine-observation >= 20.8.21
+Requires: smartmet-engine-geonames >= 20.8.21
+Requires: smartmet-engine-querydata >= 20.8.21
+Requires: smartmet-engine-gis >= 20.8.21
+Requires: smartmet-server >= 20.8.21
+Requires: smartmet-library-spine >= 20.8.21
 Requires: boost169-chrono
 Requires: boost169-date-time
 Requires: boost169-filesystem
@@ -68,6 +68,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri Aug 21 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.8.21-1.fmi
+- Upgrade to fmt 6.2
+
+* Mon Aug 10 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.8.10-1.fmi
+- Ensure that directory monitor thread is stopped when destroying plugin object
+
 * Wed Jun 17 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.6.17-1.fmi
 - Fixed shutdown to stop monitoring configuration files
 - Monitor configuration files every 5 seconds instead of 10 to enable faster shutdown
