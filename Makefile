@@ -34,7 +34,7 @@ GCC_DIAG_COLOR ?= always
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -I/usr/include/boost169
+  INCLUDES += -isystem /usr/include/boost169
   LIBS += -L/usr/lib64/boost169
 endif
 
@@ -42,15 +42,13 @@ ifeq ($(CXX), clang++)
 
  FLAGS = \
 	-std=c++11 -fPIC -MD \
-	-Weverything \
 	-Wno-c++98-compat \
 	-Wno-float-equal \
 	-Wno-padded \
 	-Wno-missing-prototypes
 
  INCLUDES += \
-	-isystem $(includedir) \
-	-isystem $(includedir)/smartmet \
+	-I$(includedir)/smartmet \
 	-isystem $(includedir)/mysql
 
 else
@@ -69,7 +67,6 @@ else
  FLAGS_RELEASE = -Wuninitialized
 
  INCLUDES += \
-	-I$(includedir) \
 	-I$(includedir)/smartmet \
 	-I$(includedir)/mysql
 
