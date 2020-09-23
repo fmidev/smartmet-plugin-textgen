@@ -29,7 +29,7 @@ int main() try
 }
 catch (...)
 {
-  SmartMet::Spine::Exception ex(BCP, "Failed to run the tests", nullptr);
+  Fmi::Exception ex(BCP, "Failed to run the tests", nullptr);
   ex.printError();
   return 1;
 }
