@@ -16,7 +16,7 @@
 #include <macgyver/StringConversion.h>
 #include <newbase/NFmiFileSystem.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -76,7 +76,7 @@ TextGen::WeatherArea make_area(const std::string& postGISName,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 std::string parse_config_key(const char* str1 = nullptr,
@@ -182,7 +182,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
           case libconfig::Setting::TypeGroup:
           case libconfig::Setting::TypeArray:
           case libconfig::Setting::TypeList:
-            throw SmartMet::Spine::Exception(BCP,
+            throw Fmi::Exception(BCP,
                                              "TextGen: Invalid setting type for '" + key + "'");
         };
 
@@ -192,7 +192,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -253,7 +253,7 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -307,7 +307,7 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -368,7 +368,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
             "database_servers.mysql_dictionary section missing in textgenplugin configuration file "
             "'" +
             config_name + "'";
-        throw SmartMet::Spine::Exception::Trace(BCP, "Textgenplugin configuration error!")
+        throw Fmi::Exception::Trace(BCP, "Textgenplugin configuration error!")
             .addDetail(messageDetails);
       }
     }
@@ -391,7 +391,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -451,7 +451,7 @@ ConfigItemVector Config::readMainConfig() const
     else
       details = "Syntax error in file '" + itsMainConfigFile + "'!";
 
-    throw SmartMet::Spine::Exception(BCP, "Error reading configuration file!").addDetail(details);
+    throw Fmi::Exception(BCP, "Error reading configuration file!").addDetail(details);
   }
 }
 
@@ -516,7 +516,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
           productConfig->itsLastModifiedTime = timestamp.EpochTime();
         }
       }
-      catch (const SmartMet::Spine::Exception& e)
+      catch (const Fmi::Exception& e)
       {
         // If non-fatal error occurred, report it and continue processing the next file
         if (e.getDetailCount() > 0)
@@ -527,7 +527,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
       }
       catch (...)
       {
-        throw SmartMet::Spine::Exception(
+        throw Fmi::Exception(
             BCP, "Error reading product configuration file '" + config_file + "'");
         erroneousFiles.insert(config_file);
       }
@@ -561,7 +561,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception(
+    throw Fmi::Exception(
         BCP, "Error reading product configuration file '" + config_value + "'");
   }
 }  // namespace Textgen
@@ -592,7 +592,7 @@ void Config::update(Fmi::DirectoryMonitor::Watcher id,
   {
     configItems = readMainConfig();
   }
-  catch (const SmartMet::Spine::Exception& e)
+  catch (const Fmi::Exception& e)
   {
     std::string details = e.getDetailByIndex(0);
     std::cout << ANSI_FG_RED
@@ -626,7 +626,7 @@ void Config::error(Fmi::DirectoryMonitor::Watcher id,
   }
   catch (...)
   {
-    throw Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -635,13 +635,13 @@ const ProductConfig& Config::getProductConfig(const std::string& config_name) co
   try
   {
     if (itsProductConfigs->find(config_name) == itsProductConfigs->end())
-      throw SmartMet::Spine::Exception(BCP, config_name + " configuration not found!");
+      throw Fmi::Exception(BCP, config_name + " configuration not found!");
 
     return *(itsProductConfigs->at(config_name));
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -660,7 +660,7 @@ std::vector<std::string> Config::getProductNames(const std::unique_ptr<ProductCo
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -693,7 +693,7 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
     for (auto product_name : product_names)
     {
       if (pgs->find(product_name) == pgs->end())
-        throw SmartMet::Spine::Exception(BCP, product_name + " configuration not found!");
+        throw Fmi::Exception(BCP, product_name + " configuration not found!");
 
       const ProductConfig& config = *(pgs->at(product_name));
 
@@ -729,7 +729,7 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -770,7 +770,7 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName) con
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -800,7 +800,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
     {
       exceptionDetails =
           "Product configuration file '" + configfile + "' not found, please check the filename!";
-      throw SmartMet::Spine::Exception(BCP, configfile + " file does not exist!");
+      throw Fmi::Exception(BCP, configfile + " file does not exist!");
     }
 
     itsConfig.readFile(configfile.c_str());
@@ -917,7 +917,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
           {
             exceptionDetails =
                 "Textgenplugin configuration error in geometry_tables section: " + err_msg;
-            throw SmartMet::Spine::Exception(BCP, "Textgenplugin configuration error!");
+            throw Fmi::Exception(BCP, "Textgenplugin configuration error!");
           }
         }
       }
@@ -985,7 +985,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
 
       if (!sections.isArray())
       {
-        throw SmartMet::Spine::Exception(
+        throw Fmi::Exception(
             BCP,
             "output_document.sections not an array in textgenplugin configuration file line " +
                 Fmi::to_string(sections.getSourceLine()));
@@ -1106,7 +1106,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
       exceptionDetails =
           "Error reading product configuration file '" + configfile + "', please check the syntax!";
 
-    throw SmartMet::Spine::Exception::Trace(
+    throw Fmi::Exception::Trace(
         BCP, "Error processing product configuration file " + configfile)
         .addDetail(exceptionDetails);
   }
@@ -1138,7 +1138,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
     if (forecast_data_config_items.empty())
     {
       if (!pDefaultConfig || pDefaultConfig->numberOfForecastDataConfigs() == 0)
-        throw SmartMet::Spine::Exception(BCP, "forecast_data-section missing, cannot continue!");
+        throw Fmi::Exception(BCP, "forecast_data-section missing, cannot continue!");
 
       forecast_data_config_items = pDefaultConfig->forecast_data_config_items;
     }
@@ -1146,7 +1146,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
     if (masks.empty())
     {
       if (!pDefaultConfig || pDefaultConfig->numberOfMasks() == 0)
-        throw SmartMet::Spine::Exception(BCP, "mask-section missing, cannot continue!");
+        throw Fmi::Exception(BCP, "mask-section missing, cannot continue!");
 
       masks = pDefaultConfig->masks;
     }
@@ -1215,7 +1215,7 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1232,7 +1232,7 @@ const std::string& ProductConfig::getAreaTimeZone(const std::string& area) const
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1255,7 +1255,7 @@ const Engine::Gis::postgis_identifier& ProductConfig::getDefaultPostGISIdentifie
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1265,7 +1265,7 @@ const std::pair<std::string, std::string>& ProductConfig::getForecastDataConfig(
   try
   {
     if (index >= forecast_data_config_items.size())
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP,
           "ProductConfig::getForecastDataConfig(index)-function invalid index parameter: " +
               Fmi::to_string(index));
@@ -1274,7 +1274,7 @@ const std::pair<std::string, std::string>& ProductConfig::getForecastDataConfig(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1284,7 +1284,7 @@ const std::pair<std::string, std::string>& ProductConfig::getUnitFormatConfig(
   try
   {
     if (index >= unit_format_config_items.size())
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP,
           "ProductConfig::getUnitFormatDataConfig(index)-function invalid index parameter: " +
               Fmi::to_string(index));
@@ -1293,7 +1293,7 @@ const std::pair<std::string, std::string>& ProductConfig::getUnitFormatConfig(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1303,7 +1303,7 @@ const std::pair<std::string, std::string>& ProductConfig::getOutputDocumentConfi
   try
   {
     if (index >= output_document_config_items.size())
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP,
           "ProductConfig::getOutputDocumentConfig(index)-function invalid index parameter: " +
               Fmi::to_string(index));
@@ -1312,7 +1312,7 @@ const std::pair<std::string, std::string>& ProductConfig::getOutputDocumentConfi
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1322,7 +1322,7 @@ const std::pair<std::string, std::string>& ProductConfig::getAreaConfig(
   try
   {
     if (index >= area_config_items.size())
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP,
           "ProductConfig::getAreaConfig(index)-function invalid index parameter: " +
               Fmi::to_string(index));
@@ -1331,7 +1331,7 @@ const std::pair<std::string, std::string>& ProductConfig::getAreaConfig(
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1340,7 +1340,7 @@ const std::pair<std::string, std::string>& ProductConfig::getMask(const unsigned
   try
   {
     if (index >= masks.size())
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP,
           "ProductConfig::getMask(index)-function invalid index parameter: " +
               Fmi::to_string(index));
@@ -1349,7 +1349,7 @@ const std::pair<std::string, std::string>& ProductConfig::getMask(const unsigned
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -1359,7 +1359,7 @@ const std::pair<std::string, std::string>& ProductConfig::getFireWarningAreaCode
   try
   {
     if (index >= forestfirewarning_areacodes.size())
-      throw SmartMet::Spine::Exception(
+      throw Fmi::Exception(
           BCP,
           "ProductConfig::getFireWarningAreaCode(index)-function invalid index parameter: " +
               Fmi::to_string(index));
@@ -1368,7 +1368,7 @@ const std::pair<std::string, std::string>& ProductConfig::getFireWarningAreaCode
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 

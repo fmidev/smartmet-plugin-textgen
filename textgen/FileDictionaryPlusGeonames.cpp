@@ -47,7 +47,7 @@
 #include <calculator/TextGenError.h>
 #include <engines/geonames/Engine.h>
 #include <mysql++/mysql++.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Reactor.h>
 #include <cassert>
 #include <map>
@@ -98,14 +98,14 @@ void MySQLDictionariesPlusGeonames::geoinit(void* theReactor)
         reinterpret_cast<SmartMet::Spine::Reactor*>(theReactor)->getSingleton("Geonames", nullptr);
 
     if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "Geonames engine unavailable");
+      throw Fmi::Exception(BCP, "Geonames engine unavailable");
 
     itsImpl->itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
     itsImpl->itsInitialized = true;
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
