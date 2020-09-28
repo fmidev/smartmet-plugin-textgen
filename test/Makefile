@@ -17,21 +17,21 @@ ifeq ($(ASAN), yes)
   FLAGS += -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=undefined -fsanitize-address-use-after-scope
 endif
 
-CC = g++
 CFLAGS = -DUNIX -O0 -g $(FLAGS)
 
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -I/usr/include/boost169
+  INCLUDES += -isystem /usr/include/boost169
   LIBS += -L/usr/lib64/boost169
 endif
 
 INCLUDES += \
 	-I ../textgen \
-	-I /usr/include/mysql \
-        -I /usr/gdal30/include \
+	-isystem /usr/include/mysql \
+        -isystem /usr/gdal30/include \
 	-I /usr/include/smartmet \
+	-isystem /usr/include/mysql \
 	`pkg-config --cflags libconfig++`
 
 LIBS += \
@@ -62,4 +62,4 @@ endif
 	done
 
 $(PROG) : % : %.cpp Makefile
-	$(CC) $(CFLAGS) -o $@ $@.cpp $(INCLUDES) $(LIBS)
+	$(CXX) $(CFLAGS) -o $@ $@.cpp $(INCLUDES) $(LIBS)

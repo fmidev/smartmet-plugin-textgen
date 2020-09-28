@@ -34,15 +34,21 @@ GCC_DIAG_COLOR ?= always
 # Boost 1.69
 
 ifneq "$(wildcard /usr/include/boost169)" ""
-  INCLUDES += -I/usr/include/boost169
+  INCLUDES += -isystem /usr/include/boost169
   LIBS += -L/usr/lib64/boost169
+endif
+
+ifneq "$(wildcard /usr/gdal30/include)" ""
+  INCLUDES += -isystem /usr/gdal30/include
+  LIBS += -L$(PREFIX)/gdal30/lib
+else
+  INCLUDES += -isystem /usr/include/gdal
 endif
 
 ifeq ($(CXX), clang++)
 
  FLAGS = \
 	-std=c++11 -fPIC -MD \
-	-Weverything \
 	-Wno-c++98-compat \
 	-Wno-float-equal \
 	-Wno-padded \
@@ -50,7 +56,6 @@ ifeq ($(CXX), clang++)
 
  INCLUDES += \
 	-isystem $(PREFIX)/gdal30/include \
-	-isystem $(includedir) \
 	-isystem $(includedir)/smartmet \
 	-isystem $(includedir)/mysql
 
@@ -70,10 +75,8 @@ else
  FLAGS_RELEASE = -Wuninitialized
 
  INCLUDES += \
-        -I$(PREFIX)/gdal30/include \
-	-I$(includedir) \
 	-I$(includedir)/smartmet \
-	-I$(includedir)/mysql
+	-isystem $(includedir)/mysql
 
 endif
 
@@ -148,7 +151,7 @@ release: all
 profile: all
 
 $(LIBFILE): $(OBJS)
-	$(CXX) $(CFLAGS) -shared -rdynamic -o $(LIBFILE) $(OBJS) $(LIBS)
+	$(CC) $(LDFLAGS) -shared -rdynamic -o $(LIBFILE) $(OBJS) $(LIBS)
 
 clean:
 	rm -f $(LIBFILE) *~ $(SUBNAME)/*~

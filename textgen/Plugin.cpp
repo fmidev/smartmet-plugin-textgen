@@ -7,7 +7,7 @@
 #include <engines/gis/Engine.h>
 #include <macgyver/TimeFormatter.h>
 #include <spine/Convenience.h>
-#include <spine/Exception.h>
+#include <macgyver/Exception.h>
 #include <spine/Location.h>
 #include <textgen/DictionaryFactory.h>
 #include <textgen/Document.h>
@@ -72,7 +72,7 @@ std::string mmap_string(const SmartMet::Spine::HTTP::ParamMap& mmap,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -105,7 +105,7 @@ bool parse_forecasttime_parameter(const std::string& forecasttime_string,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -143,7 +143,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
       std::vector<std::string> parts;
       boost::algorithm::split(parts, bbox_string, boost::algorithm::is_any_of(","));
       if (parts.size() != 4)
-        throw Spine::Exception(BCP,
+        throw Fmi::Exception(BCP,
                                "Invalid bbox parameter " + bbox_string +
                                    ", should be in format 'lon,lat,lon,lat[:radius] [as name]'!");
 
@@ -205,7 +205,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         case Spine::Location::LocationType::BoundingBox:
         {
           // We should never end up here because bbox parameter is converted to wkt parameter
-          throw Spine::Exception(BCP,
+          throw Fmi::Exception(BCP,
                                  "Something wrong: BoundingBox should be handled as WKT POLYGON!");
           break;
         }
@@ -262,7 +262,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Location parameter parsing failed!");
+    throw Fmi::Exception::Trace(BCP, "Location parameter parsing failed!");
   }
 }
 
@@ -402,7 +402,7 @@ void set_textgen_settings(const ProductConfig& config,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -438,7 +438,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -467,7 +467,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     std::string errorMessage;
 
     if (!verifyHttpRequestParameters(queryParameters, errorMessage))
-      throw SmartMet::Spine::Exception(BCP, errorMessage);
+      throw Fmi::Exception(BCP, errorMessage);
 
     SmartMet::Spine::ReadLock lock(itsConfig.itsConfigUpdateMutex);
 
@@ -495,7 +495,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     if (!parse_forecasttime_parameter(
             mmap_string(queryParameters, FORECASTTIME_PARAM), timestamp, errorMessage))
     {
-      throw SmartMet::Spine::Exception(BCP, errorMessage);
+      throw Fmi::Exception(BCP, errorMessage);
     }
 
     if (!parse_location_parameters(theRequest,
@@ -506,7 +506,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
                                    weatherAreaVector,
                                    errorMessage))
     {
-      throw SmartMet::Spine::Exception(BCP, errorMessage);
+      throw Fmi::Exception(BCP, errorMessage);
     }
 
     // set locale
@@ -597,7 +597,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -664,7 +664,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     }
     catch (...)
     {
-      SmartMet::Spine::Exception exception(BCP, "Operation failed!", nullptr);
+      Fmi::Exception exception(BCP, "Operation failed!", nullptr);
       handle_exception(theRequest,
                        theResponse,
                        exception.what(),
@@ -681,7 +681,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -707,7 +707,7 @@ Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -724,24 +724,24 @@ void Plugin::init()
     /* GeoEngine */
     auto engine = itsReactor->getSingleton("Geonames", nullptr);
     if (engine == nullptr)
-      throw SmartMet::Spine::Exception(BCP, "Geonames engine unavailable");
+      throw Fmi::Exception(BCP, "Geonames engine unavailable");
     itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
 
     /* GisEngine */
     engine = itsReactor->getSingleton("Gis", nullptr);
     if (engine == nullptr)
-      throw Spine::Exception(BCP, "Gis engine unavailable");
+      throw Fmi::Exception(BCP, "Gis engine unavailable");
 
     itsConfig.init(reinterpret_cast<Engine::Gis::Engine*>(engine));
 
     if (!itsReactor->addContentHandler(this,
                                        itsConfig.defaultUrl(),
                                        boost::bind(&Plugin::callRequestHandler, this, _1, _2, _3)))
-      throw SmartMet::Spine::Exception(BCP, "Failed to register textgen content handler");
+      throw Fmi::Exception(BCP, "Failed to register textgen content handler");
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
@@ -810,7 +810,7 @@ bool Plugin::verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryP
   }
   catch (...)
   {
-    throw SmartMet::Spine::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
 
