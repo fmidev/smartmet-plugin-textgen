@@ -2,9 +2,9 @@ SUBNAME = textgen
 SPEC = smartmet-plugin-$(SUBNAME)
 INCDIR = smartmet/plugins/$(SUBNAME)
 
-REQUIRES_GDAL = yes
+REQUIRES = gdal
 
-include common.mk
+include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 # Compiler options
 
@@ -56,6 +56,11 @@ profile: all
 
 $(LIBFILE): $(OBJS)
 	$(CC) $(LDFLAGS) -shared -rdynamic -o $(LIBFILE) $(OBJS) $(LIBS)
+	@echo "Checking $(LIBFILE) for unresolved references (except SmartMet::Engine::*)"
+	@if ldd -r $(LIBFILE) 2>&1 | c++filt | grep ^undefined\ symbol | grep -v SmartMet::Engine:: ; \
+		then rm -v $(LIBFILE); \
+		exit 1; \
+	fi
 
 clean:
 	rm -f $(LIBFILE) *~ $(SUBNAME)/*~
