@@ -1,22 +1,20 @@
 PROG = $(patsubst %.cpp,%,$(wildcard *Test.cpp))
 
-REQUIRES_GDAL = yes
+REQUIRES = gdal configpp
 
-include ../common.mk
+include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
 CFLAGS = -DUNIX -O0 -g $(FLAGS)
 
 INCLUDES += \
 	-I ../textgen \
-	-I /usr/include/smartmet \
-	-isystem /usr/include/mysql \
-	`pkg-config --cflags libconfig++`
+	-isystem /usr/include/mysql
 
 LIBS += \
 	-lsmartmet-macgyver \
 	-lsmartmet-spine \
 	-lsmartmet-newbase \
-	`pkg-config --libs libconfig++` \
+	$(CONFIGPP_LIBS) \
 	-lboost_date_time \
 	-lboost_thread \
 	-lboost_filesystem \
