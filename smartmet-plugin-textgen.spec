@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.9.23
+Version: 20.10.19
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -23,10 +23,10 @@ BuildRequires: smartmet-engine-observation-devel >= 20.9.23
 BuildRequires: smartmet-engine-querydata-devel >= 20.9.23
 BuildRequires: smartmet-engine-geonames-devel >= 20.9.23
 BuildRequires: smartmet-engine-gis-devel >= 20.8.23
-BuildRequires: smartmet-library-macgyver-devel >= 20.9.18
+BuildRequires: smartmet-library-macgyver-devel >= 20.10.9
 BuildRequires: smartmet-library-locus-devel >= 20.8.21
 Requires: smartmet-library-calculator >= 20.8.21
-Requires: smartmet-library-macgyver >= 20.9.18
+Requires: smartmet-library-macgyver >= 20.10.9
 Requires: smartmet-library-locus >= 20.8.21
 Requires: smartmet-library-textgen >= 20.8.21
 Requires: libconfig
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon Oct 19 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.19-1.fmi
+- Build update: use makefile.inc from smartmet-library-macgyver
+
 * Wed Sep 23 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.9.23-1.fmi
 - Use Fmi::Exception instead of Spine::Exception
 
