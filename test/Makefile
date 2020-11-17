@@ -26,12 +26,18 @@ all: $(PROG)
 clean:
 	rm -f $(PROG) *~
 
+ifdef CI
+test: fminames $(PROG)
+else
 test: $(PROG)
+endif
 	@mkdir -p failures
 	@echo Running tests:
-	@for prog in $(PROG); do \
-	./$$prog; \
-	done
+	@ok=true; for prog in $(PROG); do ./$$prog || ok=false; done; $$ok
+
+fminames:
+	sed -i -e 's/"smartmet-test"/"localhost"/g' cnf/*.conf
+	@/usr/share/smartmet/test/db/init-and-start.sh && /usr/share/smartmet/test/db/install-test-db.sh > /dev/null
 
 $(PROG) : % : %.cpp Makefile
 	$(CXX) $(CFLAGS) -o $@ $@.cpp $(INCLUDES) $(LIBS)

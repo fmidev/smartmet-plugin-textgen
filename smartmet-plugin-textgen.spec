@@ -47,14 +47,15 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-library-macgyver-devel >= 20.10.9
+#TestRequires: boost169-devel
 #TestRequires: gcc-c++
 #TestRequires: libconfig-devel
-#TestRequires: boost169-devel
-#TestRequires: smartmet-library-calculator-devel >= 20.8.21
-#TestRequires: smartmet-library-newbase-devel >= 20.10.28
 #TestRequires: smartmet-engine-gis-devel >= 20.8.23
+#TestRequires: smartmet-library-calculator-devel >= 20.8.21
+#TestRequires: smartmet-library-macgyver-devel >= 20.10.9
+#TestRequires: smartmet-library-newbase-devel >= 20.10.28
 #TestRequires: smartmet-library-spine-devel >= 20.9.23
+#TestRequires: smartmet-test-db
 %if 0%{rhel} >= 8
 #TestRequires: gdal30-devel
 %else
