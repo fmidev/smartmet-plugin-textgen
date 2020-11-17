@@ -55,6 +55,7 @@ Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-library-macgyver-devel >= 20.10.9
 #TestRequires: smartmet-library-newbase-devel >= 20.10.28
 #TestRequires: smartmet-library-spine-devel >= 20.9.23
+#TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 %if 0%{rhel} >= 8
 #TestRequires: gdal30-devel
