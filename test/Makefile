@@ -27,10 +27,6 @@ clean:
 	rm -f $(PROG) *~
 
 test: $(PROG)
-ifeq ("$(wildcard cnf/local.conf)","")
-	@echo "cnf/local.conf file does not exist!";
-	exit 1;
-endif
 	@mkdir -p failures
 	@echo Running tests:
 	@for prog in $(PROG); do \
