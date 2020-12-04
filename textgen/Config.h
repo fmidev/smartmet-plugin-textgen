@@ -12,6 +12,7 @@
 #include <calculator/WeatherArea.h>
 #include <engines/gis/Engine.h>
 #include <engines/gis/GeometryStorage.h>
+#include <macgyver/AsyncTask.h>
 #include <macgyver/DirectoryMonitor.h>
 #include <spine/Thread.h>
 #include <libconfig.h++>
@@ -191,6 +192,7 @@ class Config : private boost::noncopyable
   std::string itsMainConfigFile;
   SmartMet::Engine::Gis::Engine* itsGisEngine = nullptr;
 
+  std::unique_ptr<Fmi::AsyncTask> config_update_task;
 };  // class Config
 
 }  // namespace Textgen

@@ -324,12 +324,22 @@ Config::~Config()
 {
   if (itsMonitorThread.joinable()) {
     itsMonitor.stop();
-    itsMonitorThread.join();
+    if (config_update_task) {
+        try {
+            config_update_task->cancel();
+            config_update_task->wait();
+        } catch (...) {
+            Fmi::Exception::Trace(BCP, "Config update task failed").printError();
+        }
+    }
   }
 }
 
 void Config::shutdown()
 {
+    if (config_update_task) {
+        config_update_task->cancel();
+    }
 }
 
 void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
@@ -383,11 +393,13 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
                        5,
                        Fmi::DirectoryMonitor::ALL);
     }
-    itsMonitorThread = boost::thread(
-        [this]()
-        {
-            itsMonitor.run();
-        });
+
+    config_update_task.reset(new Fmi::AsyncTask(
+            "[TextGen] config update watch",
+            [this]()
+            {
+                itsMonitor.run();
+            }));
   }
   catch (...)
   {
@@ -464,6 +476,8 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
   std::string config_value;
   std::set<std::string> erroneousFiles;
 
+  Fmi::AsyncTask::interruption_point();
+
   try
   {
     boost::filesystem::path config_path(itsMainConfigFile);
@@ -505,6 +519,8 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
           continue;
         std::string config_name = product.first;
         config_file = product.second;
+
+        Fmi::AsyncTask::interruption_point();
 
         boost::shared_ptr<ProductConfig> productConfig(
             new ProductConfig(config_file, pDefultConfig));
@@ -556,6 +572,8 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
       }
     }
     itsShowFileMessages = true;
+
+    Fmi::AsyncTask::interruption_point();
 
     return newProductConfigs;
   }
@@ -673,9 +691,12 @@ std::unique_ptr<Engine::Gis::GeometryStorage> Config::loadGeometries(
   for (const auto& pci : *pgs)
   {
     boost::shared_ptr<ProductConfig> productConfig = pci.second;
+    Fmi::AsyncTask::interruption_point();
     itsGisEngine->populateGeometryStorage(productConfig->getPostGISIdentifiers(),
                                           *newGeometryStorage);
   }
+
+  Fmi::AsyncTask::interruption_point();
 
   return newGeometryStorage;
 }
@@ -704,6 +725,8 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
         std::string name(config.getMask(i).first);
         std::string value(config.getMask(i).second);
 
+        Fmi::AsyncTask::interruption_point();
+
         // first check if mask can be found in PostGIS database
         if (gs->geoObjectExists(value))
         {
@@ -724,6 +747,8 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
       }
       newProductMasks->insert(make_pair(product_name, prod_mask));
     }
+
+    Fmi::AsyncTask::interruption_point();
 
     return newProductMasks;
   }
