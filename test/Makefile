@@ -33,6 +33,8 @@ geonames-database:
 	    cat tmp-geonames-db.log; \
 	    false; \
 	fi
+	netstat -ln | grep ^tcp
+	sleep 5
 	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) start -w
 
 stop-test-db:
