@@ -6,7 +6,7 @@ clean:
 	rm -fr tmp-geonames-db
 	rm -f tmp-geonames-db.log
 
-TEST_PREPARE_TARGETS := cnf/geonames.conf
+TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf
 TEST_FINISH_TARGETS := .dummy
 ifdef CI
 GEONAMES_HOST_EDIT := sed -e 's/"smartmet-test"/"localhost"/g'
@@ -25,6 +25,9 @@ test:	$(TEST_PREPARE_TARGETS)
 	ok=true; smartmet-plugin-test $(TESTER_PARAM) || ok=false; $(MAKE) $(TEST_FINISH_TARGETS); $$ok
 
 cnf/geonames.conf: cnf/geonames.conf.in .dummy
+	$(GEONAMES_HOST_EDIT) $< >$@
+
+cnf/gis.conf: cnf/gis.conf.in .dummy
 	$(GEONAMES_HOST_EDIT) $< >$@
 
 geonames-database:
