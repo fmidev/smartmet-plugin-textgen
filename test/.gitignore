@@ -1,1 +1,4 @@
-failures
+/failures
+/cnf/geonames.conf
+/cnf/gis.conf
+/tmp-geonames-db*

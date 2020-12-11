@@ -1,43 +1,46 @@
-PROG = $(patsubst %.cpp,%,$(wildcard *Test.cpp))
+all:
 
-REQUIRES = gdal configpp
-
-include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
-
-CFLAGS = -DUNIX -O0 -g $(FLAGS)
-
-INCLUDES += \
-	-I ../textgen \
-	-isystem /usr/include/mysql
-
-LIBS += \
-	-lsmartmet-macgyver \
-	-lsmartmet-spine \
-	-lsmartmet-newbase \
-	$(CONFIGPP_LIBS) \
-	-lboost_date_time \
-	-lboost_thread \
-	-lboost_filesystem \
-	-lboost_iostreams \
-	-lboost_system \
-	-lbz2 -lz -lpthread -ldl
-
-all: $(PROG)
 clean:
-	rm -f $(PROG) *~
+	rm -f PluginTest *~
+	rm -f cnf/geonames.conf
+	rm -fr tmp-geonames-db
+	rm -f tmp-geonames-db.log
 
+TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf
+TEST_FINISH_TARGETS := .dummy
 ifdef CI
-test: fminames $(PROG)
+GEONAMES_HOST_EDIT := sed -e 's/"smartmet-test"/"localhost"/g'
+TEST_PREPARE_TARGETS += geonames-database
+TEST_FINISH_TARGETS += stop-test-db
 else
-test: $(PROG)
+GEONAMES_HOST_EDIT := cat
 endif
-	@mkdir -p failures
+
+TEST_DB_DIR := tmp-geonames-db
+TESTER_PARAM := --handler=/textgen --reactor-config=cnf/reactor.conf
+
+test:	$(TEST_PREPARE_TARGETS)
+	@rm -f failures/*
 	@echo Running tests:
-	@ok=true; for prog in $(PROG); do ./$$prog || ok=false; done; $$ok
+	ok=true; smartmet-plugin-test $(TESTER_PARAM) || ok=false; $(MAKE) $(TEST_FINISH_TARGETS); $$ok
 
-fminames:
-	sed -i -e 's/"smartmet-test"/"localhost"/g' cnf/*.conf
-	@/usr/share/smartmet/test/db/init-and-start.sh && /usr/share/smartmet/test/db/install-test-db.sh > /dev/null
+cnf/geonames.conf: cnf/geonames.conf.in .dummy
+	$(GEONAMES_HOST_EDIT) $< >$@
 
-$(PROG) : % : %.cpp Makefile
-	$(CXX) $(CFLAGS) -o $@ $@.cpp $(INCLUDES) $(LIBS)
+cnf/gis.conf: cnf/gis.conf.in .dummy
+	$(GEONAMES_HOST_EDIT) $< >$@
+
+geonames-database:
+	rm -rf tmp-geonames-db
+	if ! /usr/share/smartmet/test/db/create-local-db.sh $(TEST_DB_DIR) >tmp-geonames-db.log 2>&1 ; then \
+	    cat tmp-geonames-db.log; \
+	    false; \
+	fi
+	sleep 5
+	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) start -w
+
+stop-test-db:
+	/usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) stop
+
+.dummy:
+	true
