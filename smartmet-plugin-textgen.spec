@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.10.19
+Version: 20.12.15
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,26 +16,26 @@ BuildRequires: boost169-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 20.8.21
-BuildRequires: smartmet-library-textgen-devel >= 20.8.21
-BuildRequires: smartmet-library-spine-devel >= 20.9.23
-BuildRequires: smartmet-engine-observation-devel >= 20.9.23
-BuildRequires: smartmet-engine-querydata-devel >= 20.9.23
-BuildRequires: smartmet-engine-geonames-devel >= 20.9.23
-BuildRequires: smartmet-engine-gis-devel >= 20.8.23
-BuildRequires: smartmet-library-macgyver-devel >= 20.10.9
-BuildRequires: smartmet-library-locus-devel >= 20.8.21
-Requires: smartmet-library-calculator >= 20.8.21
-Requires: smartmet-library-macgyver >= 20.10.9
-Requires: smartmet-library-locus >= 20.8.21
-Requires: smartmet-library-textgen >= 20.8.21
+BuildRequires: smartmet-library-calculator-devel >= 20.10.7
+BuildRequires: smartmet-library-textgen-devel >= 20.12.15
+BuildRequires: smartmet-library-spine-devel >= 20.12.15
+BuildRequires: smartmet-engine-observation-devel >= 20.12.15
+BuildRequires: smartmet-engine-querydata-devel >= 20.12.15
+BuildRequires: smartmet-engine-geonames-devel >= 20.12.15
+BuildRequires: smartmet-engine-gis-devel >= 20.12.15
+BuildRequires: smartmet-library-macgyver-devel >= 20.12.15
+BuildRequires: smartmet-library-locus-devel >= 20.12.15
+Requires: smartmet-library-calculator >= 20.10.7
+Requires: smartmet-library-macgyver >= 20.12.15
+Requires: smartmet-library-locus >= 20.12.15
+Requires: smartmet-library-textgen >= 20.12.15
 Requires: libconfig
-Requires: smartmet-engine-observation >= 20.9.23
-Requires: smartmet-engine-geonames >= 20.9.23
-Requires: smartmet-engine-querydata >= 20.9.23
-Requires: smartmet-engine-gis >= 20.8.23
-Requires: smartmet-server >= 20.9.23
-Requires: smartmet-library-spine >= 20.9.23
+Requires: smartmet-engine-observation >= 20.12.15
+Requires: smartmet-engine-geonames >= 20.12.15
+Requires: smartmet-engine-querydata >= 20.12.15
+Requires: smartmet-engine-gis >= 20.12.15
+Requires: smartmet-server >= 20.10.28
+Requires: smartmet-library-spine >= 20.12.15
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -47,16 +47,12 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-engine-gis >= 20.8.23
-#TestRequires: smartmet-engine-geonames >= 20.9.23
+#TestRequires: smartmet-engine-gis >= 20.12.15
+#TestRequires: smartmet-engine-geonames >= 20.12.15
 #TestRequires: smartmet-library-spine-devel >= 20.12.4
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
-%if 0%{rhel} >= 8
-#TestRequires: gdal30-devel
-%else
-#TestRequires: gdal-devel
-%endif
+#TestRequires: gdal32-devel
 
 %description
 SmartMet TextGen plugin
@@ -80,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Dec 15 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.12.15-1.fmi
+- Upgrade to pgdg12
+
 * Mon Oct 19 2020 Andris Pavenis <andris.pavenis@fmi.fi> - 20.10.19-1.fmi
 - Build update: use makefile.inc from smartmet-library-macgyver
 
