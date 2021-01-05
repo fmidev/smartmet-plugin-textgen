@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 20.12.15
+Version: 21.1.5
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -18,24 +18,22 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 20.10.7
 BuildRequires: smartmet-library-textgen-devel >= 20.12.15
-BuildRequires: smartmet-library-spine-devel >= 20.12.15
-BuildRequires: smartmet-engine-observation-devel >= 20.12.15
-BuildRequires: smartmet-engine-querydata-devel >= 20.12.15
-BuildRequires: smartmet-engine-geonames-devel >= 20.12.15
-BuildRequires: smartmet-engine-gis-devel >= 20.12.15
-BuildRequires: smartmet-library-macgyver-devel >= 20.12.15
-BuildRequires: smartmet-library-locus-devel >= 20.12.15
+BuildRequires: smartmet-library-spine-devel >= 21.1.5
+BuildRequires: smartmet-engine-querydata-devel >= 20.12.30
+BuildRequires: smartmet-engine-geonames-devel >= 21.1.5
+BuildRequires: smartmet-engine-gis-devel >= 21.1.5
+BuildRequires: smartmet-library-macgyver-devel >= 21.1.5
+BuildRequires: smartmet-library-locus-devel >= 21.1.5
 Requires: smartmet-library-calculator >= 20.10.7
-Requires: smartmet-library-macgyver >= 20.12.15
-Requires: smartmet-library-locus >= 20.12.15
+Requires: smartmet-library-macgyver >= 21.1.5
+Requires: smartmet-library-locus >= 21.1.5
 Requires: smartmet-library-textgen >= 20.12.15
 Requires: libconfig
-Requires: smartmet-engine-observation >= 20.12.15
-Requires: smartmet-engine-geonames >= 20.12.15
-Requires: smartmet-engine-querydata >= 20.12.15
-Requires: smartmet-engine-gis >= 20.12.15
-Requires: smartmet-server >= 20.10.28
-Requires: smartmet-library-spine >= 20.12.15
+Requires: smartmet-engine-geonames >= 21.1.5
+Requires: smartmet-engine-querydata >= 20.12.30
+Requires: smartmet-engine-gis >= 21.1.5
+Requires: smartmet-server >= 21.1.5
+Requires: smartmet-library-spine >= 21.1.5
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -47,8 +45,8 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-engine-gis >= 20.12.15
-#TestRequires: smartmet-engine-geonames >= 20.12.15
+#TestRequires: smartmet-engine-gis >= 21.1.5
+#TestRequires: smartmet-engine-geonames >= 21.1.5
 #TestRequires: smartmet-library-spine-devel >= 20.12.4
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
@@ -76,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Jan  5 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.5-1.fmi
+- Removed incorrect dependency on observation-engine
+
 * Tue Dec 15 2020 Mika Heiskanen <mika.heiskanen@fmi.fi> - 20.12.15-1.fmi
 - Upgrade to pgdg12
 
