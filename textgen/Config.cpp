@@ -391,7 +391,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
                        boost::bind(&Config::update, this, _1, _2, _3, _4),
                        boost::bind(&Config::error, this, _1, _2, _3, _4),
                        5,
-                       Fmi::DirectoryMonitor::ALL);
+                       Fmi::DirectoryMonitor::CREATE | Fmi::DirectoryMonitor::DELETE | Fmi::DirectoryMonitor::MODIFY | Fmi::DirectoryMonitor::ERROR);
     }
 
     config_update_task.reset(new Fmi::AsyncTask(
