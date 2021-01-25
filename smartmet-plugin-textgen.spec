@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 21.1.18
+Version: 21.1.25
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -19,18 +19,18 @@ BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 21.1.14
 BuildRequires: smartmet-library-textgen-devel >= 21.1.14
 BuildRequires: smartmet-library-spine-devel >= 21.1.14
-BuildRequires: smartmet-engine-querydata-devel >= 21.1.14
-BuildRequires: smartmet-engine-geonames-devel >= 21.1.14
+BuildRequires: smartmet-engine-querydata-devel >= 21.1.25
+BuildRequires: smartmet-engine-geonames-devel >= 21.1.25
 BuildRequires: smartmet-engine-gis-devel >= 21.1.14
-BuildRequires: smartmet-library-macgyver-devel >= 21.1.18
+BuildRequires: smartmet-library-macgyver-devel >= 21.1.25
 BuildRequires: smartmet-library-locus-devel >= 21.1.14
 Requires: smartmet-library-calculator >= 21.1.14
-Requires: smartmet-library-macgyver >= 21.1.18
+Requires: smartmet-library-macgyver >= 21.1.25
 Requires: smartmet-library-locus >= 21.1.14
 Requires: smartmet-library-textgen >= 21.1.14
 Requires: libconfig
-Requires: smartmet-engine-geonames >= 21.1.14
-Requires: smartmet-engine-querydata >= 21.1.14
+Requires: smartmet-engine-geonames >= 21.1.25
+Requires: smartmet-engine-querydata >= 21.1.25
 Requires: smartmet-engine-gis >= 21.1.14
 Requires: smartmet-server >= 21.1.14
 Requires: smartmet-library-spine >= 21.1.14
@@ -46,7 +46,7 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-engine-gis >= 21.1.14
-#TestRequires: smartmet-engine-geonames >= 21.1.14
+#TestRequires: smartmet-engine-geonames >= 21.1.25
 #TestRequires: smartmet-library-spine-devel >= 20.12.4
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
@@ -74,7 +74,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
-* Mon Jan 18 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.1.18-1.fmi
+* Mon Jan 25 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.1.25-1.fmi
 - Define explicitly the events that are subscribed from DirectoryMonitor. Related to ticket BRAINSTORM-1981.
 
 * Thu Jan 14 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.1.14-1.fmi
