@@ -45,6 +45,7 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
+#TestRequires: smartmet-library-macgyver-devel >= 21.1.25
 #TestRequires: smartmet-engine-gis >= 21.1.14
 #TestRequires: smartmet-engine-geonames >= 21.1.25
 #TestRequires: smartmet-library-spine-devel >= 20.12.4
