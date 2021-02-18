@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 21.1.25
+Version: 21.2.18
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,24 +16,24 @@ BuildRequires: boost169-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 21.1.14
-BuildRequires: smartmet-library-textgen-devel >= 21.1.14
-BuildRequires: smartmet-library-spine-devel >= 21.1.14
-BuildRequires: smartmet-engine-querydata-devel >= 21.1.25
+BuildRequires: smartmet-library-calculator-devel >= 21.2.18
+BuildRequires: smartmet-library-textgen-devel >= 21.2.18
+BuildRequires: smartmet-library-spine-devel >= 21.2.5
+BuildRequires: smartmet-engine-querydata-devel >= 21.2.18
 BuildRequires: smartmet-engine-geonames-devel >= 21.1.25
-BuildRequires: smartmet-engine-gis-devel >= 21.1.14
+BuildRequires: smartmet-engine-gis-devel >= 21.2.10
 BuildRequires: smartmet-library-macgyver-devel >= 21.1.25
-BuildRequires: smartmet-library-locus-devel >= 21.1.14
-Requires: smartmet-library-calculator >= 21.1.14
+BuildRequires: smartmet-library-locus-devel >= 21.2.2
+Requires: smartmet-library-calculator >= 21.2.18
 Requires: smartmet-library-macgyver >= 21.1.25
-Requires: smartmet-library-locus >= 21.1.14
-Requires: smartmet-library-textgen >= 21.1.14
+Requires: smartmet-library-locus >= 21.2.2
+Requires: smartmet-library-textgen >= 21.2.18
 Requires: libconfig
 Requires: smartmet-engine-geonames >= 21.1.25
-Requires: smartmet-engine-querydata >= 21.1.25
-Requires: smartmet-engine-gis >= 21.1.14
+Requires: smartmet-engine-querydata >= 21.2.18
+Requires: smartmet-engine-gis >= 21.2.10
 Requires: smartmet-server >= 21.1.14
-Requires: smartmet-library-spine >= 21.1.14
+Requires: smartmet-library-spine >= 21.2.5
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -47,7 +47,7 @@ Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: gcc-c++
 #TestRequires: smartmet-library-macgyver-devel >= 21.1.25
-#TestRequires: smartmet-engine-gis >= 21.1.14
+#TestRequires: smartmet-engine-gis >= 21.2.10
 #TestRequires: smartmet-engine-geonames >= 21.1.25
 #TestRequires: smartmet-library-spine-devel >= 20.12.4
 #TestRequires: smartmet-test-data
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Feb 18 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.18-1.fmi
+- Repackaged due to newbase ABI changes
+
 * Mon Jan 25 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.1.25-1.fmi
 - Define explicitly the events that are subscribed from DirectoryMonitor. Related to ticket BRAINSTORM-1981.
 
