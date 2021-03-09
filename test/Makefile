@@ -6,17 +6,18 @@ clean:
 	rm -fr tmp-geonames-db
 	rm -f tmp-geonames-db.log
 
+TEST_DB_DIR := $(shell pwd)/tmp-geonames-db
+
 TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf
 TEST_FINISH_TARGETS := .dummy
 ifdef CI
-GEONAMES_HOST_EDIT := sed -e 's/"smartmet-test"/"localhost"/g'
+GEONAMES_HOST_EDIT := sed -e 's|"smartmet-test"|"$(TEST_DB_DIR)"|g'
 TEST_PREPARE_TARGETS += start-geonames-db
 TEST_FINISH_TARGETS += stop-geonames-db
 else
 GEONAMES_HOST_EDIT := cat
 endif
 
-TEST_DB_DIR := tmp-geonames-db
 TESTER_PARAM := --handler=/textgen --reactor-config=cnf/reactor.conf
 
 test:	$(TEST_PREPARE_TARGETS)
