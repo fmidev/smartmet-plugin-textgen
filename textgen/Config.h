@@ -141,8 +141,8 @@ class Config : private boost::noncopyable
 
   int getForecastTextCacheSize() { return itsForecastTextCacheSize; }
   const ProductConfig& getProductConfig(const std::string& config_name) const;
-  bool geoObjectExists(const std::string& name) const;
-  TextGen::WeatherArea makePostGisArea(const std::string& postGISName) const;
+  bool geoObjectExists(const std::string& postGISName, const std::string& areasource) const;
+  TextGen::WeatherArea makePostGisArea(const std::string& postGISName, const std::string& areasource) const;
   const WeatherAreas& getProductMasks(const std::string& product_name) const;
 
   bool productConfigExists(const std::string& config_name) const;
