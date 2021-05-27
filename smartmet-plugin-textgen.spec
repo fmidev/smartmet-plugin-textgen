@@ -16,24 +16,24 @@ BuildRequires: boost169-devel
 BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 21.2.18
-BuildRequires: smartmet-library-textgen-devel >= 21.2.18
-BuildRequires: smartmet-library-spine-devel >= 21.2.5
-BuildRequires: smartmet-engine-querydata-devel >= 21.2.18
-BuildRequires: smartmet-engine-geonames-devel >= 21.1.25
+BuildRequires: smartmet-library-calculator-devel >= 21.5.6
+BuildRequires: smartmet-library-textgen-devel >= 21.5.6
+BuildRequires: smartmet-library-spine-devel >= 21.5.21
+BuildRequires: smartmet-engine-querydata-devel >= 21.5.21
+BuildRequires: smartmet-engine-geonames-devel >= 21.5.20
 BuildRequires: smartmet-engine-gis-devel >= 21.5.27
-BuildRequires: smartmet-library-macgyver-devel >= 21.1.25
-BuildRequires: smartmet-library-locus-devel >= 21.2.2
-Requires: smartmet-library-calculator >= 21.2.18
-Requires: smartmet-library-macgyver >= 21.1.25
-Requires: smartmet-library-locus >= 21.2.2
-Requires: smartmet-library-textgen >= 21.2.18
+BuildRequires: smartmet-library-macgyver-devel >= 21.5.21
+BuildRequires: smartmet-library-locus-devel >= 21.5.20
+Requires: smartmet-library-calculator >= 21.5.6
+Requires: smartmet-library-macgyver >= 21.5.21
+Requires: smartmet-library-locus >= 21.5.20
+Requires: smartmet-library-textgen >= 21.5.6
 Requires: libconfig
-Requires: smartmet-engine-geonames >= 21.1.25
-Requires: smartmet-engine-querydata >= 21.2.18
+Requires: smartmet-engine-geonames >= 21.5.20
+Requires: smartmet-engine-querydata >= 21.5.21
 Requires: smartmet-engine-gis >= 21.5.27
 Requires: smartmet-server >= 21.1.14
-Requires: smartmet-library-spine >= 21.2.5
+Requires: smartmet-library-spine >= 21.5.21
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -46,9 +46,9 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: gcc-c++
-#TestRequires: smartmet-library-macgyver-devel >= 21.1.25
+#TestRequires: smartmet-library-macgyver-devel >= 21.5.21
 #TestRequires: smartmet-engine-gis >= 21.2.10
-#TestRequires: smartmet-engine-geonames >= 21.1.25
+#TestRequires: smartmet-engine-geonames >= 21.5.20
 #TestRequires: smartmet-library-spine-devel >= 20.12.4
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
