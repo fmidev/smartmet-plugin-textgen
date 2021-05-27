@@ -758,9 +758,12 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
   }
 }
 
-bool Config::geoObjectExists(const std::string& name) const
+bool Config::geoObjectExists(const std::string& postGISName, const std::string& areasource) const
 {
-  return itsGeometryStorage->geoObjectExists(name);
+  std::string shapeKey = (postGISName+areasource);
+  normalize_string(shapeKey);
+
+  return itsGeometryStorage->geoObjectExists(shapeKey);
 }
 
 const WeatherAreas& Config::getProductMasks(const std::string& product_name) const
@@ -773,23 +776,25 @@ bool Config::productConfigExists(const std::string& config_name) const
   return itsProductConfigs->find(config_name) != itsProductConfigs->end();
 }
 
-TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName) const
+TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName, const std::string& areasource) const
 {
   try
   {
-    std::string areaName(postGISName);
+    std::string areaName = postGISName;
+    std::string shapeKey = (postGISName+areasource);
     normalize_string(areaName);
+    normalize_string(shapeKey);
 
-    if (itsGeometryStorage->isPolygon(postGISName))
+    if (itsGeometryStorage->isPolygon(shapeKey))
     {
-      std::stringstream svg_string_stream(itsGeometryStorage->getSVGPath(postGISName));
+      std::stringstream svg_string_stream(itsGeometryStorage->getSVGPath(shapeKey));
       NFmiSvgPath svgPath;
       svgPath.Read(svg_string_stream);
       return {svgPath, areaName};
     }
 
     // if not polygon, it must be a point
-    std::pair<float, float> std_point(itsGeometryStorage->getPoint(postGISName));
+    std::pair<float, float> std_point(itsGeometryStorage->getPoint(shapeKey));
     NFmiPoint point(std_point.first, std_point.second);
     return {point, areaName};
   }
@@ -879,10 +884,12 @@ ProductConfig::ProductConfig(const std::string& configfile,
     // Geometry tables
     if (itsConfig.exists("geometry_tables"))
     {
+      std::string default_source_name;
       std::string default_server;
       std::string default_schema;
       std::string default_table;
       std::string default_field;
+      itsConfig.lookupValue("geometry_tables.name", default_source_name);
       itsConfig.lookupValue("geometry_tables.server", default_server);
       itsConfig.lookupValue("geometry_tables.schema", default_schema);
       itsConfig.lookupValue("geometry_tables.table", default_table);
@@ -890,6 +897,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
 
       if (!default_schema.empty() && !default_table.empty() && !default_field.empty())
       {
+        default_postgis_id.source_name = default_source_name;
         default_postgis_id.pgname = default_server;
         default_postgis_id.schema = default_schema;
         default_postgis_id.table = default_table;
@@ -907,6 +915,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
         for (int i = 0; i < additionalTables.getLength(); i++)
         {
           libconfig::Setting& tableConfig = additionalTables[i];
+          std::string source_name;
           std::string server =
               (default_server.empty() ? default_postgis_id.pgname : default_server);
           std::string schema =
@@ -914,12 +923,14 @@ ProductConfig::ProductConfig(const std::string& configfile,
           std::string table = (default_table.empty() ? default_postgis_id.table : default_table);
           std::string field = (default_field.empty() ? default_postgis_id.field : default_field);
 
+          tableConfig.lookupValue("name", source_name);
           tableConfig.lookupValue("server", server);
           tableConfig.lookupValue("schema", schema);
           tableConfig.lookupValue("table", table);
           tableConfig.lookupValue("field", field);
 
           Engine::Gis::postgis_identifier postgis_id;
+          postgis_id.source_name = source_name;
           postgis_id.pgname = server;
           postgis_id.schema = schema;
           postgis_id.table = table;

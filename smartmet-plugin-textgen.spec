@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 21.2.18
+Version: 21.5.27
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -21,7 +21,7 @@ BuildRequires: smartmet-library-textgen-devel >= 21.2.18
 BuildRequires: smartmet-library-spine-devel >= 21.2.5
 BuildRequires: smartmet-engine-querydata-devel >= 21.2.18
 BuildRequires: smartmet-engine-geonames-devel >= 21.1.25
-BuildRequires: smartmet-engine-gis-devel >= 21.2.10
+BuildRequires: smartmet-engine-gis-devel >= 21.5.27
 BuildRequires: smartmet-library-macgyver-devel >= 21.1.25
 BuildRequires: smartmet-library-locus-devel >= 21.2.2
 Requires: smartmet-library-calculator >= 21.2.18
@@ -31,7 +31,7 @@ Requires: smartmet-library-textgen >= 21.2.18
 Requires: libconfig
 Requires: smartmet-engine-geonames >= 21.1.25
 Requires: smartmet-engine-querydata >= 21.2.18
-Requires: smartmet-engine-gis >= 21.2.10
+Requires: smartmet-engine-gis >= 21.5.27
 Requires: smartmet-server >= 21.1.14
 Requires: smartmet-library-spine >= 21.2.5
 %if 0%{rhel} >= 7
@@ -76,6 +76,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu May 27 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.5.27-1.fmi
+- Added support for areasource query option in order to handle geometries with the same name (BRAINSTORM-2073): 
+Optional geometry_tables.additional_tables.name configuration parameter identifies a database schema/table/field. 
+If the name has been defined it must be used in areasource URL-parameter in order to use geometries defined in 
+that database schema/table/field.
+
 * Thu Feb 18 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.2.18-1.fmi
 - Repackaged due to newbase ABI changes
 

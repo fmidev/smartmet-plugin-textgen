@@ -170,16 +170,21 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
       return false;
     }
 
+    boost::optional<std::string> areasource = httpRequest.getParameter("areasource");
+	if(!areasource)
+	  areasource = "";
+
     for (const auto& tagged_loc : tagged_locations.locations())
     {
       const auto& loc = *tagged_loc.loc;
+	  std::string shapename = (loc.name + *areasource);
       switch (loc.type)
       {
         case Spine::Location::LocationType::Place:
         case Spine::Location::LocationType::CoordinatePoint:
         {
-          if (loc.feature.substr(0, 3) == "ADM" && config.geoObjectExists(loc.name))
-            weatherAreaVector.emplace_back(config.makePostGisArea(loc.name));
+          if (loc.feature.substr(0, 3) == "ADM" && config.geoObjectExists(loc.name, *areasource))
+            weatherAreaVector.emplace_back(config.makePostGisArea(loc.name, *areasource));
           else
           {
             auto geoname = loc.name;
@@ -193,13 +198,18 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         }
         case Spine::Location::LocationType::Area:
         {
-          if (config.geoObjectExists(loc.name))
-            weatherAreaVector.emplace_back(config.makePostGisArea(loc.name));
+          if (config.geoObjectExists(loc.name, *areasource))
+			{
+			  weatherAreaVector.emplace_back(config.makePostGisArea(loc.name, *areasource));
+			}
           else
-          {
-            errorMessage += "Area " + loc.name + " not found in PostGIS database!";
-            return false;
-          }
+			{
+			  if(!(*areasource).empty())
+				errorMessage += "Area " + loc.name + " (areasource: " + *areasource + ") not found in PostGIS database!";
+			  else 
+				errorMessage += "Area " + loc.name + " not found in PostGIS database!";
+			  return false;
+			}
           break;
         }
         case Spine::Location::LocationType::BoundingBox:
