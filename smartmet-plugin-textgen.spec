@@ -3,7 +3,7 @@
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
 Version: 21.6.17
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Jun 17 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.6.17-2.fmi
+- Do not register the plugin for the server until the configuration files have been scanned once
+
 * Thu Jun 17 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.6.17-1.fmi
 - Use identical case conversions with GIS-engine
 

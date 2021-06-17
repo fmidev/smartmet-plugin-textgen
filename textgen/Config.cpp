@@ -391,6 +391,12 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
 
     config_update_task.reset(
         new Fmi::AsyncTask("[TextGen] config update watch", [this]() { itsMonitor.run(); }));
+
+    // Wait for a full scan to complete before registering ready for the Reactor
+    while (!itsMonitor.ready())
+    {
+      boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+    }
   }
   catch (...)
   {
