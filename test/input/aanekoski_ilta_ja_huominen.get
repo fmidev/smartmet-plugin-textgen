@@ -1,0 +1,1 @@
+GET /textgen?formatter=plainlines&area=%C3%A4%C3%A4nekoski&product=ilta_ja_huominen&forecasttime=200808061400 HTTP/1.0
