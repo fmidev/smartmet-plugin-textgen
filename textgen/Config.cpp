@@ -12,11 +12,12 @@
 #include <boost/tokenizer.hpp>
 #include <calculator/TextGenPosixTime.h>
 #include <engines/gis/Engine.h>
+#include <engines/gis/Normalize.h>
 #include <macgyver/AnsiEscapeCodes.h>
+#include <macgyver/Exception.h>
 #include <macgyver/StringConversion.h>
 #include <newbase/NFmiFileSystem.h>
 #include <spine/Convenience.h>
-#include <macgyver/Exception.h>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -41,25 +42,13 @@ namespace Textgen
 
 namespace
 {
-void normalize_string(std::string& str)
-{
-  // convert to lower case and skandinavian characters
-  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-  boost::algorithm::replace_all(str, "Ä", "a");
-  boost::algorithm::replace_all(str, "ä", "a");
-  boost::algorithm::replace_all(str, "Å", "a");
-  boost::algorithm::replace_all(str, "å", "a");
-  boost::algorithm::replace_all(str, "Ö", "o");
-  boost::algorithm::replace_all(str, "ö", "o");
-}
-
 TextGen::WeatherArea make_area(const std::string& postGISName,
                                const std::unique_ptr<Engine::Gis::GeometryStorage>& geometryStorage)
 {
   try
   {
     std::string areaName(postGISName);
-    normalize_string(areaName);
+    Engine::Gis::normalize_string(areaName);
 
     if (geometryStorage->isPolygon(postGISName))
     {
@@ -182,8 +171,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
           case libconfig::Setting::TypeGroup:
           case libconfig::Setting::TypeArray:
           case libconfig::Setting::TypeList:
-            throw Fmi::Exception(BCP,
-                                             "TextGen: Invalid setting type for '" + key + "'");
+            throw Fmi::Exception(BCP, "TextGen: Invalid setting type for '" + key + "'");
         };
 
         config_item_container.push_back(std::make_pair(key, ss.str()));
@@ -322,24 +310,30 @@ Config::Config(const std::string& configfile)
 
 Config::~Config()
 {
-  if (itsMonitorThread.joinable()) {
+  if (itsMonitorThread.joinable())
+  {
     itsMonitor.stop();
-    if (config_update_task) {
-        try {
-            config_update_task->cancel();
-            config_update_task->wait();
-        } catch (...) {
-            Fmi::Exception::Trace(BCP, "Config update task failed").printError();
-        }
+    if (config_update_task)
+    {
+      try
+      {
+        config_update_task->cancel();
+        config_update_task->wait();
+      }
+      catch (...)
+      {
+        Fmi::Exception::Trace(BCP, "Config update task failed").printError();
+      }
     }
   }
 }
 
 void Config::shutdown()
 {
-    if (config_update_task) {
-        config_update_task->cancel();
-    }
+  if (config_update_task)
+  {
+    config_update_task->cancel();
+  }
 }
 
 void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
@@ -391,15 +385,12 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
                        boost::bind(&Config::update, this, _1, _2, _3, _4),
                        boost::bind(&Config::error, this, _1, _2, _3, _4),
                        5,
-                       Fmi::DirectoryMonitor::CREATE | Fmi::DirectoryMonitor::DELETE | Fmi::DirectoryMonitor::MODIFY | Fmi::DirectoryMonitor::ERROR);
+                       Fmi::DirectoryMonitor::CREATE | Fmi::DirectoryMonitor::DELETE |
+                           Fmi::DirectoryMonitor::MODIFY | Fmi::DirectoryMonitor::ERROR);
     }
 
-    config_update_task.reset(new Fmi::AsyncTask(
-            "[TextGen] config update watch",
-            [this]()
-            {
-                itsMonitor.run();
-            }));
+    config_update_task.reset(
+        new Fmi::AsyncTask("[TextGen] config update watch", [this]() { itsMonitor.run(); }));
   }
   catch (...)
   {
@@ -543,8 +534,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
       }
       catch (...)
       {
-        throw Fmi::Exception(
-            BCP, "Error reading product configuration file '" + config_file + "'");
+        throw Fmi::Exception(BCP, "Error reading product configuration file '" + config_file + "'");
         erroneousFiles.insert(config_file);
       }
     }
@@ -579,8 +569,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
   }
   catch (...)
   {
-    throw Fmi::Exception(
-        BCP, "Error reading product configuration file '" + config_value + "'");
+    throw Fmi::Exception(BCP, "Error reading product configuration file '" + config_value + "'");
   }
 }  // namespace Textgen
 
@@ -760,9 +749,8 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
 
 bool Config::geoObjectExists(const std::string& postGISName, const std::string& areasource) const
 {
-  std::string shapeKey = (postGISName+areasource);
-  normalize_string(shapeKey);
-
+  std::string shapeKey = (postGISName + areasource);
+  Engine::Gis::normalize_string(shapeKey);
   return itsGeometryStorage->geoObjectExists(shapeKey);
 }
 
@@ -776,14 +764,15 @@ bool Config::productConfigExists(const std::string& config_name) const
   return itsProductConfigs->find(config_name) != itsProductConfigs->end();
 }
 
-TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName, const std::string& areasource) const
+TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
+                                             const std::string& areasource) const
 {
   try
   {
     std::string areaName = postGISName;
-    std::string shapeKey = (postGISName+areasource);
-    normalize_string(areaName);
-    normalize_string(shapeKey);
+    std::string shapeKey = (postGISName + areasource);
+    Engine::Gis::normalize_string(areaName);
+    Engine::Gis::normalize_string(shapeKey);
 
     if (itsGeometryStorage->isPolygon(shapeKey))
     {
@@ -1142,8 +1131,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
       exceptionDetails =
           "Error reading product configuration file '" + configfile + "', please check the syntax!";
 
-    throw Fmi::Exception::Trace(
-        BCP, "Error processing product configuration file " + configfile)
+    throw Fmi::Exception::Trace(BCP, "Error processing product configuration file " + configfile)
         .addDetail(exceptionDetails);
   }
 }
@@ -1376,10 +1364,9 @@ const std::pair<std::string, std::string>& ProductConfig::getMask(const unsigned
   try
   {
     if (index >= masks.size())
-      throw Fmi::Exception(
-          BCP,
-          "ProductConfig::getMask(index)-function invalid index parameter: " +
-              Fmi::to_string(index));
+      throw Fmi::Exception(BCP,
+                           "ProductConfig::getMask(index)-function invalid index parameter: " +
+                               Fmi::to_string(index));
 
     return masks.at(index);
   }

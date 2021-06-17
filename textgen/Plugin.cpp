@@ -5,9 +5,10 @@
 #include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
 #include <engines/gis/Engine.h>
+#include <engines/gis/Normalize.h>
+#include <macgyver/Exception.h>
 #include <macgyver/TimeFormatter.h>
 #include <spine/Convenience.h>
-#include <macgyver/Exception.h>
 #include <spine/Location.h>
 #include <textgen/DictionaryFactory.h>
 #include <textgen/Document.h>
@@ -47,18 +48,6 @@ namespace Textgen
 
 namespace
 {
-void normalize_string(std::string& str)
-{
-  // convert to lower case and skandinavian characters
-  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-  boost::algorithm::replace_all(str, "Ä", "a");
-  boost::algorithm::replace_all(str, "ä", "a");
-  boost::algorithm::replace_all(str, "Å", "a");
-  boost::algorithm::replace_all(str, "å", "a");
-  boost::algorithm::replace_all(str, "Ö", "o");
-  boost::algorithm::replace_all(str, "ö", "o");
-}
-
 std::string mmap_string(const SmartMet::Spine::HTTP::ParamMap& mmap,
                         const std::string& key,
                         const std::string& default_value = "")
@@ -144,8 +133,8 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
       boost::algorithm::split(parts, bbox_string, boost::algorithm::is_any_of(","));
       if (parts.size() != 4)
         throw Fmi::Exception(BCP,
-                               "Invalid bbox parameter " + bbox_string +
-                                   ", should be in format 'lon,lat,lon,lat[:radius] [as name]'!");
+                             "Invalid bbox parameter " + bbox_string +
+                                 ", should be in format 'lon,lat,lon,lat[:radius] [as name]'!");
 
       std::string wktString("POLYGON((");
       wktString += (parts[0] + " " + parts[1] + ", ");
@@ -171,13 +160,14 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
     }
 
     boost::optional<std::string> areasource = httpRequest.getParameter("areasource");
-	if(!areasource)
-	  areasource = "";
+    if (!areasource)
+      areasource = "";
 
     for (const auto& tagged_loc : tagged_locations.locations())
     {
       const auto& loc = *tagged_loc.loc;
-	  std::string shapename = (loc.name + *areasource);
+      std::string shapename = (loc.name + *areasource);
+
       switch (loc.type)
       {
         case Spine::Location::LocationType::Place:
@@ -188,7 +178,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
           else
           {
             auto geoname = loc.name;
-            normalize_string(geoname);
+            Engine::Gis::normalize_string(geoname);
             weatherAreaVector.emplace_back(
                 TextGen::WeatherArea(NFmiPoint(loc.longitude, loc.latitude),
                                      geoname,
@@ -199,24 +189,25 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         case Spine::Location::LocationType::Area:
         {
           if (config.geoObjectExists(loc.name, *areasource))
-			{
-			  weatherAreaVector.emplace_back(config.makePostGisArea(loc.name, *areasource));
-			}
+          {
+            weatherAreaVector.emplace_back(config.makePostGisArea(loc.name, *areasource));
+          }
           else
-			{
-			  if(!(*areasource).empty())
-				errorMessage += "Area " + loc.name + " (areasource: " + *areasource + ") not found in PostGIS database!";
-			  else 
-				errorMessage += "Area " + loc.name + " not found in PostGIS database!";
-			  return false;
-			}
+          {
+            if (!(*areasource).empty())
+              errorMessage += "Area " + loc.name + " (areasource: " + *areasource +
+                              ") not found in PostGIS database!";
+            else
+              errorMessage += "Area " + loc.name + " not found in PostGIS database!";
+            return false;
+          }
           break;
         }
         case Spine::Location::LocationType::BoundingBox:
         {
           // We should never end up here because bbox parameter is converted to wkt parameter
           throw Fmi::Exception(BCP,
-                                 "Something wrong: BoundingBox should be handled as WKT POLYGON!");
+                               "Something wrong: BoundingBox should be handled as WKT POLYGON!");
           break;
         }
         case Spine::Location::LocationType::Wkt:
