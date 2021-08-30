@@ -68,19 +68,6 @@ TextGen::WeatherArea make_area(const std::string& postGISName,
     throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
-std::string parse_config_key(const char* str1 = nullptr,
-                             const char* str2 = nullptr,
-                             const char* str3 = nullptr)
-{
-  std::string string1(str1 != nullptr ? str1 : "");
-  std::string string2(str2 != nullptr ? str2 : "");
-  std::string string3(str3 != nullptr ? str3 : "");
-
-  std::string retval(string1 + string2 + string3);
-
-  return retval;
-}
-
 void parseConfigurationItem(const libconfig::Config& itsConfig,
                             const std::string& key,
                             const std::vector<std::string>& allowed_sections,
@@ -393,7 +380,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
         new Fmi::AsyncTask("[TextGen] config update watch", [this]() { itsMonitor.run(); }));
 
     // Wait for a full scan to complete before registering ready for the Reactor
-    while (!itsMonitor.ready())
+    while (!itsMonitor.ready() || config_update_task->ended())
     {
       boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     }

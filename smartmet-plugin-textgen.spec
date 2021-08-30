@@ -3,7 +3,7 @@
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
 Version: 21.8.30
-Release: 2%{?dist}.fmi
+Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -23,10 +23,10 @@ BuildRequires: smartmet-engine-querydata-devel >= 21.8.30
 BuildRequires: smartmet-engine-geonames-devel >= 21.8.30
 BuildRequires: smartmet-engine-gis-devel >= 21.8.30
 BuildRequires: smartmet-library-macgyver-devel >= 21.8.30
-BuildRequires: smartmet-library-locus-devel >= 21.6.16
+BuildRequires: smartmet-library-locus-devel >= 21.8.11
 Requires: smartmet-library-calculator >= 21.5.6
 Requires: smartmet-library-macgyver >= 21.8.30
-Requires: smartmet-library-locus >= 21.6.16
+Requires: smartmet-library-locus >= 21.8.11
 Requires: smartmet-library-textgen >= 21.5.6
 Requires: libconfig
 Requires: smartmet-engine-geonames >= 21.8.30
@@ -78,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Aug 30 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.8.30-1.fmi
 - Cache counters added (BRAINSTORM-1005)
+
+* Tue Aug 17 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.8.17-1.fmi
+- Use the new shutdown API
 
 * Thu Jun 17 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.6.17-2.fmi
 - Do not register the plugin for the server until the configuration files have been scanned once
