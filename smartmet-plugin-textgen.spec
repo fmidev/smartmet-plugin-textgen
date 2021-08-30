@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 21.6.17
+Version: 21.8.30
 Release: 2%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -18,22 +18,22 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 21.5.6
 BuildRequires: smartmet-library-textgen-devel >= 21.5.6
-BuildRequires: smartmet-library-spine-devel >= 21.6.15
-BuildRequires: smartmet-engine-querydata-devel >= 21.6.3
-BuildRequires: smartmet-engine-geonames-devel >= 21.6.16
-BuildRequires: smartmet-engine-gis-devel >= 21.5.27
-BuildRequires: smartmet-library-macgyver-devel >= 21.6.16
+BuildRequires: smartmet-library-spine-devel >= 21.8.30
+BuildRequires: smartmet-engine-querydata-devel >= 21.8.30
+BuildRequires: smartmet-engine-geonames-devel >= 21.8.30
+BuildRequires: smartmet-engine-gis-devel >= 21.8.30
+BuildRequires: smartmet-library-macgyver-devel >= 21.8.30
 BuildRequires: smartmet-library-locus-devel >= 21.6.16
 Requires: smartmet-library-calculator >= 21.5.6
-Requires: smartmet-library-macgyver >= 21.6.16
+Requires: smartmet-library-macgyver >= 21.8.30
 Requires: smartmet-library-locus >= 21.6.16
 Requires: smartmet-library-textgen >= 21.5.6
 Requires: libconfig
-Requires: smartmet-engine-geonames >= 21.6.16
-Requires: smartmet-engine-querydata >= 21.6.3
-Requires: smartmet-engine-gis >= 21.5.27
+Requires: smartmet-engine-geonames >= 21.8.30
+Requires: smartmet-engine-querydata >= 21.8.30
+Requires: smartmet-engine-gis >= 21.8.30
 Requires: smartmet-server >= 21.6.3
-Requires: smartmet-library-spine >= 21.6.15
+Requires: smartmet-library-spine >= 21.8.30
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -46,10 +46,10 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: gcc-c++
-#TestRequires: smartmet-library-macgyver-devel >= 21.6.16
-#TestRequires: smartmet-engine-gis >= 21.2.10
-#TestRequires: smartmet-engine-geonames >= 21.6.16
-#TestRequires: smartmet-library-spine-devel >= 20.12.4
+#TestRequires: smartmet-library-macgyver-devel >= 21.8.30
+#TestRequires: smartmet-engine-gis >= 21.8.30
+#TestRequires: smartmet-engine-geonames >= 21.8.30
+#TestRequires: smartmet-library-spine-devel >= 21.8 .30
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 #TestRequires: gdal32-devel
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon Aug 30 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.8.30-1.fmi
+- Cache counters added (BRAINSTORM-1005)
+
 * Thu Jun 17 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.6.17-2.fmi
 - Do not register the plugin for the server until the configuration files have been scanned once
 
