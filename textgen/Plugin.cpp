@@ -815,6 +815,15 @@ bool Plugin::verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryP
   }
 }
 
+Fmi::Cache::CacheStatistics Plugin::getCacheStats() const
+{
+  Fmi::Cache::CacheStatistics ret;
+  
+  ret.insert(std::make_pair("Textgen::forecast_text_cache", itsForecastTextCache.statistics()));
+
+  return ret;
+}
+
 }  // namespace Textgen
 }  // namespace Plugin
 }  // namespace SmartMet
