@@ -49,7 +49,7 @@ Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-library-macgyver-devel >= 21.8.30
 #TestRequires: smartmet-engine-gis >= 21.8.30
 #TestRequires: smartmet-engine-geonames >= 21.8.30
-#TestRequires: smartmet-library-spine-devel >= 21.8 .30
+#TestRequires: smartmet-library-spine-devel >= 21.8.30
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 #TestRequires: gdal32-devel
