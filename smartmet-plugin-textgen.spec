@@ -13,27 +13,27 @@ BuildRequires: rpm-build
 BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost169-devel
-BuildRequires: libconfig-devel
+BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 21.5.6
 BuildRequires: smartmet-library-textgen-devel >= 21.5.6
-BuildRequires: smartmet-library-spine-devel >= 21.8.30
-BuildRequires: smartmet-engine-querydata-devel >= 21.8.30
+BuildRequires: smartmet-library-spine-devel >= 21.9.7
+BuildRequires: smartmet-engine-querydata-devel >= 21.9.7
 BuildRequires: smartmet-engine-geonames-devel >= 21.8.30
-BuildRequires: smartmet-engine-gis-devel >= 21.8.30
+BuildRequires: smartmet-engine-gis-devel >= 21.9.7
 BuildRequires: smartmet-library-macgyver-devel >= 21.8.30
 BuildRequires: smartmet-library-locus-devel >= 21.8.11
 Requires: smartmet-library-calculator >= 21.5.6
 Requires: smartmet-library-macgyver >= 21.8.30
 Requires: smartmet-library-locus >= 21.8.11
 Requires: smartmet-library-textgen >= 21.5.6
-Requires: libconfig
+Requires: libconfig17
 Requires: smartmet-engine-geonames >= 21.8.30
-Requires: smartmet-engine-querydata >= 21.8.30
-Requires: smartmet-engine-gis >= 21.8.30
-Requires: smartmet-server >= 21.6.3
-Requires: smartmet-library-spine >= 21.8.30
+Requires: smartmet-engine-querydata >= 21.9.7
+Requires: smartmet-engine-gis >= 21.9.7
+Requires: smartmet-server >= 21.9.7
+Requires: smartmet-library-spine >= 21.9.7
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -47,9 +47,9 @@ Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: gcc-c++
 #TestRequires: smartmet-library-macgyver-devel >= 21.8.30
-#TestRequires: smartmet-engine-gis >= 21.8.30
+#TestRequires: smartmet-engine-gis >= 21.9.7
 #TestRequires: smartmet-engine-geonames >= 21.8.30
-#TestRequires: smartmet-library-spine-devel >= 21.8.30
+#TestRequires: smartmet-library-spine-devel >= 21.9.7
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 #TestRequires: gdal32-devel
