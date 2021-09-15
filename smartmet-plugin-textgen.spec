@@ -3,7 +3,7 @@
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
 Version: 21.9.15
-Release: 2%{?dist}.fmi
+Release: 3%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Sep 15 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.9.15-3.fmi
+- Added support for database_servers.postgresql_dictionary.schema configuration parameter
+
 * Wed Sep 15 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.9.15-2.fmi
 - Improved error messages
 

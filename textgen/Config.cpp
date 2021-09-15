@@ -383,6 +383,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
         lconf.lookupValue("database_servers.postgresql_dictionary.username", dci.username);
         lconf.lookupValue("database_servers.postgresql_dictionary.password", dci.password);
         lconf.lookupValue("database_servers.postgresql_dictionary.database", dci.database);
+        lconf.lookupValue("database_servers.postgresql_dictionary.schema", dci.schema);
         lconf.lookupValue("database_servers.postgresql_dictionary.encoding", dci.encoding);
         lconf.lookupValue("database_servers.postgresql_dictionary.connect_timeout",
                           dci.connect_timeout);

@@ -41,6 +41,7 @@ struct db_connect_info
   std::string username;
   std::string password;
   std::string database;
+  std::string schema{"textgen"};
   std::string encoding{"UTF8"};
   unsigned int connect_timeout{30};
 };

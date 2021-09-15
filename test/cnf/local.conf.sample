@@ -14,7 +14,8 @@ database_servers:
         {
                 host		= "postgresql_host";
                 port            = postgresql_port; // optional, default value is 5432
-                database        = "postgre_database_name";
+                database        = "postgresql_database_name";
+                schema        	= "postgresql_schema";
                 username        = "postgresql_user_name";
                 password        = "postgresql_password";
                 encoding        = "postgresql_encoding"; // optional, default value is "UTF8"
