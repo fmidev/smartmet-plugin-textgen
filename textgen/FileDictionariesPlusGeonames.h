@@ -1,14 +1,15 @@
 // ======================================================================
 /*!
  * \file
- * \brief Interface of class TextGen::FileDictionaryPlusGeonames
+ * \brief Interface of class TextGen::FileDictionariesPlusGeonames
  */
 // ======================================================================
 
-#pragma once
+#ifndef TEXTGEN_FILEDICTIONARIESPLUSGEONAMES_H
+#define TEXTGEN_FILEDICTIONARIESPLUSGEONAMES_H
 
 #include <boost/shared_ptr.hpp>
-#include <textgen/FileDictionary.h>
+#include <textgen/FileDictionaries.h>
 #include <string>
 
 namespace SmartMet
@@ -17,14 +18,14 @@ namespace Plugin
 {
 namespace Textgen
 {
-class FileDictionaryPlusGeonames : public TextGen::FileDictionary
+class FileDictionariesPlusGeonames : public TextGen::FileDictionaries
 {
  public:
-  virtual ~FileDictionaryPlusGeonames() = default;
-  FileDictionaryPlusGeonames();
+  virtual ~FileDictionariesPlusGeonames() = default;
+  FileDictionariesPlusGeonames();
 #ifdef NO_COMPILER_OPTIMIZE
-  FileDictionaryPlusGeonames(const FileDictionaryPlusGeonames& theDict);
-  FileDictionaryPlusGeonames& operator=(const FileDictionaryPlusGeonames& theDict);
+  FileDictionariesPlusGeonames(const FileDictionariesPlusGeonames& theDict);
+  FileDictionariesPlusGeonames& operator=(const FileDictionariesPlusGeonames& theDict);
 #endif
 
   virtual void geoinit(void* theGeoengine);
@@ -38,8 +39,12 @@ class FileDictionaryPlusGeonames : public TextGen::FileDictionary
  private:
   class Impl;
   boost::shared_ptr<Impl> itsImpl;
-};  // class FileDictionaryPlusGeonames
+};  // class FileDictionariesPlusGeonames
 
 }  // namespace Textgen
 }  // namespace Plugin
 }  // namespace SmartMet
+
+#endif  // TEXTGEN_FILEDICTIONARIESPLUSGEONAMES_H
+
+// ======================================================================

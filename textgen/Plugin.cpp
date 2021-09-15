@@ -1,6 +1,7 @@
 #include "Plugin.h"
 #include "FileDictionaryPlusGeonames.h"
-#include "MySQLDictionariesPlusGeonames.h"
+#include "DatabaseDictionariesPlusGeonames.h"
+#include "FileDictionariesPlusGeonames.h"
 #include <boost/locale.hpp>
 #include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
@@ -10,7 +11,6 @@
 #include <macgyver/TimeFormatter.h>
 #include <spine/Convenience.h>
 #include <spine/Location.h>
-#include <textgen/DictionaryFactory.h>
 #include <textgen/Document.h>
 #include <textgen/MessageLogger.h>
 #include <textgen/TextFormatter.h>
@@ -101,7 +101,6 @@ bool parse_forecasttime_parameter(const std::string& forecasttime_string,
 bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
                                const Config& config,
                                const SmartMet::Engine::Geonames::Engine& geoEngine,
-                               const boost::shared_ptr<TextGen::Dictionary>& theDictionary,
                                const std::string& language,
                                std::vector<TextGen::WeatherArea>& weatherAreaVector,
                                std::string& errorMessage)
@@ -313,24 +312,6 @@ void set_textgen_settings(const ProductConfig& config,
       Settings::set(configname, qdname);
     }
 
-    // MySQL database
-    Settings::set("textgen::host", config.mySQLDictionaryHost());
-    Settings::set("textgen::user", config.mySQLDictionaryUsername());
-    Settings::set("textgen::passwd", config.mySQLDictionaryPassword());
-    Settings::set("textgen::database", config.mySQLDictionaryDatabase());
-    Settings::set("textgen::filedictionaries", config.fileDictionaries());
-
-#ifdef MYDEBUG
-    std::cout << "MySQL dictionary: " << std::endl
-              << "textgen::host=" << config.mySQLDictionaryHost() << std::endl
-              << "textgen::user=" << config.mySQLDictionaryUsername() << std::endl
-              << "textgen::passwd=" << config.mySQLDictionaryPassword() << std::endl
-              << "textgen::database=" << config.mySQLDictionaryDatabase() << std::endl
-              << "textgen::filedictionaries=" << config.fileDictionaries() << std::endl
-              << "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false") << std::endl
-              << std::endl;
-#endif
-
     // forecasts and the querydata
     for (unsigned int i = 0; i < config.numberOfForecastDataConfigs(); i++)
     {
@@ -478,20 +459,12 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
 
     // set text generator settings (stored in thread local storage)
     std::string modified_params;
-    set_textgen_settings(config, queryParameters, modified_params);
+	set_textgen_settings(config,
+						 queryParameters,
+						 modified_params);
 
-    boost::shared_ptr<TextGen::Dictionary> theDictionary;
-    const auto& dictionary_name = config.dictionary();
-    if (dictionary_name == "multimysqlplusgeonames")
-      theDictionary = boost::make_shared<MySQLDictionariesPlusGeonames>();
-    else if (dictionary_name == "fileplusgeonames")
-      theDictionary = boost::make_shared<FileDictionaryPlusGeonames>();
-    else
-      theDictionary = static_cast<boost::shared_ptr<TextGen::Dictionary> >(
-          (TextGen::DictionaryFactory::create(dictionary_name)));
-
-    theDictionary->init(mmap_string(queryParameters, LANGUAGE_PARAM));
-    theDictionary->geoinit(&theReactor);
+	std::string languageParam = mmap_string(queryParameters, LANGUAGE_PARAM);
+    itsDictionary->changeLanguage(languageParam);
 
     if (!parse_forecasttime_parameter(
             mmap_string(queryParameters, FORECASTTIME_PARAM), timestamp, errorMessage))
@@ -502,8 +475,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     if (!parse_location_parameters(theRequest,
                                    itsConfig,
                                    *itsGeoEngine,
-                                   theDictionary,
-                                   mmap_string(queryParameters, LANGUAGE_PARAM),
+                                   languageParam,
                                    weatherAreaVector,
                                    errorMessage))
     {
@@ -526,7 +498,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     timestamp_cachekey_ss << (timestamp.EpochTime() / CACHE_EXPIRATION_TIME_SEC);
     std::string cache_key_common_part(
         mmap_string(queryParameters, PRODUCT_PARAM) + ";" +
-        mmap_string(queryParameters, LANGUAGE_PARAM) + ";" + formatter_name + ";" +
+        languageParam + ";" + formatter_name + ";" +
         mmap_string(queryParameters, POSTGIS_PARAM) + ";" + timestamp_cachekey_ss.str());
 
     const WeatherAreas& theMaskContainer = itsConfig.getProductMasks(product_name);
@@ -570,7 +542,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
         // create formatter
         boost::shared_ptr<TextGen::TextFormatter> formatter(
             TextGen::TextFormatterFactory::create(formatter_name));
-        formatter->dictionary(theDictionary);
+        formatter->dictionary(itsDictionary);
 
 #ifdef MYDEBUG
         std::cout << "Generating new forecast" << std::endl;
@@ -726,6 +698,7 @@ void Plugin::init()
     auto engine = itsReactor->getSingleton("Geonames", nullptr);
     if (engine == nullptr)
       throw Fmi::Exception(BCP, "Geonames engine unavailable");
+
     itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
 
     /* GisEngine */
@@ -734,6 +707,55 @@ void Plugin::init()
       throw Fmi::Exception(BCP, "Gis engine unavailable");
 
     itsConfig.init(reinterpret_cast<Engine::Gis::Engine*>(engine));
+
+	/* Initialize dictionary */
+    const auto& dictionary_name = itsConfig.dictionary();
+    if (dictionary_name == "multimysqlplusgeonames")
+      itsDictionary = boost::make_shared<DatabaseDictionariesPlusGeonames>("mysql");
+    else if (dictionary_name == "multipostgresqlplusgeonames")
+      itsDictionary = boost::make_shared<DatabaseDictionariesPlusGeonames>("postgresql");else if (dictionary_name == "multifileplusgeonames")
+	  itsDictionary = boost::make_shared<FileDictionariesPlusGeonames>();
+    else
+      itsDictionary = static_cast<boost::shared_ptr<TextGen::Dictionary> >(
+																		   (TextGen::DictionaryFactory::create(dictionary_name)));	
+	Settings::set("textgen::filedictionaries", itsConfig.fileDictionaries());
+
+	const std::string dictionaryId = itsDictionary->getDictionaryId();
+	if(dictionaryId == "mysql" || dictionaryId == "postgresql")
+	  {
+		const db_connect_info& dci = itsConfig.getDatabaseConnectInfo(dictionaryId);
+		
+		// Database dictionary
+		Settings::set("textgen::host", dci.host);
+		Settings::set("textgen::port", Fmi::to_string(dci.port));
+		Settings::set("textgen::user", dci.username);
+		Settings::set("textgen::passwd", dci.password);
+		Settings::set("textgen::database", dci.database);
+		Settings::set("textgen::encoding", dci.encoding);
+		Settings::set("textgen::connect_timeout", Fmi::to_string(dci.connect_timeout));
+		
+#ifdef MYDEBUG
+		std::cout << "Database dictionary for "  << dictionary << ": "<< std::endl
+				  << "textgen::host=" << dci.host << std::endl
+				  << "textgen::port=" << dci.port << std::endl
+				  << "textgen::user=" << dci.username << std::endl
+				  << "textgen::passwd=" << dci.password << std::endl
+				  << "textgen::database=" << dci.database << std::endl
+				  << "textgen::encoding=" << dci.encoding << std::endl;
+				  << "textgen::connect_timeout=" << dci.connect_timeout << std::endl
+				  << "textgen::filedictionaries=" << itsConfig.fileDictionaries() << std::endl
+				  << "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false") << std::endl
+				  << std::endl;
+
+
+#endif
+	  }
+
+    itsDictionary->geoinit(itsGeoEngine);
+
+	// Read all languages at init
+	for(const auto& lang : itsConfig.supportedLanguages())
+	  itsDictionary->init(lang);
 
     if (!itsReactor->addContentHandler(this,
                                        itsConfig.defaultUrl(),
