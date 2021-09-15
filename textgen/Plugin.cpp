@@ -725,6 +725,7 @@ void Plugin::init()
       Settings::set("textgen::user", dci.username);
       Settings::set("textgen::passwd", dci.password);
       Settings::set("textgen::database", dci.database);
+      Settings::set("textgen::schema", dci.schema);
       Settings::set("textgen::encoding", dci.encoding);
       Settings::set("textgen::connect_timeout", Fmi::to_string(dci.connect_timeout));
 
@@ -735,12 +736,12 @@ void Plugin::init()
                 << "textgen::user=" << dci.username << std::endl
                 << "textgen::passwd=" << dci.password << std::endl
                 << "textgen::database=" << dci.database << std::endl
-                << "textgen::encoding=" << dci.encoding << std::endl;
-      << "textgen::connect_timeout=" << dci.connect_timeout << std::endl
-      << "textgen::filedictionaries=" << itsConfig.fileDictionaries() << std::endl
-      << "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false") << std::endl
-      << std::endl;
-
+                << "textgen::schema=" << dci.schema << std::endl
+                << "textgen::encoding=" << dci.encoding << std::endl
+				<< "textgen::connect_timeout=" << dci.connect_timeout << std::endl
+				<< "textgen::filedictionaries=" << itsConfig.fileDictionaries() << std::endl
+				<< "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false") << std::endl
+				<< std::endl;
 #endif
     }
 
