@@ -46,8 +46,8 @@
 #include <calculator/Settings.h>
 #include <calculator/TextGenError.h>
 #include <engines/geonames/Engine.h>
-#include <mysql++/mysql++.h>
 #include <macgyver/Exception.h>
+#include <mysql++/mysql++.h>
 #include <spine/Reactor.h>
 #include <cassert>
 #include <map>
@@ -87,7 +87,10 @@ class DatabaseDictionariesPlusGeonames::Impl
  */
 // ----------------------------------------------------------------------
 
-DatabaseDictionariesPlusGeonames::DatabaseDictionariesPlusGeonames(const std::string& theDatabaseId) : DatabaseDictionaries(theDatabaseId), itsImpl(new Impl()) {}
+DatabaseDictionariesPlusGeonames::DatabaseDictionariesPlusGeonames(const std::string& theDatabaseId)
+    : DatabaseDictionaries(theDatabaseId), itsImpl(new Impl())
+{
+}
 
 void DatabaseDictionariesPlusGeonames::geoinit(void* theGeoengine)
 {
@@ -105,7 +108,7 @@ void DatabaseDictionariesPlusGeonames::geoinit(void* theGeoengine)
   }
 }
 
-  bool DatabaseDictionariesPlusGeonames::geocontains(const std::string& theKey) const
+bool DatabaseDictionariesPlusGeonames::geocontains(const std::string& theKey) const
 {
   std::string key(theKey);
   trim(key);
@@ -127,14 +130,14 @@ void DatabaseDictionariesPlusGeonames::geoinit(void* theGeoengine)
   }
 }
 
-  bool DatabaseDictionariesPlusGeonames::geocontains(const double& theLongitude,
-													 const double& theLatitude,
-													 const double& theMaxDistance) const
+bool DatabaseDictionariesPlusGeonames::geocontains(const double& theLongitude,
+                                                   const double& theLatitude,
+                                                   const double& theMaxDistance) const
 {
   try
   {
     auto locPtr =
-	  itsImpl->itsGeoEngine->lonlatSearch(theLongitude, theLatitude, language(), theMaxDistance);
+        itsImpl->itsGeoEngine->lonlatSearch(theLongitude, theLatitude, language(), theMaxDistance);
 
     if (locPtr->geoid == 0)
       return false;
@@ -150,7 +153,7 @@ void DatabaseDictionariesPlusGeonames::geoinit(void* theGeoengine)
   }
 }
 
-  std::string DatabaseDictionariesPlusGeonames::geofind(const std::string& theKey) const
+std::string DatabaseDictionariesPlusGeonames::geofind(const std::string& theKey) const
 {
   try
   {
@@ -164,8 +167,8 @@ void DatabaseDictionariesPlusGeonames::geoinit(void* theGeoengine)
 }
 
 std::string DatabaseDictionariesPlusGeonames::geofind(double theLongitude,
-													  double theLatitude,
-													  double theMaxDistance) const
+                                                      double theLatitude,
+                                                      double theMaxDistance) const
 {
   try
   {
