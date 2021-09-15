@@ -1,25 +1,25 @@
 // ======================================================================
 /*!
  * \file
- * \brief Implementation of class TextGen::FileDictionaryPlusGeonames
+ * \brief Implementation of class TextGen::DatabaseDictionariesPlusGeonames
  */
 // ======================================================================
 /*!
- * \class TextGen::FileDictionaryPlusGeonames
+ * \class TextGen::DatabaseDictionariesPlusGeonames
  *
  * \brief Provides dictionary services
  *
- * The responsibility of the FileDictionaryPlusGeonames class is to provide natural
+ * The responsibility of the DatabaseDictionariesPlusGeonames class is to provide natural
  * language text for the given keyword. Inserting new keyword-text pairs.
  *
  * The dictionary has an initialization method, which fetches the specified
- * language from the disk.
+ * language from the DatabasePlusGeonames server.
  *
  * Sample usage:
  * \code
  * using namespace TextGen;
  *
- * FileDictionaryPlusGeonames finnish;
+ * DatabaseDictionariesPlusGeonames finnish;
  * finnish.init("fi");
  *
  * cout << finnish.find("good morning") << endl;
@@ -31,20 +31,24 @@
  *
  * Note that find throws if the given keyword does not exist.
  *
+ * The database address, table name, user name and password
+ * are all specified externally in fmi.conf used by newbase
+ * NFmiSettings class.
+ *
  * The dictionary can be initialized multiple times. Each init
  * erases the language initialized earlier.
  */
 // ----------------------------------------------------------------------
 
-#include "FileDictionaryPlusGeonames.h"
+#include "DatabaseDictionariesPlusGeonames.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <calculator/Settings.h>
 #include <calculator/TextGenError.h>
 #include <engines/geonames/Engine.h>
+#include <mysql++/mysql++.h>
 #include <macgyver/Exception.h>
 #include <spine/Reactor.h>
-#include <atomic>
 #include <cassert>
 #include <map>
 #include <sstream>
@@ -65,11 +69,11 @@ namespace Textgen
  */
 // ----------------------------------------------------------------------
 
-class FileDictionaryPlusGeonames::Impl
+class DatabaseDictionariesPlusGeonames::Impl
 {
  public:
   Impl() : itsInitialized(false), itsGeoEngine(nullptr) {}
-  std::atomic<bool> itsInitialized;
+  bool itsInitialized;
   SmartMet::Engine::Geonames::Engine* itsGeoEngine;
   std::string itsEmptyString;
 
@@ -83,20 +87,16 @@ class FileDictionaryPlusGeonames::Impl
  */
 // ----------------------------------------------------------------------
 
-FileDictionaryPlusGeonames::FileDictionaryPlusGeonames() : itsImpl(new Impl()) {}
+DatabaseDictionariesPlusGeonames::DatabaseDictionariesPlusGeonames(const std::string& theDatabaseId) : DatabaseDictionaries(theDatabaseId), itsImpl(new Impl()) {}
 
-void FileDictionaryPlusGeonames::geoinit(void* theReactor)
+void DatabaseDictionariesPlusGeonames::geoinit(void* theGeoengine)
 {
   try
   {
-    // Get Geoengine
-    void* engine =
-        reinterpret_cast<SmartMet::Spine::Reactor*>(theReactor)->getSingleton("Geonames", nullptr);
-
-    if (engine == nullptr)
+    if (theGeoengine == nullptr)
       throw Fmi::Exception(BCP, "Geonames engine unavailable");
 
-    itsImpl->itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
+    itsImpl->itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(theGeoengine);
     itsImpl->itsInitialized = true;
   }
   catch (...)
@@ -105,7 +105,7 @@ void FileDictionaryPlusGeonames::geoinit(void* theReactor)
   }
 }
 
-bool FileDictionaryPlusGeonames::geocontains(const std::string& theKey) const
+  bool DatabaseDictionariesPlusGeonames::geocontains(const std::string& theKey) const
 {
   std::string key(theKey);
   trim(key);
@@ -127,14 +127,14 @@ bool FileDictionaryPlusGeonames::geocontains(const std::string& theKey) const
   }
 }
 
-bool FileDictionaryPlusGeonames::geocontains(const double& theLongitude,
-                                             const double& theLatitude,
-                                             const double& theMaxDistance) const
+  bool DatabaseDictionariesPlusGeonames::geocontains(const double& theLongitude,
+													 const double& theLatitude,
+													 const double& theMaxDistance) const
 {
   try
   {
     auto locPtr =
-        itsImpl->itsGeoEngine->lonlatSearch(theLongitude, theLatitude, language(), theMaxDistance);
+	  itsImpl->itsGeoEngine->lonlatSearch(theLongitude, theLatitude, language(), theMaxDistance);
 
     if (locPtr->geoid == 0)
       return false;
@@ -150,7 +150,7 @@ bool FileDictionaryPlusGeonames::geocontains(const double& theLongitude,
   }
 }
 
-std::string FileDictionaryPlusGeonames::geofind(const std::string& theKey) const
+  std::string DatabaseDictionariesPlusGeonames::geofind(const std::string& theKey) const
 {
   try
   {
@@ -163,9 +163,9 @@ std::string FileDictionaryPlusGeonames::geofind(const std::string& theKey) const
   }
 }
 
-std::string FileDictionaryPlusGeonames::geofind(double theLongitude,
-                                                double theLatitude,
-                                                double theMaxDistance) const
+std::string DatabaseDictionariesPlusGeonames::geofind(double theLongitude,
+													  double theLatitude,
+													  double theMaxDistance) const
 {
   try
   {

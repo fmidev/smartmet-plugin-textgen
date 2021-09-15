@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 21.8.30
+Version: 21.9.15
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -17,7 +17,7 @@ BuildRequires: libconfig-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 21.5.6
-BuildRequires: smartmet-library-textgen-devel >= 21.5.6
+BuildRequires: smartmet-library-textgen-devel >= 21.9.15
 BuildRequires: smartmet-library-spine-devel >= 21.8.30
 BuildRequires: smartmet-engine-querydata-devel >= 21.8.30
 BuildRequires: smartmet-engine-geonames-devel >= 21.8.30
@@ -27,7 +27,7 @@ BuildRequires: smartmet-library-locus-devel >= 21.8.11
 Requires: smartmet-library-calculator >= 21.5.6
 Requires: smartmet-library-macgyver >= 21.8.30
 Requires: smartmet-library-locus >= 21.8.11
-Requires: smartmet-library-textgen >= 21.5.6
+Requires: smartmet-library-textgen >= 21.9.15
 Requires: libconfig
 Requires: smartmet-engine-geonames >= 21.8.30
 Requires: smartmet-engine-querydata >= 21.8.30
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Sep 15 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.9.15-1.fmi
+- Support for PostgreSQL dictionary database added (BRAINSTORM-1707)
+
 * Mon Aug 30 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.8.30-1.fmi
 - Cache counters added (BRAINSTORM-1005)
 

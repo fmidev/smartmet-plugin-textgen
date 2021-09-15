@@ -1,7 +1,7 @@
 // ======================================================================
 /*!
  * \file
- * \brief Interface of class TextGen::MySQLDictionariesPlusGeonames
+ * \brief Interface of class TextGen::DatabaseDictionariesPlusGeonames
  */
 // ======================================================================
 
@@ -9,7 +9,7 @@
 #define TEXTGEN_MYSQLDICTIONARIESPLUSGEONAMES_H
 
 #include <boost/shared_ptr.hpp>
-#include <textgen/MySQLDictionaries.h>
+#include <textgen/DatabaseDictionaries.h>
 #include <string>
 
 namespace SmartMet
@@ -18,17 +18,17 @@ namespace Plugin
 {
 namespace Textgen
 {
-class MySQLDictionariesPlusGeonames : public TextGen::MySQLDictionaries
+class DatabaseDictionariesPlusGeonames : public TextGen::DatabaseDictionaries
 {
  public:
-  virtual ~MySQLDictionariesPlusGeonames() = default;
-  MySQLDictionariesPlusGeonames();
+  virtual ~DatabaseDictionariesPlusGeonames() = default;
+  DatabaseDictionariesPlusGeonames(const std::string& theDatabaseId);
 #ifdef NO_COMPILER_OPTIMIZE
-  MySQLDictionariesPlusGeonames(const MySQLDictionariesPlusGeonames& theDict);
-  MySQLDictionariesPlusGeonames& operator=(const MySQLDictionariesPlusGeonames& theDict);
+  DatabaseDictionariesPlusGeonames(const DatabaseDictionariesPlusGeonames& theDict);
+  DatabaseDictionariesPlusGeonames& operator=(const DatabaseDictionariesPlusGeonames& theDict);
 #endif
 
-  virtual void geoinit(void* theReactor);
+  virtual void geoinit(void* theGeoengine);
   virtual bool geocontains(const std::string& theKey) const;
   virtual bool geocontains(const double& theLongitude,
                            const double& theLatitude,
@@ -39,7 +39,7 @@ class MySQLDictionariesPlusGeonames : public TextGen::MySQLDictionaries
  private:
   class Impl;
   boost::shared_ptr<Impl> itsImpl;
-};  // class MySQLDictionariesPlusGeonames
+};  // class DatabaseDictionariesPlusGeonames
 
 }  // namespace Textgen
 }  // namespace Plugin

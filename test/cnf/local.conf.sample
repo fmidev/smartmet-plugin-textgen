@@ -9,4 +9,16 @@ database_servers:
 		password	= "mysql_password";
 		database	= "mysql_database_name";
 	};
+
+        postgresql_dictionary:
+        {
+                host		= "postgresql_host";
+                port            = postgresql_port; // optional, default value is 5432
+                database        = "postgre_database_name";
+                username        = "postgresql_user_name";
+                password        = "postgresql_password";
+                encoding        = "postgresql_encoding"; // optional, default value is "UTF8"
+                connect_timeout	= postgresql_connect_timeout; // optional, default value is 30
+        };
+
 }

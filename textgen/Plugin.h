@@ -6,6 +6,7 @@
 #include <spine/HTTP.h>
 #include <spine/Reactor.h>
 #include <spine/SmartMetPlugin.h>
+#include <textgen/DictionaryFactory.h>
 
 namespace SmartMet
 {
@@ -56,6 +57,7 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
   SmartMet::Spine::Reactor* itsReactor = nullptr;
   const std::string itsModuleName;
   Config itsConfig;
+  boost::shared_ptr<TextGen::Dictionary> itsDictionary;
 
   struct cache_item
   {

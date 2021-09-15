@@ -34,22 +34,30 @@ using ParameterMappings = std::map<std::string, std::string>;
 using WeatherAreas = std::map<std::string, TextGen::WeatherArea>;
 using ProductWeatherAreaMap = std::map<std::string, WeatherAreas>;
 
+struct db_connect_info
+{
+  std::string host;
+  unsigned int port{5432};
+  std::string username;
+  std::string password;
+  std::string database;
+  std::string encoding{"UTF8"};
+  unsigned int connect_timeout{30};
+};
+
+using DatabaseConnectInfo = std::map<std::string, db_connect_info>;
+
 class ProductConfig : private boost::noncopyable
 {
  public:
   ProductConfig(const std::string& configfile,
-                const boost::shared_ptr<ProductConfig>& pDefaultConf);
+                const boost::shared_ptr<ProductConfig>& pDefaultConf,
+				const std::string& dictionary);
 
-  const std::string& mySQLDictionaryHost() const { return itsMySQLDictionaryHost; }
-  const std::string& mySQLDictionaryDatabase() const { return itsMySQLDictionaryDatabase; }
-  const std::string& mySQLDictionaryUsername() const { return itsMySQLDictionaryUsername; }
-  const std::string& mySQLDictionaryPassword() const { return itsMySQLDictionaryPassword; }
-  const std::string& fileDictionaries() const { return itsFileDictionaries; }
   const std::string& language() const { return itsLanguage; }
   const std::string& formatter() const { return itsFormatter; }
   const std::string& locale() const { return itsLocale; }
   const std::string& timeFormat() const { return itsTimeFormat; }
-  const std::string& dictionary() const { return itsDictionary; }
   const std::string& forestfirewarning_directory() const { return itsForestFireWarningDirectory; }
   const libconfig::Config& config() const { return itsConfig; }
   const std::string& getAreaTimeZone(const std::string& area) const;
@@ -111,12 +119,7 @@ class ProductConfig : private boost::noncopyable
   std::string itsFormatter;
   std::string itsLocale;
   std::string itsTimeFormat;
-  std::string itsDictionary;
-  std::string itsMySQLDictionaryHost;
-  std::string itsMySQLDictionaryDatabase;
-  std::string itsMySQLDictionaryUsername;
-  std::string itsMySQLDictionaryPassword;
-  std::string itsFileDictionaries;
+
   std::string itsForestFireWarningDirectory;
   ParameterMappings itsParameterMappings;
   bool itsFrostSeason;
@@ -148,6 +151,12 @@ class Config : private boost::noncopyable
   bool productConfigExists(const std::string& config_name) const;
 
   const std::string& defaultUrl() const { return itsDefaultUrl; }
+  const std::set<std::string>& supportedLanguages() const { return itsSupportedLanguages; }
+  const std::string& dictionary() const { return itsDictionary; }
+  const db_connect_info& getDatabaseConnectInfo(const std::string& dbId) const { return itsDatabaseConnectInfo.at(dbId); }  
+  db_connect_info& getDatabaseConnectInfo(const std::string& dbId) { return itsDatabaseConnectInfo.at(dbId); }  
+  //  bool exists(const std::string& dbId) const { return (itsDatabaseConnectInfo.find(dbId) != itsDatabaseConnectInfo.end()); }
+  const std::string& fileDictionaries() const { return itsFileDictionaries; }
 
   // Mutex for updating Configuration
   SmartMet::Spine::MutexType itsConfigUpdateMutex;
@@ -190,6 +199,11 @@ class Config : private boost::noncopyable
 
   bool itsShowFileMessages{false};
   std::string itsMainConfigFile;
+  std::string itsDictionary;
+  std::set<std::string> itsSupportedLanguages;
+  DatabaseConnectInfo itsDatabaseConnectInfo;
+  std::string itsFileDictionaries;
+
   SmartMet::Engine::Gis::Engine* itsGisEngine = nullptr;
 
   std::unique_ptr<Fmi::AsyncTask> config_update_task;

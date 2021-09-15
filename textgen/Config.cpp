@@ -24,10 +24,12 @@
 
 static const char* default_url = "/textgen";
 static const char* default_language = "fi";
+static const char* default_supported_languages = "fi,sv,en";
 static const char* default_locale = "fi_FI.UTF-8";
 static const char* default_formatter = "html";
 static const char* default_timeformat = "iso";
 static const char* default_dictionary = "multimysql";
+static const char* default_filedictionaries = "";
 static const char* default_timezone = "Europe/Helsinki";
 static const char* default_textgen_config_name = "default";
 
@@ -334,6 +336,19 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
 
     lconf.lookupValue("forecast_text_cache_size", itsForecastTextCacheSize);
     lconf.lookupValue("url", itsDefaultUrl);
+    lconf.lookupValue("dictionary", itsDictionary);	
+    lconf.lookupValue("filedictionaries", itsFileDictionaries);
+
+	if (itsDictionary.empty())
+	  itsDictionary = default_dictionary;
+	if (itsFileDictionaries.empty())
+	  itsFileDictionaries = default_filedictionaries;
+
+	std::string supported_languages;
+    lconf.lookupValue("supported_languages", supported_languages);	
+	if(supported_languages.empty())
+	  supported_languages = default_supported_languages;
+	boost::algorithm::split(itsSupportedLanguages, supported_languages, boost::algorithm::is_any_of(","));
 
     // Set monitoring directories
     ConfigItemVector configItems = readMainConfig();
@@ -343,26 +358,40 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
     itsGeometryStorage.reset(loadGeometries(itsProductConfigs).release());
     itsProductMasks.reset(readMasks(itsGeometryStorage, itsProductConfigs).release());
 
-    for (const auto& item : *itsProductConfigs)
-    {
-      std::string config_name = item.first;
-      const boost::shared_ptr<ProductConfig>& productConfig = item.second;
-      std::string dictionary = productConfig->dictionary();
+	db_connect_info dci;
 
-      if (boost::algorithm::starts_with(dictionary, "multimysql") &&
-          (productConfig->mySQLDictionaryHost().empty() &&
-           productConfig->mySQLDictionaryDatabase().empty() &&
-           productConfig->mySQLDictionaryUsername().empty() &&
-           productConfig->mySQLDictionaryPassword().empty()))
-      {
-        std::string messageDetails =
-            "database_servers.mysql_dictionary section missing in textgenplugin configuration file "
-            "'" +
-            config_name + "'";
-        throw Fmi::Exception::Trace(BCP, "Textgenplugin configuration error!")
-            .addDetail(messageDetails);
-      }
+	// MySQL dictionary
+    if (itsDictionary.find("mysql") != std::string::npos)
+	  {
+	  if(lconf.exists("database_servers.mysql_dictionary"))
+		{
+		  lconf.lookupValue("database_servers.mysql_dictionary.host", dci.host);
+		  lconf.lookupValue("database_servers.mysql_dictionary.database", dci.database);
+		  lconf.lookupValue("database_servers.mysql_dictionary.username", dci.username);
+		  lconf.lookupValue("database_servers.mysql_dictionary.password", dci.password);
+		  itsDatabaseConnectInfo.insert(std::make_pair("mysql", dci));
+		}
     }
+	// PostgreSQL dictionary
+    if (itsDictionary.find("postgresql") != std::string::npos)
+    {
+	  if(lconf.exists("database_servers.postgresql_dictionary"))
+		{
+		  lconf.lookupValue("database_servers.postgresql_dictionary.host", dci.host);
+		  lconf.lookupValue("database_servers.postgresql_dictionary.port", dci.port);
+		  lconf.lookupValue("database_servers.postgresql_dictionary.username", dci.username);
+		  lconf.lookupValue("database_servers.postgresql_dictionary.password", dci.password);
+		  lconf.lookupValue("database_servers.postgresql_dictionary.database", dci.database);
+		  lconf.lookupValue("database_servers.postgresql_dictionary.encoding", dci.encoding);
+		  lconf.lookupValue("database_servers.postgresql_dictionary.connect_timeout", dci.encoding);
+		  itsDatabaseConnectInfo.insert(std::make_pair("postgresql", dci));
+		}
+    }
+
+	if((itsDictionary.find("mysql") != std::string::npos || itsDictionary.find("postgresql") != std::string::npos) && dci.host.empty())
+	  throw Fmi::Exception(
+						   BCP,
+						   "Textgenplugin configuration error! No database connection info found for " + itsDictionary);
 
     boost::regex pattern("^[\\w,\\s-]+\\.[A-Za-z]+$");
     for (auto dir : getDirectoriesToMonitor(configItems))
@@ -484,7 +513,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
     if (products.find(default_textgen_config_name) != products.end())
     {
       boost::shared_ptr<ProductConfig> productConfig(
-          new ProductConfig(products.at(default_textgen_config_name), pDefultConfig));
+													 new ProductConfig(products.at(default_textgen_config_name), pDefultConfig, itsDictionary));
       newProductConfigs->insert(std::make_pair(default_textgen_config_name, productConfig));
       if (modifiedFiles.find(default_textgen_config_name) != modifiedFiles.end())
       {
@@ -507,7 +536,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
         Fmi::AsyncTask::interruption_point();
 
         boost::shared_ptr<ProductConfig> productConfig(
-            new ProductConfig(config_file, pDefultConfig));
+													   new ProductConfig(config_file, pDefultConfig, itsDictionary));
         productConfig->setDefaultConfig(pDefultConfig);
         newProductConfigs->insert(std::make_pair(config_name, productConfig));
         if (modifiedFiles.find(config_file) != modifiedFiles.end())
@@ -793,12 +822,12 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
 // ----------------------------------------------------------------------
 
 ProductConfig::ProductConfig(const std::string& configfile,
-                             const boost::shared_ptr<ProductConfig>& pDefaultConf)
+                             const boost::shared_ptr<ProductConfig>& pDefaultConf,
+							 const std::string& dictionary)
     : itsLanguage(""),
       itsFormatter(""),
       itsLocale(""),
       itsTimeFormat(""),
-      itsDictionary(""),
       itsForestFireWarningDirectory(""),
       itsFrostSeason(DEFAULT_FROSTSEASON)
 {
@@ -838,23 +867,8 @@ ProductConfig::ProductConfig(const std::string& configfile,
     itsConfig.lookupValue("misc.timeformat", itsTimeFormat);
     itsConfig.lookupValue("misc.language", itsLanguage);
     itsConfig.lookupValue("misc.locale", itsLocale);
-    itsConfig.lookupValue("misc.dictionary", itsDictionary);
-    itsConfig.lookupValue("misc.filedictionaries", itsFileDictionaries);
     itsConfig.lookupValue("misc.formatter", itsFormatter);
-
     itsConfig.lookupValue("forestfirewarning.directory", itsForestFireWarningDirectory);
-
-    // MySQL-dictionary
-    if (itsConfig.exists("database_servers.mysql_dictionary"))
-    {
-      itsConfig.lookupValue("database_servers.mysql_dictionary.host", itsMySQLDictionaryHost);
-      itsConfig.lookupValue("database_servers.mysql_dictionary.database",
-                            itsMySQLDictionaryDatabase);
-      itsConfig.lookupValue("database_servers.mysql_dictionary.username",
-                            itsMySQLDictionaryUsername);
-      itsConfig.lookupValue("database_servers.mysql_dictionary.password",
-                            itsMySQLDictionaryPassword);
-    }
 
     // PostGIS
 
@@ -1170,19 +1184,6 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
 
     if (pDefaultConfig)
     {
-      // MySQL dictionary
-      if (itsMySQLDictionaryHost.empty())
-        itsMySQLDictionaryHost = pDefaultConfig->itsMySQLDictionaryHost;
-
-      if (itsMySQLDictionaryDatabase.empty())
-        itsMySQLDictionaryDatabase = pDefaultConfig->itsMySQLDictionaryDatabase;
-
-      if (itsMySQLDictionaryUsername.empty())
-        itsMySQLDictionaryUsername = pDefaultConfig->itsMySQLDictionaryUsername;
-
-      if (itsMySQLDictionaryPassword.empty())
-        itsMySQLDictionaryPassword = pDefaultConfig->itsMySQLDictionaryPassword;
-
       if (unit_format_config_items.empty())
         unit_format_config_items = pDefaultConfig->unit_format_config_items;
 
@@ -1211,12 +1212,6 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
       if (itsTimeFormat.empty())
         itsTimeFormat = pDefaultConfig->itsTimeFormat;
 
-      if (itsDictionary.empty())
-        itsDictionary = pDefaultConfig->itsDictionary;
-
-      if (itsFileDictionaries.empty())
-        itsFileDictionaries = pDefaultConfig->itsFileDictionaries;
-
       // Use hard-coded default values
       if (itsLanguage.empty())
         itsLanguage = default_language;
@@ -1226,8 +1221,6 @@ void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDe
         itsLocale = default_locale;
       if (itsTimeFormat.empty())
         itsTimeFormat = default_timeformat;
-      if (itsDictionary.empty())
-        itsDictionary = default_dictionary;
     }
   }
   catch (...)
