@@ -52,7 +52,7 @@ class ProductConfig : private boost::noncopyable
  public:
   ProductConfig(const std::string& configfile,
                 const boost::shared_ptr<ProductConfig>& pDefaultConf,
-				const std::string& dictionary);
+                const std::string& dictionary);
 
   const std::string& language() const { return itsLanguage; }
   const std::string& formatter() const { return itsFormatter; }
@@ -145,7 +145,8 @@ class Config : private boost::noncopyable
   int getForecastTextCacheSize() { return itsForecastTextCacheSize; }
   const ProductConfig& getProductConfig(const std::string& config_name) const;
   bool geoObjectExists(const std::string& postGISName, const std::string& areasource) const;
-  TextGen::WeatherArea makePostGisArea(const std::string& postGISName, const std::string& areasource) const;
+  TextGen::WeatherArea makePostGisArea(const std::string& postGISName,
+                                       const std::string& areasource) const;
   const WeatherAreas& getProductMasks(const std::string& product_name) const;
 
   bool productConfigExists(const std::string& config_name) const;
@@ -153,9 +154,16 @@ class Config : private boost::noncopyable
   const std::string& defaultUrl() const { return itsDefaultUrl; }
   const std::set<std::string>& supportedLanguages() const { return itsSupportedLanguages; }
   const std::string& dictionary() const { return itsDictionary; }
-  const db_connect_info& getDatabaseConnectInfo(const std::string& dbId) const { return itsDatabaseConnectInfo.at(dbId); }  
-  db_connect_info& getDatabaseConnectInfo(const std::string& dbId) { return itsDatabaseConnectInfo.at(dbId); }  
-  //  bool exists(const std::string& dbId) const { return (itsDatabaseConnectInfo.find(dbId) != itsDatabaseConnectInfo.end()); }
+  const db_connect_info& getDatabaseConnectInfo(const std::string& dbId) const
+  {
+    return itsDatabaseConnectInfo.at(dbId);
+  }
+  db_connect_info& getDatabaseConnectInfo(const std::string& dbId)
+  {
+    return itsDatabaseConnectInfo.at(dbId);
+  }
+  //  bool exists(const std::string& dbId) const { return (itsDatabaseConnectInfo.find(dbId) !=
+  //  itsDatabaseConnectInfo.end()); }
   const std::string& fileDictionaries() const { return itsFileDictionaries; }
 
   // Mutex for updating Configuration

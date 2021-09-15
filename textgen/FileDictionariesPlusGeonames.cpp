@@ -46,8 +46,8 @@
 #include <calculator/Settings.h>
 #include <calculator/TextGenError.h>
 #include <engines/geonames/Engine.h>
-#include <mysql++/mysql++.h>
 #include <macgyver/Exception.h>
+#include <mysql++/mysql++.h>
 #include <spine/Reactor.h>
 #include <cassert>
 #include <map>
@@ -87,7 +87,10 @@ class FileDictionariesPlusGeonames::Impl
  */
 // ----------------------------------------------------------------------
 
-FileDictionariesPlusGeonames::FileDictionariesPlusGeonames() : FileDictionaries(), itsImpl(new Impl()) {}
+FileDictionariesPlusGeonames::FileDictionariesPlusGeonames()
+    : FileDictionaries(), itsImpl(new Impl())
+{
+}
 
 void FileDictionariesPlusGeonames::geoinit(void* theGeoengine)
 {
@@ -128,13 +131,13 @@ bool FileDictionariesPlusGeonames::geocontains(const std::string& theKey) const
 }
 
 bool FileDictionariesPlusGeonames::geocontains(const double& theLongitude,
-											   const double& theLatitude,
-											   const double& theMaxDistance) const
+                                               const double& theLatitude,
+                                               const double& theMaxDistance) const
 {
   try
   {
     auto locPtr =
-	  itsImpl->itsGeoEngine->lonlatSearch(theLongitude, theLatitude, language(), theMaxDistance);
+        itsImpl->itsGeoEngine->lonlatSearch(theLongitude, theLatitude, language(), theMaxDistance);
 
     if (locPtr->geoid == 0)
       return false;
@@ -164,8 +167,8 @@ std::string FileDictionariesPlusGeonames::geofind(const std::string& theKey) con
 }
 
 std::string FileDictionariesPlusGeonames::geofind(double theLongitude,
-													double theLatitude,
-													double theMaxDistance) const
+                                                  double theLatitude,
+                                                  double theMaxDistance) const
 {
   try
   {

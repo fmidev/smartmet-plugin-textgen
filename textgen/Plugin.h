@@ -70,7 +70,7 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
 
   SmartMet::Engine::Geonames::Engine* itsGeoEngine = nullptr;
 
-  Fmi::Cache::CacheStatistics getCacheStats() const;  
+  Fmi::Cache::CacheStatistics getCacheStats() const;
 };  // class Plugin
 
 }  // namespace Textgen
