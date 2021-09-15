@@ -384,7 +384,8 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
         lconf.lookupValue("database_servers.postgresql_dictionary.password", dci.password);
         lconf.lookupValue("database_servers.postgresql_dictionary.database", dci.database);
         lconf.lookupValue("database_servers.postgresql_dictionary.encoding", dci.encoding);
-        lconf.lookupValue("database_servers.postgresql_dictionary.connect_timeout", dci.encoding);
+        lconf.lookupValue("database_servers.postgresql_dictionary.connect_timeout",
+                          dci.connect_timeout);
         itsDatabaseConnectInfo.insert(std::make_pair("postgresql", dci));
       }
     }
@@ -418,9 +419,25 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
       boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     }
   }
+  catch (const libconfig::ParseException& e)
+  {
+    throw Fmi::Exception::Trace(BCP, "Configuration error!")
+        .addParameter("Configuration file", itsMainConfigFile)
+        .addParameter("Line", Fmi::to_string(e.getLine()));
+  }
+  catch (const libconfig::SettingNotFoundException& ex)
+  {
+    throw Fmi::Exception::Trace(BCP, "Incorrect setting type")
+        .addParameter("Setting path", ex.getPath());
+  }
+  catch (const libconfig::SettingTypeException& ex)
+  {
+    throw Fmi::Exception::Trace(BCP, "Incorrect setting type")
+        .addParameter("Setting path", ex.getPath());
+  }
   catch (...)
   {
-    throw Fmi::Exception::Trace(BCP, "Operation failed!");
+    throw Fmi::Exception::Trace(BCP, "Configuration error");
   }
 }
 
