@@ -13,27 +13,27 @@ BuildRequires: rpm-build
 BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: boost169-devel
-BuildRequires: libconfig-devel
+BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 21.5.6
 BuildRequires: smartmet-library-textgen-devel >= 21.9.15
-BuildRequires: smartmet-library-spine-devel >= 21.8.30
-BuildRequires: smartmet-engine-querydata-devel >= 21.8.30
-BuildRequires: smartmet-engine-geonames-devel >= 21.8.30
-BuildRequires: smartmet-engine-gis-devel >= 21.8.30
-BuildRequires: smartmet-library-macgyver-devel >= 21.8.30
+BuildRequires: smartmet-library-spine-devel >= 21.9.13
+BuildRequires: smartmet-engine-querydata-devel >= 21.9.13
+BuildRequires: smartmet-engine-geonames-devel >= 21.9.13
+BuildRequires: smartmet-engine-gis-devel >= 21.9.13
+BuildRequires: smartmet-library-macgyver-devel >= 21.9.13
 BuildRequires: smartmet-library-locus-devel >= 21.8.11
 Requires: smartmet-library-calculator >= 21.5.6
-Requires: smartmet-library-macgyver >= 21.8.30
+Requires: smartmet-library-macgyver >= 21.9.13
 Requires: smartmet-library-locus >= 21.8.11
 Requires: smartmet-library-textgen >= 21.9.15
-Requires: libconfig
-Requires: smartmet-engine-geonames >= 21.8.30
-Requires: smartmet-engine-querydata >= 21.8.30
-Requires: smartmet-engine-gis >= 21.8.30
-Requires: smartmet-server >= 21.6.3
-Requires: smartmet-library-spine >= 21.8.30
+Requires: libconfig17
+Requires: smartmet-engine-geonames >= 21.9.13
+Requires: smartmet-engine-querydata >= 21.9.13
+Requires: smartmet-engine-gis >= 21.9.13
+Requires: smartmet-server >= 21.9.7
+Requires: smartmet-library-spine >= 21.9.13
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -46,10 +46,10 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: gcc-c++
-#TestRequires: smartmet-library-macgyver-devel >= 21.8.30
-#TestRequires: smartmet-engine-gis >= 21.8.30
-#TestRequires: smartmet-engine-geonames >= 21.8.30
-#TestRequires: smartmet-library-spine-devel >= 21.8 .30
+#TestRequires: smartmet-library-macgyver-devel >= 21.9.13
+#TestRequires: smartmet-engine-gis >= 21.9.13
+#TestRequires: smartmet-engine-geonames >= 21.9.13
+#TestRequires: smartmet-library-spine-devel >= 21.9.13
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 #TestRequires: gdal32-devel
@@ -78,6 +78,12 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Sep 15 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.9.15-1.fmi
 - Support for PostgreSQL dictionary database added (BRAINSTORM-1707)
+
+* Mon Sep 13 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.9.13-1.fmi
+- Repackaged due to Fmi::Cache statistics fixes
+
+* Thu Sep  9 2021 Andris Pavenis <andris.pavenis@fmi.fi> 21.9.9-1.fmi
+- Repackage due to dependency change (libconfig->libconfig17)
 
 * Mon Aug 30 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.8.30-1.fmi
 - Cache counters added (BRAINSTORM-1005)
