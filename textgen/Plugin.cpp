@@ -11,6 +11,7 @@
 #include <macgyver/TimeFormatter.h>
 #include <spine/Convenience.h>
 #include <spine/Location.h>
+#include <spine/Thread.h>
 #include <textgen/Document.h>
 #include <textgen/MessageLogger.h>
 #include <textgen/TextFormatter.h>
@@ -48,6 +49,8 @@ namespace Textgen
 
 namespace
 {
+SmartMet::Spine::MutexType gDictionaryMutex;
+
 std::string mmap_string(const SmartMet::Spine::HTTP::ParamMap& mmap,
                         const std::string& key,
                         const std::string& default_value = "")
@@ -462,7 +465,6 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
     set_textgen_settings(config, queryParameters, modified_params);
 
     std::string languageParam = mmap_string(queryParameters, LANGUAGE_PARAM);
-    itsDictionary->changeLanguage(languageParam);
 
     if (!parse_forecasttime_parameter(
             mmap_string(queryParameters, FORECASTTIME_PARAM), timestamp, errorMessage))
@@ -549,7 +551,11 @@ std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
 
         const TextGen::Document document = generator.generate(area);
 
-        forecast_text_area = formatter->format(document);
+        {
+          SmartMet::Spine::WriteLock lock(gDictionaryMutex);
+          itsDictionary->changeLanguage(languageParam);
+          forecast_text_area = formatter->format(document);
+        }
 
         cache_item ci;
         ci.member = forecast_text_area;
