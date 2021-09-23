@@ -2,7 +2,7 @@ SUBNAME = textgen
 SPEC = smartmet-plugin-$(SUBNAME)
 INCDIR = smartmet/plugins/$(SUBNAME)
 
-REQUIRES = gdal
+REQUIRES = gdal configpp
 
 include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 
@@ -21,6 +21,7 @@ LIBS += -L$(libdir) \
 	-lsmartmet-newbase \
 	-lsmartmet-locus \
 	-lmysqlpp \
+	$(REQUIRED_LIBS) \
 	-lboost_date_time \
 	-lboost_timer \
 	-lboost_chrono \
