@@ -45,14 +45,12 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: gcc-c++
-#TestRequires: smartmet-library-macgyver-devel >= 21.9.13
+#TestRequires: smartmet-utils-devel
 #TestRequires: smartmet-engine-gis >= 21.9.13
 #TestRequires: smartmet-engine-geonames >= 21.9.13
-#TestRequires: smartmet-library-spine-devel >= 21.9.13
+#TestRequires: smartmet-library-spine-plugin-test
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
-#TestRequires: gdal32-devel
 
 %description
 SmartMet TextGen plugin
