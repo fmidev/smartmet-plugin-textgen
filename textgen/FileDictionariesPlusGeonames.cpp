@@ -88,7 +88,7 @@ class FileDictionariesPlusGeonames::Impl
 // ----------------------------------------------------------------------
 
 FileDictionariesPlusGeonames::FileDictionariesPlusGeonames()
-    : FileDictionaries(), itsImpl(new Impl())
+    :  itsImpl(new Impl())
 {
 }
 
