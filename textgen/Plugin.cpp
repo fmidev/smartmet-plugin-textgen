@@ -124,7 +124,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         bbox_name = bbox_string.substr(name_pos + 4);
         bbox_string = bbox_string.substr(0, name_pos);
       }
-      size_t radius_pos = bbox_string.find(":");
+      size_t radius_pos = bbox_string.find(':');
       std::string radius = "";
       if (radius_pos != std::string::npos)
       {
@@ -228,11 +228,11 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
           {
             case Spine::Location::LocationType::CoordinatePoint:
             {
-              int coordinate_string_len = (loc.name.find(")") - loc.name.find("(")) - 1;
+              int coordinate_string_len = (loc.name.find(')') - loc.name.find('(')) - 1;
               std::string coordinates =
-                  loc.name.substr(loc.name.find("(") + 1, coordinate_string_len);
-              double lon = Fmi::stod(coordinates.substr(0, coordinates.find(" ")));
-              double lat = Fmi::stod(coordinates.substr(coordinates.find(" ") + 1));
+                  loc.name.substr(loc.name.find('(') + 1, coordinate_string_len);
+              double lon = Fmi::stod(coordinates.substr(0, coordinates.find(' ')));
+              double lat = Fmi::stod(coordinates.substr(coordinates.find(' ') + 1));
               weatherAreaVector.emplace_back(
                   TextGen::WeatherArea(NFmiPoint(lon, lat),
                                        wktName,
