@@ -119,10 +119,7 @@ bool DatabaseDictionariesPlusGeonames::geocontains(const std::string& theKey) co
   {
     auto locPtr = itsImpl->itsGeoEngine->nameSearch(theKey, language());
 
-    if (locPtr->name.empty())
-      return false;
-
-    return true;
+    return !locPtr->name.empty();
   }
   catch (...)
   {
