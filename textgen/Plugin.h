@@ -32,18 +32,18 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
 {
  public:
   Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
-  virtual ~Plugin() = default;
+  ~Plugin() override = default;
 
-  const std::string& getPluginName() const;
-  int getRequiredAPIVersion() const;
-  bool queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const;
+  const std::string& getPluginName() const override;
+  int getRequiredAPIVersion() const override;
+  bool queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const override;
 
  protected:
-  void init();
-  void shutdown();
+  void init() override;
+  void shutdown() override;
   void requestHandler(SmartMet::Spine::Reactor& theReactor,
                       const SmartMet::Spine::HTTP::Request& theRequest,
-                      SmartMet::Spine::HTTP::Response& theResponse);
+                      SmartMet::Spine::HTTP::Response& theResponse) override;
 
  private:
   Plugin();
@@ -70,7 +70,7 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
 
   SmartMet::Engine::Geonames::Engine* itsGeoEngine = nullptr;
 
-  Fmi::Cache::CacheStatistics getCacheStats() const;
+  Fmi::Cache::CacheStatistics getCacheStats() const override;
 };  // class Plugin
 
 }  // namespace Textgen

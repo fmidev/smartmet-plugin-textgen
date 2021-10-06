@@ -20,20 +20,20 @@ namespace Textgen
 class FileDictionaryPlusGeonames : public TextGen::FileDictionary
 {
  public:
-  virtual ~FileDictionaryPlusGeonames() = default;
+  ~FileDictionaryPlusGeonames() override = default;
   FileDictionaryPlusGeonames();
 #ifdef NO_COMPILER_OPTIMIZE
   FileDictionaryPlusGeonames(const FileDictionaryPlusGeonames& theDict);
   FileDictionaryPlusGeonames& operator=(const FileDictionaryPlusGeonames& theDict);
 #endif
 
-  virtual void geoinit(void* theGeoengine);
-  virtual bool geocontains(const std::string& theKey) const;
-  virtual bool geocontains(const double& theLongitude,
+  void geoinit(void* theGeoengine) override;
+  bool geocontains(const std::string& theKey) const override;
+  bool geocontains(const double& theLongitude,
                            const double& theLatitude,
-                           const double& theMaxDistance) const;
-  virtual std::string geofind(const std::string& theKey) const;
-  virtual std::string geofind(double theLongitude, double theLatitude, double theMaxDistance) const;
+                           const double& theMaxDistance) const override;
+  std::string geofind(const std::string& theKey) const override;
+  std::string geofind(double theLongitude, double theLatitude, double theMaxDistance) const override;
 
  private:
   class Impl;
