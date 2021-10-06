@@ -694,7 +694,7 @@ void Plugin::init()
   try
   {
     /* GeoEngine */
-    auto engine = itsReactor->getSingleton("Geonames", nullptr);
+    auto *engine = itsReactor->getSingleton("Geonames", nullptr);
     if (engine == nullptr)
       throw Fmi::Exception(BCP, "Geonames engine unavailable");
 
