@@ -585,7 +585,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 {
   // thead specific stringstream logging
   MessageLogger logger("SmartMet::Plugin::TextGen::requestHandler");
-  logger.open();
+  MessageLogger::open();
 
   try
   {
