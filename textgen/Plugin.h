@@ -46,7 +46,7 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
                       SmartMet::Spine::HTTP::Response& theResponse) override;
 
  private:
-  Plugin();
+  Plugin() = delete;
 
   std::string query(SmartMet::Spine::Reactor& theReactor,
                     const SmartMet::Spine::HTTP::Request& theRequest,
