@@ -68,9 +68,9 @@ namespace Textgen
 class FileDictionaryPlusGeonames::Impl
 {
  public:
-  Impl() : itsInitialized(false), itsGeoEngine(nullptr) {}
+  Impl() : itsInitialized(false) {}
   std::atomic<bool> itsInitialized;
-  SmartMet::Engine::Geonames::Engine* itsGeoEngine;
+  SmartMet::Engine::Geonames::Engine* itsGeoEngine{nullptr};
   std::string itsEmptyString;
 
 };  // class Impl
