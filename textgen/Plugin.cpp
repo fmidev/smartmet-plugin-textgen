@@ -621,7 +621,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 
       theResponse.setHeader("Content-Type", "text/html; charset=UTF-8");
       theResponse.setHeader("Cache-Control", cachecontrol);
-      theResponse.setHeader("Expires", expiration.c_str());
+      theResponse.setHeader("Expires", expiration);
       theResponse.setHeader("Last-Modified", modification);
 
       if (response.empty())
