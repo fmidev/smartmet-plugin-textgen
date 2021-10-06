@@ -274,7 +274,7 @@ std::string get_setting_string(const std::string& key,
                                const SmartMet::Spine::HTTP::ParamMap& params,
                                std::string& modified_params)
 {
-  for (auto p : params)
+  for (const auto& p : params)
   {
     if (boost::iends_with(key, p.first))
     {

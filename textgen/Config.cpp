@@ -743,7 +743,7 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
 
     // PostGIS
     std::vector<std::string> product_names(getProductNames(pgs));
-    for (auto product_name : product_names)
+    for (const auto& product_name : product_names)
     {
       if (pgs->find(product_name) == pgs->end())
         throw Fmi::Exception(BCP, product_name + " configuration not found!");
@@ -874,7 +874,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
       std::vector<std::string> allowed_sections;
       allowed_sections.emplace_back("*");
       parseConfigurationItem(itsConfig, "parameter_mapping", allowed_sections, parameter_mappings);
-      for (auto item : parameter_mappings)
+      for (const auto& item : parameter_mappings)
       {
         std::string configname = item.first;
         std::string qdname = item.second;
