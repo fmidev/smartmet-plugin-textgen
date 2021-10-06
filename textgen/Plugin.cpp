@@ -116,7 +116,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
     boost::optional<std::string> bbox_param_value = httpRequest.getParameter("bbox");
     if (bbox_param_value)
     {
-      std::string bbox_name = "";
+      std::string bbox_name;
       std::string bbox_string = *bbox_param_value;
       size_t name_pos = bbox_string.find(" as ");
       if (name_pos != std::string::npos)
@@ -125,7 +125,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         bbox_string = bbox_string.substr(0, name_pos);
       }
       size_t radius_pos = bbox_string.find(':');
-      std::string radius = "";
+      std::string radius;
       if (radius_pos != std::string::npos)
       {
         radius = bbox_string.substr(radius_pos + 1);

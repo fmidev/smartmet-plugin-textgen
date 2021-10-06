@@ -845,11 +845,7 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
 ProductConfig::ProductConfig(const std::string& configfile,
                              const boost::shared_ptr<ProductConfig>& pDefaultConf,
                              const std::string&  /*dictionary*/)
-    : itsLanguage(""),
-      itsFormatter(""),
-      itsLocale(""),
-      itsTimeFormat(""),
-      itsForestFireWarningDirectory(""),
+    : 
       itsFrostSeason(DEFAULT_FROSTSEASON)
 {
   std::string exceptionDetails;
