@@ -616,9 +616,9 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
   }
 }  // namespace Textgen
 
-void Config::update(Fmi::DirectoryMonitor::Watcher id,
-                    const boost::filesystem::path& dir,
-                    const boost::regex& pattern,
+void Config::update(Fmi::DirectoryMonitor::Watcher  /*id*/,
+                    const boost::filesystem::path&  /*dir*/,
+                    const boost::regex&  /*pattern*/,
                     const Fmi::DirectoryMonitor::Status& status)
 {
   std::set<std::string> modifiedFiles;
@@ -664,9 +664,9 @@ void Config::update(Fmi::DirectoryMonitor::Watcher id,
   itsProductMasks = std::move(productMasks);
 }
 
-void Config::error(Fmi::DirectoryMonitor::Watcher id,
+void Config::error(Fmi::DirectoryMonitor::Watcher  /*id*/,
                    const boost::filesystem::path& dir,
-                   const boost::regex& pattern,
+                   const boost::regex&  /*pattern*/,
                    const std::string& message)
 {
   try
@@ -844,7 +844,7 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
 
 ProductConfig::ProductConfig(const std::string& configfile,
                              const boost::shared_ptr<ProductConfig>& pDefaultConf,
-                             const std::string& dictionary)
+                             const std::string&  /*dictionary*/)
     : itsLanguage(""),
       itsFormatter(""),
       itsLocale(""),

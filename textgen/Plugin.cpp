@@ -429,7 +429,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
 
 }  // namespace
 
-bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const
+bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request&  /*theRequest*/) const
 {
   // Uses databases and such
   // Also, is rarely used interactively
@@ -440,7 +440,7 @@ bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const
  * \brief Perform a TextGen query
  */
 // ----------------------------------------------------------------------
-std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
+std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
                           const SmartMet::Spine::HTTP::Request& theRequest,
                           SmartMet::Spine::HTTP::Response& /* theResponse */)
 {
