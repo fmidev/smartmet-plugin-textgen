@@ -354,10 +354,9 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
     // Set monitoring directories
     ConfigItemVector configItems = readMainConfig();
     std::set<std::string> emptyset;
-    itsProductConfigs.reset(
-        updateProductConfigs(configItems, emptyset, emptyset, emptyset).release());
-    itsGeometryStorage.reset(loadGeometries(itsProductConfigs).release());
-    itsProductMasks.reset(readMasks(itsGeometryStorage, itsProductConfigs).release());
+    itsProductConfigs = updateProductConfigs(configItems, emptyset, emptyset, emptyset);
+    itsGeometryStorage = loadGeometries(itsProductConfigs);
+    itsProductMasks = readMasks(itsGeometryStorage, itsProductConfigs);
 
     db_connect_info dci;
 
@@ -660,9 +659,9 @@ void Config::update(Fmi::DirectoryMonitor::Watcher id,
 
   SmartMet::Spine::WriteLock lock(itsConfigUpdateMutex);
 
-  itsProductConfigs.reset(prodConf.release());
-  itsGeometryStorage.reset(geomStorage.release());
-  itsProductMasks.reset(productMasks.release());
+  itsProductConfigs = std::move(prodConf);
+  itsGeometryStorage = std::move(geomStorage);
+  itsProductMasks = std::move(productMasks);
 }
 
 void Config::error(Fmi::DirectoryMonitor::Watcher id,
