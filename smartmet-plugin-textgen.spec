@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 21.9.22
+Version: 21.10.6
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,24 +16,24 @@ BuildRequires: boost169-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 21.5.6
-BuildRequires: smartmet-library-textgen-devel >= 21.9.15
-BuildRequires: smartmet-library-spine-devel >= 21.9.13
+BuildRequires: smartmet-library-calculator-devel >= 21.10.6
+BuildRequires: smartmet-library-textgen-devel >= 21.10.6
+BuildRequires: smartmet-library-spine-devel >= 21.9.17
 BuildRequires: smartmet-engine-querydata-devel >= 21.9.13
-BuildRequires: smartmet-engine-geonames-devel >= 21.9.13
+BuildRequires: smartmet-engine-geonames-devel >= 21.9.28
 BuildRequires: smartmet-engine-gis-devel >= 21.9.13
-BuildRequires: smartmet-library-macgyver-devel >= 21.9.13
+BuildRequires: smartmet-library-macgyver-devel >= 21.10.4
 BuildRequires: smartmet-library-locus-devel >= 21.8.11
-Requires: smartmet-library-calculator >= 21.5.6
-Requires: smartmet-library-macgyver >= 21.9.13
+Requires: smartmet-library-calculator >= 21.10.6
+Requires: smartmet-library-macgyver >= 21.10.4
 Requires: smartmet-library-locus >= 21.8.11
-Requires: smartmet-library-textgen >= 21.9.15
+Requires: smartmet-library-textgen >= 21.10.6
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 21.9.13
+Requires: smartmet-engine-geonames >= 21.9.28
 Requires: smartmet-engine-querydata >= 21.9.13
 Requires: smartmet-engine-gis >= 21.9.13
 Requires: smartmet-server >= 21.9.7
-Requires: smartmet-library-spine >= 21.9.13
+Requires: smartmet-library-spine >= 21.9.17
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -45,14 +45,12 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: gcc-c++
-#TestRequires: smartmet-library-macgyver-devel >= 21.9.13
+#TestRequires: smartmet-utils-devel
 #TestRequires: smartmet-engine-gis >= 21.9.13
-#TestRequires: smartmet-engine-geonames >= 21.9.13
-#TestRequires: smartmet-library-spine-devel >= 21.9.13
+#TestRequires: smartmet-engine-geonames >= 21.9.28
+#TestRequires: smartmet-library-spine-plugin-test
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
-#TestRequires: gdal32-devel
 
 %description
 SmartMet TextGen plugin
@@ -76,6 +74,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Oct  6 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.10.6-1.fmi
+- Used clang-tidy to modernize code
+
+* Thu Sep 23 2021 Andris Pavēnis <andris.pavenis@fmi.fi> 21.9.23-1.fmi
+- Repackage to prepare for moving libconfig to different directory
+
 * Wed Sep 22 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.9.22-1.fmi
 - Protect dictionary with a mutex since the language may change during dictionary use
 

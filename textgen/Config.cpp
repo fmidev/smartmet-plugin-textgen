@@ -354,10 +354,9 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
     // Set monitoring directories
     ConfigItemVector configItems = readMainConfig();
     std::set<std::string> emptyset;
-    itsProductConfigs.reset(
-        updateProductConfigs(configItems, emptyset, emptyset, emptyset).release());
-    itsGeometryStorage.reset(loadGeometries(itsProductConfigs).release());
-    itsProductMasks.reset(readMasks(itsGeometryStorage, itsProductConfigs).release());
+    itsProductConfigs = updateProductConfigs(configItems, emptyset, emptyset, emptyset);
+    itsGeometryStorage = loadGeometries(itsProductConfigs);
+    itsProductMasks = readMasks(itsGeometryStorage, itsProductConfigs);
 
     db_connect_info dci;
 
@@ -617,9 +616,9 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
   }
 }  // namespace Textgen
 
-void Config::update(Fmi::DirectoryMonitor::Watcher id,
-                    const boost::filesystem::path& dir,
-                    const boost::regex& pattern,
+void Config::update(Fmi::DirectoryMonitor::Watcher  /*id*/,
+                    const boost::filesystem::path&  /*dir*/,
+                    const boost::regex&  /*pattern*/,
                     const Fmi::DirectoryMonitor::Status& status)
 {
   std::set<std::string> modifiedFiles;
@@ -660,14 +659,14 @@ void Config::update(Fmi::DirectoryMonitor::Watcher id,
 
   SmartMet::Spine::WriteLock lock(itsConfigUpdateMutex);
 
-  itsProductConfigs.reset(prodConf.release());
-  itsGeometryStorage.reset(geomStorage.release());
-  itsProductMasks.reset(productMasks.release());
+  itsProductConfigs = std::move(prodConf);
+  itsGeometryStorage = std::move(geomStorage);
+  itsProductMasks = std::move(productMasks);
 }
 
-void Config::error(Fmi::DirectoryMonitor::Watcher id,
+void Config::error(Fmi::DirectoryMonitor::Watcher  /*id*/,
                    const boost::filesystem::path& dir,
-                   const boost::regex& pattern,
+                   const boost::regex&  /*pattern*/,
                    const std::string& message)
 {
   try
@@ -744,7 +743,7 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
 
     // PostGIS
     std::vector<std::string> product_names(getProductNames(pgs));
-    for (auto product_name : product_names)
+    for (const auto& product_name : product_names)
     {
       if (pgs->find(product_name) == pgs->end())
         throw Fmi::Exception(BCP, product_name + " configuration not found!");
@@ -845,12 +844,8 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
 
 ProductConfig::ProductConfig(const std::string& configfile,
                              const boost::shared_ptr<ProductConfig>& pDefaultConf,
-                             const std::string& dictionary)
-    : itsLanguage(""),
-      itsFormatter(""),
-      itsLocale(""),
-      itsTimeFormat(""),
-      itsForestFireWarningDirectory(""),
+                             const std::string&  /*dictionary*/)
+    : 
       itsFrostSeason(DEFAULT_FROSTSEASON)
 {
   std::string exceptionDetails;
@@ -875,7 +870,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
       std::vector<std::string> allowed_sections;
       allowed_sections.emplace_back("*");
       parseConfigurationItem(itsConfig, "parameter_mapping", allowed_sections, parameter_mappings);
-      for (auto item : parameter_mappings)
+      for (const auto& item : parameter_mappings)
       {
         std::string configname = item.first;
         std::string qdname = item.second;

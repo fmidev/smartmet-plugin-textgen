@@ -116,7 +116,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
     boost::optional<std::string> bbox_param_value = httpRequest.getParameter("bbox");
     if (bbox_param_value)
     {
-      std::string bbox_name = "";
+      std::string bbox_name;
       std::string bbox_string = *bbox_param_value;
       size_t name_pos = bbox_string.find(" as ");
       if (name_pos != std::string::npos)
@@ -124,8 +124,8 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         bbox_name = bbox_string.substr(name_pos + 4);
         bbox_string = bbox_string.substr(0, name_pos);
       }
-      size_t radius_pos = bbox_string.find(":");
-      std::string radius = "";
+      size_t radius_pos = bbox_string.find(':');
+      std::string radius;
       if (radius_pos != std::string::npos)
       {
         radius = bbox_string.substr(radius_pos + 1);
@@ -228,11 +228,11 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
           {
             case Spine::Location::LocationType::CoordinatePoint:
             {
-              int coordinate_string_len = (loc.name.find(")") - loc.name.find("(")) - 1;
+              int coordinate_string_len = (loc.name.find(')') - loc.name.find('(')) - 1;
               std::string coordinates =
-                  loc.name.substr(loc.name.find("(") + 1, coordinate_string_len);
-              double lon = Fmi::stod(coordinates.substr(0, coordinates.find(" ")));
-              double lat = Fmi::stod(coordinates.substr(coordinates.find(" ") + 1));
+                  loc.name.substr(loc.name.find('(') + 1, coordinate_string_len);
+              double lon = Fmi::stod(coordinates.substr(0, coordinates.find(' ')));
+              double lat = Fmi::stod(coordinates.substr(coordinates.find(' ') + 1));
               weatherAreaVector.emplace_back(
                   TextGen::WeatherArea(NFmiPoint(lon, lat),
                                        wktName,
@@ -274,7 +274,7 @@ std::string get_setting_string(const std::string& key,
                                const SmartMet::Spine::HTTP::ParamMap& params,
                                std::string& modified_params)
 {
-  for (auto p : params)
+  for (const auto& p : params)
   {
     if (boost::iends_with(key, p.first))
     {
@@ -429,7 +429,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
 
 }  // namespace
 
-bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const
+bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request&  /*theRequest*/) const
 {
   // Uses databases and such
   // Also, is rarely used interactively
@@ -440,7 +440,7 @@ bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& theRequest) const
  * \brief Perform a TextGen query
  */
 // ----------------------------------------------------------------------
-std::string Plugin::query(SmartMet::Spine::Reactor& theReactor,
+std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
                           const SmartMet::Spine::HTTP::Request& theRequest,
                           SmartMet::Spine::HTTP::Response& /* theResponse */)
 {
@@ -585,7 +585,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 {
   // thead specific stringstream logging
   MessageLogger logger("SmartMet::Plugin::TextGen::requestHandler");
-  logger.open();
+  MessageLogger::open();
 
   try
   {
@@ -621,7 +621,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 
       theResponse.setHeader("Content-Type", "text/html; charset=UTF-8");
       theResponse.setHeader("Cache-Control", cachecontrol);
-      theResponse.setHeader("Expires", expiration.c_str());
+      theResponse.setHeader("Expires", expiration);
       theResponse.setHeader("Last-Modified", modification);
 
       if (response.empty())
@@ -694,7 +694,7 @@ void Plugin::init()
   try
   {
     /* GeoEngine */
-    auto engine = itsReactor->getSingleton("Geonames", nullptr);
+    auto *engine = itsReactor->getSingleton("Geonames", nullptr);
     if (engine == nullptr)
       throw Fmi::Exception(BCP, "Geonames engine unavailable");
 

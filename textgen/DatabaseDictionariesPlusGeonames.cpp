@@ -72,9 +72,9 @@ namespace Textgen
 class DatabaseDictionariesPlusGeonames::Impl
 {
  public:
-  Impl() : itsInitialized(false), itsGeoEngine(nullptr) {}
-  bool itsInitialized;
-  SmartMet::Engine::Geonames::Engine* itsGeoEngine;
+  Impl()  {}
+  bool itsInitialized{false};
+  SmartMet::Engine::Geonames::Engine* itsGeoEngine{nullptr};
   std::string itsEmptyString;
 
 };  // class Impl
@@ -119,10 +119,7 @@ bool DatabaseDictionariesPlusGeonames::geocontains(const std::string& theKey) co
   {
     auto locPtr = itsImpl->itsGeoEngine->nameSearch(theKey, language());
 
-    if (locPtr->name.empty())
-      return false;
-
-    return true;
+    return !locPtr->name.empty();
   }
   catch (...)
   {

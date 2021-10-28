@@ -143,7 +143,7 @@ class Config : private boost::noncopyable
   void init(SmartMet::Engine::Gis::Engine* pGisEngine);
   void shutdown();
 
-  int getForecastTextCacheSize() { return itsForecastTextCacheSize; }
+  int getForecastTextCacheSize() const { return itsForecastTextCacheSize; }
   const ProductConfig& getProductConfig(const std::string& config_name) const;
   bool geoObjectExists(const std::string& postGISName, const std::string& areasource) const;
   TextGen::WeatherArea makePostGisArea(const std::string& postGISName,
