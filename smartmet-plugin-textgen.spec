@@ -49,6 +49,7 @@ Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-engine-gis >= 21.9.13
 #TestRequires: smartmet-engine-geonames >= 21.9.28
 #TestRequires: smartmet-library-spine-plugin-test
+#TestRequires: smartmet-library-newbase-devel >= 21.9.22
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -74,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri Oct 29 2021 Pertti Kinnia <pertti.kinnia@fmi.fi> - upcoming
+- Added test dependency for smartmet-library-newbase-devel
+
 * Wed Oct  6 2021 Mika Heiskanen <mika.heiskanen@fmi.fi> - 21.10.6-1.fmi
 - Used clang-tidy to modernize code
 
