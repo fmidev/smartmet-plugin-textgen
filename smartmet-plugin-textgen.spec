@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 21.10.6
+Version: 21.12.3
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -17,23 +17,23 @@ BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 21.10.6
-BuildRequires: smartmet-library-textgen-devel >= 21.10.6
-BuildRequires: smartmet-library-spine-devel >= 21.9.17
-BuildRequires: smartmet-engine-querydata-devel >= 21.9.13
-BuildRequires: smartmet-engine-geonames-devel >= 21.9.28
-BuildRequires: smartmet-engine-gis-devel >= 21.9.13
-BuildRequires: smartmet-library-macgyver-devel >= 21.10.4
-BuildRequires: smartmet-library-locus-devel >= 21.8.11
+BuildRequires: smartmet-library-textgen-devel >= 21.12.2
+BuildRequires: smartmet-library-spine-devel >= 21.12.2
+BuildRequires: smartmet-engine-querydata-devel >= 21.12.2
+BuildRequires: smartmet-engine-geonames-devel >= 21.12.2
+BuildRequires: smartmet-engine-gis-devel >= 21.12.2
+BuildRequires: smartmet-library-macgyver-devel >= 21.12.1
+BuildRequires: smartmet-library-locus-devel >= 21.12.2
 Requires: smartmet-library-calculator >= 21.10.6
-Requires: smartmet-library-macgyver >= 21.10.4
-Requires: smartmet-library-locus >= 21.8.11
-Requires: smartmet-library-textgen >= 21.10.6
+Requires: smartmet-library-macgyver >= 21.12.1
+Requires: smartmet-library-locus >= 21.12.2
+Requires: smartmet-library-textgen >= 21.12.2
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 21.9.28
-Requires: smartmet-engine-querydata >= 21.9.13
-Requires: smartmet-engine-gis >= 21.9.13
+Requires: smartmet-engine-geonames >= 21.12.2
+Requires: smartmet-engine-querydata >= 21.12.2
+Requires: smartmet-engine-gis >= 21.12.2
 Requires: smartmet-server >= 21.9.7
-Requires: smartmet-library-spine >= 21.9.17
+Requires: smartmet-library-spine >= 21.12.2
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -45,11 +45,10 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-utils-devel
-#TestRequires: smartmet-engine-gis >= 21.9.13
-#TestRequires: smartmet-engine-geonames >= 21.9.28
-#TestRequires: smartmet-library-spine-plugin-test
-#TestRequires: smartmet-library-newbase-devel >= 21.9.22
+#TestRequires: smartmet-utils-devel >= 21.11.23
+#TestRequires: smartmet-engine-gis >= 21.12.2
+#TestRequires: smartmet-engine-geonames >= 21.12.2
+#TestRequires: smartmet-library-spine-plugin-test >= 21.12.2
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
