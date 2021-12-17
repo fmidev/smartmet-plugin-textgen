@@ -446,7 +446,6 @@ std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
 {
   try
   {
-    TextGenPosixTime timestamp;
     std::vector<TextGen::WeatherArea> weatherAreaVector;
     SmartMet::Spine::HTTP::ParamMap queryParameters(theRequest.getParameterMap());
     std::string errorMessage;
@@ -466,12 +465,6 @@ std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
 
     std::string languageParam = mmap_string(queryParameters, LANGUAGE_PARAM);
 
-    if (!parse_forecasttime_parameter(
-            mmap_string(queryParameters, FORECASTTIME_PARAM), timestamp, errorMessage))
-    {
-      throw Fmi::Exception(BCP, errorMessage);
-    }
-
     if (!parse_location_parameters(
             theRequest, itsConfig, *itsGeoEngine, languageParam, weatherAreaVector, errorMessage))
     {
@@ -489,9 +482,18 @@ std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
 
     std::string formatter_name(mmap_string(queryParameters, FORMATTER_PARAM));
 
+    TextGenPosixTime forecasttime;
+    if (!parse_forecasttime_parameter(
+            mmap_string(queryParameters, FORECASTTIME_PARAM), forecasttime, errorMessage))
+    {
+      throw Fmi::Exception(BCP, errorMessage);
+    }
+    TextGenPosixTime timestamp;
     std::stringstream timestamp_cachekey_ss;
     // generate forecast at least every CACHE_EXPIRATION_TIME_SEC secods
-    timestamp_cachekey_ss << (timestamp.EpochTime() / CACHE_EXPIRATION_TIME_SEC);
+    timestamp_cachekey_ss << (forecasttime.EpochTime() / CACHE_EXPIRATION_TIME_SEC);
+    timestamp_cachekey_ss << ";" << (timestamp.EpochTime() / CACHE_EXPIRATION_TIME_SEC);
+
     std::string cache_key_common_part(
         mmap_string(queryParameters, PRODUCT_PARAM) + ";" + languageParam + ";" + formatter_name +
         ";" + mmap_string(queryParameters, POSTGIS_PARAM) + ";" + timestamp_cachekey_ss.str());
@@ -542,10 +544,6 @@ std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
 #ifdef MYDEBUG
         std::cout << "Generating new forecast" << std::endl;
 #endif
-
-        TextGenPosixTime forecasttime;
-        parse_forecasttime_parameter(
-            mmap_string(queryParameters, FORECASTTIME_PARAM), forecasttime, errorMessage);
 
         generator.time(forecasttime);
 

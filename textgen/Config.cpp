@@ -70,6 +70,7 @@ TextGen::WeatherArea make_area(const std::string& postGISName,
     throw Fmi::Exception::Trace(BCP, "Operation failed!");
   }
 }
+
 void parseConfigurationItem(const libconfig::Config& itsConfig,
                             const std::string& key,
                             const std::vector<std::string>& allowed_sections,
@@ -1091,6 +1092,8 @@ ProductConfig::ProductConfig(const std::string& configfile,
 
               allowed_sections.emplace_back("output_document." + section_name + ".story." +
                                             story_name);
+			  if(story_name == "temperature_max36hours")
+				allowed_sections.emplace_back("output_document." + section_name + ".story.frost_onenight");
             }
             output_document_config_item_container.emplace_back(std::make_pair(
                 "output_document." + section_name + ".content", content_parameter_value));
