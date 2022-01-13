@@ -65,9 +65,6 @@ class Plugin : public SmartMetPlugin, private boost::noncopyable
   };
   Fmi::Cache::Cache<std::string, cache_item> itsForecastTextCache;
 
-  // Mutex for forecast text cache
-  SmartMet::Spine::MutexType itsForecastTextCacheMutex;
-
   SmartMet::Engine::Geonames::Engine* itsGeoEngine = nullptr;
 
   Fmi::Cache::CacheStatistics getCacheStats() const override;
