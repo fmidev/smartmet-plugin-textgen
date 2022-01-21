@@ -17,23 +17,23 @@ BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 21.10.6
-BuildRequires: smartmet-library-textgen-devel >= 21.12.17
-BuildRequires: smartmet-library-spine-devel >= 22.1.5
-BuildRequires: smartmet-engine-querydata-devel >= 22.1.3
-BuildRequires: smartmet-engine-geonames-devel >= 22.1.10
-BuildRequires: smartmet-engine-gis-devel >= 21.12.7
-BuildRequires: smartmet-library-macgyver-devel >= 22.1.10
+BuildRequires: smartmet-library-textgen-devel >= 21.1.21
+BuildRequires: smartmet-library-spine-devel >= 21.1.21
+BuildRequires: smartmet-engine-querydata-devel >= 21.1.21
+BuildRequires: smartmet-engine-geonames-devel >= 21.1.21
+BuildRequires: smartmet-engine-gis-devel >= 21.1.21
+BuildRequires: smartmet-library-macgyver-devel >= 21.1.21
 BuildRequires: smartmet-library-locus-devel >= 21.12.7
 Requires: smartmet-library-calculator >= 21.10.6
-Requires: smartmet-library-macgyver >= 22.1.10
+Requires: smartmet-library-macgyver >= 21.1.21
 Requires: smartmet-library-locus >= 21.12.7
-Requires: smartmet-library-textgen >= 21.12.17
+Requires: smartmet-library-textgen >= 21.1.21
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 22.1.10
-Requires: smartmet-engine-querydata >= 22.1.3
-Requires: smartmet-engine-gis >= 21.12.7
+Requires: smartmet-engine-geonames >= 21.1.21
+Requires: smartmet-engine-querydata >= 21.1.21
+Requires: smartmet-engine-gis >= 21.1.21
 Requires: smartmet-server >= 21.11.25
-Requires: smartmet-library-spine >= 22.1.5
+Requires: smartmet-library-spine >= 21.1.21
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -45,10 +45,10 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-utils-devel >= 21.11.23
-#TestRequires: smartmet-engine-gis >= 21.12.7
-#TestRequires: smartmet-engine-geonames >= 22.1.10
-#TestRequires: smartmet-library-spine-plugin-test >= 21.12.2
+#TestRequires: smartmet-utils-devel >= 22.1.20
+#TestRequires: smartmet-engine-gis >= 21.1.21
+#TestRequires: smartmet-engine-geonames >= 21.1.21
+#TestRequires: smartmet-library-spine-plugin-test >= 21.1.21
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
