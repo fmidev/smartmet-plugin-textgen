@@ -2057,3 +2057,9 @@ B5W_B7E:lle|for Western Gulf of Finland and Northeastern Baltic Proper
 B5W_B7:lle|for Western Gulf of Finland and Northern Baltic Proper
 B5_B7:lle|for Gulf of Finland and Northern Baltic Proper
 huono nakyvyys|bad visibility
+vesi- tai tihkusadetta|rain or drizzle
+lumi- tai tihkusadetta|snowfall or drizzle
+ranta- tai tihkusadetta|sleet or drizzle
+jaatavaa tihkusadetta|freezing drizzle
+jotka muuttuvat lumikuuroiksi|that turn into snow showers
+jotka muuttuvat rantakuuroiksi|that turn into sleet showers

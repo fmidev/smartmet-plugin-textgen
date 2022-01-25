@@ -2057,3 +2057,10 @@ B5W_B7E_B4E:lle|Suomenlahden länsiosaan, Pohjois-Itämeren itäosaan ja Saarist
 B5W_B7:lle|Suomenlahden länsiosaan ja Pohjois-Itämerelle
 B5W_B7E:lle|Suomenlahden länsiosaan ja Pohjois-Itämeren itäosaan
 B5_B7:lle|Suomenlahdelle ja Pohjois-Itämerelle
+jaatavaa tihkusadetta|jäätävää tihkusadetta
+lumi- tai tihkusadetta|lumi- tai tihkusadetta
+vesi- tai tihkusadetta|vesi- tai tihkusadetta
+ranta- tai tihkusadetta|räntä- tai tihkusadetta
+jotka muuttuvat rantakuuroiksi|jotka muuttuvat räntäkuuroiksi
+jotka muuttuvat lumikuuroiksi|jotka muuttuvat lumikuuroiksi
+meri-lappi:lle|Meri-Lappiin

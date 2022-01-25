@@ -2035,7 +2035,9 @@ illalla ja yolla|på kvällen och på natten
 5-keskipaivalla|på fredag middag
 6-keskipaivalla|på lördag middag
 7-keskipaivalla|på söndag middag
+lumi- tai tihkusadetta|snöfall eller duggregn
 huono nakyvyys|dålig sikt
+jaatavaa tihkusadetta|underkylt duggregn
 B2_B1:lle|för Kvarken och Bottenviken
 ja huono nakyvyys|och dålig sikt
 B2_B1S:lle|för Kvarken och Södra Bottenviken
@@ -2057,3 +2059,7 @@ B5W_B7E_B4E:lle|för Västra Finska viken, Östra delen av Norra Östersjön och
 B5W_B7E:lle|för Västra Finska viken och Östra delen av Norra Östersjön
 B5W_B7:lle|för Västra Finska viken och Norra Östersjön
 B5_B7:lle|för Finska Viken och Norra Östersjön
+ranta- tai tihkusadetta|snöblandat regn eller duggregn
+vesi- tai tihkusadetta|regn eller duggregn
+jotka muuttuvat rantakuuroiksi|som övergår till skurar av snöblandat regn
+jotka muuttuvat lumikuuroiksi|som övergår till skurar av snö
