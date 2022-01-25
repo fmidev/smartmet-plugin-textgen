@@ -188,7 +188,6 @@ viiva|viiva
 miinus|miinus
 paivien ylin lampotila|päivien ylin lämpötila
 kello|kello
-o'clock|
 aland:lle|Ahvenanmaalle
 etela-karjala:lle|Etelä-Karjalaan
 etela-pohjanmaa:lle|Etelä-Pohjanmaalle
@@ -1369,6 +1368,7 @@ saa on [poikkeuksellisen] [kylmaa]|sää on [1] [2]
 [sisamaassa] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3], joka voi olla jäätävää
 [sisamaassa] [paikoin] [sadetta], joka voi olla jaatavaa|[1] [2] [3], joka voi olla jäätävää
 [huomenna] [paikoin] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4], joka voi olla jäätävää
+3- ja 4-valille|idän ja kaakon välille
 [huomenna] [sadetta], joka voi olla jaatavaa|[1] [2], joka voi olla jäätävää
 [huomenna] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3], joka voi olla jäätävää
 [huomenna] [paikoin] [sadetta], joka voi olla jaatavaa|[1] [2] [3], joka voi olla jäätävää
@@ -1641,7 +1641,6 @@ astetta (m...n)|astetta
 suunnaltaan vaihtelevaa tuulta|suunnaltaan vaihtelevaa tuulta
 1- ja 2-valille|pohjoisen ja koillisen välille
 3- ja 2-valille|idän ja koillisen välille
-3- ja 4-valille|idän ja kaakon välille
 5- ja 4-valille|etelän ja kaakon välille
 5- ja 6-valille|etelän ja lounaan välille
 7- ja 6-valille|lännen ja lounaan välille
@@ -1938,6 +1937,7 @@ voimakas 1- ja 2-valinen tuuli|voimakas pohjoisen ja koillisen välinen tuuli
 [pohjoistuuli] alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] alkaa heiketä [2] ja kääntyy [3] [4]
 [etelatuuli] heikkenee [nopeasti]|[1] heikkenee [2]
 [etelatuuli] voimistuu [nopeasti]|[1] voimistuu [2]
+muuten hyva nakyvyys|muuten hyvä näkyvyys
 [pohjoistuuli] alkaa voimistua ja muuttuu vaihtelevaksi|[1] alkaa voimistua ja muuttuu vaihtelevaksi
 [pohjoistuuli] alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] alkaa heiketä ja muuttuu tilapäisesti vaihtelevaksi
 [pohjoistuuli] alkaa heiketa ja muuttuu vaihtelevaksi|[1] alkaa heiketä ja muuttuu vaihtelevaksi
@@ -2021,7 +2021,6 @@ kemi-tornio:lle|Kemi-Tornioon
 [huomenna] [sisamaassa] vahan nollan alapuolella|[1] [2] vähän nollan alapuolella
 [huomenna] [sisamaassa] [lampotila] on vahan nollan alapuolella|[1] [2] [3] on vähän nollan alapuolella
 rannikolla vahan nollan alapuolella|rannikolla vähän nollan alapuolella
-muuten hyva nakyvyys|muuten hyvä näkyvyys
 hyva nakyvyys|hyvä näkyvyys
 enimmakseen hyva nakyvyys|enimmäkseen hyvä näkyvyys
 yolla ja aamulla|yöllä ja aamulla
@@ -2064,3 +2063,16 @@ ranta- tai tihkusadetta|räntä- tai tihkusadetta
 jotka muuttuvat rantakuuroiksi|jotka muuttuvat räntäkuuroiksi
 jotka muuttuvat lumikuuroiksi|jotka muuttuvat lumikuuroiksi
 meri-lappi:lle|Meri-Lappiin
+o'clock|
+pohjois-pohjanmaan itaosa:lle|Pohjois-Pohjanmaan itäosaan
+pohjois-pohjanmaan lansiosa:lle|Pohjois-Pohjanmaan länsiosaan
+pohjanmaa ja etela-pohjanmaa:lle|Pohjanmaalle ja Etelä-Pohjanmaalle
+etela-lappi:lle|Etelä-Lappiin
+keski-lappi:lle|Keski-Lappiin
+utsjoki ja inari:lle|Utsjoelle ja Inariin
+finnmarkin lansiosa:lle|Finnmarkin länsiosaan
+finnmarkin itaosa:lle|Finnmarkin itäosaan
+murmanskin alueen lansiosa:lle|Murmanskin alueen länsiosaan
+pohjois-ruotsi:lle|Pohjois-Ruotsiin
+[iltapaivalla] lumikuurot voivat olla sakeita|[1] lumikuurot voivat olla sakeita
+[iltapaivalla] lumisade voi olla sakeaa|[1] lumisade voi olla sakeaa

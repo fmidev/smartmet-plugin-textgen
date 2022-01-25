@@ -222,7 +222,6 @@ rantasadetta|snöblandat regn
 edelleen|fortfarande
 saaennuste|väderrapport
 kello|klockan
-o'clock|
 aland:lle|för Åland
 etela-karjala:lle|för Södra Karelen
 etela-pohjanmaa:lle|för Södra Österbotten
@@ -287,6 +286,7 @@ lampotila|temperaturen
 5-na kello|fredag klockan
 6-na kello|lördag klockan
 7-na kello|söndag klockan
+o'clock|
 ei suuria muutoksia saassa|inga stora förändringar in vädret
 saa selkenee|vädret klarnar upp
 saa muuttuu epavakaisemmaksi|vädret blir ostadigare
@@ -1413,6 +1413,7 @@ asteen(tienoilla)|grader
 [iltapaivalla] saa poutaantuu rantasateen jalkeen ja on pilvinen|[1] upphör snöfallet men fortfarande mulet
 [iltapaivalla] saa poutaantuu tihkusateen jalkeen ja on pilvinen|[1] upphör duggregnet men fortfarande mulet
 [iltapaivalla] saa poutaantuu tihkusateen jalkeen ja on verrattain pilvinen|[1] upphör duggregnet men fortfarande riklig molnighet
+[huomenna] [N] asteen tuntumassa|[1] nära [2]
 [iltapaivalla] saa poutaantuu vesisateen jalkeen ja on verrattain pilvinen|[1] upphör regnet men fortfarande riklig molnighet
 [iltapaivalla] saa poutaantuu lumisateen jalkeen ja on verrattain pilvinen|[1] upphör snöfallet men fortfarande riklig molnighet
 [iltapaivalla] saa poutaantuu rantasateen jalkeen ja on verrattain pilvinen|[1] upphör snöfallet men fortfarande riklig molnighet
@@ -1478,7 +1479,6 @@ saa on ajankohtaan nahden tavanomaista lampimampaa|det är varmare än vanligt
 [sisamaassa] [N] asteen tienoilla|[1] omkring [2] grader
 [huomenna] [N] asteen tienoilla|[1] omkring [2] grader
 [sisamaassa] [N] asteen tuntumassa|[1] nära [2] grader
-[huomenna] [N] asteen tuntumassa|[1] nära [2]
 [sisamaassa] lahella [N] [astetta]|[1] omkring [2] [3]
 [huomenna] lahella [N] [astetta]|[1] omkring [2] [3]
 [sisamaassa] vahan yli [N] [astetta]|[1] litet över [2] [3]
@@ -1863,6 +1863,7 @@ huomisiltaan asti|till i morgon kväll
 [iltapaivalla] tuuli alkaa heiketa ja muuttuu vaihtelevaksi|[1] börjar vinden avta och är varierande
 [iltapaivalla] tuuli alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] börjar vinden avta och blir tillfälligt av varierande riktning
 [iltapaivalla] [pohjoistuuli] alkaa heiketa ja muuttuu vaihtelevaksi|[1] [2] börjar avta och är varierande
+tiepiiri-u5:lle|för Östra Nylands inre delar
 [iltapaivalla] [pohjoistuuli] alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] [2] börjar avta och blir tillfälligt av varierande riktning
 inari_utsjoki:lle|för Enare och Utsjoki
 ita_finnmark:lle|för östra delen av Finnmark
@@ -2006,7 +2007,6 @@ tiepiiri-u1:lle|för Västra Nylands kust
 tiepiiri-u2:lle|för huvudstadsregionen
 tiepiiri-u3:lle|för Östra Nylands kust
 tiepiiri-u4:lle|för Västra Nylands inre delar
-tiepiiri-u5:lle|för Östra Nylands inre delar
 tiepiiri-v1:lle|för Österbottens sydkust
 tiepiiri-v2:lle|för Södra Österbotten
 tiepiiri-v4:lle|för Österbottens nordkust
@@ -2063,3 +2063,16 @@ ranta- tai tihkusadetta|snöblandat regn eller duggregn
 vesi- tai tihkusadetta|regn eller duggregn
 jotka muuttuvat rantakuuroiksi|som övergår till skurar av snöblandat regn
 jotka muuttuvat lumikuuroiksi|som övergår till skurar av snö
+pohjois-pohjanmaan itaosa:lle|för östra delen av Norra Österbotten
+pohjois-pohjanmaan lansiosa:lle|för västra delen av Norra Österbotten
+pohjanmaa ja etela-pohjanmaa:lle|för Österbotten och södra Österbotten
+etela-lappi:lle|för Södra Lappland
+keski-lappi:lle|för Mellersta Lappland
+meri-lappi:lle|för Havs-Lappland
+utsjoki ja inari:lle|för Utsjoki och Enare
+finnmarkin lansiosa:lle|för västra delen av Finnmark
+finnmarkin itaosa:lle|för östra delen av Finnmark
+murmanskin alueen lansiosa:lle|för västra delen av Murmansk oblast
+pohjois-ruotsi:lle|för Norra Sverige
+[iltapaivalla] lumikuurot voivat olla sakeita|[1] kan snöbyarna vara ymniga
+[iltapaivalla] lumisade voi olla sakeaa|[1] kan snöfallet vara ymnigt
