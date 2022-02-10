@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 21.12.17
+Version: 22.1.21
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -17,23 +17,23 @@ BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 21.10.6
-BuildRequires: smartmet-library-textgen-devel >= 21.12.17
-BuildRequires: smartmet-library-spine-devel >= 21.12.7
-BuildRequires: smartmet-engine-querydata-devel >= 21.12.7
-BuildRequires: smartmet-engine-geonames-devel >= 21.12.7
-BuildRequires: smartmet-engine-gis-devel >= 21.12.7
-BuildRequires: smartmet-library-macgyver-devel >= 21.12.7
+BuildRequires: smartmet-library-textgen-devel >= 21.1.21
+BuildRequires: smartmet-library-spine-devel >= 21.1.21
+BuildRequires: smartmet-engine-querydata-devel >= 21.1.21
+BuildRequires: smartmet-engine-geonames-devel >= 21.1.21
+BuildRequires: smartmet-engine-gis-devel >= 21.1.21
+BuildRequires: smartmet-library-macgyver-devel >= 21.1.21
 BuildRequires: smartmet-library-locus-devel >= 21.12.7
 Requires: smartmet-library-calculator >= 21.10.6
-Requires: smartmet-library-macgyver >= 21.12.7
+Requires: smartmet-library-macgyver >= 21.1.21
 Requires: smartmet-library-locus >= 21.12.7
-Requires: smartmet-library-textgen >= 21.12.17
+Requires: smartmet-library-textgen >= 21.1.21
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 21.12.7
-Requires: smartmet-engine-querydata >= 21.12.7
-Requires: smartmet-engine-gis >= 21.12.7
+Requires: smartmet-engine-geonames >= 21.1.21
+Requires: smartmet-engine-querydata >= 21.1.21
+Requires: smartmet-engine-gis >= 21.1.21
 Requires: smartmet-server >= 21.11.25
-Requires: smartmet-library-spine >= 21.12.7
+Requires: smartmet-library-spine >= 21.1.21
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -45,10 +45,10 @@ Requires: boost169-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-utils-devel >= 21.11.23
-#TestRequires: smartmet-engine-gis >= 21.12.7
-#TestRequires: smartmet-engine-geonames >= 21.12.7
-#TestRequires: smartmet-library-spine-plugin-test >= 21.12.2
+#TestRequires: smartmet-utils-devel >= 22.1.20
+#TestRequires: smartmet-engine-gis >= 21.1.21
+#TestRequires: smartmet-engine-geonames >= 21.1.21
+#TestRequires: smartmet-library-spine-plugin-test >= 21.1.21
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -74,6 +74,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri Jan 21 2022 Andris Pavēnis <andris.pavenis@fmi.fi> 22.1.21-1.fmi
+- Repackage due to upgrade of packages from PGDG repo: gdal-3.4, geos-3.10, proj-8.2
+
+* Thu Jan 13 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.1.13-1.fmi
+- Removed unnecessary mutex, the product cache is already thread safe
+
 * Fri Dec 17 2021 Anssi Reponen <anssi.reponen@fmi.fi> - 21.12.17-1.fmi
 - Fixed 'missing frost_forecast story'-bug. Fixed cache expiration time bug (BRAINSTORM-2222)
 

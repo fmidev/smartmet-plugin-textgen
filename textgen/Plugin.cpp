@@ -429,7 +429,7 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
 
 }  // namespace
 
-bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request&  /*theRequest*/) const
+bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request& /*theRequest*/) const
 {
   // Uses databases and such
   // Also, is rarely used interactively
@@ -440,7 +440,7 @@ bool Plugin::queryIsFast(const SmartMet::Spine::HTTP::Request&  /*theRequest*/) 
  * \brief Perform a TextGen query
  */
 // ----------------------------------------------------------------------
-std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
+std::string Plugin::query(SmartMet::Spine::Reactor& /*theReactor*/,
                           const SmartMet::Spine::HTTP::Request& theRequest,
                           SmartMet::Spine::HTTP::Response& /* theResponse */)
 {
@@ -523,8 +523,6 @@ std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
       // set timezone for the area (stored in thread local storage)
       TextGenPosixTime::SetThreadTimeZone(config.getAreaTimeZone(area_name));
 
-      SmartMet::Spine::UpgradeReadLock cacheReadLock(itsForecastTextCacheMutex);
-
       auto cache_result = itsForecastTextCache.find(cache_key);
 
       if (!configIsModified && cache_result)
@@ -557,7 +555,6 @@ std::string Plugin::query(SmartMet::Spine::Reactor&  /*theReactor*/,
 
         cache_item ci;
         ci.member = forecast_text_area;
-        SmartMet::Spine::UpgradeWriteLock cacheWriteLock(cacheReadLock);
         itsForecastTextCache.insert(cache_key, ci);
       }
       forecast_text += forecast_text_area;
@@ -692,7 +689,7 @@ void Plugin::init()
   try
   {
     /* GeoEngine */
-    auto *engine = itsReactor->getSingleton("Geonames", nullptr);
+    auto* engine = itsReactor->getSingleton("Geonames", nullptr);
     if (engine == nullptr)
       throw Fmi::Exception(BCP, "Geonames engine unavailable");
 
@@ -742,10 +739,11 @@ void Plugin::init()
                 << "textgen::database=" << dci.database << std::endl
                 << "textgen::schema=" << dci.schema << std::endl
                 << "textgen::encoding=" << dci.encoding << std::endl
-				<< "textgen::connect_timeout=" << dci.connect_timeout << std::endl
-				<< "textgen::filedictionaries=" << itsConfig.fileDictionaries() << std::endl
-				<< "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false") << std::endl
-				<< std::endl;
+                << "textgen::connect_timeout=" << dci.connect_timeout << std::endl
+                << "textgen::filedictionaries=" << itsConfig.fileDictionaries() << std::endl
+                << "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false")
+                << std::endl
+                << std::endl;
 #endif
     }
 

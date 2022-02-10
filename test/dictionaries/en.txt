@@ -1,3 +1,18 @@
+o'clock|o'clock
+meri-lappi:lle|for Meri-Lappi
+pohjois-pohjanmaan itaosa:lle|for Eastern part of Northern Ostrobothnia
+pohjois-pohjanmaan lansiosa:lle|for Western part of Northern Ostrobothnia
+pohjanmaa ja etela-pohjanmaa:lle|for Ostrobothnia and Southern Ostrobothnia
+etela-lappi:lle|for Southern Lapland
+keski-lappi:lle|for Central Lapland
+utsjoki ja inari:lle|for Utsjoki and Inari
+finnmarkin lansiosa:lle|for Western part of Finnmark
+finnmarkin itaosa:lle|for Eastern part of Finnmar
+murmanskin alueen lansiosa:lle|for Western part of Murmansk Oblast
+pohjois-ruotsi:lle|for Northern Sweden
+[iltapaivalla] lumikuurot voivat olla sakeita|snow showers can be heavy [1]
+[iltapaivalla] lumisade voi olla sakeaa|snowfall can be heavy [1]
+astetta(noin n)|degrees
 huomattavasti lampimampi|significantly warmer
 lampimampi|warmer
 seuraava yo|the following night
@@ -222,7 +237,6 @@ hirmumyrskya|severe storm
 hirmumyrskyksi|severe storm
 saaennuste|weather report
 kello|
-o'clock|o'clock
 aland:lle|for Åland Islands
 etela-karjala:lle|for Southern Karelia
 etela-pohjanmaa:lle|for Southern Ostrobothnia
@@ -1010,14 +1024,14 @@ alle|below
 yksi millimetri|one millimeter
 lahella [1] astetta|around [1] degrees
 [1] asteen tienoilla|round about [1] degrees
-kello [1]|[1] o'clock
-1-na kello [1]|on Monday [1] o'clock
-2-na kello [1]|on Tuesday[1] o'clock
-3-na kello [1]|on Wednesday [1] o'clock
-4-na kello [1]|on Thursday [1] o'clock
-5-na kello [1]|on Friday [1] o'clock
-6-na kello [1]|on Saturday [1] o'clock
-7-na kello [1]|on Sunday [1] o'clock
+kello [1]|[1] 'clock
+1-na kello [1]|on Monday [1] 'clock
+2-na kello [1]|on Tuesday[1] 'clock
+3-na kello [1]|on Wednesday [1] 'clock
+4-na kello [1]|on Thursday [1] 'clock
+5-na kello [1]|on Friday [1] 'clock
+6-na kello [1]|on Saturday [1] 'clock
+7-na kello [1]|on Sunday [1] 'clock
 [1] asteen tuntumassa|close to [1] degrees
 ita-suomi:lle|for Eastern Finland
 itainen-uusimaa:lle|for Eastern Uusimaa
@@ -1403,6 +1417,7 @@ pakkasta on [M...N] [astetta]|the temperature is [1] 2]
 [iltapaivalla] saa poutaantuu tihkusateen jalkeen ja vaihtelee puolipilvisesta pilviseen|the weather becomes fair and varies from half cloudy to cloudy [1]
 [iltapaivalla] saa poutaantuu rantasateen jalkeen ja vaihtelee puolipilvisesta pilviseen|the weather becomes fair and varies from half cloudy to cloudy [1]
 [iltapaivalla] saa poutaantuu lumisateen jalkeen ja vaihtelee puolipilvisesta pilviseen|the weather becomes fair and varies from half cloudy to cloudy [1]
+6-keskiyohon asti|until Saturday midnight
 [iltapaivalla] saa poutaantuu vesisateen jalkeen ja vaihtelee puolipilvisesta pilviseen|the weather becomes fair and varies from half cloudy to cloudy [1]
 [iltapaivalla] saa poutaantuu tihkusateen jalkeen|the weather becomes fair [1]
 [iltapaivalla] saa poutaantuu rantasateen jalkeen|the weather becomes fair [1]
@@ -1764,7 +1779,6 @@ astetta(noin 3)|degrees
 astetta(noin 2)|degrees
 astetta(noin 1)|degree
 astetta(noin (mod 10=1))|degrees
-astetta(noin n)|degrees
 [iltapaivalla] [pohjoistuuli] alkaa voimistua ja kaantyy [etelaan]|[1] [2] starts to strengthen and turns [3]
 [iltapaivalla] [pohjoistuuli] alkaa heiketa ja kaantyy [etelaan]|[1] [2] starts to weaken and turns [3]
 [pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa voimistua|[1] [2] [3], which starts to strengthen
@@ -1849,7 +1863,6 @@ huomisiltaan asti|until tomorrow evening
 2-aamuyohon asti|until Tuesday small hours
 1-aamuyohon asti|until Monday small hours
 7-keskiyohon asti|until Sunday midnight
-6-keskiyohon asti|until Saturday midnight
 5-keskiyohon asti|until Friday midnight
 4-keskiyohon asti|until Thursday midnight
 3-keskiyohon asti|until Wednesday midnight
@@ -1917,6 +1930,7 @@ voimakas 1- ja 2-valinen tuuli|strong north to north-easterly wind
 [iltapaivalla] [voimakas pohjoistuuli] heikkenee ja muuttuu vaihtelevaksi|[2] weakens and becomes variable [1]
 [iltapaivalla] [voimakas pohjoistuuli] alkaa heiketa ja kaantyy [etelaan]|[2] starts to weaken and turns [3] [1]
 [iltapaivalla] [voimakas pohjoistuuli] heikkenee ja kaantyy [etelaan]|[2] weakens and turns [3] [1]
+tiepiiri-o4:lle|for Oulu northern inland region
 [iltapaivalla] [voimakas pohjoistuuli] kaantyy [etelaan] ja heikkenee edelleen|[2] turns [3] and weakens further [1]
 [iltapaivalla] [voimakas pohjoistuuli] heikkenee [nopeasti] ja kaantyy [illalla] [etelaan]|[2] weakens [3] [1] and turns [5] [4]
 [iltapaivalla] [voimakas pohjoistuuli] heikkenee [nopeasti] ja kaantyy [etelaan]|[2] weakens [3]  [1] and turns [4]
@@ -1990,7 +2004,6 @@ tiepiiri-o1e:lle|for Oulu southern coastal region
 tiepiiri-o1p:lle|for Oulu northern coastal region
 tiepiiri-o2:lle|for Oulu southern inland region
 tiepiiri-o3:lle|for Kainuu
-tiepiiri-o4:lle|for Oulu northern inland region
 tiepiiri-o5:lle|for Koillismaa
 tiepiiri-s1:lle|for Northern Karelia southern region
 tiepiiri-s2:lle|for Northern Savo southern region
@@ -2057,3 +2070,9 @@ B5W_B7E:lle|for Western Gulf of Finland and Northeastern Baltic Proper
 B5W_B7:lle|for Western Gulf of Finland and Northern Baltic Proper
 B5_B7:lle|for Gulf of Finland and Northern Baltic Proper
 huono nakyvyys|bad visibility
+vesi- tai tihkusadetta|rain or drizzle
+lumi- tai tihkusadetta|snowfall or drizzle
+ranta- tai tihkusadetta|sleet or drizzle
+jaatavaa tihkusadetta|freezing drizzle
+jotka muuttuvat lumikuuroiksi|that turn into snow showers
+jotka muuttuvat rantakuuroiksi|that turn into sleet showers
