@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 22.1.21
+Version: 22.5.20
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -16,24 +16,24 @@ BuildRequires: boost169-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 21.10.6
-BuildRequires: smartmet-library-textgen-devel >= 21.1.21
-BuildRequires: smartmet-library-spine-devel >= 21.1.21
-BuildRequires: smartmet-engine-querydata-devel >= 21.1.21
-BuildRequires: smartmet-engine-geonames-devel >= 21.1.21
-BuildRequires: smartmet-engine-gis-devel >= 21.1.21
-BuildRequires: smartmet-library-macgyver-devel >= 21.1.21
-BuildRequires: smartmet-library-locus-devel >= 21.12.7
-Requires: smartmet-library-calculator >= 21.10.6
-Requires: smartmet-library-macgyver >= 21.1.21
-Requires: smartmet-library-locus >= 21.12.7
-Requires: smartmet-library-textgen >= 21.1.21
+BuildRequires: smartmet-library-calculator-devel >= 22.5.20
+BuildRequires: smartmet-library-textgen-devel >= 22.5.20
+BuildRequires: smartmet-library-spine-devel >= 22.5.16
+BuildRequires: smartmet-engine-querydata-devel >= 22.5.20
+BuildRequires: smartmet-engine-geonames-devel >= 22.3.21
+BuildRequires: smartmet-engine-gis-devel >= 22.5.20
+BuildRequires: smartmet-library-macgyver-devel >= 22.3.28
+BuildRequires: smartmet-library-locus-devel >= 22.3.28
+Requires: smartmet-library-calculator >= 22.5.20
+Requires: smartmet-library-macgyver >= 22.3.28
+Requires: smartmet-library-locus >= 22.3.28
+Requires: smartmet-library-textgen >= 22.5.20
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 21.1.21
-Requires: smartmet-engine-querydata >= 21.1.21
-Requires: smartmet-engine-gis >= 21.1.21
-Requires: smartmet-server >= 21.11.25
-Requires: smartmet-library-spine >= 21.1.21
+Requires: smartmet-engine-geonames >= 22.3.21
+Requires: smartmet-engine-querydata >= 22.5.20
+Requires: smartmet-engine-gis >= 22.5.20
+Requires: smartmet-server >= 22.5.16
+Requires: smartmet-library-spine >= 22.5.16
 %if 0%{rhel} >= 7
 Requires: boost169-chrono
 Requires: boost169-date-time
@@ -46,9 +46,10 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 22.1.20
-#TestRequires: smartmet-engine-gis >= 21.1.21
-#TestRequires: smartmet-engine-geonames >= 21.1.21
+#TestRequires: smartmet-engine-gis >= 22.5.20
+#TestRequires: smartmet-engine-geonames >= 22.3.21
 #TestRequires: smartmet-library-spine-plugin-test >= 21.1.21
+#TestRequires: smartmet-library-newbase-devel >= 22.5.18
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -74,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri May 20 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.5.20-1.fmi
+- Repackaged due to ABI changes to newbase LatLon methods
+
 * Fri Jan 21 2022 Andris Pavēnis <andris.pavenis@fmi.fi> 22.1.21-1.fmi
 - Repackage due to upgrade of packages from PGDG repo: gdal-3.4, geos-3.10, proj-8.2
 
