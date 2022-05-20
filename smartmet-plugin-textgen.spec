@@ -78,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 * Fri May 20 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.5.20-1.fmi
 - Repackaged due to ABI changes to newbase LatLon methods
 
+* Thu Apr 28 2022 Andris Pavenis <andris.pavenis@fmi.fi> 22.4.28-1.fmi
+- Repackage due to SmartMet::Spine::Reactor ABI changes
+
 * Fri Jan 21 2022 Andris Pavēnis <andris.pavenis@fmi.fi> 22.1.21-1.fmi
 - Repackage due to upgrade of packages from PGDG repo: gdal-3.4, geos-3.10, proj-8.2
 
