@@ -328,6 +328,8 @@ void Config::shutdown()
 
 void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
 {
+  using namespace boost::placeholders;
+
   try
   {
     itsGisEngine = pGisEngine;

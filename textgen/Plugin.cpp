@@ -686,6 +686,8 @@ Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
 
 void Plugin::init()
 {
+  using namespace boost::placeholders;
+
   try
   {
     /* GeoEngine */
