@@ -9,47 +9,56 @@ Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
 Source0: %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+%if 0%{?rhel} && 0%{rhel} < 9
+%define smartmet_boost boost169
+%else
+%define smartmet_boost boost
+%endif
+
+%define smartmet_fmt_min 8.1.1
+%define smartmet_fmt_max 8.2.0
+
 BuildRequires: rpm-build
 BuildRequires: gcc-c++
 BuildRequires: make
-BuildRequires: boost169-devel
+BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 22.5.24
-BuildRequires: smartmet-library-textgen-devel >= 22.5.24
-BuildRequires: smartmet-library-spine-devel >= 22.5.24
-BuildRequires: smartmet-engine-querydata-devel >= 22.5.31
-BuildRequires: smartmet-engine-geonames-devel >= 22.5.24
-BuildRequires: smartmet-engine-gis-devel >= 22.5.24
-BuildRequires: smartmet-library-macgyver-devel >= 22.5.24
-BuildRequires: smartmet-library-locus-devel >= 22.3.28
-Requires: smartmet-library-calculator >= 22.5.24
-Requires: smartmet-library-macgyver >= 22.5.24
-Requires: smartmet-library-locus >= 22.3.28
-Requires: smartmet-library-textgen >= 22.5.24
+BuildRequires: smartmet-library-calculator-devel >= 22.6.16
+BuildRequires: smartmet-library-textgen-devel >= 22.6.17
+BuildRequires: smartmet-library-spine-devel >= 22.6.16
+BuildRequires: smartmet-engine-querydata-devel >= 22.6.17
+BuildRequires: smartmet-engine-geonames-devel >= 22.6.17
+BuildRequires: smartmet-engine-gis-devel >= 22.6.17
+BuildRequires: smartmet-library-macgyver-devel >= 22.6.16
+BuildRequires: smartmet-library-locus-devel >= 22.6.16
+Requires: smartmet-library-calculator >= 22.6.16
+Requires: smartmet-library-macgyver >= 22.6.16
+Requires: smartmet-library-locus >= 22.6.16
+Requires: smartmet-library-textgen >= 22.6.17
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 22.5.24
-Requires: smartmet-engine-querydata >= 22.5.31
-Requires: smartmet-engine-gis >= 22.5.24
+Requires: smartmet-engine-geonames >= 22.6.17
+Requires: smartmet-engine-querydata >= 22.6.17
+Requires: smartmet-engine-gis >= 22.6.17
 Requires: smartmet-server >= 22.5.16
-Requires: smartmet-library-spine >= 22.5.24
+Requires: smartmet-library-spine >= 22.6.16
 %if 0%{rhel} >= 7
-Requires: boost169-chrono
-Requires: boost169-date-time
-Requires: boost169-filesystem
-Requires: boost169-iostreams
-Requires: boost169-thread
-Requires: boost169-timer
+Requires: %{smartmet_boost}-chrono
+Requires: %{smartmet_boost}-date-time
+Requires: %{smartmet_boost}-filesystem
+Requires: %{smartmet_boost}-iostreams
+Requires: %{smartmet_boost}-thread
+Requires: %{smartmet_boost}-timer
 %endif
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 22.1.20
-#TestRequires: smartmet-engine-gis >= 22.5.24
-#TestRequires: smartmet-engine-geonames >= 22.5.24
-#TestRequires: smartmet-library-spine-plugin-test >= 21.1.21
-#TestRequires: smartmet-library-newbase-devel >= 22.5.18
+#TestRequires: smartmet-engine-gis >= 22.6.17
+#TestRequires: smartmet-engine-geonames >= 22.6.17
+#TestRequires: smartmet-library-spine-plugin-test >= 22.6.16
+#TestRequires: smartmet-library-newbase-devel >= 22.6.16
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
