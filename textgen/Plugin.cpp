@@ -659,10 +659,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 // ----------------------------------------------------------------------
 
 Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
-    : itsReactor(theReactor),
-      itsModuleName("Textgen"),
-      itsConfig(theConfig),
-      itsForecastTextCache(boost::numeric_cast<size_t>(itsConfig.getForecastTextCacheSize()))
+    : itsReactor(theReactor), itsModuleName("Textgen"), itsConfig(theConfig)
 {
   try
   {
@@ -703,6 +700,9 @@ void Plugin::init()
       throw Fmi::Exception(BCP, "Gis engine unavailable");
 
     itsConfig.init(reinterpret_cast<Engine::Gis::Engine*>(engine));
+
+    // Init caches
+    itsForecastTextCache.resize(boost::numeric_cast<size_t>(itsConfig.getForecastTextCacheSize()));
 
     /* Initialize dictionary */
     const auto& dictionary_name = itsConfig.dictionary();
