@@ -2,3 +2,4 @@
 /cnf/geonames.conf
 /cnf/gis.conf
 /tmp-geonames-db*
+/tmp

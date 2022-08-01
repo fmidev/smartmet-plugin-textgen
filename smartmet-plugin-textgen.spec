@@ -2,53 +2,63 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 22.1.21
+Version: 22.7.27
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
 Source0: %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+%if 0%{?rhel} && 0%{rhel} < 9
+%define smartmet_boost boost169
+%else
+%define smartmet_boost boost
+%endif
+
+%define smartmet_fmt_min 8.1.1
+%define smartmet_fmt_max 8.2.0
+
 BuildRequires: rpm-build
 BuildRequires: gcc-c++
 BuildRequires: make
-BuildRequires: boost169-devel
+BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 21.10.6
-BuildRequires: smartmet-library-textgen-devel >= 21.1.21
-BuildRequires: smartmet-library-spine-devel >= 21.1.21
-BuildRequires: smartmet-engine-querydata-devel >= 21.1.21
-BuildRequires: smartmet-engine-geonames-devel >= 21.1.21
-BuildRequires: smartmet-engine-gis-devel >= 21.1.21
-BuildRequires: smartmet-library-macgyver-devel >= 21.1.21
-BuildRequires: smartmet-library-locus-devel >= 21.12.7
-Requires: smartmet-library-calculator >= 21.10.6
-Requires: smartmet-library-macgyver >= 21.1.21
-Requires: smartmet-library-locus >= 21.12.7
-Requires: smartmet-library-textgen >= 21.1.21
+BuildRequires: smartmet-library-calculator-devel >= 22.6.16
+BuildRequires: smartmet-library-textgen-devel >= 22.6.17
+BuildRequires: smartmet-library-spine-devel >= 22.7.27
+BuildRequires: smartmet-engine-querydata-devel >= 22.7.27
+BuildRequires: smartmet-engine-geonames-devel >= 22.7.27
+BuildRequires: smartmet-engine-gis-devel >= 22.7.27
+BuildRequires: smartmet-library-macgyver-devel >= 22.7.27
+BuildRequires: smartmet-library-locus-devel >= 22.6.16
+Requires: smartmet-library-calculator >= 22.6.16
+Requires: smartmet-library-macgyver >= 22.7.27
+Requires: smartmet-library-locus >= 22.6.16
+Requires: smartmet-library-textgen >= 22.6.17
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 21.1.21
-Requires: smartmet-engine-querydata >= 21.1.21
-Requires: smartmet-engine-gis >= 21.1.21
-Requires: smartmet-server >= 21.11.25
-Requires: smartmet-library-spine >= 21.1.21
+Requires: smartmet-engine-geonames >= 22.7.27
+Requires: smartmet-engine-querydata >= 22.7.27
+Requires: smartmet-engine-gis >= 22.7.27
+Requires: smartmet-server >= 22.5.16
+Requires: smartmet-library-spine >= 22.7.27
 %if 0%{rhel} >= 7
-Requires: boost169-chrono
-Requires: boost169-date-time
-Requires: boost169-filesystem
-Requires: boost169-iostreams
-Requires: boost169-thread
-Requires: boost169-timer
+Requires: %{smartmet_boost}-chrono
+Requires: %{smartmet_boost}-date-time
+Requires: %{smartmet_boost}-filesystem
+Requires: %{smartmet_boost}-iostreams
+Requires: %{smartmet_boost}-thread
+Requires: %{smartmet_boost}-timer
 %endif
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 22.1.20
-#TestRequires: smartmet-engine-gis >= 21.1.21
-#TestRequires: smartmet-engine-geonames >= 21.1.21
-#TestRequires: smartmet-library-spine-plugin-test >= 21.1.21
+#TestRequires: smartmet-engine-gis >= 22.7.27
+#TestRequires: smartmet-engine-geonames >= 22.7.27
+#TestRequires: smartmet-library-spine-plugin-test >= 22.7.27
+#TestRequires: smartmet-library-newbase-devel >= 22.6.16
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -74,6 +84,24 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Jul 27 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.7.27-1.fmi
+- Repackaged since macgyver CacheStats ABI changed
+
+* Tue Jun 21 2022 Andris Pavēnis <andris.pavenis@fmi.fi> 22.6.21-1.fmi
+- Add support for RHEL9, upgrade libpqxx to 7.7.0 (rhel8+) and fmt to 8.1.1
+
+* Tue May 31 2022 Andris Pavēnis <andris.pavenis@fmi.fi> 22.5.31-1.fmi
+- Repackage due to smartmet-engine-querydata and smartmet-engine-observation ABI changes
+
+* Tue May 24 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.5.24-1.fmi
+- Repackaged due to NFmiArea ABI changes
+
+* Fri May 20 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.5.20-1.fmi
+- Repackaged due to ABI changes to newbase LatLon methods
+
+* Thu Apr 28 2022 Andris Pavenis <andris.pavenis@fmi.fi> 22.4.28-1.fmi
+- Repackage due to SmartMet::Spine::Reactor ABI changes
+
 * Fri Jan 21 2022 Andris Pavēnis <andris.pavenis@fmi.fi> 22.1.21-1.fmi
 - Repackage due to upgrade of packages from PGDG repo: gdal-3.4, geos-3.10, proj-8.2
 
