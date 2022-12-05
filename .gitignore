@@ -11,3 +11,4 @@ obj/
 *.c2t
 compile_commands.json
 test/cnf/local.conf
+/smartmet-plugin-textgen.tar.gz
