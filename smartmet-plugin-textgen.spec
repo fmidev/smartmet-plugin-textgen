@@ -27,7 +27,7 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 22.6.16
 BuildRequires: smartmet-library-textgen-devel >= 22.8.24
-BuildRequires: smartmet-library-spine-devel >= 22.9.5
+BuildRequires: smartmet-library-spine-devel >= 22.12.2
 BuildRequires: smartmet-engine-querydata-devel >= 22.10.5
 BuildRequires: smartmet-engine-geonames-devel >= 22.10.5
 BuildRequires: smartmet-engine-gis-devel >= 22.10.5
@@ -42,7 +42,7 @@ Requires: smartmet-engine-geonames >= 22.10.5
 Requires: smartmet-engine-querydata >= 22.10.5
 Requires: smartmet-engine-gis >= 22.10.5
 Requires: smartmet-server >= 22.10.5
-Requires: smartmet-library-spine >= 22.9.5
+Requires: smartmet-library-spine >= 22.12.2
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-date-time
@@ -57,7 +57,7 @@ Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 22.2.8
 #TestRequires: smartmet-engine-gis >= 22.10.5
 #TestRequires: smartmet-engine-geonames >= 22.10.5
-#TestRequires: smartmet-library-spine-plugin-test >= 22.9.5
+#TestRequires: smartmet-library-spine-plugin-test >= 22.12.2
 #TestRequires: smartmet-library-newbase-devel >= 22.8.29
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db

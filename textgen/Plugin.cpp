@@ -578,6 +578,12 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
                             const SmartMet::Spine::HTTP::Request& theRequest,
                             SmartMet::Spine::HTTP::Response& theResponse)
 {
+  // Check request method (support GET, OPTIONS)
+  if (checkRequest(theRequest, theResponse, false))
+  {
+    return;
+  }
+
   // thead specific stringstream logging
   MessageLogger logger("SmartMet::Plugin::TextGen::requestHandler");
   MessageLogger::open();
