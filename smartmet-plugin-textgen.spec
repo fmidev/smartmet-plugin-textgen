@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 23.4.27
+Version: 23.6.13
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -26,23 +26,23 @@ BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 22.6.16
-BuildRequires: smartmet-library-textgen-devel >= 22.8.24
-BuildRequires: smartmet-library-spine-devel >= 22.12.2
-BuildRequires: smartmet-engine-querydata-devel >= 22.10.5
-BuildRequires: smartmet-engine-geonames-devel >= 22.10.5
-BuildRequires: smartmet-engine-gis-devel >= 22.10.5
-BuildRequires: smartmet-library-macgyver-devel >= 22.8.23
-BuildRequires: smartmet-library-locus-devel >= 22.6.17
+BuildRequires: smartmet-library-textgen-devel >= 22.12.16
+BuildRequires: smartmet-library-spine-devel >= 23.6.13
+BuildRequires: smartmet-engine-querydata-devel >= 23.6.13
+BuildRequires: smartmet-engine-geonames-devel >= 23.6.13
+BuildRequires: smartmet-engine-gis-devel >= 23.6.13
+BuildRequires: smartmet-library-macgyver-devel >= 23.6.6
+BuildRequires: smartmet-library-locus-devel >= 23.3.7
 Requires: smartmet-library-calculator >= 22.6.16
-Requires: smartmet-library-macgyver >= 22.8.23
-Requires: smartmet-library-locus >= 22.6.17
-Requires: smartmet-library-textgen >= 22.8.24
+Requires: smartmet-library-macgyver >= 23.6.6
+Requires: smartmet-library-locus >= 23.3.7
+Requires: smartmet-library-textgen >= 22.12.16
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 22.10.5
-Requires: smartmet-engine-querydata >= 22.10.5
-Requires: smartmet-engine-gis >= 22.10.5
-Requires: smartmet-server >= 22.10.5
-Requires: smartmet-library-spine >= 22.12.2
+Requires: smartmet-engine-geonames >= 23.6.13
+Requires: smartmet-engine-querydata >= 23.6.13
+Requires: smartmet-engine-gis >= 23.6.13
+Requires: smartmet-server >= 23.5.19
+Requires: smartmet-library-spine >= 23.6.13
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-date-time
@@ -54,11 +54,11 @@ Requires: %{smartmet_boost}-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-utils-devel >= 22.2.8
-#TestRequires: smartmet-engine-gis >= 22.10.5
-#TestRequires: smartmet-engine-geonames >= 22.10.5
-#TestRequires: smartmet-library-spine-plugin-test >= 22.12.2
-#TestRequires: smartmet-library-newbase-devel >= 22.8.29
+#TestRequires: smartmet-utils-devel >= 23.4.28
+#TestRequires: smartmet-engine-gis >= 23.6.13
+#TestRequires: smartmet-engine-geonames >= 23.6.13
+#TestRequires: smartmet-library-spine-plugin-test >= 23.6.13
+#TestRequires: smartmet-library-newbase-devel >= 23.2.9
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Jun 13 2023 Mika Heiskanen <mika.heiskanen@fmi.fi> - 23.6.13-1.fmi
+- Support internal and environment variables in configuration files
+
 * Thu Apr 27 2023 Andris Pavēnis <andris.pavenis@fmi.fi> 23.4.27-1.fmi
 - Repackage due to macgyver ABI changes (AsyncTask, AsyncTaskGroup)
 
