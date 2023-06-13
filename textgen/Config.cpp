@@ -17,6 +17,7 @@
 #include <macgyver/Exception.h>
 #include <macgyver/StringConversion.h>
 #include <newbase/NFmiFileSystem.h>
+#include <spine/ConfigTools.h>
 #include <spine/Convenience.h>
 #include <spine/Exceptions.h>
 #include <iostream>
@@ -337,6 +338,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
 
     libconfig::Config lconf;
     lconf.readFile(itsMainConfigFile.c_str());
+    Spine::expandVariables(lconf);
 
     lconf.lookupValue("forecast_text_cache_size", itsForecastTextCacheSize);
     lconf.lookupValue("url", itsDefaultUrl);
