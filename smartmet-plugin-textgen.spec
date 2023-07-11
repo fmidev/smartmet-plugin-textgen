@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 23.4.27
+Version: 23.6.13
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -31,7 +31,7 @@ BuildRequires: smartmet-library-spine-devel >= 23.7.10
 BuildRequires: smartmet-engine-querydata-devel >= 23.7.10
 BuildRequires: smartmet-engine-geonames-devel >= 23.7.11
 BuildRequires: smartmet-engine-gis-devel >= 23.7.10
-BuildRequires: smartmet-library-macgyver-devel >= 22.8.23
+BuildRequires: smartmet-library-macgyver-devel >= 23.6.6
 BuildRequires: smartmet-library-locus-devel >= 23.7.10
 Requires: smartmet-library-calculator >= 23.7.10
 Requires: smartmet-library-macgyver >= 22.8.23
@@ -69,7 +69,7 @@ SmartMet TextGen plugin
 rm -rf $RPM_BUILD_ROOT
 
 %setup -q -n %{SPECNAME}
- 
+
 %build -q -n %{SPECNAME}
 make %{_smp_mflags}
 
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Jun 13 2023 Mika Heiskanen <mika.heiskanen@fmi.fi> - 23.6.13-1.fmi
+- Support internal and environment variables in configuration files
+
 * Thu Apr 27 2023 Andris Pavēnis <andris.pavenis@fmi.fi> 23.4.27-1.fmi
 - Repackage due to macgyver ABI changes (AsyncTask, AsyncTaskGroup)
 
