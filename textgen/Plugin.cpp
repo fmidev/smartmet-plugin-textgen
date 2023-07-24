@@ -578,6 +578,12 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
                             const SmartMet::Spine::HTTP::Request& theRequest,
                             SmartMet::Spine::HTTP::Response& theResponse)
 {
+  // Check request method (support GET, OPTIONS)
+  if (checkRequest(theRequest, theResponse, false))
+  {
+    return;
+  }
+
   // thead specific stringstream logging
   MessageLogger logger("SmartMet::Plugin::TextGen::requestHandler");
   MessageLogger::open();
@@ -659,10 +665,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
 // ----------------------------------------------------------------------
 
 Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
-    : itsReactor(theReactor),
-      itsModuleName("Textgen"),
-      itsConfig(theConfig),
-      itsForecastTextCache(boost::numeric_cast<size_t>(itsConfig.getForecastTextCacheSize()))
+    : itsReactor(theReactor), itsModuleName("Textgen"), itsConfig(theConfig)
 {
   try
   {
@@ -703,6 +706,9 @@ void Plugin::init()
       throw Fmi::Exception(BCP, "Gis engine unavailable");
 
     itsConfig.init(reinterpret_cast<Engine::Gis::Engine*>(engine));
+
+    // Init caches
+    itsForecastTextCache.resize(boost::numeric_cast<size_t>(itsConfig.getForecastTextCacheSize()));
 
     /* Initialize dictionary */
     const auto& dictionary_name = itsConfig.dictionary();

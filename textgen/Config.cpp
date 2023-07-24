@@ -17,7 +17,9 @@
 #include <macgyver/Exception.h>
 #include <macgyver/StringConversion.h>
 #include <newbase/NFmiFileSystem.h>
+#include <spine/ConfigTools.h>
 #include <spine/Convenience.h>
+#include <spine/Exceptions.h>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -336,6 +338,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
 
     libconfig::Config lconf;
     lconf.readFile(itsMainConfigFile.c_str());
+    Spine::expandVariables(lconf);
 
     lconf.lookupValue("forecast_text_cache_size", itsForecastTextCacheSize);
     lconf.lookupValue("url", itsDefaultUrl);
@@ -422,25 +425,9 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
       boost::this_thread::sleep(boost::posix_time::milliseconds(100));
     }
   }
-  catch (const libconfig::ParseException& e)
-  {
-    throw Fmi::Exception::Trace(BCP, "Configuration error!")
-        .addParameter("Configuration file", itsMainConfigFile)
-        .addParameter("Line", Fmi::to_string(e.getLine()));
-  }
-  catch (const libconfig::SettingNotFoundException& ex)
-  {
-    throw Fmi::Exception::Trace(BCP, "Incorrect setting type")
-        .addParameter("Setting path", ex.getPath());
-  }
-  catch (const libconfig::SettingTypeException& ex)
-  {
-    throw Fmi::Exception::Trace(BCP, "Incorrect setting type")
-        .addParameter("Setting path", ex.getPath());
-  }
   catch (...)
   {
-    throw Fmi::Exception::Trace(BCP, "Configuration error");
+    Spine::Exceptions::handle("TextGen plugin");
   }
 }
 
@@ -619,9 +606,9 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
   }
 }  // namespace Textgen
 
-void Config::update(Fmi::DirectoryMonitor::Watcher  /*id*/,
-                    const boost::filesystem::path&  /*dir*/,
-                    const boost::regex&  /*pattern*/,
+void Config::update(Fmi::DirectoryMonitor::Watcher /*id*/,
+                    const boost::filesystem::path& /*dir*/,
+                    const boost::regex& /*pattern*/,
                     const Fmi::DirectoryMonitor::Status& status)
 {
   std::set<std::string> modifiedFiles;
@@ -667,9 +654,9 @@ void Config::update(Fmi::DirectoryMonitor::Watcher  /*id*/,
   itsProductMasks = std::move(productMasks);
 }
 
-void Config::error(Fmi::DirectoryMonitor::Watcher  /*id*/,
+void Config::error(Fmi::DirectoryMonitor::Watcher /*id*/,
                    const boost::filesystem::path& dir,
-                   const boost::regex&  /*pattern*/,
+                   const boost::regex& /*pattern*/,
                    const std::string& message)
 {
   try
@@ -847,9 +834,8 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
 
 ProductConfig::ProductConfig(const std::string& configfile,
                              const boost::shared_ptr<ProductConfig>& pDefaultConf,
-                             const std::string&  /*dictionary*/)
-    : 
-      itsFrostSeason(DEFAULT_FROSTSEASON)
+                             const std::string& /*dictionary*/)
+    : itsFrostSeason(DEFAULT_FROSTSEASON)
 {
   std::string exceptionDetails;
   try
@@ -1094,8 +1080,9 @@ ProductConfig::ProductConfig(const std::string& configfile,
 
               allowed_sections.emplace_back("output_document." + section_name + ".story." +
                                             story_name);
-			  if(story_name == "temperature_max36hours")
-				allowed_sections.emplace_back("output_document." + section_name + ".story.frost_onenight");
+              if (story_name == "temperature_max36hours")
+                allowed_sections.emplace_back("output_document." + section_name +
+                                              ".story.frost_onenight");
             }
             output_document_config_item_container.emplace_back(std::make_pair(
                 "output_document." + section_name + ".content", content_parameter_value));

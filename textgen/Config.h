@@ -8,7 +8,6 @@
 #define TEXTGEN_CONFIG_H
 
 #include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
 #include <calculator/WeatherArea.h>
 #include <engines/gis/Engine.h>
 #include <engines/gis/GeometryStorage.h>
@@ -48,12 +47,14 @@ struct db_connect_info
 
 using DatabaseConnectInfo = std::map<std::string, db_connect_info>;
 
-class ProductConfig : private boost::noncopyable
+class ProductConfig
 {
  public:
   ProductConfig(const std::string& configfile,
                 const boost::shared_ptr<ProductConfig>& pDefaultConf,
                 const std::string& dictionary);
+  ProductConfig(const ProductConfig& other) = delete;
+  ProductConfig& operator=(const ProductConfig& other) = delete;
 
   const std::string& language() const { return itsLanguage; }
   const std::string& formatter() const { return itsFormatter; }

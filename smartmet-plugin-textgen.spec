@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 22.7.27
+Version: 23.7.11
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -25,24 +25,24 @@ BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 22.6.16
-BuildRequires: smartmet-library-textgen-devel >= 22.6.17
-BuildRequires: smartmet-library-spine-devel >= 22.7.27
-BuildRequires: smartmet-engine-querydata-devel >= 22.7.27
-BuildRequires: smartmet-engine-geonames-devel >= 22.7.27
-BuildRequires: smartmet-engine-gis-devel >= 22.7.27
-BuildRequires: smartmet-library-macgyver-devel >= 22.7.27
-BuildRequires: smartmet-library-locus-devel >= 22.6.16
-Requires: smartmet-library-calculator >= 22.6.16
-Requires: smartmet-library-macgyver >= 22.7.27
-Requires: smartmet-library-locus >= 22.6.16
-Requires: smartmet-library-textgen >= 22.6.17
+BuildRequires: smartmet-library-calculator-devel >= 23.7.10
+BuildRequires: smartmet-library-textgen-devel >= 23.7.10
+BuildRequires: smartmet-library-spine-devel >= 23.7.10
+BuildRequires: smartmet-engine-querydata-devel >= 23.7.10
+BuildRequires: smartmet-engine-geonames-devel >= 23.7.11
+BuildRequires: smartmet-engine-gis-devel >= 23.7.10
+BuildRequires: smartmet-library-macgyver-devel >= 23.6.6
+BuildRequires: smartmet-library-locus-devel >= 23.7.10
+Requires: smartmet-library-calculator >= 23.7.10
+Requires: smartmet-library-macgyver >= 22.8.23
+Requires: smartmet-library-locus >= 23.7.10
+Requires: smartmet-library-textgen >= 23.7.10
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 22.7.27
-Requires: smartmet-engine-querydata >= 22.7.27
-Requires: smartmet-engine-gis >= 22.7.27
-Requires: smartmet-server >= 22.5.16
-Requires: smartmet-library-spine >= 22.7.27
+Requires: smartmet-engine-geonames >= 23.7.11
+Requires: smartmet-engine-querydata >= 23.7.10
+Requires: smartmet-engine-gis >= 23.7.10
+Requires: smartmet-server >= 22.10.5
+Requires: smartmet-library-spine >= 23.7.10
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-date-time
@@ -54,11 +54,11 @@ Requires: %{smartmet_boost}-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-utils-devel >= 22.1.20
-#TestRequires: smartmet-engine-gis >= 22.7.27
-#TestRequires: smartmet-engine-geonames >= 22.7.27
-#TestRequires: smartmet-library-spine-plugin-test >= 22.7.27
-#TestRequires: smartmet-library-newbase-devel >= 22.6.16
+#TestRequires: smartmet-utils-devel >= 22.2.8
+#TestRequires: smartmet-engine-gis >= 23.7.10
+#TestRequires: smartmet-engine-geonames >= 23.7.11
+#TestRequires: smartmet-library-spine-plugin-test >= 23.7.10
+#TestRequires: smartmet-library-newbase-devel >= 23.7.10
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -69,7 +69,7 @@ SmartMet TextGen plugin
 rm -rf $RPM_BUILD_ROOT
 
 %setup -q -n %{SPECNAME}
- 
+
 %build -q -n %{SPECNAME}
 make %{_smp_mflags}
 
@@ -84,6 +84,27 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Jul 11 2023 Andris Pavēnis <andris.pavenis@fmi.fi> 23.7.11-1.fmi
+- Use postgresql 15, gdal 3.5, geos 3.11 and proj-9.0
+
+* Tue Jun 13 2023 Mika Heiskanen <mika.heiskanen@fmi.fi> - 23.6.13-1.fmi
+- Support internal and environment variables in configuration files
+
+* Thu Apr 27 2023 Andris Pavēnis <andris.pavenis@fmi.fi> 23.4.27-1.fmi
+- Repackage due to macgyver ABI changes (AsyncTask, AsyncTaskGroup)
+
+* Mon Dec  5 2022 Andris Pavēnis <andris.pavenis@fmi.fi> 22.12.5-1.fmi
+- Check HTTP request type and handle only POST and OPTIONS requests
+
+* Wed Oct  5 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.10.5-1.fmi
+- Do not use boost::noncopyable
+
+* Thu Aug 25 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.8.25-1.fmi
+- Use a generic exception handler for configuration file errors
+
+* Thu Jul 28 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.7.28-1.fmi
+- Fixed 'forecast_text_cache_size' configuration setting to work
+
 * Wed Jul 27 2022 Mika Heiskanen <mika.heiskanen@fmi.fi> - 22.7.27-1.fmi
 - Repackaged since macgyver CacheStats ABI changed
 
