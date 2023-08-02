@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 23.7.11
+Version: 23.7.28
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -27,14 +27,14 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 23.7.10
 BuildRequires: smartmet-library-textgen-devel >= 23.7.10
-BuildRequires: smartmet-library-spine-devel >= 23.7.10
+BuildRequires: smartmet-library-spine-devel >= 23.7.28
 BuildRequires: smartmet-engine-querydata-devel >= 23.7.10
 BuildRequires: smartmet-engine-geonames-devel >= 23.7.11
 BuildRequires: smartmet-engine-gis-devel >= 23.7.10
-BuildRequires: smartmet-library-macgyver-devel >= 23.6.6
+BuildRequires: smartmet-library-macgyver-devel >= 23.7.28
 BuildRequires: smartmet-library-locus-devel >= 23.7.10
 Requires: smartmet-library-calculator >= 23.7.10
-Requires: smartmet-library-macgyver >= 22.8.23
+Requires: smartmet-library-macgyver >= 23.7.28
 Requires: smartmet-library-locus >= 23.7.10
 Requires: smartmet-library-textgen >= 23.7.10
 Requires: libconfig17
@@ -42,7 +42,7 @@ Requires: smartmet-engine-geonames >= 23.7.11
 Requires: smartmet-engine-querydata >= 23.7.10
 Requires: smartmet-engine-gis >= 23.7.10
 Requires: smartmet-server >= 22.10.5
-Requires: smartmet-library-spine >= 23.7.10
+Requires: smartmet-library-spine >= 23.7.28
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-date-time
@@ -57,8 +57,8 @@ Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 22.2.8
 #TestRequires: smartmet-engine-gis >= 23.7.10
 #TestRequires: smartmet-engine-geonames >= 23.7.11
-#TestRequires: smartmet-library-spine-plugin-test >= 23.7.10
-#TestRequires: smartmet-library-newbase-devel >= 23.7.10
+#TestRequires: smartmet-library-spine-plugin-test >= 23.7.28
+#TestRequires: smartmet-library-newbase-devel >= 23.7.28
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri Jul 28 2023 Andris Pavēnis <andris.pavenis@fmi.fi> 23.7.28-1.fmi
+- Repackage due to bulk ABI changes in macgyver/newbase/spine
+
 * Tue Jul 11 2023 Andris Pavēnis <andris.pavenis@fmi.fi> 23.7.11-1.fmi
 - Use postgresql 15, gdal 3.5, geos 3.11 and proj-9.0
 
