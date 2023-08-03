@@ -105,7 +105,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
                                const Config& config,
                                const SmartMet::Engine::Geonames::Engine& geoEngine,
                                const std::string& language,
-                               std::vector<TextGen::WeatherArea>& weatherAreaVector,
+                               std::vector<std::pair<std::string, TextGen::WeatherArea>>& weatherAreaVector,
                                std::string& errorMessage)
 {
   try
@@ -176,15 +176,15 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         case Spine::Location::LocationType::CoordinatePoint:
         {
           if (loc.feature.substr(0, 3) == "ADM" && config.geoObjectExists(loc.name, *areasource))
-            weatherAreaVector.emplace_back(config.makePostGisArea(loc.name, *areasource));
+            weatherAreaVector.emplace_back(std::make_pair((loc.name+*areasource+"_place1"), config.makePostGisArea(loc.name, *areasource)));
           else
           {
             auto geoname = loc.name;
             Engine::Gis::normalize_string(geoname);
-            weatherAreaVector.emplace_back(
+            weatherAreaVector.emplace_back(std::make_pair((geoname+"_"+Fmi::to_string(loc.longitude)+"_"+Fmi::to_string(loc.latitude)+"_place2"),
                 TextGen::WeatherArea(NFmiPoint(loc.longitude, loc.latitude),
                                      geoname,
-                                     (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
+                                     (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0)));
           }
           break;
         }
@@ -192,7 +192,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
         {
           if (config.geoObjectExists(loc.name, *areasource))
           {
-            weatherAreaVector.emplace_back(config.makePostGisArea(loc.name, *areasource));
+            weatherAreaVector.emplace_back(std::make_pair((loc.name+*areasource+"_area1"), config.makePostGisArea(loc.name, *areasource)));
           }
           else
           {
@@ -233,17 +233,17 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
                   loc.name.substr(loc.name.find('(') + 1, coordinate_string_len);
               double lon = Fmi::stod(coordinates.substr(0, coordinates.find(' ')));
               double lat = Fmi::stod(coordinates.substr(coordinates.find(' ') + 1));
-              weatherAreaVector.emplace_back(
+              weatherAreaVector.emplace_back(std::make_pair((wktName+"_wkt1"),
                   TextGen::WeatherArea(NFmiPoint(lon, lat),
                                        wktName,
-                                       (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
+                                       (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0)));
             }
             break;
             case Spine::Location::LocationType::Area:
             case Spine::Location::LocationType::Path:
             {
-              weatherAreaVector.emplace_back(
-                  TextGen::WeatherArea(wktGeometries.getSvgPath(loc.name), wktName));
+              weatherAreaVector.emplace_back(std::make_pair((wktName+"_wkt2"),
+															TextGen::WeatherArea(wktGeometries.getSvgPath(loc.name), wktName)));
             }
             break;
             default:
@@ -446,7 +446,8 @@ std::string Plugin::query(SmartMet::Spine::Reactor& /*theReactor*/,
 {
   try
   {
-    std::vector<TextGen::WeatherArea> weatherAreaVector;
+	// area_id,  WeatherArea pair
+	std::vector<std::pair<std::string, TextGen::WeatherArea>> weatherAreaVector;
     SmartMet::Spine::HTTP::ParamMap queryParameters(theRequest.getParameterMap());
     std::string errorMessage;
 
@@ -466,7 +467,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& /*theReactor*/,
     std::string languageParam = mmap_string(queryParameters, LANGUAGE_PARAM);
 
     if (!parse_location_parameters(
-            theRequest, itsConfig, *itsGeoEngine, languageParam, weatherAreaVector, errorMessage))
+								   theRequest, itsConfig, *itsGeoEngine, languageParam, weatherAreaVector, errorMessage))
     {
       throw Fmi::Exception(BCP, errorMessage);
     }
@@ -514,11 +515,13 @@ std::string Plugin::query(SmartMet::Spine::Reactor& /*theReactor*/,
     if (wktParam != queryParameters.end())
       modified_params += (";" + wktParam->second);
 
-    for (const auto& area : weatherAreaVector)
+    for (const auto& item : weatherAreaVector)
     {
+	  const auto& area = item.second;
+      const auto& area_id = item.first;
       std::string forecast_text_area;
       const auto& area_name = area.name();
-      std::string cache_key = cache_key_common_part + ";" + area_name + ";" + modified_params;
+      std::string cache_key = cache_key_common_part + ";" + area_id + ";" + Fmi::to_string(area.isPoint()) + ";" + modified_params;
 
       // set timezone for the area (stored in thread local storage)
       TextGenPosixTime::SetThreadTimeZone(config.getAreaTimeZone(area_name));
