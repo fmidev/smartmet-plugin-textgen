@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 23.8.3
+Version: 23.9.1
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -27,22 +27,22 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 23.7.28
 BuildRequires: smartmet-library-textgen-devel >= 23.8.1
-BuildRequires: smartmet-library-spine-devel >= 23.7.31
-BuildRequires: smartmet-engine-querydata-devel >= 23.7.28
+BuildRequires: smartmet-library-spine-devel >= 23.8.31
+BuildRequires: smartmet-engine-querydata-devel >= 23.8.31
 BuildRequires: smartmet-engine-geonames-devel >= 23.7.28
-BuildRequires: smartmet-engine-gis-devel >= 23.7.28
-BuildRequires: smartmet-library-macgyver-devel >= 23.7.28
+BuildRequires: smartmet-engine-gis-devel >= 23.8.28
+BuildRequires: smartmet-library-macgyver-devel >= 23.8.31
 BuildRequires: smartmet-library-locus-devel >= 23.7.28
 Requires: smartmet-library-calculator >= 23.7.28
-Requires: smartmet-library-macgyver >= 23.7.28
+Requires: smartmet-library-macgyver >= 23.8.31
 Requires: smartmet-library-locus >= 23.7.28
 Requires: smartmet-library-textgen >= 23.8.1
 Requires: libconfig17
 Requires: smartmet-engine-geonames >= 23.7.28
-Requires: smartmet-engine-querydata >= 23.7.28
-Requires: smartmet-engine-gis >= 23.7.28
-Requires: smartmet-server >= 23.7.28
-Requires: smartmet-library-spine >= 23.7.31
+Requires: smartmet-engine-querydata >= 23.8.31
+Requires: smartmet-engine-gis >= 23.8.28
+Requires: smartmet-server >= 23.8.30
+Requires: smartmet-library-spine >= 23.8.31
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-date-time
@@ -54,11 +54,11 @@ Requires: %{smartmet_boost}-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-utils-devel >= 23.7.17
-#TestRequires: smartmet-engine-gis >= 23.7.28
+#TestRequires: smartmet-utils-devel >= 23.8.23
+#TestRequires: smartmet-engine-gis >= 23.8.28
 #TestRequires: smartmet-engine-geonames >= 23.7.28
-#TestRequires: smartmet-library-spine-plugin-test >= 23.7.31
-#TestRequires: smartmet-library-newbase-devel >= 23.7.31
+#TestRequires: smartmet-library-spine-plugin-test >= 23.8.31
+#TestRequires: smartmet-library-newbase-devel >= 23.8.30
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri Sep  1 2023 Mika Heiskanen <mheiskan@rhel8.dev.fmi.fi> - 23.9.1-1.fmi
+- Repackaged
+
 * Thu Aug 3 2023 Anssi Reponen <anssi.reponen@fmi.fi> - 23.8.3-1.fmi
 - Fixed cache key bug (BRAINSTORM-2674)
 
