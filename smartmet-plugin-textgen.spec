@@ -31,10 +31,10 @@ BuildRequires: smartmet-library-spine-devel >= 23.7.28
 BuildRequires: smartmet-engine-querydata-devel >= 23.7.10
 BuildRequires: smartmet-engine-geonames-devel >= 23.7.11
 BuildRequires: smartmet-engine-gis-devel >= 23.7.10
-BuildRequires: smartmet-library-macgyver-devel >= 23.7.28
+BuildRequires: smartmet-library-macgyver-devel >= 23.11.8
 BuildRequires: smartmet-library-locus-devel >= 23.7.10
 Requires: smartmet-library-calculator >= 23.7.10
-Requires: smartmet-library-macgyver >= 23.7.28
+Requires: smartmet-library-macgyver >= 23.11.8
 Requires: smartmet-library-locus >= 23.7.10
 Requires: smartmet-library-textgen >= 23.7.10
 Requires: libconfig17

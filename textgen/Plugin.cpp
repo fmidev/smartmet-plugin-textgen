@@ -597,7 +597,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     const int expires_seconds = CACHE_EXPIRATION_TIME_SEC;
 
     // Now
-    auto t_now = boost::posix_time::second_clock::universal_time();
+    auto t_now = Fmi::SecondClock::universal_time();
 
     try
     {
@@ -611,7 +611,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
         theResponse.setContent(response + "\n<pre>" + logger.str() + "</pre>");
 
       // Build cache expiration time info
-      auto t_expires = t_now + boost::posix_time::seconds(expires_seconds);
+      auto t_expires = t_now + Fmi::Seconds(expires_seconds);
 
       // The headers themselves
       boost::shared_ptr<Fmi::TimeFormatter> tformat(Fmi::TimeFormatter::create("http"));
