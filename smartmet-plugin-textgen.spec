@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 23.12.5
+Version: 24.1.30
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Jan 30 2024 Mika Heiskanen <mika.heiskanen@fmi.fi> 24.1.30-1.fmi
+- Repackaged due to newbase ABI changes
+
 * Tue Dec  5 2023 Mika Heiskanen <mika.heiskanen@fmi.fi> - 23.12.5-1.fmi
 - Repackaged due to an ABI change in SmartMetPlugin
 
