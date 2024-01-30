@@ -25,24 +25,24 @@ BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 23.11.16
-BuildRequires: smartmet-library-textgen-devel >= 23.8.1
-BuildRequires: smartmet-library-spine-devel >= 23.12.5
-BuildRequires: smartmet-engine-querydata-devel >= 23.12.4
-BuildRequires: smartmet-engine-geonames-devel >= 23.9.6
-BuildRequires: smartmet-engine-gis-devel >= 23.8.28
-BuildRequires: smartmet-library-macgyver-devel >= 23.11.21
+BuildRequires: smartmet-library-calculator-devel >= 24.1.30
+BuildRequires: smartmet-library-textgen-devel >= 24.1.30
+BuildRequires: smartmet-library-spine-devel >= 24.1.30
+BuildRequires: smartmet-engine-querydata-devel >= 24.1.19
+BuildRequires: smartmet-engine-geonames-devel >= 24.1.30
+BuildRequires: smartmet-engine-gis-devel >= 24.1.30
+BuildRequires: smartmet-library-macgyver-devel >= 24.1.17
 BuildRequires: smartmet-library-locus-devel >= 23.7.28
-Requires: smartmet-library-calculator >= 23.11.16
-Requires: smartmet-library-macgyver >= 23.11.21
+Requires: smartmet-library-calculator >= 24.1.30
+Requires: smartmet-library-macgyver >= 24.1.17
 Requires: smartmet-library-locus >= 23.7.28
-Requires: smartmet-library-textgen >= 23.8.1
+Requires: smartmet-library-textgen >= 24.1.30
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 23.9.6
-Requires: smartmet-engine-querydata >= 23.12.4
-Requires: smartmet-engine-gis >= 23.8.28
-Requires: smartmet-server >= 23.12.5
-Requires: smartmet-library-spine >= 23.12.5
+Requires: smartmet-engine-geonames >= 24.1.30
+Requires: smartmet-engine-querydata >= 24.1.19
+Requires: smartmet-engine-gis >= 24.1.30
+Requires: smartmet-server >= 24.1.29
+Requires: smartmet-library-spine >= 24.1.30
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-date-time
@@ -55,10 +55,10 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 23.9.6
-#TestRequires: smartmet-engine-gis >= 23.8.28
-#TestRequires: smartmet-engine-geonames >= 23.9.6
-#TestRequires: smartmet-library-spine-plugin-test >= 23.12.5
-#TestRequires: smartmet-library-newbase-devel >= 23.11.21
+#TestRequires: smartmet-engine-gis >= 24.1.30
+#TestRequires: smartmet-engine-geonames >= 24.1.30
+#TestRequires: smartmet-library-spine-plugin-test >= 24.1.30
+#TestRequires: smartmet-library-newbase-devel >= 24.1.30
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
