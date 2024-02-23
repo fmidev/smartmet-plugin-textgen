@@ -25,24 +25,24 @@ BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 24.1.30
-BuildRequires: smartmet-library-textgen-devel >= 24.1.30
-BuildRequires: smartmet-library-spine-devel >= 24.1.30
-BuildRequires: smartmet-engine-querydata-devel >= 24.1.19
-BuildRequires: smartmet-engine-geonames-devel >= 24.1.30
-BuildRequires: smartmet-engine-gis-devel >= 24.1.30
+BuildRequires: smartmet-library-calculator-devel >= 24.2.23
+BuildRequires: smartmet-library-textgen-devel >= 24.2.23
+BuildRequires: smartmet-library-spine-devel >= 24.2.8
+BuildRequires: smartmet-engine-querydata-devel >= 24.2.23
+BuildRequires: smartmet-engine-geonames-devel >= 24.2.23
+BuildRequires: smartmet-engine-gis-devel >= 24.2.23
 BuildRequires: smartmet-library-macgyver-devel >= 24.1.17
 BuildRequires: smartmet-library-locus-devel >= 23.7.28
-Requires: smartmet-library-calculator >= 24.1.30
+Requires: smartmet-library-calculator >= 24.2.23
 Requires: smartmet-library-macgyver >= 24.1.17
 Requires: smartmet-library-locus >= 23.7.28
-Requires: smartmet-library-textgen >= 24.1.30
+Requires: smartmet-library-textgen >= 24.2.23
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 24.1.30
-Requires: smartmet-engine-querydata >= 24.1.19
-Requires: smartmet-engine-gis >= 24.1.30
-Requires: smartmet-server >= 24.1.29
-Requires: smartmet-library-spine >= 24.1.30
+Requires: smartmet-engine-geonames >= 24.2.23
+Requires: smartmet-engine-querydata >= 24.2.23
+Requires: smartmet-engine-gis >= 24.2.23
+Requires: smartmet-server >= 24.2.22
+Requires: smartmet-library-spine >= 24.2.8
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-date-time
@@ -55,10 +55,10 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 23.9.6
-#TestRequires: smartmet-engine-gis >= 24.1.30
-#TestRequires: smartmet-engine-geonames >= 24.1.30
-#TestRequires: smartmet-library-spine-plugin-test >= 24.1.30
-#TestRequires: smartmet-library-newbase-devel >= 24.1.30
+#TestRequires: smartmet-engine-gis >= 24.2.23
+#TestRequires: smartmet-engine-geonames >= 24.2.23
+#TestRequires: smartmet-library-spine-plugin-test >= 24.2.8
+#TestRequires: smartmet-library-newbase-devel >= 24.2.23
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
