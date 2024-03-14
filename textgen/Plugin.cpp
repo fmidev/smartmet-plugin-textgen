@@ -2,6 +2,7 @@
 #include "DatabaseDictionariesPlusGeonames.h"
 #include "FileDictionariesPlusGeonames.h"
 #include "FileDictionaryPlusGeonames.h"
+#include <boost/lexical_cast.hpp>
 #include <boost/locale.hpp>
 #include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
