@@ -422,7 +422,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
     // Wait for a full scan to complete before registering ready for the Reactor
     while (!itsMonitor.ready() || config_update_task->ended())
     {
-      boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+      boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
     }
   }
   catch (...)
