@@ -22,7 +22,6 @@ LIBS += -L$(libdir) \
 	-lsmartmet-locus \
 	-lmysqlpp \
 	$(REQUIRED_LIBS) \
-	-lboost_date_time \
 	-lboost_timer \
 	-lboost_chrono \
 	-lboost_thread \
