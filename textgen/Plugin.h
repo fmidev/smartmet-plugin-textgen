@@ -58,7 +58,7 @@ class Plugin : public SmartMetPlugin
   SmartMet::Spine::Reactor* itsReactor = nullptr;
   const std::string itsModuleName;
   Config itsConfig;
-  boost::shared_ptr<TextGen::Dictionary> itsDictionary;
+  std::shared_ptr<TextGen::Dictionary> itsDictionary;
 
   struct cache_item
   {

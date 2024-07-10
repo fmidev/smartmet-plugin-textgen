@@ -114,7 +114,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
     Spine::HTTP::Request httpRequest = theRequest;
 
     // If bbox-parameter exists, convert it to wkt-parameter
-    boost::optional<std::string> bbox_param_value = httpRequest.getParameter("bbox");
+    std::optional<std::string> bbox_param_value = httpRequest.getParameter("bbox");
     if (bbox_param_value)
     {
       std::string bbox_name;
@@ -162,7 +162,7 @@ bool parse_location_parameters(const Spine::HTTP::Request& theRequest,
       return false;
     }
 
-    boost::optional<std::string> areasource = httpRequest.getParameter("areasource");
+    std::optional<std::string> areasource = httpRequest.getParameter("areasource");
     if (!areasource)
       areasource = "";
 
@@ -539,7 +539,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& /*theReactor*/,
       else
       {
         // create formatter
-        boost::shared_ptr<TextGen::TextFormatter> formatter(
+        std::shared_ptr<TextGen::TextFormatter> formatter(
             TextGen::TextFormatterFactory::create(formatter_name));
         formatter->dictionary(itsDictionary);
 
@@ -618,7 +618,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
       auto t_expires = t_now + Fmi::Seconds(expires_seconds);
 
       // The headers themselves
-      boost::shared_ptr<Fmi::TimeFormatter> tformat(Fmi::TimeFormatter::create("http"));
+      std::shared_ptr<Fmi::TimeFormatter> tformat(Fmi::TimeFormatter::create("http"));
 
       std::string cachecontrol = "public, max-age=" + Fmi::to_string(expires_seconds);
       std::string expiration = tformat->format(t_expires);
@@ -717,13 +717,13 @@ void Plugin::init()
     /* Initialize dictionary */
     const auto& dictionary_name = itsConfig.dictionary();
     if (dictionary_name == "multimysqlplusgeonames")
-      itsDictionary = boost::make_shared<DatabaseDictionariesPlusGeonames>("mysql");
+      itsDictionary = std::make_shared<DatabaseDictionariesPlusGeonames>("mysql");
     else if (dictionary_name == "multipostgresqlplusgeonames")
-      itsDictionary = boost::make_shared<DatabaseDictionariesPlusGeonames>("postgresql");
+      itsDictionary = std::make_shared<DatabaseDictionariesPlusGeonames>("postgresql");
     else if (dictionary_name == "multifileplusgeonames")
-      itsDictionary = boost::make_shared<FileDictionariesPlusGeonames>();
+      itsDictionary = std::make_shared<FileDictionariesPlusGeonames>();
     else
-      itsDictionary = static_cast<boost::shared_ptr<TextGen::Dictionary> >(
+      itsDictionary = static_cast<std::shared_ptr<TextGen::Dictionary> >(
           (TextGen::DictionaryFactory::create(dictionary_name)));
     Settings::set("textgen::filedictionaries", itsConfig.fileDictionaries());
 

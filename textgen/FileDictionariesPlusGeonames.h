@@ -8,7 +8,7 @@
 #ifndef TEXTGEN_FILEDICTIONARIESPLUSGEONAMES_H
 #define TEXTGEN_FILEDICTIONARIESPLUSGEONAMES_H
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <textgen/FileDictionaries.h>
 #include <string>
 
@@ -38,7 +38,7 @@ class FileDictionariesPlusGeonames : public TextGen::FileDictionaries
 
  private:
   class Impl;
-  boost::shared_ptr<Impl> itsImpl;
+  std::shared_ptr<Impl> itsImpl;
 };  // class FileDictionariesPlusGeonames
 
 }  // namespace Textgen

@@ -7,7 +7,7 @@
 #include "Config.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/replace.hpp>
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 #include <calculator/TextGenPosixTime.h>
@@ -435,11 +435,11 @@ std::set<std::string> Config::getDirectoriesToMonitor(const ConfigItemVector& co
 {
   std::set<std::string> ret;
 
-  boost::filesystem::path mainPath = itsMainConfigFile;
+  std::filesystem::path mainPath = itsMainConfigFile;
   std::string mainPathString = mainPath.parent_path().string() + "/";
   for (auto item : configItems)
   {
-    boost::filesystem::path p = item.second;
+    std::filesystem::path p = item.second;
     std::string path = (p.is_relative() ? mainPathString : "") + p.parent_path().string();
     ret.insert(path);
   }
@@ -465,7 +465,7 @@ ConfigItemVector Config::readMainConfig() const
         for (int i = 0; i < setting.getLength(); i++)
         {
           std::string value = setting[i];
-          boost::filesystem::path p = value;
+          std::filesystem::path p = value;
           std::string product_name = p.stem().string();
           std::string product_file = p.string();
           ret.emplace_back(std::make_pair(product_name, product_file));
@@ -482,7 +482,7 @@ ConfigItemVector Config::readMainConfig() const
   catch (...)
   {
     std::string details;
-    if (!boost::filesystem::exists(itsMainConfigFile))
+    if (!std::filesystem::exists(itsMainConfigFile))
       details = "File '" + itsMainConfigFile + "' does not exist!";
     else
       details = "Syntax error in file '" + itsMainConfigFile + "'!";
@@ -504,7 +504,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
 
   try
   {
-    boost::filesystem::path config_path(itsMainConfigFile);
+    std::filesystem::path config_path(itsMainConfigFile);
     // Read configured products
     std::map<std::string, std::string> products;  // name -> config file
     for (const auto& item : configItems)
@@ -520,10 +520,10 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
     }
 
     auto newProductConfigs = std::unique_ptr<ProductConfigMap>(new ProductConfigMap());
-    boost::shared_ptr<ProductConfig> pDefultConfig;
+    std::shared_ptr<ProductConfig> pDefultConfig;
     if (products.find(default_textgen_config_name) != products.end())
     {
-      boost::shared_ptr<ProductConfig> productConfig(new ProductConfig(
+      std::shared_ptr<ProductConfig> productConfig(new ProductConfig(
           products.at(default_textgen_config_name), pDefultConfig, itsDictionary));
       newProductConfigs->insert(std::make_pair(default_textgen_config_name, productConfig));
       if (modifiedFiles.find(default_textgen_config_name) != modifiedFiles.end())
@@ -546,7 +546,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
 
         Fmi::AsyncTask::interruption_point();
 
-        boost::shared_ptr<ProductConfig> productConfig(
+        std::shared_ptr<ProductConfig> productConfig(
             new ProductConfig(config_file, pDefultConfig, itsDictionary));
         productConfig->setDefaultConfig(pDefultConfig);
         newProductConfigs->insert(std::make_pair(config_name, productConfig));
@@ -607,7 +607,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
 }  // namespace Textgen
 
 void Config::update(Fmi::DirectoryMonitor::Watcher /*id*/,
-                    const boost::filesystem::path& /*dir*/,
+                    const std::filesystem::path& /*dir*/,
                     const boost::regex& /*pattern*/,
                     const Fmi::DirectoryMonitor::Status& status)
 {
@@ -655,7 +655,7 @@ void Config::update(Fmi::DirectoryMonitor::Watcher /*id*/,
 }
 
 void Config::error(Fmi::DirectoryMonitor::Watcher /*id*/,
-                   const boost::filesystem::path& dir,
+                   const std::filesystem::path& dir,
                    const boost::regex& /*pattern*/,
                    const std::string& message)
 {
@@ -712,7 +712,7 @@ std::unique_ptr<Engine::Gis::GeometryStorage> Config::loadGeometries(
 
   for (const auto& pci : *pgs)
   {
-    boost::shared_ptr<ProductConfig> productConfig = pci.second;
+    std::shared_ptr<ProductConfig> productConfig = pci.second;
     Fmi::AsyncTask::interruption_point();
     itsGisEngine->populateGeometryStorage(productConfig->getPostGISIdentifiers(),
                                           *newGeometryStorage);
@@ -833,7 +833,7 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
 // ----------------------------------------------------------------------
 
 ProductConfig::ProductConfig(const std::string& configfile,
-                             const boost::shared_ptr<ProductConfig>& pDefaultConf,
+                             const std::shared_ptr<ProductConfig>& pDefaultConf,
                              const std::string& /*dictionary*/)
     : itsFrostSeason(DEFAULT_FROSTSEASON)
 {
@@ -843,7 +843,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
     if (configfile.empty())
       return;
 
-    if (!boost::filesystem::exists(configfile))
+    if (!std::filesystem::exists(configfile))
     {
       exceptionDetails =
           "Product configuration file '" + configfile + "' not found, please check the filename!";
@@ -1152,7 +1152,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
   }
 }
 
-void ProductConfig::setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDefaultConf)
+void ProductConfig::setDefaultConfig(const std::shared_ptr<ProductConfig>& pDefaultConf)
 {
   try
   {
