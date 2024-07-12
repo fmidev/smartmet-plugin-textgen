@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <textgen/FileDictionary.h>
 #include <string>
 
@@ -37,7 +37,7 @@ class FileDictionaryPlusGeonames : public TextGen::FileDictionary
 
  private:
   class Impl;
-  boost::shared_ptr<Impl> itsImpl;
+  std::shared_ptr<Impl> itsImpl;
 };  // class FileDictionaryPlusGeonames
 
 }  // namespace Textgen
