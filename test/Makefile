@@ -1,7 +1,6 @@
 all:
 
 clean:
-	rm -f PluginTest *~
 	rm -f cnf/geonames.conf
 	rm -fr tmp-geonames-db
 	rm -f tmp-geonames-db.log
