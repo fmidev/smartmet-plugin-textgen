@@ -7,7 +7,7 @@
 #ifndef TEXTGEN_CONFIG_H
 #define TEXTGEN_CONFIG_H
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <calculator/WeatherArea.h>
 #include <engines/gis/Engine.h>
 #include <engines/gis/GeometryStorage.h>
@@ -28,7 +28,7 @@ namespace Textgen
 class ProductConfig;
 using ConfigItem = std::pair<std::string, std::string>;
 using ConfigItemVector = std::vector<ConfigItem>;
-using ProductConfigMap = std::map<std::string, boost::shared_ptr<ProductConfig> >;
+using ProductConfigMap = std::map<std::string, std::shared_ptr<ProductConfig> >;
 using ParameterMappings = std::map<std::string, std::string>;
 using WeatherAreas = std::map<std::string, TextGen::WeatherArea>;
 using ProductWeatherAreaMap = std::map<std::string, WeatherAreas>;
@@ -51,7 +51,7 @@ class ProductConfig
 {
  public:
   ProductConfig(const std::string& configfile,
-                const boost::shared_ptr<ProductConfig>& pDefaultConf,
+                const std::shared_ptr<ProductConfig>& pDefaultConf,
                 const std::string& dictionary);
   ProductConfig(const ProductConfig& other) = delete;
   ProductConfig& operator=(const ProductConfig& other) = delete;
@@ -90,7 +90,7 @@ class ProductConfig
       const unsigned int& index) const;
   const ParameterMappings& getParameterMappings() const { return itsParameterMappings; }
 
-  void setDefaultConfig(const boost::shared_ptr<ProductConfig>& pDefaultConf);
+  void setDefaultConfig(const std::shared_ptr<ProductConfig>& pDefaultConf);
 
   const ConfigItemVector& getForecastDataConfigs() const { return forecast_data_config_items; }
   const ConfigItemVector& getUnitFormatConfigs() const { return unit_format_config_items; }
@@ -127,7 +127,7 @@ class ProductConfig
   bool itsFrostSeason;
   size_t itsLastModifiedTime{0};  // epoch seconds
 
-  boost::shared_ptr<ProductConfig> pDefaultConfig;
+  std::shared_ptr<ProductConfig> pDefaultConfig;
   const std::map<std::string, Engine::Gis::postgis_identifier>& getPostGISIdentifiersPrivate()
   {
     return postgis_identifiers;
@@ -186,11 +186,11 @@ class Config : private boost::noncopyable
 
   // callback requests
   void update(Fmi::DirectoryMonitor::Watcher id,
-              const boost::filesystem::path& dir,
+              const std::filesystem::path& dir,
               const boost::regex& pattern,
               const Fmi::DirectoryMonitor::Status& status);
   void error(Fmi::DirectoryMonitor::Watcher id,
-             const boost::filesystem::path& dir,
+             const std::filesystem::path& dir,
              const boost::regex& pattern,
              const std::string& message);
   ConfigItemVector readMainConfig() const;

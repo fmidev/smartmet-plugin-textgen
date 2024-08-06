@@ -8,7 +8,7 @@
 #ifndef TEXTGEN_MYSQLDICTIONARIESPLUSGEONAMES_H
 #define TEXTGEN_MYSQLDICTIONARIESPLUSGEONAMES_H
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <textgen/DatabaseDictionaries.h>
 #include <string>
 
@@ -38,7 +38,7 @@ class DatabaseDictionariesPlusGeonames : public TextGen::DatabaseDictionaries
 
  private:
   class Impl;
-  boost::shared_ptr<Impl> itsImpl;
+  std::shared_ptr<Impl> itsImpl;
 };  // class DatabaseDictionariesPlusGeonames
 
 }  // namespace Textgen

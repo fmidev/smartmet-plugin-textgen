@@ -13,7 +13,7 @@ DEFINES = -DUNIX -D_REENTRANT
 INCLUDES += -isystem $(includedir)/mysql
 # Compile options in detault, debug and profile modes
 
-LIBS += -L$(libdir) \
+LIBS += $(PREFIX_LDFLAGS) \
 	-lsmartmet-macgyver \
 	-lsmartmet-spine \
 	-lsmartmet-calculator \
@@ -65,6 +65,7 @@ $(LIBFILE): $(OBJS)
 clean:
 	rm -f $(LIBFILE) *~ $(SUBNAME)/*~
 	rm -rf obj
+	$(MAKE) -C test $@
 
 format:
 	clang-format -i -style=file $(SUBNAME)/*.h $(SUBNAME)/*.cpp
