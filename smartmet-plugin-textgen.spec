@@ -25,7 +25,7 @@ BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 24.8.7
 BuildRequires: smartmet-library-textgen-devel >= 24.8.7
 BuildRequires: smartmet-library-spine-devel >= 24.8.7
-BuildRequires: smartmet-engine-querydata-devel >= 24.8.7
+BuildRequires: smartmet-engine-querydata-devel >= 24.9.2
 BuildRequires: smartmet-engine-geonames-devel >= 24.8.7
 BuildRequires: smartmet-engine-gis-devel >= 24.8.7
 BuildRequires: smartmet-library-macgyver-devel >= 24.8.7
@@ -36,7 +36,7 @@ Requires: smartmet-library-locus >= 24.8.7
 Requires: smartmet-library-textgen >= 24.8.7
 Requires: libconfig17
 Requires: smartmet-engine-geonames >= 24.8.7
-Requires: smartmet-engine-querydata >= 24.8.7
+Requires: smartmet-engine-querydata >= 24.9.2
 Requires: smartmet-engine-gis >= 24.8.7
 Requires: smartmet-server >= 24.8.7
 Requires: smartmet-library-spine >= 24.8.7
