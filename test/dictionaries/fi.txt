@@ -1049,7 +1049,6 @@ sadekuuroja|sadekuuroja
 vesikuuroja|vesikuuroja
 rantakuuroja|räntäkuuroja
 pieni ukkosen todennakoisyys|pieni ukkosen todennäköisyys
-voimakkaita sadekuuroja|voimakkaita sadekuuroja
 tuulista|tuulista
 heikkoja sadekuuroja|heikkoja sadekuuroja
 pakkanen on erittain purevaa|pakkanen on erittäin purevaa
@@ -2074,5 +2073,15 @@ finnmarkin lansiosa:lle|Finnmarkin länsiosaan
 finnmarkin itaosa:lle|Finnmarkin itäosaan
 murmanskin alueen lansiosa:lle|Murmanskin alueen länsiosaan
 pohjois-ruotsi:lle|Pohjois-Ruotsiin
+voimakkaita sadekuuroja|rankkoja sadekuuroja
+huomiseen iltapaivaan asti|huomiseen iltapaivaan asti
+huomisen keskipaivaan asti|huomisen keskipäivään asti
 [iltapaivalla] lumikuurot voivat olla sakeita|[1] lumikuurot voivat olla sakeita
 [iltapaivalla] lumisade voi olla sakeaa|[1] lumisade voi olla sakeaa
+1-keskipaivaan asti|maanantain keskipäivään asti
+2-keskipaivaan asti|tiistain keskipäivään asti
+3-keskipaivaan asti|keskiviikon keskipäivään asti
+4-keskipaivaan asti|torstain keskipäivään asti
+5-keskipaivaan asti|perjantain keskipäivään asti
+6-keskipaivaan asti|lauantain keskipäivään asti
+7-keskipaivaan asti|sunnuntain keskipäivään asti
