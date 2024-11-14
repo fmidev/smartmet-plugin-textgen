@@ -146,8 +146,6 @@ suunnaltaan vaihtelevaa|varierande
 7-tuulta|västlig vind
 8-tuulta|nordvästlig vind
 yolla|på natten
-heikkenevaa|avtagande
-voimistuvaa|tilltagande
 tuuli|vinden
 1-puoleista tuulta|vind omkring nord
 2-puoleista tuulta|vind omkring nordost
@@ -191,6 +189,8 @@ sakeita lumikuuroja|täta snöbyar
 3-tuuleksi|ostlig vind
 4-tuuleksi|sydostlig vind
 5-tuuleksi|sydlig vind
+heikkenevaa|som avtar
+voimistuvaa|som tilltar
 6-tuuleksi|sydvästlig vind
 7-tuuleksi|västlig vind
 8-tuuleksi|nordvästlig vind
@@ -1644,8 +1644,6 @@ aallonkorkeus on enimmillaan [N] [metria]|våghöjden är högst [1] [2]
 ivalo:lle|för Ivalo
 pieksamaki:lle|för Pieksämäki
 [iltapaivalla] [etelaan] kaantyvaa tuulta|[1] [2] vridande vind
-voimistuvaa tuulta|tilltagande vind
-heikkenevaa tuulta|avtagande vind
 8-puolelle|till omkring nordväst
 7-puolelle|till omkring väst
 6-puolelle|till omkring sydväst
@@ -1667,8 +1665,6 @@ latgale:lle|för Latgale regionen
 kurzeme:lle|for Kurzeme regionen
 rigaregion:lle|för Lielriga regionen
 tuuli kaantyy|vinden vrider
-[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta]|[1] [2] [3] [4]
-[iltapaivalla] [nopeasti] [heikkenevaa tuulta]|[1] [2] [3]
 [iltapaivalla] tuuli heikkenee ja muuttuu vaihtelevaksi|[1] avtar vinden och är varierande
 [iltapaivalla] tuuli voimistuu ja muuttuu vaihtelevaksi|[1] tilltar vinden och blir varierande
 aallonkorkeus on alle [N] [metria]|våghöjden är mindre än [1] [2]
@@ -1678,7 +1674,6 @@ aallonkorkeus on alle [N] [metria]|våghöjden är mindre än [1] [2]
 [iltapaivalla] tuuli muuttuu vaihtelevaksi ja heikkenee edelleen|[1] blir vinden varierande och avtar ytterligare
 [iltapaivalla] tuuli muuttuu vaihtelevaksi ja voimistuu edelleen|[1] blir vinden varierande och tilltar ytterligare
 [iltapaivalla] [heikkenevaa tuulta]|[1] [2]
-[iltapaivalla] [heikkenevaa] [etelatuulta]|[1] [2] [3]
 [iltapaivalla] [pohjoistuuli] voimistuu ja muuttuu vaihtelevaksi|[1] tilltar [2] och blir varierande
 [iltapaivalla] [pohjoistuuli] heikkenee ja muuttuu vaihtelevaksi|[1] avtar [2] och är varierande
 [iltapaivalla] [pohjoistuuli] voimistuu ja kaantyy [etelaan]|[1] tilltar [2] och vrider [3]
@@ -1688,6 +1683,11 @@ aallonkorkeus on alle [N] [metria]|våghöjden är mindre än [1] [2]
 7- ja 8-valista tuulta|västlig till nordvästlig vind
 7- ja 6-valista tuulta|västlig till sydvästlig vind
 5- ja 6-valista tuulta|sydlig till sydvästlig vind
+voimistuvaa tuulta|vind som tilltar
+heikkenevaa tuulta|vind som avtar
+[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta]|[1] [4] [3] [2]
+[iltapaivalla] [nopeasti] [heikkenevaa tuulta]|[1] [3] [2]
+[iltapaivalla] [heikkenevaa] [etelatuulta]|[1] [3] [2]
 1- ja 8-valinen tuuli|vinden mellan nord och nordväst
 7- ja 8-valinen tuuli|vinden mellan väst och nordväst
 7- ja 6-valinen tuuli|vinden mellan väst och sydväst
@@ -1727,7 +1727,6 @@ astetta (mod 10=1)|grader
 aste|grad
 nolla|noll
 asteen(tienoilla (mod 10=1))|grader
-[iltapaivalla] edelleen [heikkenevaa] [pohjoistuulta]|[1] alltjämt [2] [3]
 hehtopascalia (mod 10=1)|hektopascal
 prosenttia (mod 10=1)|procent
 millimetria (mod 10=1)|millimeter
@@ -1755,12 +1754,13 @@ astetta(noin n)|grader
 [iltapaivalla] [etelatuuli] heikkenee [nopeasti]|[1] [2] avtar [3]
 [pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa voimistua|[1] [2] [3] som börjar tillta
 [pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa heiketa|[1] [2] [3] som börjar avta
-[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [illalla] [pohjoiseen]|[1] [2] [3] [4] som vrider [6] [5]
 [ip] [p-tuulta] [m...n] [m/s], joka alkaa voimistua [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] [3] [4] som börjar tillta [5] och vrider [7] [6]
 5- ja 4-valista tuulta|sydlig till sydostlig vind
 3- ja 4-valista tuulta|ostlig till sydostlig vind
 3- ja 2-valista tuulta|ostlig till nordostlig vind
 1- ja 2-valista tuulta|nordlig till nordostlig vind
+[iltapaivalla] edelleen [heikkenevaa] [pohjoistuulta]|[1] [3] [2] alltjämt
+[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [illalla] [pohjoiseen]|[1] [4] [3] [2] och [5] [6]
 [iltapaivalla] [etelatuuli] voimistuu [nopeasti]|[1] [2] tilltar [3]
 [iltapaivalla] [pohjoistuuli] voimistuu edelleen|[1] [2] tilltar ytterligare
 [iltapaivalla] sade voi olla runsasta|[1] kan regnet vara rikligt
@@ -2081,7 +2081,7 @@ huomisen keskipaivaan asti|till imorgon middagen
 [huomenna] sumua, joka voi olla sakeaa|[1] dimma som kan vara tät
 [huomenna] [sisamaassa] sumua, joka voi olla sakeaa|[1] [2] dimma som kan vara tät
 [pohjoistuulta] [m...n] [metria sekunnissa], joka kaantyy [iltapaivalla] [etelaan]|[1] [2] [3] som vrider [5] [4]
-[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [pohjoiseen]|[1] [2] [3] [4] som vrider [5]
 [ip] [p-tuulta] [m...n] [m/s], joka alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] [3] [4] som börjar avta [5] och vrider [7] [6]
 [iltap] [nop] [heikken] [tuulta] [m...n] [m sek], joka kaantyy [illalla] [pohj]|[1] [2] [3] [4] [5] [6] som vrider [8] [7]
 iltayolla|senare under kvällen
+[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [pohjoiseen]|[1] [4] [3] [2] och vrider [5]
