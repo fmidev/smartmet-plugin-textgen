@@ -1651,7 +1651,6 @@ etelaan|to the south
 pohjoiseen|to the north
 [iltapaivalla] tuuli kaantyy [etelaan] ja voimistuu edelleen|[1] the wind turns [2] and contines to weaken
 [pohjoistuulta] [m...n] [metria sekunnissa], joka muuttuu [iltapaivalla] vaihtelevaksi|[1] [2] [3], that becomes variable [4]
-nopeasti|fast
 vahitellen|gradually
 [pohjoistuulta] [m...n] [metria sekunnissa], joka kaantyy [iltapaivalla] [etelaan]|[1] [2] [3], that turns [5] [4]
 [iltapaivalla] tuuli kaantyy [etelaan]|the wind turns [2] [1]
@@ -1710,6 +1709,7 @@ astetta (n)|degrees
 [iltapaivalla] tuuli voimistuu ja muuttuu vaihtelevaksi|the wind strenghtens and becomes varying [1]
 voimistuvaa tuulta|strenghtening wind
 kovimmillaan|up to
+nopeasti|rapidly
 [iltapaivalla] tuuli muuttuu vaihtelevaksi ja heikkenee edelleen|[1] the wind becomes variable and continues to weaken
 [iltapaivalla] [heikkenevaa tuulta]|[1] [2]
 [iltapaivalla] [heikkenevaa] [etelatuulta]|[1] [2] [3]
