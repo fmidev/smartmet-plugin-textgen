@@ -22,18 +22,18 @@ BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 25.2.18
-BuildRequires: smartmet-library-textgen-devel >= 25.2.18
+BuildRequires: smartmet-library-calculator-devel >= 25.3.7
+BuildRequires: smartmet-library-textgen-devel >= 25.3.7
 BuildRequires: smartmet-library-spine-devel >= 25.2.18
 BuildRequires: smartmet-engine-querydata-devel >= 25.2.18
 BuildRequires: smartmet-engine-geonames-devel >= 25.2.18
 BuildRequires: smartmet-engine-gis-devel >= 25.2.18
 BuildRequires: smartmet-library-macgyver-devel >= 25.2.18
 BuildRequires: smartmet-library-locus-devel >= 25.2.18
-Requires: smartmet-library-calculator >= 25.2.18
+Requires: smartmet-library-calculator >= 25.3.7
 Requires: smartmet-library-macgyver >= 25.2.18
 Requires: smartmet-library-locus >= 25.2.18
-Requires: smartmet-library-textgen >= 25.2.18
+Requires: smartmet-library-textgen >= 25.3.7
 Requires: libconfig17
 Requires: smartmet-engine-geonames >= 25.2.18
 Requires: smartmet-engine-querydata >= 25.2.18
