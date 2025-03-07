@@ -47,6 +47,7 @@
 #include <calculator/TextGenError.h>
 #include <engines/geonames/Engine.h>
 #include <macgyver/Exception.h>
+#include <mysql++/mystring.h>
 #include <mysql++/mysql++.h>
 #include <spine/Reactor.h>
 #include <cassert>
