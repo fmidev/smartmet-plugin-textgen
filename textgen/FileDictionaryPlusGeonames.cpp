@@ -40,7 +40,6 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <calculator/Settings.h>
-#include <calculator/TextGenError.h>
 #include <engines/geonames/Engine.h>
 #include <macgyver/Exception.h>
 #include <spine/Reactor.h>
