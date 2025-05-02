@@ -8,7 +8,7 @@ clean:
 
 TEST_DB_DIR := $(shell pwd)/tmp-geonames-db
 
-TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf wgs84mode
+TEST_PREPARE_TARGETS := cnf/geonames.conf cnf/gis.conf
 TEST_FINISH_TARGETS := .dummy
 ifdef CI
 GEONAMES_HOST_EDIT := sed -e 's|"smartmet-test"|"$(TEST_DB_DIR)"|g'
@@ -18,7 +18,7 @@ else
 GEONAMES_HOST_EDIT := cat
 endif
 
-TESTER_PARAM := --handler=/textgen --reactor-config=cnf/reactor.conf -e tmp/
+TESTER_PARAM := --handler=/textgen --reactor-config=cnf/reactor.conf -e output/
 
 test:	$(TEST_PREPARE_TARGETS)
 	@rm -f failures/*
@@ -46,10 +46,6 @@ stop-geonames-db:
 	@if [ -d $(TEST_DB_DIR) ] ; then \
 	    /usr/share/smartmet/test/db/test-db-ctl.sh $(TEST_DB_DIR) stop; \
 	fi
-
-wgs84mode:
-	rm -rf tmp && mkdir tmp && cp output/* tmp/
-	if grep --quiet "#define WGS84 1" /usr/include/smartmet/newbase/NFmiGlobals.h; then for f in tmp/*.wgs84; do mv $$f tmp/$$(basename $$f .wgs84); done; fi
 
 .dummy:
 	true
