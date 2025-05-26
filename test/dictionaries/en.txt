@@ -13,14 +13,6 @@ pohjois-ruotsi:lle|for Northern Sweden
 [iltapaivalla] lumikuurot voivat olla sakeita|snow showers can be heavy [1]
 [iltapaivalla] lumisade voi olla sakeaa|snowfall can be heavy [1]
 huomiseen iltapaivaan asti|until tomorrow afternoon
-huomisen keskipaivaan asti|until tomorrow forenoon
-1-keskipaivaan asti|until Monday forenoon
-2-keskipaivaan asti|until Tuesday forenoon
-3-keskipaivaan asti|until Wednesday forenoon
-4-keskipaivaan asti|until Thursday forenoon
-5-keskipaivaan asti|until Friday forenoon
-6-keskipaivaan asti|until Saturday forenoon
-7-keskipaivaan asti|until Sunday forenoon
 astetta(noin n)|degrees
 huomattavasti lampimampi|significantly warmer
 lampimampi|warmer
@@ -89,6 +81,13 @@ alkavan|
 8-vuorokauden saa|for the next eight days
 9-vuorokauden saa|for the next nine days
 10-vuorokauden saa|for the next 10 days
+1-keskipaivaan asti|until Monday noon
+2-keskipaivaan asti|until Tuesday noon
+3-keskipaivaan asti|until Wednesday noon
+4-keskipaivaan asti|until Thursday noon
+5-keskipaivaan asti|until Friday noon
+6-keskipaivaan asti|until Saturday noon
+7-keskipaivaan asti|until Sunday noon
 yli|over
 2-iltaan|until Tuesday evening
 3-iltaan|until Wednesday evening
@@ -116,7 +115,6 @@ paivien ylin lampotila|daily maximum temperature
 oiden alin lampotila|nightly minimum temperature
 paivalampotila|daily temperature
 yolampotila|nightly temperature
-aluksi|in the beginning
 lopuksi|in the end
 8-suunnasta|from north west
 7-suunnasta|from west
@@ -187,6 +185,7 @@ lumikuuroja|snow showers
 lumisadetta|snowfall
 voimistuvaa|strenghtening
 vahvistuu|strenghtens
+uusimaa|Uusimaa
 mahdollisesti ukkosta|possibility of thunder
 melko selkeaa|partly clear
 miinus|minus
@@ -376,6 +375,7 @@ saa muuttuu sateisemmaksi|the weather is becoming rainier
 alue|the area
 pohjanmaa:lle|for Ostrobothnia
 suomi:lle|for Finland
+aluksi|at first
 ahvenanmaa:lle|for Åland
 huomisesta alkaen|starting tomorrow
 ja|and
@@ -2069,7 +2069,6 @@ B5W_B7E_B4E:lle|for Western Gulf of Finland, Northeastern Baltic Proper and Sea 
 B5W_B7E:lle|for Western Gulf of Finland and Northeastern Baltic Proper
 B5W_B7:lle|for Western Gulf of Finland and Northern Baltic Proper
 B5_B7:lle|for Gulf of Finland and Northern Baltic Proper
-huono nakyvyys|bad visibility
 vesi- tai tihkusadetta|rain or drizzle
 lumi- tai tihkusadetta|snowfall or drizzle
 ranta- tai tihkusadetta|sleet or drizzle
@@ -2085,3 +2084,52 @@ jotka muuttuvat rantakuuroiksi|that turn into sleet showers
 [iltapaivalla] tuuli kaantyy [etelaan] ja heikkenee edelleen|[1] the wind turns [2] and contines to strenghten
 tuuli voimistuu|the wind strenghtens to
 aamupaivalla|before noon
+huomisen keskipaivaan asti|until tomorrow noon
+huono nakyvyys|poor visibility
+B1|Bay of Bothnia
+B2|the Quark
+B3|Sea of Bothnia
+B4|Sea of Archipelago and Sea of Åland
+B5|Gulf of Finland
+B6|Gulf of Riga
+B7|Northern Baltic Proper
+B8|Middle Baltic Proper
+B9|Southeastern Baltic Proper
+B10|Southern Baltic Proper
+B11|Arkona Sea
+B12|Öresund and the Belts
+B13|Kattegat
+B1N|Northern Bay of Bothnia
+B1S|Southern Bay of Bothnia
+B3N|Northern Bothnian Sea
+B3S|Southern Bothnian Sea
+B4E|Sea of Archipelago
+B4W|Sea of Åland
+B5E|Eastern Gulf of Finland
+B5W|Western Gulf of Finland
+B7E|Northeastern Baltic Proper
+B7W|Northwestern Baltic Proper
+B8E|Middle Baltic Proper
+B8W|Gotland Sea
+B10N|Öland Sea
+B10S|Bornholm Sea
+B2_B1S|the Quark and Southern Bay of Bothnia
+B2_B1|the Quark and Bay of Bothnia
+B3N_B2|Northern Bothnian Sea and the Quark
+B3_B2_B1|Sea of Bothnia, the Quark and Bay of Bothnia
+B3_B2|Sea of Bothnia and the Quark
+B4E_B3|Sea of Archipelago and Sea of Bothnia
+B4_B3|Sea of Archipelago and Sea of Åland and Sea of Bothnia
+B4_B3S|Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
+B7E_B4E_B3S|Northeastern Baltic Proper, Sea of Archipelago and Southern Bothnian Sea
+B7W_B4W_B3S|Western Gulf of Finland, Sea of Åland and Southern Bothnian Sea
+B7E_B4E|Northeastern Baltic Proper and Sea of Archipelago
+B7W_B4W|Western Gulf of Finland and Sea of Åland
+B7W_B4|Western Gulf of Finland, Sea of Archipelago and Sea of Åland
+B7_B4_B3S|Northern Baltic Proper, Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
+B7_B4|Northern Baltic Proper, Sea of Archipelago and Sea of Åland
+B7_B4_B3|Northern Baltic Proper, Sea of Archipelago and Sea of Åland and Sea of Bothnia
+B5W_B7E_B4E|Western Gulf of Finland, Northeastern Baltic Proper and Sea of Archipelago
+B5W_B7E|Western Gulf of Finland and Northeastern Baltic Proper
+B5W_B7|Western Gulf of Finland and Northern Baltic Proper
+B5_B7|Gulf of Finland and Northern Baltic Proper

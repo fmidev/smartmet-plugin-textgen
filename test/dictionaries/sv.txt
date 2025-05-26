@@ -45,8 +45,6 @@ monin paikoin|på flera ställen
 paikoin|lokalt
 odotettavissa|utsikter
 keskilampotila|medeltemperaturen
-keskimaarainen ylin lampotila|maximitemperaturen i medeltal
-keskimaarainen alin lampotila|minimitemperaturen i medeltal
 sadesumma|nederbördssumman
 astetta|grader
 millimetria|millimeter
@@ -89,8 +87,8 @@ paivan ylin lampotila|dagens högsta temperatur
 yon alin lampotila|nattens lägsta temperatur
 noin|cirka
 seuraavana paivana|följande dag
-paivien ylin lampotila|dagens maximitemperatur
-oiden alin lampotila|nattens minimitemperatur
+paivien ylin lampotila|dagens högsta temperatur
+keskimaarainen alin lampotila|lägsta temperaturen i medeltal
 lopuksi|i slutet
 paivalampotila|dagstemperaturen
 yolampotila|nattemperaturen
@@ -145,7 +143,6 @@ suunnaltaan vaihtelevaa|varierande
 6-tuulta|sydvästlig vind
 7-tuulta|västlig vind
 8-tuulta|nordvästlig vind
-yolla|på natten
 tuuli|vinden
 1-puoleista tuulta|vind omkring nord
 2-puoleista tuulta|vind omkring nordost
@@ -190,7 +187,7 @@ sakeita lumikuuroja|täta snöbyar
 4-tuuleksi|sydostlig vind
 5-tuuleksi|sydlig vind
 heikkenevaa|som avtar
-voimistuvaa|som tilltar
+yolla|i natt
 6-tuuleksi|sydvästlig vind
 7-tuuleksi|västlig vind
 8-tuuleksi|nordvästlig vind
@@ -241,7 +238,6 @@ pohjois-lappi:lle|för Norra Lappland
 pohjois-pohjanmaa:lle|för Norra Österbotten
 pohjois-savo:lle|för Norra Savolax
 satakunta:lle|för Satakunta
-uusimaa:lle|för Nyland
 varsinais-suomi:lle|för Egentliga Finland
 osterbotten:lle|för Österbotten
 huomattavasti pienempi|betydligt mindre
@@ -264,16 +260,12 @@ illalla|på kvällen
 aamupaivalla|på förmiddagen
 iltapaivalla|på eftermiddagen
 keskipaivalla|på dagen
-keskiyolla|på midnatten
-yosta alkaen|från och med natten
-aamuyosta alkaen|från och med efternatten
 aamusta alkaen|från och med morgonen
 aamupaivasta alkaen|från och med förmiddagen
 keskipaivasta alkaen|från och med dagen
 iltapaivasta alkaen|från och med eftermiddagen
 illasta alkaen|från och med kvällen
 iltayosta alkaen|från och med förnatten
-keskiyosta alkaen|från och med midnatten
 prosenttia|procent
 ajoittain|tidvis
 2-na kello|tisdag klockan
@@ -284,7 +276,12 @@ lampotila|temperaturen
 6-na kello|lördag klockan
 7-na kello|söndag klockan
 o'clock|
-aamuyolla|senare på natten
+keskiyolla|vid midnatt
+uusimaa:lle|för Nyland
+aamuyolla|på efternatten
+keskiyosta alkaen|från och med midnatt
+yosta alkaen|från och med i natt
+aamuyosta alkaen|från och med efternatten
 ei suuria muutoksia saassa|inga stora förändringar in vädret
 saa selkenee|vädret klarnar upp
 saa muuttuu epavakaisemmaksi|vädret blir ostadigare
@@ -949,6 +946,7 @@ kruunupyy:lle|för Kronoby
 4-aamupaivalla|på torsdag förmiddag
 5-aamupaivalla|på fredag förmiddag
 6-aamupaivalla|på lördag förmiddag
+B1|Bottenviken
 7-aamupaivalla|på söndag förmiddag
 1-iltapaivalla|på måndag eftermiddag
 2-iltapaivalla|på tisdag eftermiddag
@@ -1141,11 +1139,6 @@ empty_string|
 [rannikolla] [paikoin] hallaa|[1] [2] frost
 1-aamuyolla|på måndag efternatt
 [huomenna] [sisamaassa] [paikoin] sumua|[1] [2] [3] dimma
-aamuyolla ja aamulla|på efternatten och morgon
-keskiyolla ja aamuyolla|på midnatten och efternatten
-iltayolla ja keskiyolla|på förnatten och midnatten
-illalla ja iltayolla|på kvällen och förnatten
-aamulla ja aamupaivalla|på morgonen och förmiddag
 iltapaivalla ja illalla|på eftermiddagen och kvällen
 7-aamuyolla|på söndag efternatt
 6-aamuyolla|på lördag efternatt
@@ -1204,6 +1197,11 @@ rannikolla lahella [N] [astetta]|vid kusten omkring [1] [2]
 [huomenna] [sisamaassa] [lampotila] on noin [N] [astetta]|[1] är [3] cirka [4] [5] [2]
 [huomenna] [sisamaassa] [lampotila] on [M...N] [astetta]|[1] är [3] [2] [4] [5]
 [huomenna] [sisamaassa] [paikoin] sumua, joka voi olla sakeaa|[1] [2] [3] dimma som kan vara tät
+aamulla ja aamupaivalla|på morgonen och på förmiddagen
+iltayolla ja keskiyolla|sent på kvällen och vid midnatt
+keskiyolla ja aamuyolla|vid midnatt och på efternatten
+aamuyolla ja aamulla|på efternatten och på morgonen
+illalla ja iltayolla|i kväll och under förnatten
 [yolla] on [hieman kylmempaa]|[1] är det [2]
 [huomenna] [sisamaassa] [lampotila] on [suunnilleen sama]|[1] är [3] [2] [4]
 [huomenna] [sisamaassa] pakkasta on [M...N] [astetta]|[1] är kölden [2] [3] [4]
@@ -1403,6 +1401,15 @@ asteen(tienoilla)|grader
 [paikoin] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] som kan vara underkylda
 [sisamaassa] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] som kan vara underkylda
 [huomenna] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] som kan vara underkylda
+B2|Kvarken
+B3|Bottenhavet
+B4|Skärgårdshavet och Ålands hav
+B5|Finska viken
+B6|Rigabukten
+B7|Norra Östersjön
+B8|Mellersta Östersjön
+B9|Sydöstra Östersjön
+B10|Södra Östersjön
 [iltapaivalla] saa poutaantuu vesisateen jalkeen ja on verrattain pilvinen|[1] upphör regnet men fortfarande riklig molnighet
 [iltapaivalla] saa poutaantuu lumisateen jalkeen ja on verrattain pilvinen|[1] upphör snöfallet men fortfarande riklig molnighet
 [iltapaivalla] saa poutaantuu rantasateen jalkeen ja on verrattain pilvinen|[1] upphör snöfallet men fortfarande riklig molnighet
@@ -1540,6 +1547,7 @@ saa on [selkea] ja poutainen|vädret är [1] med uppehåll
 [1-na] [alueella] saa muuttuu helteiseksi|[1] blir vädret mycket varmt [2]
 [alueella] helteinen saa jatkuu|[1] fortsätter det mycket varma vädret
 [1-na] helteinen saa jatkuu|[1] fortsätter det mycket varma vädret
+uusimaa|Nyland
 [1-na] [alueella] helteinen saa jatkuu|[1] fortsätter det mycket varma vädret [2]
 [alueella] saa viilenee huomattavasti|[1] blir vädret mycket svalare
 [1-na] saa viilenee huomattavasti|[1] blir vädret mycket svalare
@@ -1771,16 +1779,10 @@ astetta(noin n)|grader
 6-asti|till lördag
 5-asti|till fredag
 7-asti|till söndag
-yohon asti|till natten
-aamuyohon asti|till efternatten
-aamuun asti|till morgonen
 aamupaivaan asti|till förmiddagen
 keskipaivaan asti|till middagen
 iltapaivaan asti|till eftermiddagen
 iltaan asti|till kvällen
-iltayohon asti|till förnatten
-keskiyohon asti|till midnatten
-huomiseen asti|till morgonen
 1-aamupaivaan asti|till måndag förmiddag
 2-aamupaivaan asti|till tisdag förmiddag
 3-aamupaivaan asti|till onsdag förmiddag
@@ -1808,9 +1810,6 @@ huomiseen asti|till morgonen
 5-vastaiseen yohon asti|till natten mot fredag
 6-vastaiseen yohon asti|till natten mot lördag
 7-vastaiseen yohon asti|till natten mot söndag
-huomisaamuun asti|till i morgon bitti
-huomisaamupaivaan asti|till i morgon förmiddag
-huomisiltaan asti|till i morgon kväll
 7-iltapaivaan asti|till söndag eftermiddag
 6-iltapaivaan asti|till lördag eftermiddag
 5-iltapaivaan asti|till fredag eftermiddag
@@ -1848,6 +1847,14 @@ huomisiltaan asti|till i morgon kväll
 [iltapaivalla] tuuli alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] börjar vinden avta och blir tillfälligt av varierande riktning
 [iltapaivalla] [pohjoistuuli] alkaa heiketa ja muuttuu vaihtelevaksi|[1] [2] börjar avta och är varierande
 tiepiiri-u5:lle|för Östra Nylands inre delar
+aamuun asti|fram till morgonen
+huomisaamuun asti|fram till i morgon bitti
+huomiseen asti|till i morgon
+huomisiltaan asti|fram till i morgon kväll
+iltayohon asti|fram till förnatten
+keskiyohon asti|fram till midnatt
+yohon asti|fram till natten
+aamuyohon asti|fram till efternatten
 [iltapaivalla] [pohjoistuuli] alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] [2] börjar avta och blir tillfälligt av varierande riktning
 inari_utsjoki:lle|för Enare och Utsjoki
 ita_finnmark:lle|för östra delen av Finnmark
@@ -2007,10 +2014,8 @@ rannikolla vahan nollan alapuolella|vid kusten strax under noll
 muuten hyva nakyvyys|annars god sikt
 hyva nakyvyys|god sikt
 enimmakseen hyva nakyvyys|mest god sikt
-yolla ja aamulla|på natten och på morgonen
 aamulla ja paivalla|på morgonen och på dagen
 paivalla ja illalla|på dagen och på kvällen
-illalla ja yolla|på kvällen och på natten
 1-keskipaivalla|på mådag middag
 2-keskipaivalla|på tisdag middag
 3-keskipaivalla|på onsdag middag
@@ -2061,13 +2066,15 @@ pohjois-ruotsi:lle|för Norra Sverige
 [iltapaivalla] lumisade voi olla sakeaa|[1] kan snöfallet vara ymnigt
 1-iltaan asti|till måndag kväll
 1-keskiyosta alkaen|från och med måndag midnatt
-huomiseen iltapaivaan asti|till imorgon eftermiddag
 huomisen keskipaivaan asti|till imorgon middagen
 1-keskipaivaan asti|till måndag middagen
 2-keskipaivaan asti|till tisdag middagen
 3-keskipaivaan asti|till onsdag middagen
 4-keskipaivaan asti|till torsdag middagen
 5-keskipaivaan asti|till fredag middagen
+huomiseen iltapaivaan asti|fram till i morgon eftermiddag
+illalla ja yolla|i kväll och i natt
+yolla ja aamulla|i natt och i morgon
 6-keskipaivaan asti|till lördag middagen
 7-keskipaivaan asti|till söndag middagen
 [huomenna] [sisamaassa] [paikoin] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4] [5] som kan vara underkylt
@@ -2085,3 +2092,44 @@ huomisen keskipaivaan asti|till imorgon middagen
 [iltap] [nop] [heikken] [tuulta] [m...n] [m sek], joka kaantyy [illalla] [pohj]|[1] [2] [3] [4] [5] [6] som vrider [8] [7]
 iltayolla|senare under kvällen
 [iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [pohjoiseen]|[1] [4] [3] [2] och vrider [5]
+B11|Arkona havet
+B12|Öresund och Bälten
+B13|Kattegat
+B1N|Norra Bottenviken
+B1S|Södra Bottenviken
+B3N|Norra Bottenhavet
+B3S|Södra Bottenhavet
+B4E|Skärgårdshavet
+B4W|Ålands hav
+B5E|Östra Finska viken
+B5W|Västra Finska viken
+B7E|Östra delen av Norra Östersjön
+B7W|Västra delen av Norra Östersjön
+B8E|Mellersta Östersjön
+B8W|Gotlands farvatten
+B10N|Ölands farvatten
+B10S|Bornholmshavet
+B2_B1|Kvarken och Bottenviken
+B2_B1S|Kvarken och Södra Bottenviken
+B3N_B2|Norra Bottenhavet och Kvarken
+B3_B2|Bottenhavet och Kvarken
+B3_B2_B1|Bottenhavet, Kvarken och Bottenviken
+B4_B3|Skärgårdshavet och Ålands hav och Bottenhavet
+B4_B3S|Skärgårdshavet och Ålands hav och Södra Bottenhavet
+B4E_B3|Skärgårdshavet och Bottenhavet
+B7E_B4E_B3S|Östra delen av Norra Östersjön, Skärgårdshavet och Södra Bottenhavet
+B7W_B4W|Västra delen av Norra Östersjön och Ålands hav
+B7W_B4W_B3S|Västra delen av Norra Östersjön, Ålands hav och Södra Bottenhavet
+B7E_B4E|Östra delen av Norra Östersjön och Skärgårdshavet
+B7W_B4|Västra delen av Norra Östersjön, Skärgårdshavet och Ålands hav
+B7_B4_B3S|Norra Östersjön, Skärgårdshavet och Ålands hav och Södra Bottenhavet
+B7_B4_B3|Norra Östersjön, Skärgårdshavet och Ålands hav och Bottenhavet
+B7_B4|Norra Östersjön och Skärgårdshavet och Ålands hav
+B5W_B7E_B4E|Västra Finska viken, Östra delen av Norra Östersjön och Skärgårdshavet
+B5W_B7E|Västra Finska viken och Östra delen av Norra Östersjön
+B5W_B7|Västra Finska viken och Norra Östersjön
+B5_B7|Finska Viken och Norra Östersjön
+huomisaamupaivaan asti|fram till i morgon förmiddag
+oiden alin lampotila|natternas lägsta temperatur
+keskimaarainen ylin lampotila|högsta temperaturen i medeltal
+voimistuvaa|som tilltar och blir
