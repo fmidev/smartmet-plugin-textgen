@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 25.3.7
+Version: 25.9.1
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon Sep  1 2025 Andris Pavēnis <andris.pavenis@fmi.fi> 25.9.1-1.fmi
+- Update according to smartmet-library-spine ABI changes
+
 * Fri Mar  7 2025 Andris Pavēnis <andris.pavenis@fmi.fi> 25.3.7-1.fmi
 - Use Fmi::Exception instead of TextGen::TextGenError
 
