@@ -7,7 +7,6 @@
 #include "Config.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/replace.hpp>
-#include <filesystem>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 #include <calculator/TextGenPosixTime.h>
@@ -20,20 +19,10 @@
 #include <spine/ConfigTools.h>
 #include <spine/Convenience.h>
 #include <spine/Exceptions.h>
+#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-
-static const char* default_url = "/textgen";
-static const char* default_language = "fi";
-static const char* default_supported_languages = "fi,sv,en";
-static const char* default_locale = "fi_FI.UTF-8";
-static const char* default_formatter = "html";
-static const char* default_timeformat = "iso";
-static const char* default_dictionary = "multimysql";
-static const char* default_filedictionaries = "";
-static const char* default_timezone = "Europe/Helsinki";
-static const char* default_textgen_config_name = "default";
 
 namespace SmartMet
 {
@@ -46,6 +35,18 @@ namespace Textgen
 
 namespace
 {
+
+const char* default_url = "/textgen";
+const char* default_language = "fi";
+const char* default_supported_languages = "fi,sv,en";
+const char* default_locale = "fi_FI.UTF-8";
+const char* default_formatter = "html";
+const char* default_timeformat = "iso";
+const char* default_dictionary = "multimysql";
+const char* default_filedictionaries = "";
+const char* default_timezone = "Europe/Helsinki";
+const char* default_textgen_config_name = "default";
+
 TextGen::WeatherArea make_area(const std::string& postGISName,
                                const std::unique_ptr<Engine::Gis::GeometryStorage>& geometryStorage)
 {
