@@ -31,7 +31,6 @@ namespace Plugin
 namespace Textgen
 {
 #define DEFAULT_FORECAST_TEXT_CACHE_SIZE 20
-#define DEFAULT_FROSTSEASON 0
 
 namespace
 {
@@ -46,6 +45,22 @@ const char* default_dictionary = "multimysql";
 const char* default_filedictionaries = "";
 const char* default_timezone = "Europe/Helsinki";
 const char* default_textgen_config_name = "default";
+
+void error(Fmi::DirectoryMonitor::Watcher /*id*/,
+           const std::filesystem::path& dir,
+           const boost::regex& /*pattern*/,
+           const std::string& message)
+{
+  try
+  {
+    std::cout << ANSI_FG_RED << "Error in directory " << dir << " : " << message << ANSI_FG_DEFAULT
+              << '\n';
+  }
+  catch (...)
+  {
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
+  }
+}
 
 TextGen::WeatherArea make_area(const std::string& postGISName,
                                const std::unique_ptr<Engine::Gis::GeometryStorage>& geometryStorage)
@@ -67,6 +82,23 @@ TextGen::WeatherArea make_area(const std::string& postGISName,
     std::pair<float, float> std_point(geometryStorage->getPoint(postGISName));
     NFmiPoint point(std_point.first, std_point.second);
     return {point, areaName};
+  }
+  catch (...)
+  {
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
+std::vector<std::string> getProductNames(const std::unique_ptr<ProductConfigMap>& pgs)
+{
+  try
+  {
+    std::vector<std::string> retval;
+
+    for (const auto& pci : *pgs)
+      retval.push_back(pci.first);
+
+    return retval;
   }
   catch (...)
   {
@@ -411,7 +443,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
       itsMonitor.watch(dir,
                        pattern,
                        boost::bind(&Config::update, this, _1, _2, _3, _4),
-                       boost::bind(&Config::error, this, _1, _2, _3, _4),
+                       boost::bind(error, _1, _2, _3, _4),
                        5,
                        Fmi::DirectoryMonitor::CREATE | Fmi::DirectoryMonitor::DELETE |
                            Fmi::DirectoryMonitor::MODIFY | Fmi::DirectoryMonitor::ERROR);
@@ -653,22 +685,6 @@ void Config::update(Fmi::DirectoryMonitor::Watcher /*id*/,
   itsProductMasks = std::move(productMasks);
 }
 
-void Config::error(Fmi::DirectoryMonitor::Watcher /*id*/,
-                   const std::filesystem::path& dir,
-                   const boost::regex& /*pattern*/,
-                   const std::string& message)
-{
-  try
-  {
-    std::cout << ANSI_FG_RED << "Error in directory " << dir << " : " << message << ANSI_FG_DEFAULT
-              << '\n';
-  }
-  catch (...)
-  {
-    throw Fmi::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
 const ProductConfig& Config::getProductConfig(const std::string& config_name) const
 {
   try
@@ -677,25 +693,6 @@ const ProductConfig& Config::getProductConfig(const std::string& config_name) co
       throw Fmi::Exception(BCP, config_name + " configuration not found!");
 
     return *(itsProductConfigs->at(config_name));
-  }
-  catch (...)
-  {
-    throw Fmi::Exception::Trace(BCP, "Operation failed!");
-  }
-}
-
-std::vector<std::string> Config::getProductNames(const std::unique_ptr<ProductConfigMap>& pgs) const
-{
-  try
-  {
-    std::vector<std::string> retval;
-
-    for (const auto& pci : *pgs)
-    {
-      retval.push_back(pci.first);
-    }
-
-    return retval;
   }
   catch (...)
   {
@@ -833,7 +830,6 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
 ProductConfig::ProductConfig(const std::string& configfile,
                              const std::shared_ptr<ProductConfig>& pDefaultConf,
                              const std::string& /*dictionary*/)
-    : itsFrostSeason(DEFAULT_FROSTSEASON)
 {
   std::string exceptionDetails;
   try

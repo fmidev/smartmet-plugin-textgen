@@ -189,10 +189,6 @@ class Config : private boost::noncopyable
               const std::filesystem::path& dir,
               const boost::regex& pattern,
               const Fmi::DirectoryMonitor::Status& status);
-  void error(Fmi::DirectoryMonitor::Watcher id,
-             const std::filesystem::path& dir,
-             const boost::regex& pattern,
-             const std::string& message);
   ConfigItemVector readMainConfig() const;
   std::unique_ptr<ProductConfigMap> updateProductConfigs(const ConfigItemVector& configItems,
                                                          const std::set<std::string>& deletedFiles,
@@ -205,7 +201,6 @@ class Config : private boost::noncopyable
   std::unique_ptr<ProductWeatherAreaMap> readMasks(
       const std::unique_ptr<Engine::Gis::GeometryStorage>& gs,
       const std::unique_ptr<ProductConfigMap>& pgs);
-  std::vector<std::string> getProductNames(const std::unique_ptr<ProductConfigMap>& pgs) const;
 
   bool itsShowFileMessages = false;
   std::string itsMainConfigFile;
