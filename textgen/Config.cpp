@@ -568,8 +568,8 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
       }
       catch (...)
       {
-        throw Fmi::Exception(BCP, "Error reading product configuration file '" + config_file + "'");
         erroneousFiles.insert(config_file);
+        throw Fmi::Exception(BCP, "Error reading product configuration file '" + config_file + "'");
       }
     }
 
