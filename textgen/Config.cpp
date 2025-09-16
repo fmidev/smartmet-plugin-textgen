@@ -167,7 +167,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
             throw Fmi::Exception(BCP, "TextGen: Invalid setting type for '" + key + "'");
         }
 
-        config_item_container.push_back(std::make_pair(key, ss.str()));
+        config_item_container.emplace_back(key, ss.str());
       }
     }
   }
@@ -216,7 +216,7 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
             if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
               reProcess = true;
 
-            included_config_items.push_back(std::make_pair(parsed_config_key, config_value));
+            included_config_items.emplace_back(parsed_config_key, config_value);
           }
         }
       }
@@ -270,7 +270,7 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
                 std::string included_value = itsConfig.lookup(value.substr(4));
                 value = included_value;
               }
-              config_item_container.push_back(std::make_pair(name, value));
+              config_item_container.emplace_back(name, value);
             }
           }
         }
@@ -281,7 +281,7 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
         {
           std::string name = settings.getName();
           std::string value = settings;
-          config_item_container.push_back(std::make_pair(name, value));
+          config_item_container.emplace_back(name, value);
         }
       }
     }
