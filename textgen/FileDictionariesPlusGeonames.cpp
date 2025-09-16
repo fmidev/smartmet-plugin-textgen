@@ -46,8 +46,8 @@
 #include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
 #include <macgyver/Exception.h>
-#include <mysql++/mystring.h>
 #include <mysql++/mysql++.h>
+#include <mysql++/mystring.h>
 #include <spine/Reactor.h>
 #include <cassert>
 #include <map>
@@ -72,7 +72,7 @@ namespace Textgen
 class FileDictionariesPlusGeonames::Impl
 {
  public:
-  Impl()  {}
+  Impl() = default;
   bool itsInitialized{false};
   SmartMet::Engine::Geonames::Engine* itsGeoEngine{nullptr};
   std::string itsEmptyString;
@@ -87,10 +87,7 @@ class FileDictionariesPlusGeonames::Impl
  */
 // ----------------------------------------------------------------------
 
-FileDictionariesPlusGeonames::FileDictionariesPlusGeonames()
-    :  itsImpl(new Impl())
-{
-}
+FileDictionariesPlusGeonames::FileDictionariesPlusGeonames() : itsImpl(new Impl()) {}
 
 void FileDictionariesPlusGeonames::geoinit(void* theGeoengine)
 {
