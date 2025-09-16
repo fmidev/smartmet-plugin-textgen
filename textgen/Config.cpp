@@ -106,6 +106,62 @@ std::vector<std::string> getProductNames(const std::unique_ptr<ProductConfigMap>
   }
 }
 
+std::unique_ptr<ProductWeatherAreaMap> readMasks(
+    const std::unique_ptr<Engine::Gis::GeometryStorage>& gs,
+    const std::unique_ptr<ProductConfigMap>& pgs)
+{
+  try
+  {
+    auto newProductMasks = std::unique_ptr<ProductWeatherAreaMap>(new ProductWeatherAreaMap());
+
+    // PostGIS
+    std::vector<std::string> product_names(getProductNames(pgs));
+    for (const auto& product_name : product_names)
+    {
+      if (pgs->find(product_name) == pgs->end())
+        throw Fmi::Exception(BCP, product_name + " configuration not found!");
+
+      const ProductConfig& config = *(pgs->at(product_name));
+
+      // masks
+      WeatherAreas prod_mask;
+      for (unsigned int i = 0; i < config.numberOfMasks(); i++)
+      {
+        std::string name(config.getMask(i).first);
+        std::string value(config.getMask(i).second);
+
+        Fmi::AsyncTask::interruption_point();
+
+        // first check if mask can be found in PostGIS database
+        if (gs->geoObjectExists(value))
+        {
+          prod_mask.insert(make_pair(name, TextGen::WeatherArea(make_area(value, gs))));
+        }
+        else
+        {
+          std::string filename(value);
+          if (filename.find(':') != std::string::npos)
+            filename = filename.substr(0, filename.find(':'));
+          // mask is probably a svg-file
+          if (NFmiFileSystem::FileExists(filename))
+          {
+            prod_mask.insert(make_pair(name, TextGen::WeatherArea(value, name)));
+          }
+        }
+      }
+      newProductMasks->insert(make_pair(product_name, prod_mask));
+    }
+
+    Fmi::AsyncTask::interruption_point();
+
+    return newProductMasks;
+  }
+  catch (...)
+  {
+    throw Fmi::Exception::Trace(BCP, "Operation failed!");
+  }
+}
+
 void parseConfigurationItem(const libconfig::Config& itsConfig,
                             const std::string& key,
                             const std::vector<std::string>& allowed_sections,
@@ -717,62 +773,6 @@ std::unique_ptr<Engine::Gis::GeometryStorage> Config::loadGeometries(
   Fmi::AsyncTask::interruption_point();
 
   return newGeometryStorage;
-}
-
-std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
-    const std::unique_ptr<Engine::Gis::GeometryStorage>& gs,
-    const std::unique_ptr<ProductConfigMap>& pgs)
-{
-  try
-  {
-    auto newProductMasks = std::unique_ptr<ProductWeatherAreaMap>(new ProductWeatherAreaMap());
-
-    // PostGIS
-    std::vector<std::string> product_names(getProductNames(pgs));
-    for (const auto& product_name : product_names)
-    {
-      if (pgs->find(product_name) == pgs->end())
-        throw Fmi::Exception(BCP, product_name + " configuration not found!");
-
-      const ProductConfig& config = *(pgs->at(product_name));
-
-      // masks
-      WeatherAreas prod_mask;
-      for (unsigned int i = 0; i < config.numberOfMasks(); i++)
-      {
-        std::string name(config.getMask(i).first);
-        std::string value(config.getMask(i).second);
-
-        Fmi::AsyncTask::interruption_point();
-
-        // first check if mask can be found in PostGIS database
-        if (gs->geoObjectExists(value))
-        {
-          prod_mask.insert(make_pair(name, TextGen::WeatherArea(make_area(value, gs))));
-        }
-        else
-        {
-          std::string filename(value);
-          if (filename.find(':') != std::string::npos)
-            filename = filename.substr(0, filename.find(':'));
-          // mask is probably a svg-file
-          if (NFmiFileSystem::FileExists(filename))
-          {
-            prod_mask.insert(make_pair(name, TextGen::WeatherArea(value, name)));
-          }
-        }
-      }
-      newProductMasks->insert(make_pair(product_name, prod_mask));
-    }
-
-    Fmi::AsyncTask::interruption_point();
-
-    return newProductMasks;
-  }
-  catch (...)
-  {
-    throw Fmi::Exception::Trace(BCP, "Operation failed!");
-  }
 }
 
 bool Config::geoObjectExists(const std::string& postGISName, const std::string& areasource) const

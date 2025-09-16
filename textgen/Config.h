@@ -198,9 +198,6 @@ class Config : private boost::noncopyable
   void setDefaultConfigValues(ProductConfigMap& productConfigs);
   std::unique_ptr<Engine::Gis::GeometryStorage> loadGeometries(
       const std::unique_ptr<ProductConfigMap>& pgs);
-  std::unique_ptr<ProductWeatherAreaMap> readMasks(
-      const std::unique_ptr<Engine::Gis::GeometryStorage>& gs,
-      const std::unique_ptr<ProductConfigMap>& pgs);
 
   bool itsShowFileMessages = false;
   std::string itsMainConfigFile;
