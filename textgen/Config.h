@@ -7,7 +7,6 @@
 #ifndef TEXTGEN_CONFIG_H
 #define TEXTGEN_CONFIG_H
 
-#include <memory>
 #include <calculator/WeatherArea.h>
 #include <engines/gis/Engine.h>
 #include <engines/gis/GeometryStorage.h>
@@ -16,6 +15,7 @@
 #include <spine/Thread.h>
 #include <libconfig.h++>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -124,8 +124,8 @@ class ProductConfig
 
   std::string itsForestFireWarningDirectory;
   ParameterMappings itsParameterMappings;
-  bool itsFrostSeason;
-  size_t itsLastModifiedTime{0};  // epoch seconds
+  bool itsFrostSeason = false;
+  size_t itsLastModifiedTime = 0;  // epoch seconds
 
   std::shared_ptr<ProductConfig> pDefaultConfig;
   const std::map<std::string, Engine::Gis::postgis_identifier>& getPostGISIdentifiersPrivate()
@@ -179,7 +179,7 @@ class Config : private boost::noncopyable
   std::unique_ptr<ProductWeatherAreaMap> itsProductMasks;
 
   std::string itsDefaultUrl;
-  int itsForecastTextCacheSize;
+  int itsForecastTextCacheSize = 0;
 
   Fmi::DirectoryMonitor itsMonitor;
   boost::thread itsMonitorThread;
@@ -207,7 +207,7 @@ class Config : private boost::noncopyable
       const std::unique_ptr<ProductConfigMap>& pgs);
   std::vector<std::string> getProductNames(const std::unique_ptr<ProductConfigMap>& pgs) const;
 
-  bool itsShowFileMessages{false};
+  bool itsShowFileMessages = false;
   std::string itsMainConfigFile;
   std::string itsDictionary;
   std::set<std::string> itsSupportedLanguages;

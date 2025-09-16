@@ -245,8 +245,8 @@ bool parse_location_parameters(
                   TextGen::WeatherArea(NFmiPoint(lon, lat),
                                        wktName,
                                        (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0)));
+              break;
             }
-            break;
             case Spine::Location::LocationType::Area:
             case Spine::Location::LocationType::Path:
             {
@@ -256,8 +256,10 @@ bool parse_location_parameters(
               break;
             }
             default:
+            {
               std::cout << "WKT type not supported: " << wktType << std::endl;
               return false;
+            }
           }
         }
         case Spine::Location::LocationType::Path:
