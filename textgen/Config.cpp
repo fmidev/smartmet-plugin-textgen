@@ -165,7 +165,7 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
           case libconfig::Setting::TypeArray:
           case libconfig::Setting::TypeList:
             throw Fmi::Exception(BCP, "TextGen: Invalid setting type for '" + key + "'");
-        };
+        }
 
         config_item_container.push_back(std::make_pair(key, ss.str()));
       }
@@ -636,9 +636,8 @@ void Config::update(Fmi::DirectoryMonitor::Watcher /*id*/,
   catch (const Fmi::Exception& e)
   {
     std::string details = e.getDetailByIndex(0);
-    std::cout << ANSI_FG_RED
-              << (std::string(e.getDetailByIndex(0)) + " Textgen plugin is now inactive!")
-              << ANSI_FG_DEFAULT << std::endl;
+    std::cout << ANSI_FG_RED << details << " Textgen plugin is now inactive!" << ANSI_FG_DEFAULT
+              << std::endl;
     itsProductConfigs->clear();
     return;
   }
