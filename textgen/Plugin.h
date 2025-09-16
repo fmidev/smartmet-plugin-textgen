@@ -31,6 +31,7 @@ class PluginImpl;
 class Plugin : public SmartMetPlugin
 {
  public:
+  Plugin() = delete;
   Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
   ~Plugin() override = default;
   Plugin& operator=(const Plugin& other) = delete;
@@ -47,8 +48,6 @@ class Plugin : public SmartMetPlugin
                       SmartMet::Spine::HTTP::Response& theResponse) override;
 
  private:
-  Plugin() = delete;
-
   std::string query(SmartMet::Spine::Reactor& theReactor,
                     const SmartMet::Spine::HTTP::Request& theRequest,
                     SmartMet::Spine::HTTP::Response& theResponse);
