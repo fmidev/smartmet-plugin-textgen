@@ -406,7 +406,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
               itsDictionary);
 
     boost::regex pattern("^[\\w,\\s-]+\\.[A-Za-z]+$");
-    for (auto dir : getDirectoriesToMonitor(configItems))
+    for (const auto& dir : getDirectoriesToMonitor(configItems))
     {
       itsMonitor.watch(dir,
                        pattern,
@@ -438,7 +438,7 @@ std::set<std::string> Config::getDirectoriesToMonitor(const ConfigItemVector& co
 
   std::filesystem::path mainPath = itsMainConfigFile;
   std::string mainPathString = mainPath.parent_path().string() + "/";
-  for (auto item : configItems)
+  for (const auto& item : configItems)
   {
     std::filesystem::path p = item.second;
     std::string path = (p.is_relative() ? mainPathString : "") + p.parent_path().string();
@@ -751,8 +751,7 @@ std::unique_ptr<ProductWeatherAreaMap> Config::readMasks(
         // first check if mask can be found in PostGIS database
         if (gs->geoObjectExists(value))
         {
-          std::string area_name(value);
-          prod_mask.insert(make_pair(name, TextGen::WeatherArea(make_area(area_name, gs))));
+          prod_mask.insert(make_pair(name, TextGen::WeatherArea(make_area(value, gs))));
         }
         else
         {
