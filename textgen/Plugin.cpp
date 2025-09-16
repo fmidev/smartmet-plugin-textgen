@@ -257,10 +257,11 @@ bool parse_location_parameters(
             }
             default:
             {
-              std::cout << "WKT type not supported: " << wktType << std::endl;
+              std::cout << "WKT type not supported: " << wktType << '\n';
               return false;
             }
           }
+          break;
         }
         case Spine::Location::LocationType::Path:
         {
@@ -290,7 +291,7 @@ std::string get_setting_string(const std::string& key,
       if (p.second != default_value)
       {
 #ifdef MYDEBUG
-        std::cout << key << " -> replacing " << default_value << " with " << p.second << std::endl;
+        std::cout << key << " -> replacing " << default_value << " with " << p.second << '\n';
 #endif
         if (modified_params.empty())
           modified_params += ";";
@@ -310,7 +311,7 @@ void set_textgen_settings(const ProductConfig& config,
   try
   {
 #ifdef MYDEBUG
-    std::cout << "*** Test generator settings ***" << std::endl;
+    std::cout << "*** Test generator settings ***\n";
 #endif
     // frostseason-parameter is used by old stories
     Settings::set("textgen::frostseason", (config.isFrostSeason() ? "true" : "false"));
@@ -331,8 +332,8 @@ void set_textgen_settings(const ProductConfig& config,
       Settings::set("textgen::" + forecast_item.first, forecast_item.second);
 #ifdef MYDEBUG
       if (i == 0)
-        std::cout << "Querydata: " << std::endl;
-      std::cout << "textgen::" + forecast_item.first << "=" << forecast_item.second << std::endl;
+        std::cout << "Querydata:\n";
+      std::cout << "textgen::" + forecast_item.first << "=" << forecast_item.second << '\n';
 #endif
     }
 
@@ -346,9 +347,9 @@ void set_textgen_settings(const ProductConfig& config,
       Settings::set("textgen::units::" + unit_format_item.first + "::format", setting_string);
 #ifdef MYDEBUG
       if (i == 0)
-        std::cout << std::endl << "Units: " << std::endl;
-      std::cout << "textgen::units::" + unit_format_item.first + "::format" << "="
-                << unit_format_item.second << std::endl;
+        std::cout << "\nUnits:\n" std::cout
+                  << "textgen::units::" + unit_format_item.first + "::format" << "="
+                  << unit_format_item.second << '\n';
 #endif
     }
 
@@ -363,9 +364,9 @@ void set_textgen_settings(const ProductConfig& config,
       Settings::set(output_document_config_item.first, setting_string);
 #ifdef MYDEBUG
       if (i == 0)
-        std::cout << std::endl << "Output document: " << std::endl;
+        std::cout << "\nOutput document:\n";
       std::cout << output_document_config_item.first << "=" << output_document_config_item.second
-                << std::endl;
+                << '\n';
 #endif
     }
 
@@ -376,8 +377,8 @@ void set_textgen_settings(const ProductConfig& config,
       Settings::set(area_config_item.first, area_config_item.second);
 #ifdef MYDEBUG
       if (i == 0)
-        std::cout << std::endl << "Areas: " << std::endl;
-      std::cout << area_config_item.first << "=" << area_config_item.second << std::endl;
+        std::cout << "\nAreas:\n";
+      std::cout << area_config_item.first << "=" << area_config_item.second << '\n';
 #endif
     }
 
@@ -389,8 +390,8 @@ void set_textgen_settings(const ProductConfig& config,
       Settings::set(area_code_config_item.first, area_code_config_item.second);
 #ifdef MYDEBUG
       if (i == 0)
-        std::cout << std::endl << "Area codes: " << std::endl;
-      std::cout << area_code_config_item.first << "=" << area_code_config_item.second << std::endl;
+        std::cout << "\nArea codes:\n";
+      std::cout << area_code_config_item.first << "=" << area_code_config_item.second << '\n';
 #endif
     }
   }
@@ -409,9 +410,9 @@ void handle_exception(const SmartMet::Spine::HTTP::Request& theRequest,
 {
   try
   {
-    std::cerr << Spine::log_time_str() << " error: " << what << std::endl
-              << "Query: " << theRequest.getURI() << std::endl
-              << "ClientIP: " << theRequest.getClientIP() << std::endl;
+    std::cerr << Spine::log_time_str() << " error: " << what << '\n'
+              << "Query: " << theRequest.getURI() << '\n'
+              << "ClientIP: " << theRequest.getClientIP() << '\n';
 
     if (isdebug)
     {
@@ -541,7 +542,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& /*theReactor*/,
       if (!configIsModified && cache_result)
       {
 #ifdef MYDEBUG
-        std::cout << "Fetching forecast from cache " << cache_key << std::endl;
+        std::cout << "Fetching forecast from cache " << cache_key << '\n';
 #endif
         forecast_text_area = cache_result->member;
       }
@@ -553,7 +554,7 @@ std::string Plugin::query(SmartMet::Spine::Reactor& /*theReactor*/,
         formatter->dictionary(itsDictionary);
 
 #ifdef MYDEBUG
-        std::cout << "Generating new forecast" << std::endl;
+        std::cout << "Generating new forecast" << '\n';
 #endif
 
         generator.time(forecasttime);
@@ -635,11 +636,11 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
       if (response.empty())
       {
         std::cerr << "Warning: Empty input for request " << theRequest.getQueryString() << " from "
-                  << theRequest.getClientIP() << std::endl;
+                  << theRequest.getClientIP() << '\n';
       }
 
 #ifdef MYDEBUG
-      std::cout << "Output:" << std::endl << response << std::endl;
+      std::cout << "Output:\n" << response << '\n';
 #endif
     }
     catch (...)
@@ -654,7 +655,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
     }
 
     if (print_log)
-      std::cout << logger.str() << std::endl;
+      std::cout << logger.str() << '\n';
 
     // delete textgen settings of current thread
     Settings::release();
@@ -678,7 +679,7 @@ Plugin::Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig)
   {
     if (theReactor->getRequiredAPIVersion() != SMARTMET_API_VERSION)
     {
-      std::cerr << "*** TextGen plugin and Server SmartMet  API version mismatch ***" << std::endl;
+      std::cerr << "*** TextGen plugin and Server SmartMet  API version mismatch ***\n";
       return;
     }
   }
@@ -746,19 +747,18 @@ void Plugin::init()
       Settings::set("textgen::connect_timeout", Fmi::to_string(dci.connect_timeout));
 
 #ifdef MYDEBUG
-      std::cout << "Database dictionary for " << dictionary << ": " << std::endl
-                << "textgen::host=" << dci.host << std::endl
-                << "textgen::port=" << dci.port << std::endl
-                << "textgen::user=" << dci.username << std::endl
-                << "textgen::passwd=" << dci.password << std::endl
-                << "textgen::database=" << dci.database << std::endl
-                << "textgen::schema=" << dci.schema << std::endl
-                << "textgen::encoding=" << dci.encoding << std::endl
-                << "textgen::connect_timeout=" << dci.connect_timeout << std::endl
-                << "textgen::filedictionaries=" << itsConfig.fileDictionaries() << std::endl
-                << "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false")
-                << std::endl
-                << std::endl;
+      std::cout << "Database dictionary for " << dictionary << ":\n"
+                << "textgen::host=" << dci.host << '\n'
+                << "textgen::port=" << dci.port << '\n'
+                << "textgen::user=" << dci.username << '\n'
+                << "textgen::passwd=" << dci.password << '\n'
+                << "textgen::database=" << dci.database << '\n'
+                << "textgen::schema=" << dci.schema << '\n'
+                << "textgen::encoding=" << dci.encoding << '\n'
+                << "textgen::connect_timeout=" << dci.connect_timeout << '\n'
+                << "textgen::filedictionaries=" << itsConfig.fileDictionaries() << '\n'
+                << "textgen::frostseason=" << (config.isFrostSeason() ? "true" : "false") << '\n'
+                << '\n';
 #endif
     }
 

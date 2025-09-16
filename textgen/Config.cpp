@@ -119,11 +119,11 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
       }
       else if (setting.isArray())
       {
-        // cout << key << " is an array" << endl;
+        // cout << key << " is an array\n";
       }
       else if (setting.isList())
       {
-        // cout << key << " is a list" << endl;
+        // cout << key << " is a list\n";
       }
       else
       {
@@ -562,7 +562,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
         // If non-fatal error occurred, report it and continue processing the next file
         if (e.getDetailCount() > 0)
         {
-          std::cout << ANSI_FG_RED << e.getDetailByIndex(0) << ANSI_FG_DEFAULT << std::endl;
+          std::cout << ANSI_FG_RED << e.getDetailByIndex(0) << ANSI_FG_DEFAULT << '\n';
           erroneousFiles.insert(config_file);
         }
       }
@@ -579,20 +579,19 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
     if (itsShowFileMessages)
     {
       for (const auto& f : deletedFiles)
-        std::cout << ANSI_FG_RED << "File '" << f << "' deleted!" << ANSI_FG_DEFAULT << std::endl;
+        std::cout << ANSI_FG_RED << "File '" << f << "' deleted!" << ANSI_FG_DEFAULT << '\n';
       for (const auto& f : modifiedFiles)
       {
         // Report successful update
         if (erroneousFiles.find(f) == erroneousFiles.end())
-          std::cout << ANSI_FG_GREEN << "File '" << f << "' updated!" << ANSI_FG_DEFAULT
-                    << std::endl;
+          std::cout << ANSI_FG_GREEN << "File '" << f << "' updated!" << ANSI_FG_DEFAULT << '\n';
       }
       for (const auto& f : newFiles)
       {
         // Report successful update
         if (erroneousFiles.find(f) == erroneousFiles.end())
           std::cout << ANSI_FG_GREEN << "New file '" << f << "' created!" << ANSI_FG_DEFAULT
-                    << std::endl;
+                    << '\n';
       }
     }
     itsShowFileMessages = true;
@@ -637,7 +636,7 @@ void Config::update(Fmi::DirectoryMonitor::Watcher /*id*/,
   {
     std::string details = e.getDetailByIndex(0);
     std::cout << ANSI_FG_RED << details << " Textgen plugin is now inactive!" << ANSI_FG_DEFAULT
-              << std::endl;
+              << '\n';
     itsProductConfigs->clear();
     return;
   }
@@ -662,7 +661,7 @@ void Config::error(Fmi::DirectoryMonitor::Watcher /*id*/,
   try
   {
     std::cout << ANSI_FG_RED << "Error in directory " << dir << " : " << message << ANSI_FG_DEFAULT
-              << std::endl;
+              << '\n';
   }
   catch (...)
   {
