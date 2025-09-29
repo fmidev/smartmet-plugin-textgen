@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 25.9.16
+Version: 25.9.29
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -26,24 +26,24 @@ BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 25.3.7
-BuildRequires: smartmet-library-textgen-devel >= 25.3.7
-BuildRequires: smartmet-library-spine-devel >= 25.9.1
-BuildRequires: smartmet-engine-querydata-devel >= 25.2.18
+BuildRequires: smartmet-library-calculator-devel >= 25.3.19
+BuildRequires: smartmet-library-textgen-devel >= 25.5.27
+BuildRequires: smartmet-library-spine-devel >= 25.9.16
+BuildRequires: smartmet-engine-querydata-devel >= 25.9.17
 BuildRequires: smartmet-engine-geonames-devel >= 25.2.18
 BuildRequires: smartmet-engine-gis-devel >= 25.2.18
-BuildRequires: smartmet-library-macgyver-devel >= 25.2.18
-BuildRequires: smartmet-library-locus-devel >= 25.2.18
-Requires: smartmet-library-calculator >= 25.3.7
-Requires: smartmet-library-macgyver >= 25.2.18
-Requires: smartmet-library-locus >= 25.2.18
-Requires: smartmet-library-textgen >= 25.3.7
+BuildRequires: smartmet-library-macgyver-devel >= 25.9.19
+BuildRequires: smartmet-library-locus-devel >= 25.9.29
+Requires: smartmet-library-calculator >= 25.3.19
+Requires: smartmet-library-macgyver >= 25.9.19
+Requires: smartmet-library-locus >= 25.9.29
+Requires: smartmet-library-textgen >= 25.5.27
 Requires: libconfig17
 Requires: smartmet-engine-geonames >= 25.2.18
-Requires: smartmet-engine-querydata >= 25.2.18
+Requires: smartmet-engine-querydata >= 25.9.17
 Requires: smartmet-engine-gis >= 25.2.18
-Requires: smartmet-server >= 25.2.18
-Requires: smartmet-library-spine >= 25.9.1
+Requires: smartmet-server >= 25.9.9
+Requires: smartmet-library-spine >= 25.9.16
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-filesystem
@@ -54,11 +54,11 @@ Requires: %{smartmet_boost}-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-utils-devel >= 25.2.18
+#TestRequires: smartmet-utils-devel >= 25.8.19
 #TestRequires: smartmet-engine-gis >= 25.2.18
 #TestRequires: smartmet-engine-geonames >= 25.2.18
-#TestRequires: smartmet-library-spine-plugin-test >= 25.9.1
-#TestRequires: smartmet-library-newbase-devel >= 25.2.18
+#TestRequires: smartmet-library-spine-plugin-test >= 25.9.16
+#TestRequires: smartmet-library-newbase-devel >= 25.3.20
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -84,6 +84,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon Sep 29 2025 Mika Heiskanen <mika.heiskanen@fmi.fi> - 25.9.29-1.fmi
+- Small speed improvements
+- Fixed compiler warnings
+
 * Tue Sep 16 2025 Mika Heiskanen <mika.heiskanen@fmi.fi> 25.9.16-1.fmi
 - Silenced several compiler warnings
 
