@@ -178,19 +178,18 @@ bool parse_location_parameters(
         case Spine::Location::LocationType::CoordinatePoint:
         {
           if (loc.feature.substr(0, 3) == "ADM" && config.geoObjectExists(loc.name, *areasource))
-            weatherAreaVector.emplace_back(
-                std::make_pair((loc.name + *areasource + "_place1"),
-                               config.makePostGisArea(loc.name, *areasource)));
+            weatherAreaVector.emplace_back(loc.name + *areasource + "_place1",
+                                           config.makePostGisArea(loc.name, *areasource));
           else
           {
             auto geoname = loc.name;
             Engine::Gis::normalize_string(geoname);
-            weatherAreaVector.emplace_back(std::make_pair(
-                (geoname + "_" + Fmi::to_string(loc.longitude) + "_" +
-                 Fmi::to_string(loc.latitude) + "_place2"),
+            weatherAreaVector.emplace_back(
+                geoname + "_" + Fmi::to_string(loc.longitude) + "_" + Fmi::to_string(loc.latitude) +
+                    "_place2",
                 TextGen::WeatherArea(NFmiPoint(loc.longitude, loc.latitude),
                                      geoname,
-                                     (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0)));
+                                     (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
           }
           break;
         }
@@ -198,9 +197,8 @@ bool parse_location_parameters(
         {
           if (config.geoObjectExists(loc.name, *areasource))
           {
-            weatherAreaVector.emplace_back(
-                std::make_pair((loc.name + *areasource + "_area1"),
-                               config.makePostGisArea(loc.name, *areasource)));
+            weatherAreaVector.emplace_back(loc.name + *areasource + "_area1",
+                                           config.makePostGisArea(loc.name, *areasource));
           }
           else
           {
@@ -240,19 +238,19 @@ bool parse_location_parameters(
                   loc.name.substr(loc.name.find('(') + 1, coordinate_string_len);
               double lon = Fmi::stod(coordinates.substr(0, coordinates.find(' ')));
               double lat = Fmi::stod(coordinates.substr(coordinates.find(' ') + 1));
-              weatherAreaVector.emplace_back(std::make_pair(
-                  (wktName + "_wkt1"),
+              weatherAreaVector.emplace_back(
+                  wktName + "_wkt1",
                   TextGen::WeatherArea(NFmiPoint(lon, lat),
                                        wktName,
-                                       (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0)));
+                                       (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
               break;
             }
             case Spine::Location::LocationType::Area:
             case Spine::Location::LocationType::Path:
             {
-              weatherAreaVector.emplace_back(std::make_pair(
-                  (wktName + "_wkt2"),
-                  TextGen::WeatherArea(wktGeometries.getSvgPath(loc.name), wktName)));
+              weatherAreaVector.emplace_back(
+                  wktName + "_wkt2",
+                  TextGen::WeatherArea(wktGeometries.getSvgPath(loc.name), wktName));
               break;
             }
             default:
@@ -319,11 +317,7 @@ void set_textgen_settings(const ProductConfig& config,
     // Parameter mappings
     ParameterMappings pm = config.getParameterMappings();
     for (const auto& item : pm)
-    {
-      std::string configname = item.first;
-      std::string qdname = item.second;
-      Settings::set(configname, qdname);
-    }
+      Settings::set(item.first, item.second);
 
     // forecasts and the querydata
     for (unsigned int i = 0; i < config.numberOfForecastDataConfigs(); i++)

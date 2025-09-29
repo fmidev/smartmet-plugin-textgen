@@ -382,10 +382,10 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
 
 }  // namespace
 
-Config::Config(const std::string& configfile)
+Config::Config(std::string configfile)
     : itsDefaultUrl(default_url),
       itsForecastTextCacheSize(DEFAULT_FORECAST_TEXT_CACHE_SIZE),
-      itsMainConfigFile(configfile)
+      itsMainConfigFile(std::move(configfile))
 {
 }
 
@@ -493,7 +493,8 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
           "Textgenplugin configuration error! No database connection info found for " +
               itsDictionary);
 
-    boost::regex pattern("^[\\w,\\s-]+\\.[A-Za-z]+$");
+    boost::regex pattern(R"(^[\w,\s-]+\.[A-Za-z]+$)");
+
     for (const auto& dir : getDirectoriesToMonitor(configItems))
     {
       itsMonitor.watch(dir,
