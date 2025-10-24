@@ -696,18 +696,12 @@ void Plugin::init()
   try
   {
     /* GeoEngine */
-    auto* engine = itsReactor->getSingleton("Geonames", nullptr);
-    if (engine == nullptr)
-      throw Fmi::Exception(BCP, "Geonames engine unavailable");
-
-    itsGeoEngine = reinterpret_cast<SmartMet::Engine::Geonames::Engine*>(engine);
+    itsGeoEngine = itsReactor->getEngine<SmartMet::Engine::Geonames::Engine>("Geonames", nullptr);
 
     /* GisEngine */
-    engine = itsReactor->getSingleton("Gis", nullptr);
-    if (engine == nullptr)
-      throw Fmi::Exception(BCP, "Gis engine unavailable");
+    itsGisEngine = itsReactor->getEngine<SmartMet::Engine::Gis::Engine>("Gis", nullptr);
 
-    itsConfig.init(reinterpret_cast<Engine::Gis::Engine*>(engine));
+    itsConfig.init(itsGisEngine.get());
 
     // Init caches
     itsForecastTextCache.resize(boost::numeric_cast<size_t>(itsConfig.getForecastTextCacheSize()));
@@ -756,7 +750,7 @@ void Plugin::init()
 #endif
     }
 
-    itsDictionary->geoinit(itsGeoEngine);
+    itsDictionary->geoinit(itsGeoEngine.get());
 
     // Read all languages at init
     for (const auto& lang : itsConfig.supportedLanguages())

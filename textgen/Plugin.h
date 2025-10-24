@@ -65,7 +65,8 @@ class Plugin : public SmartMetPlugin
   };
   Fmi::Cache::Cache<std::string, cache_item> itsForecastTextCache;
 
-  SmartMet::Engine::Geonames::Engine* itsGeoEngine = nullptr;
+  std::shared_ptr<SmartMet::Engine::Geonames::Engine> itsGeoEngine;
+  std::shared_ptr<SmartMet::Engine::Gis::Engine> itsGisEngine;
 
   Fmi::Cache::CacheStatistics getCacheStats() const override;
 };  // class Plugin
