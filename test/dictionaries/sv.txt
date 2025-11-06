@@ -45,6 +45,7 @@ monin paikoin|på flera ställen
 paikoin|lokalt
 odotettavissa|utsikter
 keskilampotila|medeltemperaturen
+iltayolla ja keskiyolla|sent på kvällen och vid midnatt
 sadesumma|nederbördssumman
 astetta|grader
 millimetria|millimeter
@@ -89,6 +90,7 @@ noin|cirka
 seuraavana paivana|följande dag
 paivien ylin lampotila|dagens högsta temperatur
 keskimaarainen alin lampotila|lägsta temperaturen i medeltal
+1-illalla ja iltayolla|på måndag kväll och senare under kvällen
 lopuksi|i slutet
 paivalampotila|dagstemperaturen
 yolampotila|nattemperaturen
@@ -260,12 +262,12 @@ illalla|på kvällen
 aamupaivalla|på förmiddagen
 iltapaivalla|på eftermiddagen
 keskipaivalla|på dagen
+iltayosta alkaen|från och med natten
 aamusta alkaen|från och med morgonen
 aamupaivasta alkaen|från och med förmiddagen
 keskipaivasta alkaen|från och med dagen
 iltapaivasta alkaen|från och med eftermiddagen
 illasta alkaen|från och med kvällen
-iltayosta alkaen|från och med förnatten
 prosenttia|procent
 ajoittain|tidvis
 2-na kello|tisdag klockan
@@ -1134,6 +1136,7 @@ saa viilenee vahan|vädret blir litet svalare
 saa lampenee huomattavasti|vädret blir betydligt varmare
 saa lampenee vahan|vädret blir litet varmare
 empty_string|
+illalla ja iltayolla|i kväll och senare under kvällen
 [rannikolla] mahdollisesti hallaa|[1] möjligen frost
 [sisamaassa] hallan vaara|[1] risk för frost
 [rannikolla] [paikoin] hallaa|[1] [2] frost
@@ -1160,13 +1163,6 @@ iltapaivalla ja illalla|på eftermiddagen och kvällen
 3-aamulla ja aamupaivalla|på onsdag morgon och middag
 2-aamulla ja aamupaivalla|på tisdag morgon och förmiddag
 1-aamulla ja aamupaivalla|på måndag morgon och förmiddag
-7-illalla ja iltayolla|på söndag kväll or förnatt
-6-illalla ja iltayolla|på lördag kväll or förnatt
-5-illalla ja iltayolla|på fredag kväll or förnatt
-4-illalla ja iltayolla|på torsdag kväll or förnatt
-3-illalla ja iltayolla|på onsdag kväll or förnatt
-2-illalla ja iltayolla|på tisdag kväll or förnatt
-1-illalla ja iltayolla|på måndag kväll or förnatt
 2-aamuyolla ja aamulla|på tisdag efternatt och morgon
 3-aamuyolla ja aamulla|på onsdag efternatt och morgon
 4-aamuyolla ja aamulla|på torsdag efternatt och morgon
@@ -1174,13 +1170,6 @@ iltapaivalla ja illalla|på eftermiddagen och kvällen
 6-aamuyolla ja aamulla|på lördag efternatt och morgon
 7-aamuyolla ja aamulla|på söndag efternatt och morgon
 1-aamuyolla ja aamulla|på måndag efternatt och morgon
-7-iltayolla|på söndag förnatt
-6-iltayolla|på lördag förnatt
-5-iltayolla|på fredag förnatt
-4-iltayolla|på torsdag förnatt
-3-iltayolla|på onsdag
-2-iltayolla|på tisdag förnatt
-1-iltayolla|på måndag förnatt
 [huomenna] [sisamaassa] saa on [selkea]|[1] är vädret [3] [2]
 [huomenna] [sisamaassa] saa vaihtelee puolipilvisesta pilviseen|[1] varierar vädret [2] från halvmulet till mulet
 hyvin tuulinen|mycket blåsigt
@@ -1198,10 +1187,8 @@ rannikolla lahella [N] [astetta]|vid kusten omkring [1] [2]
 [huomenna] [sisamaassa] [lampotila] on [M...N] [astetta]|[1] är [3] [2] [4] [5]
 [huomenna] [sisamaassa] [paikoin] sumua, joka voi olla sakeaa|[1] [2] [3] dimma som kan vara tät
 aamulla ja aamupaivalla|på morgonen och på förmiddagen
-iltayolla ja keskiyolla|sent på kvällen och vid midnatt
 keskiyolla ja aamuyolla|vid midnatt och på efternatten
 aamuyolla ja aamulla|på efternatten och på morgonen
-illalla ja iltayolla|i kväll och under förnatten
 [yolla] on [hieman kylmempaa]|[1] är det [2]
 [huomenna] [sisamaassa] [lampotila] on [suunnilleen sama]|[1] är [3] [2] [4]
 [huomenna] [sisamaassa] pakkasta on [M...N] [astetta]|[1] är kölden [2] [3] [4]
@@ -1225,6 +1212,7 @@ rannikolla [suunnilleen sama]|vid kusten [1]
 [huomenna] [sisamaassa] vahan yli [N] [astetta]|[1] litet över [3] [4] [2]
 [huomenna] [sisamaassa] saa on enimmakseen poutainen, [yksittaiset sadekuurot mahdollisia]|[1] är det mestadels uppehåll [2], [3]
 [huomenna] [sisamaassa] [paikoin] [heikkoa] [sadetta]|[1] [2] [3] [4] [5]
+1-iltayohon asti|fram till måndag natt
 saa on poutainen|uppehållsväder
 6-keskiyolla|på lördag midnatt
 5-keskiyolla|på fredag midnatt
@@ -1242,13 +1230,6 @@ saa on poutainen|uppehållsväder
 3-iltapaivasta alkaen|från och med onsdag eftermiddag
 2-iltapaivasta alkaen|från och med tisdag eftermiddag
 1-iltapaivasta alkaen|från och med måndag eftermiddag
-7-iltayosta alkaen|från och med söndag förnatt
-6-iltayosta alkaen|från och med lördag förnatt
-5-iltayosta alkaen|från och med fredag förnatt
-4-iltayosta alkaen|från och med torsdag förnatt
-3-iltayosta alkaen|från och med onsdag förnatt
-2-iltayosta alkaen|från och med tisdag förnatt
-1-iltayosta alkaen|från och med måndag förnatt
 7-aamuyosta alkaen|från och med söndag efternatt
 6-aamuyosta alkaen|från och med lördag efternatt
 5-aamuyosta alkaen|från och med fredag efternatt
@@ -1280,6 +1261,7 @@ ranta- tai vesisadetta|snöblandat regn eller regn
 vesi- tai rantasadetta|regn eller snöblandat regn
 ranta- tai vesikuuroja|skurar av snöblandat regn eller regn
 [huomenna] [sisamaassa] [paikoin] [heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3] [4] [5] som kan vara underkylda
+1-iltayolla|på måndag natt
 vesi- tai rantakuuroja|regnskurar eller skurar av snöblandat regn
 vesi- tai lumikuuroja|regnskurar eller snöbyar
 lumi- tai vesikuuroja|snöbyar eller regnskurar
@@ -1300,6 +1282,7 @@ myos ukkosta esiintyy|även åska förekommer
 [iltapaivasta alkaen] [pilvistyvaa]|[1] [2]
 [iltapaivalla] saa poutaantuu ja vaihtelee puolipilvisesta pilviseen|[1] upphör regnet och molntäcket spricker upp
 [iltapaivalla] saa poutaantuu ja on [selkea]|[1] klarnar vädret upp
+1-iltayosta alkaen|från och med måndag natt
 [lampotila] on [suunnilleen sama]|[1] är [2]
 [lampotila] on [M...N] [astetta]|[1] är [2] [3]
 [lampotila] on noin [N] [astetta]|[1] är cirka [2] [3]
@@ -1319,6 +1302,9 @@ saa on [poikkeuksellisen] [kylmaa]|vädret är [1] [2]
 [sisamaassa] sumua|[1] dimma
 [huomenna] [paikoin] sumua|[1] [2] dimma
 [huomenna] [sisamaassa] sumua|[1] [2] dimma
+2-illalla ja iltayolla|på tisdag kväll och senare under kvällen
+2-iltayohon asti|fram till tisdag natt
+2-iltayolla|på tisdag natt
 [huomenna] [paikoin] [heikkoa] [sadetta]|[1] [2] [3] [4]
 [paikoin] [sadetta]|[1] [2]
 [huomenna] [sisamaassa] [heikkoa] [sadetta]|[1] [2] [3] [4]
@@ -1347,6 +1333,7 @@ saa on [poikkeuksellisen] [kylmaa]|vädret är [1] [2]
 [paikoin] sumua, joka voi olla sakeaa|[1] dimma som kan vara tät
 [sisamaassa] [paikoin] sumua, joka voi olla sakeaa|[1] [2] dimma som kan vara tät
 [huomenna] [paikoin] sumua, joka voi olla sakeaa|[1] [2] dimma som kan vara tät
+2-iltayosta alkaen|från och med tisdag natt
 [heikkoa] [sadetta]|[1] [2]
 [iltapaivalla] [rannikolla] pakkanen on erittain purevaa|[1] är kölden mycket bitande [2]
 [iltapaivalla] [rannikolla] tuuli saa saan tuntumaan viileammalta|[1] får vinden vädret att kännas svalare [2]
@@ -1664,6 +1651,7 @@ tuuli muuttuu vaihtelevaksi|vinden blir varierande
 [iltapaivalla] tuuli muuttuu vaihtelevaksi|[1] blir vinden varierande
 [iltapaivalla] [etelatuulta]|[1] [2]
 latvia:lle|för Lettland
+3-illalla ja iltayolla|på onsdag kväll och senare under kvällen
 vahitellen|småningom
 nopeasti|snabbt
 [iltapaivalla] tuuli kaantyy [etelaan] ja voimistuu edelleen|[1] vrider vinden [2] och tilltar ytterligare
@@ -1735,6 +1723,7 @@ astetta (mod 10=1)|grader
 aste|grad
 nolla|noll
 asteen(tienoilla (mod 10=1))|grader
+3-iltayohon asti|fram till onsdag natt
 hehtopascalia (mod 10=1)|hektopascal
 prosenttia (mod 10=1)|procent
 millimetria (mod 10=1)|millimeter
@@ -1759,9 +1748,11 @@ astetta(noin n)|grader
 [iltapaivalla] [pohjoistuuli] heikkenee edelleen|[1] [2] avtar ytterligare
 [iltapaivalla] [pohjoistuuli] alkaa voimistua [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] börjar tillta [3] och vrider [5] [4]
 [iltapaivalla] [pohjoistuuli] alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] börjar avta [3] och vrider [5] [4]
+3-iltayolla|på onsdag natt
 [iltapaivalla] [etelatuuli] heikkenee [nopeasti]|[1] [2] avtar [3]
 [pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa voimistua|[1] [2] [3] som börjar tillta
 [pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa heiketa|[1] [2] [3] som börjar avta
+3-iltayosta alkaen|från och med onsdag natt
 [ip] [p-tuulta] [m...n] [m/s], joka alkaa voimistua [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] [3] [4] som börjar tillta [5] och vrider [7] [6]
 5- ja 4-valista tuulta|sydlig till sydostlig vind
 3- ja 4-valista tuulta|ostlig till sydostlig vind
@@ -1769,6 +1760,7 @@ astetta(noin n)|grader
 1- ja 2-valista tuulta|nordlig till nordostlig vind
 [iltapaivalla] edelleen [heikkenevaa] [pohjoistuulta]|[1] [3] [2] alltjämt
 [iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [illalla] [pohjoiseen]|[1] [4] [3] [2] och [5] [6]
+4-illalla ja iltayolla|på torsdag kväll och senare under kvällen
 [iltapaivalla] [etelatuuli] voimistuu [nopeasti]|[1] [2] tilltar [3]
 [iltapaivalla] [pohjoistuuli] voimistuu edelleen|[1] [2] tilltar ytterligare
 [iltapaivalla] sade voi olla runsasta|[1] kan regnet vara rikligt
@@ -1810,6 +1802,7 @@ iltaan asti|till kvällen
 5-vastaiseen yohon asti|till natten mot fredag
 6-vastaiseen yohon asti|till natten mot lördag
 7-vastaiseen yohon asti|till natten mot söndag
+iltayohon asti|fram till natten
 7-iltapaivaan asti|till söndag eftermiddag
 6-iltapaivaan asti|till lördag eftermiddag
 5-iltapaivaan asti|till fredag eftermiddag
@@ -1817,13 +1810,6 @@ iltaan asti|till kvällen
 3-iltapaivaan asti|till onsdag eftermiddag
 2-iltapaivaan asti|till tisdag eftermiddag
 1-iltapaivaan asti|till måndag eftermiddag
-7-iltayohon asti|till söndag förnatt
-6-iltayohon asti|till lördag förnatt
-5-iltayohon asti|till fredag förnatt
-4-iltayohon asti|till torsdag förnatt
-3-iltayohon asti|till onsdag förnatt
-2-iltayohon asti|till tisdag förnatt
-1-iltayohon asti|till måndag förnatt
 7-aamuyohon asti|till söndag efternatt
 6-aamuyohon asti|till lördag efternatt
 5-aamuyohon asti|till fredag efternatt
@@ -1851,7 +1837,6 @@ aamuun asti|fram till morgonen
 huomisaamuun asti|fram till i morgon bitti
 huomiseen asti|till i morgon
 huomisiltaan asti|fram till i morgon kväll
-iltayohon asti|fram till förnatten
 keskiyohon asti|fram till midnatt
 yohon asti|fram till natten
 aamuyohon asti|fram till efternatten
@@ -2002,6 +1987,7 @@ tiepiiri-v1:lle|för Österbottens sydkust
 tiepiiri-v2:lle|för Södra Österbotten
 tiepiiri-v4:lle|för Österbottens nordkust
 tiepiiri-v5:lle|för Mellersta Österbotten
+4-iltayohon asti|fram till torsdag natt
 [lampotila] vahan nollan alapuolella|[1] strax under noll
 [lampotila] on vahan nollan alapuolella|[1] är strax under noll
 [huomenna] vahan nollan alapuolella|[1] strax under noll
@@ -2075,6 +2061,7 @@ huomisen keskipaivaan asti|till imorgon middagen
 huomiseen iltapaivaan asti|fram till i morgon eftermiddag
 illalla ja yolla|i kväll och i natt
 yolla ja aamulla|i natt och i morgon
+4-iltayolla|på torsdag natt
 6-keskipaivaan asti|till lördag middagen
 7-keskipaivaan asti|till söndag middagen
 [huomenna] [sisamaassa] [paikoin] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4] [5] som kan vara underkylt
@@ -2090,7 +2077,6 @@ yolla ja aamulla|i natt och i morgon
 [pohjoistuulta] [m...n] [metria sekunnissa], joka kaantyy [iltapaivalla] [etelaan]|[1] [2] [3] som vrider [5] [4]
 [ip] [p-tuulta] [m...n] [m/s], joka alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] [3] [4] som börjar avta [5] och vrider [7] [6]
 [iltap] [nop] [heikken] [tuulta] [m...n] [m sek], joka kaantyy [illalla] [pohj]|[1] [2] [3] [4] [5] [6] som vrider [8] [7]
-iltayolla|senare under kvällen
 [iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [pohjoiseen]|[1] [4] [3] [2] och vrider [5]
 B11|Arkona havet
 B12|Öresund och Bälten
@@ -2133,3 +2119,17 @@ huomisaamupaivaan asti|fram till i morgon förmiddag
 oiden alin lampotila|natternas lägsta temperatur
 keskimaarainen ylin lampotila|högsta temperaturen i medeltal
 voimistuvaa|som tilltar
+iltayolla|senare under kvällen
+4-iltayosta alkaen|från och med torsdag natt
+5-illalla ja iltayolla|på fredag kväll och senare under kvällen
+5-iltayohon asti|fram till fredag natt
+5-iltayolla|på fredag natt
+5-iltayosta alkaen|från och med fredag natt
+6-illalla ja iltayolla|på lördag kväll och senare under kvällen
+6-iltayohon asti|fram till lördag natt
+6-iltayolla|på lördag natt
+6-iltayosta alkaen|från och med lördag natt
+7-illalla ja iltayolla|på söndag kväll och senare under kvällen
+7-iltayohon asti|fram till söndag natt
+7-iltayolla|på söndag natt
+7-iltayosta alkaen|från och med söndag natt
