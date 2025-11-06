@@ -1301,6 +1301,7 @@ myos ukkosta esiintyy|myös ukkosta esiintyy
 mahdollisesti myos ukkostaa|mahdollisesti myös ukkostaa
 paikoin myos ukkostaa|paikoin myös ukkostaa
 paikoin voi myos ukkostaa|paikoin voi myös ukkostaa
+B1|Perämeri
 [iltapaivalla] saa poutaantuu ja vaihtelee puolipilvisesta pilviseen|[1] sää poutaantuu ja vaihtelee puolipilvisestä pilviseen
 [iltapaivalla] saa poutaantuu ja on [selkea]|[1] sää poutaantuu ja on [2]
 [lampotila] on [suunnilleen sama]|[1] on [2]
@@ -1368,6 +1369,7 @@ saa on [poikkeuksellisen] [kylmaa]|sää on [1] [2]
 [sisamaassa] [paikoin] [sadetta], joka voi olla jaatavaa|[1] [2] [3], joka voi olla jäätävää
 [huomenna] [paikoin] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4], joka voi olla jäätävää
 3- ja 4-valille|idän ja kaakon välille
+B2|Merenkurkku
 [huomenna] [sadetta], joka voi olla jaatavaa|[1] [2], joka voi olla jäätävää
 [huomenna] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3], joka voi olla jäätävää
 [huomenna] [paikoin] [sadetta], joka voi olla jaatavaa|[1] [2] [3], joka voi olla jäätävää
@@ -1567,6 +1569,7 @@ saa on [selkea] ja poutainen|sää on [1] ja poutainen
 [1-na] [alueella] kolea saa jatkuu|[1] [2] kolea sää jatkuu
 [alueella] saa lampenee huomattavasti|[1] sää lämpenee huomattavasti
 [1-na] saa lampenee huomattavasti|[1] sää lämpenee huomattavasti
+B3|Selkämeri
 [1-na] [alueella] saa lampenee huomattavasti|[1] [2] sää lämpenee huomattavasti
 [alueella] saa lampenee vahan|[1] sää lämpenee vähän
 [1-na] saa lampenee vahan|[1] sää lämpenee vähän
@@ -1717,6 +1720,7 @@ astetta (3)|astetta
 4-puoleinen tuuli|kaakon puoleinen tuuli
 3-puoleinen tuuli|idän puoleinen tuuli
 2-puoleinen tuuli|koillisen puoleinen tuuli
+uusimaa|Uusimaa
 1-puoleinen tuuli|pohjoisen puoleinen tuuli
 8-tuuli|luoteistuuli
 7-tuuli|länsituuli
@@ -2074,7 +2078,6 @@ finnmarkin itaosa:lle|Finnmarkin itäosaan
 murmanskin alueen lansiosa:lle|Murmanskin alueen länsiosaan
 pohjois-ruotsi:lle|Pohjois-Ruotsiin
 voimakkaita sadekuuroja|rankkoja sadekuuroja
-huomiseen iltapaivaan asti|huomiseen iltapaivaan asti
 huomisen keskipaivaan asti|huomisen keskipäivään asti
 [iltapaivalla] lumikuurot voivat olla sakeita|[1] lumikuurot voivat olla sakeita
 [iltapaivalla] lumisade voi olla sakeaa|[1] lumisade voi olla sakeaa
@@ -2085,3 +2088,28 @@ huomisen keskipaivaan asti|huomisen keskipäivään asti
 5-keskipaivaan asti|perjantain keskipäivään asti
 6-keskipaivaan asti|lauantain keskipäivään asti
 7-keskipaivaan asti|sunnuntain keskipäivään asti
+huomiseen iltapaivaan asti|huomiseen iltapäivään asti
+B4|Saaristo- ja Ahvenanmeri
+B5|Suomenlahti
+B6|Riianlahti
+B7|Pohjois-Itämeri
+B8|Keski-Itämeri
+B9|Kaakkois-Itämeri
+B10|Etelä-Itämeri
+B11|Arkonanmeri
+B12|Öresund ja Beltit
+B13|Kattegat
+B1N|Perämeren pohjoisosa
+B1S|Perämeren eteläosa
+B3N|Selkämeren pohjoisosa
+B3S|Selkämeren eteläosa
+B4E|Saaristomeri
+B4W|Ahvenanmeri
+B5E|Suomenlahden itäosa
+B5W|Suomenlahden länsiosa
+B7E|Pohjois-Itämeren itäosa
+B7W|Pohjois-Itämeren länsiosa
+B8E|Keski-Itämeri
+B8W|Gotlanninmeri
+B10N|Oolanninmeri
+B10S|Bornholminmeri

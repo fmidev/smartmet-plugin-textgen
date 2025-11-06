@@ -2132,4 +2132,4 @@ B5_B7|Finska Viken och Norra Östersjön
 huomisaamupaivaan asti|fram till i morgon förmiddag
 oiden alin lampotila|natternas lägsta temperatur
 keskimaarainen ylin lampotila|högsta temperaturen i medeltal
-voimistuvaa|som tilltar och blir
+voimistuvaa|som tilltar
