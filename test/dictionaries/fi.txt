@@ -2107,9 +2107,18 @@ B4E|Saaristomeri
 B4W|Ahvenanmeri
 B5E|Suomenlahden itäosa
 B5W|Suomenlahden länsiosa
+aamuyosta|aamuyöstä
+aamusta|aamusta
 B7E|Pohjois-Itämeren itäosa
 B7W|Pohjois-Itämeren länsiosa
 B8E|Keski-Itämeri
 B8W|Gotlanninmeri
 B10N|Oolanninmeri
 B10S|Bornholminmeri
+aamupaivasta|aamupäivästä
+keskipaivasta|keskipäivästä
+iltapaivasta|iltapäivästä
+illasta|illasta
+iltayosta|iltayöstä
+keskiyosta|keskiyöstä
+yosta|yöstä

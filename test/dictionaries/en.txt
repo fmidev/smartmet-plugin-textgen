@@ -13,6 +13,7 @@ pohjois-ruotsi:lle|for Northern Sweden
 [iltapaivalla] lumikuurot voivat olla sakeita|snow showers can be heavy [1]
 [iltapaivalla] lumisade voi olla sakeaa|snowfall can be heavy [1]
 huomiseen iltapaivaan asti|until tomorrow afternoon
+aamuyosta|from the early morning
 astetta(noin n)|degrees
 huomattavasti lampimampi|significantly warmer
 lampimampi|warmer
@@ -1162,6 +1163,7 @@ empty_string|
 [rannikolla] mahdollisesti hallaa|possibly frost [1]
 [sisamaassa] hallan vaara|risk of frost [1]
 [rannikolla] [paikoin] hallaa|frost [2] [1]
+aamusta|from the morning
 [huomenna] [sisamaassa] [paikoin] sumua, joka voi olla sakeaa|[1] possibly dense fog [3] [2]
 [huomenna] [sisamaassa] [paikoin] sumua|[1] fog [3] [2]
 keskiyolla ja aamuyolla|at midnight and after midnight
@@ -1191,6 +1193,7 @@ aamulla ja aamupaivalla|in the morning and forenoon
 3-illalla ja iltayolla|on Wednesday evening and before midnight
 2-illalla ja iltayolla|on Tuesday evening and before midnight
 1-illalla ja iltayolla|on Monday evening and before midnight
+aamupaivasta|from forenoon
 7-iltayolla|on Sunday before midnight
 6-iltayolla|on Saturday before midnight
 5-iltayolla|on Friday before midnight
@@ -1705,6 +1708,7 @@ tuuli kaantyy|wind turns
 astetta (m...n)|degrees
 astetta (n)|degrees
 [iltapaivalla] tuuli heikkenee ja kaantyy [etelaan]|[1] wind weakens and turns [2]
+keskipaivasta|from the noon
 [iltapaivalla] tuuli voimistuu ja kaantyy [etelaan]|[1] the wind strenghtens and turns [2]
 [iltapaivalla] tuuli voimistuu ja muuttuu vaihtelevaksi|the wind strenghtens and becomes varying [1]
 voimistuvaa tuulta|strenghtening wind
@@ -1751,7 +1755,9 @@ suunnaltaan vaihteleva tuuli|variable wind
 [iltapaivalla] tuuli muuttuu tilapaisesti vaihtelevaksi ja heikkenee edelleen|[1] the wind becomes temporarily variable and continues to weaken
 [iltapaivalla] tuuli heikkenee ja muuttuu tilapaisesti vaihtelevaksi|[1] the wind weakens and becomes temporarily variable
 [iltapaivalla] [pohjoistuuli] heikkenee ja muuttuu tilapaisesti vaihtelevaksi|[1]  [2] weakens and becomes temporarily variable
+iltapaivasta|from the afternoon
 [iltapaivalla] [etelatuuli] alkaa heiketa [nopeasti]|[1] [2] starts to weaken [3]
+illasta|from the evening
 [iltapaivalla] [pohjoistuuli] alkaa heiketa ja kaantya [etelaan]|[1] [2] starts to weaken and turn [3]
 astetta (mod 10=1)|degrees
 aste|degree
@@ -1785,8 +1791,11 @@ astetta(noin (mod 10=1))|degrees
 [iltapaivalla] tuuli muuttuu tilapaisesti vaihtelevaksi ja voimistuu edelleen|[1] the wind becomes temporarily variable and continues to  strenghten
 [iltapaivalla] tuuli muuttuu vaihtelevaksi ja voimistuu edelleen|the wind becomes variable and continues to  strenghten [1]
 [iltapaivalla] tuuli voimistuu ja muuttuu tilapaisesti vaihtelevaksi|[1] the wind continues to strenghten and becomes temporarily variable
+iltayosta|from the late evening
+keskiyosta|from the midnight
 [pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa heiketa|[1] [2] [3], which starts to weaken
 [iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [illalla] [pohjoiseen]|[1] [2] [3] [4], that turns [6] [5]
+yosta|from tonight
 [iltapaivalla] [pohjoistuuli] alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] starts to weaken [3] and turns [5] [4]
 [ip] [p-tuulta] [m...n] [m/s], joka alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] [3] [4], which starts to weaken [5] and turns [7] [6]
 [iltapaivalla] [etelatuuli] heikkenee [nopeasti]|[2] weakens [3] [1]

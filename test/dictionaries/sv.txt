@@ -2133,3 +2133,12 @@ iltayolla|senare under kvällen
 7-iltayohon asti|fram till söndag natt
 7-iltayolla|på söndag natt
 7-iltayosta alkaen|från och med söndag natt
+aamuyosta|från och med efternatten
+aamusta|från och med morgonen
+aamupaivasta|från och med förmiddagen
+keskipaivasta|från och med dagen
+iltapaivasta|från och med eftermiddagen
+illasta|från och med kvällen
+iltayosta|från och med natten
+keskiyosta|från och med midnatten
+yosta|från och med i natt
