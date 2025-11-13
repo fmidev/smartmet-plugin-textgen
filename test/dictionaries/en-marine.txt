@@ -1,0 +1,2144 @@
+o'clock|o'clock
+B9|Southeastern Baltic
+tiepiiri-t1:lle|for Finland coastal region
+1-iltaan|until Monday evening
+1-na|on Monday
+1-vastaisena yona|on Monday night
+2-vuorokauden saa|for the next two days
+3-aamusta|from Wednesday morning
+3-aamuun|until Wednesday morning
+3-illasta|from Wednesday evening
+3-iltaan|until Wednesday evening
+3-na|on Wednesday
+3-vastaisena yona|on Wednesday night
+5-aamusta|from Friday morning
+5-aamuun|until Friday morning
+5-illasta|from Friday evening
+5-iltaan|until Friday evening
+5-na|on Friday
+5-vastaisena yona|on Friday night
+7-aamusta|from Sunday morning
+7-aamuun|until Sunday morning
+7-illasta|from Sunday evening
+7-iltaan|until Sunday evening
+7-na|on Sunday
+7-vastaisena yona|on Sunday night
+7-vuorokauden saa|for the next seven days
+keskimaarainen ylin lampotila|mean maximum temperature
+lampimampi|warmer
+meri-lappi:lle|for Meri-Lappi
+millimetria|millimeters
+monin paikoin enemman|more in many places
+monin paikoin|in many places
+odotettavissa|expected weather
+on|is
+paikoin enemman|locally more
+pienempi|smaller
+pohjanmaa ja etela-pohjanmaa:lle|for Ostrobothnia and Southern Ostrobothnia
+pohjois-pohjanmaan itaosa:lle|for Eastern part of Northern Ostrobothnia
+pohjois-pohjanmaan lansiosa:lle|for Western part of Northern Ostrobothnia
+pohjois-ruotsi:lle|for Northern Sweden
+saa|the weather
+sadesumma|total precipitation
+sama|the same
+seuraava yo|the following night
+seuraavana yona|the following night
+suurempi|greater
+utsjoki ja inari:lle|for Utsjoki and Inari
+yli|over
+1-aamuun|until Monday morning
+1-illasta|from Monday evening
+10-vuorokauden saa|for the next 10 days
+2-aamusta|from Tuesday morning
+2-aamuun|until Tuesday morning
+2-illasta|from Tuesday evening
+2-iltaan|until Tuesday evening
+2-na|on Tuesday
+2-vastaisena yona|on Tuesday night
+3-vuorokauden saa|for the next three days
+4-aamusta|from Thursday morning
+4-aamuun|until Thursday morning
+4-illasta|from Thursday evening
+4-iltaan|until Thursday evening
+4-na|on Thursday
+4-vastaisena yona|on Thursday night
+5-vuorokauden saa|for the next five days
+6-aamusta|from Saturday morning
+6-aamuun|until Saturday morning
+6-illasta|from Saturday evening
+6-iltaan|until Saturday evening
+6-na|on Saturday
+6-vuorokauden saa|for the next six days
+8-vuorokauden saa|for the next eight days
+9-vuorokauden saa|for the next nine days
+[iltapaivalla] lumikuurot voivat olla sakeita|snow showers can be heavy [1]
+[iltapaivalla] lumisade voi olla sakeaa|snowfall can be heavy [1]
+alin suhteellinen kosteus|the lowest relative humidity
+alkavan|
+ankaran hallan todennakoisyys|probability of severe frost
+astetta(noin n)|degrees
+astetta|degrees
+etela-lappi:lle|for Southern Lapland
+finnmarkin itaosa:lle|for Eastern part of Finnmar
+finnmarkin lansiosa:lle|for Western part of Finnmark
+hallan todennakoisyys|probability of frost
+hieman pienempi|somewhat smaller
+hieman suurempi|somewhat greater
+huomattavasti lampimampi|significantly warmer
+keski-lappi:lle|for Central Lapland
+keskilampotila|mean temperature
+2-tuulta|northeast
+3-puoleista tuulta|mainly east
+3-suunnasta|from east
+4-suuntaan|to south east
+4-tuulta|southeast
+5-puoleista tuulta|mainly south
+5-suunnasta|from south
+6-suuntaan|to south west
+6-tuulta|southwest
+7-tuulta|west
+7-suunnasta|from west
+korkeapaineen alue|a high pressure area
+korkeapaine|the high pressure
+kosteammaksi|more moist
+kovaa|strong
+kuivemmaksi|dryer
+laaja|large
+lahestyy|approaches
+lampenee|becomes warmer
+lampotila|temperature
+leviaa|spreads
+liikkuu|moves
+loittonee|recedes
+lopuksi|in the end
+lumikuuroja|snow showers
+lumisadetta|snowfall
+m/s|m/s
+matalapaineen alue|a low pressure area
+matalapaine|the low pressure
+melko selkeaa|partly clear
+miinus|minus
+muuttuu|changes
+myrskya|stormy
+navakkaa|fresh
+noin|about
+oiden alin lampotila|nightly minimum temperature
+paikoin|locally
+paivalampotila|daily temperature
+paivan ylin lampotila|the maximum day temperature
+paivien ylin lampotila|daily maximum temperature
+pilvista|cloudy
+pilvistyvaa|increasing cloudiness
+poutaa|fair weather
+puolipilvista|partly cloudy
+runsasta sadetta|heavy rain
+sadealue|a precipitation area
+sadetta|rain
+sakeaa lumisadetta|heavy snowfall
+sakeita lumikuuroja|heavy snow showers
+suunnaltaan vaihtelevaa|variable
+suunnilleen sama|about the same
+syvenee|deepens
+tuuli|
+tuulta|
+vahvistuu|strenghtens
+viilenee|becomes colder
+voimistuvaa|increasing
+yolampotila|nightly temperature
+yolla|at night
+yon alin lampotila|the minimum night temperature
+7-puoleista tuulta|mainly west
+1-puoleista tuulta|mainly north
+1-suunnasta|from north
+1-suuntaan|to north
+1-tuulta|north
+2-suunnasta|from northeast
+2-suuntaan|to northeast
+3-suuntaan|to east
+3-tuulta|east
+4-puoleista tuulta|mainly southeast
+4-suunnasta|from south east
+5-suuntaan|to south
+5-tuulta|south
+6-puoleista tuulta|mainly southwest
+6-suunnasta|from south west
+7-suuntaan|to west
+8-puoleista tuulta|mainly northwest
+8-suunnasta|from north west
+8-suuntaan|to north west
+8-tuulta|northwest
+ajoittain lumisadetta|at times snowfall
+ajoittain sadetta|at times rain
+ajoittain ukkosta|at times thunder
+alempi|lower
+alueen yli|over the area
+aluksi|at first
+asti|
+heikkenevaa|decreasing
+heikkoa sadetta|light rain
+heikkoa|light
+hieman alempi|somewhat lower
+hieman korkeampi|somewhat higher
+huomattavasti alempi|significantly lower
+huomattavasti korkeampi|significantly higher
+kohtalaista|moderate
+korkeampi|higher
+varsinais-suomi:lle|for Finland
+3-alkaen|from Wednesday onwards
+3-puoleiseksi tuuleksi|mainly east
+3-tuuleksi|east
+5-alkaen|from Friday onwards
+5-puoleiseksi tuuleksi|mainly south
+5-tuuleksi|south
+7-alkaen|from Sunday onwards
+7-tuuleksi|west
+aamupaivalla|before noon
+keski-suomi:lle|for Central Finland
+keskipaivalla|at noon
+keskiyolla|at midnight
+kohtalaiseksi|moderate
+koillismaa:lle|for Koillismaa
+kovaksi|strong
+kymenlaakso:lle|for Kymenlaakso
+lansi-lappi:lle|for Western Lapland
+lumi-|snow
+metria sekunnissa|m/s
+myrskyksi|stormy
+navakaksi|fresh
+nyland:lle|for Uusimaa
+paijat-hame:lle|for Päijänne Tavastia
+paivalla|during the day
+pirkanmaa:lle|for Pirkanmaa
+pohjois-karjala:lle|for Northern Karelia
+pohjois-lappi:lle|for Northern Lapland
+pohjois-pohjanmaa:lle|for Northern Ostrobothnia
+pohjois-savo:lle|for Northern Savonia
+rannikolla|on the coastal area
+ranta-|sleet
+rantasadetta|sleet
+saa on epavakaista|unstable weather
+saaennuste|weather report
+satakunta:lle|for Satakunta
+selkeaa|sunny
+selkenevaa|decreasing cloudiness
+tai|or
+tanaan|today
+tuuli heikkenee|decreasing to
+tuuli tyyntyy|decreasing
+tuuli voimistuu|increasing to
+tyyneksi|calm
+tyynta|calm
+uusimaa:lle|for Uusimaa
+vahaisia kuuroja|light showers
+vahaista lumisadetta|light snowfall
+vaihtelevaa pilvisyytta|variable cloudiness
+vesi-|rain
+vesisadetta|rain
+viiva|to
+voimakkaita kuuroja|heavy showers
+ylihuomenna|the day after tomorrow
+yosta alkaen|from tonight
+7-puoleiseksi tuuleksi|mainly west
+1-tuuleksi|north
+2-alkaen|from Tuesday onwards
+2-puoleiseksi tuuleksi|mainly northeast
+2-tuuleksi|northeast
+4-alkaen|from Thursday onwards
+4-puoleiseksi tuuleksi|mainly southeast
+4-tuuleksi|southeast
+6-alkaen|from Saturday onwards
+6-puoleiseksi tuuleksi|mainly southwest
+6-tuuleksi|southwest
+8-puoleiseksi tuuleksi|mainly northwest
+8-tuuleksi|northwest
+aamulla|in the morning
+aamuyolla|after midnight
+aamuyosta alkaen|from the early morning
+ajoittain sateista|at times rain
+aland:lle|for Åland Islands
+edelleen|continued
+enimmakseen|mostly
+ensi yona|at night
+etela-karjala:lle|for Southern Karelia
+etela-pohjanmaa:lle|for Southern Ostrobothnia
+etela-savo:lle|for Southern Savonia
+hame:lle|for Tavastia
+heikoksi|light
+hirmumyrskya|severe storm
+hirmumyrskyksi|severe storm
+huomattavasti pienempi|significantly smaller
+huomattavasti suurempi|significantly greater
+huomenna|tomorrow
+huomisaamuna|tomorrow morning
+illalla|in the evening
+iltapaivalla|in the afternoon
+iltayolla|before midnight
+kainuu:lle|for Kainuu
+kello|
+keski-pohjanmaa:lle|for Central Ostrobothnia
+B7E_B4E_B3S:lle|for Northeastern Baltic, Sea of Archipelago and Southern Bothnian Sea
+6-na kello|on Saturday
+Etela-Suomen yli|over Southern Finland
+keskiyosta alkaen|from midnight
+kosteampaa|more moist
+kuivempaa|dryer
+kuuluu|belongs to
+kuurosateen todennakoisyys|probability of showers
+kylma saa jatkuu|the cold weather continues
+kylmaa|cold
+kylmempaa|colder
+lammin saa jatkuu|the warm weather continues
+lamminta|warm
+lampimampaa|warmer
+lansi-|western
+lansiosiin|western parts
+maan|the countrys
+pakkanen jatkuu|the frost continues
+pakkanen kiristyy|the frost tightens up
+pohjanmaa:lle|for Ostrobothnia
+pohjois-|northern
+pohjoisosiin|northern parts
+prosenttia|percent
+saa kylmenee|weather becoming colder
+saa lampenee|weather becoming warmer
+saa lauhtuu|weather becoming milder
+saa muuttuu epavakaisemmaksi|weather becoming more unstable
+saa muuttuu helteiseksi|weather becoming hot
+saa muuttuu koleaksi|weather becoming bleak
+saa muuttuu sateisemmaksi|the weather becoming rainier
+saa on enimmakseen poutaista|weather mostly fair
+saa poutaantuu|weather becoming fair
+saa selkenee|weather clears up
+saa viilenee|weather becoming cooler
+saapuu|approaches
+sadealueineen|with rainy areas
+sadealueita|rainy areas
+sateen todennakoisyys|probability of precipitation
+sateineen|with rain
+sateinen saa jatkuu|the rainy weather continues
+suomi:lle|for Finland
+tiepiiri-kaakkois-lappi:lle|for South Eastern Lapland
+tiepiiri-kaakkois-suomi:lle|for South Eastern Finlands road district
+tiepiiri-kasivarsi:lle|for North Western Lapland
+tiepiiri-keski-lappi:lle|for Central Lapland
+tiepiiri-keski-suomi:lle|for Central Finlands road district
+tilapaisesti|temporarily
+ukkosen todennakoisyys|probability of thunder
+uusi|a new
+vahan|a little
+viilea saa jatkuu|the cool weather continues
+viileaa|cool
+viileampaa|cooler
+virtaa|streams
+0 astetta|zero degrees
+1-na kello|on Monday
+3-na kello|on Wednesday
+4-na kello|on Thursday
+5-na kello|on Friday
+7-na kello|on Sunday
+Ita-Suomen yli|over Eastern Finland
+Kaakkois-Suomen yli|over Southeastern Finland
+Keski-Suomen yli|over Central Finland
+Lansi-Suomen yli|over Western Finland
+Pohjois-Suomen yli|over Northern Finland
+Suomeen|to Finland
+Suomen yli|over Finland
+aamupaivasta alkaen|from forenoon
+aamusta alkaen|from the morning
+ahvenanmaa:lle|for Åland
+ajoittain|at times
+alue|the area
+ei suuria muutoksia saassa|no significant changes in the weather
+epavakainen saa jatkuu|the unstable weather continues
+etela-|southern
+etelaosiin|southern parts
+hajanaisine sadealueineen|with scattered rainy areas
+helteinen saa jatkuu|the hot weather continues
+huomisesta alkaen|starting tomorrow
+hyvin|a lot
+illasta alkaen|from the evening
+ilmaa|air
+iltapaivasta alkaen|from the afternoon
+iltayosta alkaen|from the late evening
+ita-|eastern
+itaosiin|eastern parts
+ja|and
+keski-|central
+keskipaivasta alkaen|from the noon
+kanta-hame:lle|for Tavastia
+aamuyosta|from the early morning
+aamusta|from the morning
+1-iltana|on Monday evening
+1-paivalla|on Monday during the day
+2-aamuna|on Tuesday morning
+3-aamupaivasta alkaen|from Wednesday forenoon
+3-aamusta alkaen|from Wednesday morning
+3-illasta alkaen|from Wednesday evening
+3-iltana|on Wednesday evening
+3-paivalla|on Wednesday during the day
+3-vastaisesta yosta alkaen|from Wednesday night
+5-aamuna|on Friday morning
+5-aamupaivasta alkaen|from Friday forenoon
+5-aamusta alkaen|from Friday morning
+5-illasta alkaen|from Friday evening
+5-iltana|on Friday evening
+5-paivalla|on Friday during the day
+5-vastaisesta yosta alkaen|from Friday night
+7-aamuna|on Sunday morning
+7-aamusta alkaen|from Sunday morning
+7-illasta alkaen|from Sunday evening
+7-iltana|on Sunday evening
+7-paivalla|on Sunday during the day
+7-vastaisesta yosta alkaen|from Sunday night
+kuuraa|covered by frost
+kuuraisia|covered by frost
+lapin-laani:lle|for the province of Lapland
+lappi:lle|for Lapland
+lumisia|covered by snow
+lunta|covered by snow
+markia|wet
+osittain jaisia|partly icy
+oulun-laani:lle|for the province of Oulu
+seuraavan 12 tunnin|for the following 12 hours
+seuraavan 24 tunnin sademaara|total precipitation for the next 24 hours
+sohjoa|covered by slush
+sohjoisia|covered by slush
+teilla on|the roads are
+tienpintalampotila|the road temperature
+tiepiiri-lounais-lappi:lle|for South Western Lapland
+tiepiiri-oulu-ita:lle|for Oulu road districts eastern parts
+tiepiiri-oulu-lansi:lle|for Oulu road districts western parts
+tiepiiri-savo-karjala:lle|for Savonia-Karelia road district
+tiepiiri-turku:lle|for Turku road district
+tiepiiri-uusimaa:lle|for Uusimaa road district
+tiepiiri-vaasa:lle|for Vaasa road district
+tiepiiri-yla-lappi:lle|for Upper Lapland
+tiet ovat (sivulause)|
+tiet ovat|the roads are
+yleisesti|generally
+1-aamusta alkaen|from Monday morning
+1-illasta alkaen|from Monday evening
+2-aamupaivasta alkaen|from Tuesday forenoon
+2-aamusta alkaen|from Tuesday morning
+2-illasta alkaen|from Tuesday evening
+2-iltana|on Tuesday evening
+2-vastaisesta yosta alkaen|from Tuesday night
+3-aamuna|on Wednesday morning
+4-aamuna|on Thursday morning
+4-aamupaivasta alkaen|from Thursday forenoon
+4-aamusta alkaen|from Thursday morning
+4-illasta alkaen|from Thursday evening
+4-iltana|on Thursday evening
+4-paivalla|on Thursday during the day
+4-vastaisesta yosta alkaen|from Thursday night
+6-aamuna|on Saturday morning
+6-aamupaivasta alkaen|from Saturday forenoon
+6-aamusta alkaen|from Saturday morning
+6-illasta alkaen|from Saturday evening
+6-iltana|on Saturday evening
+6-paivalla|on Saturday during the day
+6-vastaisesta yosta alkaen|from Saturday night
+ensimmaisen 12 tunnin sademaara|total precipitation for the first 12 hours
+etela-suomen-laani:lle|for the province of Southern Finland
+huomenna paivalla|tomorrow during the day
+huomisaamupaivasta alkaen|from tomorrow before noon
+huomisaamusta alkaen|from tomorrow morning
+huomisillasta alkaen|from tomorrow evening
+huomisiltana|tomorrow evening
+ita-suomen-laani:lle|for the province of Eastern Finland
+ita-uusimaa:lle|for Eastern Uusimaa
+jaisia|icy
+kosteita|moist
+kuivia|dry
+B10:lle|for Southern Baltic
+B7:lle|for Northern Baltic
+B7E:lle|for Northeastern Baltic
+B7W:lle|for Northwestern Baltic
+B8:lle|for Middle Baltic
+B10N:lle|for Öland Sea
+normaali|normal
+osittain jaisiksi|partly icy
+pakkasliukkautta|slippery of frost
+rannasta ja osittain liukkaista|weakened by partly slippery road surfaces and sleetfall
+sateesta ja liukkaista|weakened by slippery road surfaces and rainfall
+sateesta ja osittain liukkaista|weakened by partly slippery road surfaces and rainfall
+tienpinnat muuttuvat|roads will be
+tieto puuttuu|data missing
+B8E:lle|for Middle Baltic
+7-aamupaivasta alkaen|from Sunday forenoon
+B9:lle|for Southeastern Baltic
+B10S:lle|for Bornholm Sea
+B11:lle|for Arkona Sea
+B12:lle|for Öresund and the Belts
+B13:lle|for Kattegat
+B1:lle|for Bay of Bothnia
+B1N:lle|for Northern Bay of Bothnia
+B1S:lle|for Southern Bay of Bothnia
+B2:lle|for the Quark
+B3:lle|for Sea of Bothnia
+B3N:lle|for Northern Bothnian Sea
+B3S:lle|for Southern Bothnian Sea
+B4:lle|for Sea of Archipelago and Sea of Åland
+B4E:lle|for Sea of Archipelago
+B4W:lle|for Sea of Åland
+B5:lle|for Gulf of Finland
+B5E:lle|for Eastern Gulf of Finland
+B5W:lle|for Western Gulf of Finland
+B6:lle|for Gulf of Riga
+aamupaivasta|from forenoon
+keskipaivasta|from the noon
+B8W:lle|for Gotland Sea
+aanekoski:lle|for Äänekoski
+aetsa:lle|for Äetsä
+ahtari:lle|for Ähtäri
+alaharma:lle|for Alahärmä
+alajarvi:lle|for Alajärvi
+alastaro:lle|for Alastaro
+alavieska:lle|for Alavieska
+alavus:lle|for Alavus
+artjarvi:lle|for Artjärvi
+asikkala:lle|for Asikkala
+askainen:lle|for Askainen
+askola:lle|for Askola
+aura:lle|for Aura
+brando:lle|for Brändö
+dragsfjard:lle|for Dragsfjärd
+eckero:lle|for Eckerö
+elimaki:lle|for Elimäki
+eno:lle|for Eno
+enonkoski:lle|for Enonkoski
+enontekio:lle|for Enontekiö
+espoo:lle|for Espoo
+eura:lle|for Eura
+eurajoki:lle|for Eurajoki
+evijarvi:lle|for Evijärvi
+finstrom:lle|for Finström
+foglo:lle|for Föglö
+forssa:lle|for Forssa
+geta:lle|for Geta
+haapajarvi:lle|for Haapajärvi
+hailuoto:lle|for Hailuoto
+halikko:lle|for Halikko
+halsua:lle|for Halsua
+hameenkoski:lle|for Hämeenkoski
+hameenkyro:lle|for Hämeenkyrö
+hameenlinna:lle|for Hämeenlinna
+hamina:lle|for Hamina
+hammarland:lle|for Hammarland
+hankasalmi:lle|for Hankasalmi
+hanko:lle|for Hanko
+harjavalta:lle|for Harjavalta
+hartola:lle|for Hartola
+hattula:lle|for Hattula
+hauho:lle|for Hauho
+haukipudas:lle|for Haukipudas
+haukivuori:lle|for Haukivuori
+hausjarvi:lle|for Hausjärvi
+heinavesi:lle|for Heinävesi
+heinola:lle|for Heinola
+helsinki:lle|for Helsinki
+himanka:lle|for Himanka
+jaisiksi|icy
+keli on|road condition
+kuuraisiksi|be covered by frost
+liukkaiksi jaatavasta sateesta|be slippery of icy rain
+iltapaivasta|from the afternoon
+kemio:lle|for Kemiö
+kempele:lle|for Kempele
+kerava:lle|for Kerava
+kesalahti:lle|for Kesälahti
+kestila:lle|for Kestilä
+keuruu:lle|for Keuruu
+kihnio:lle|for Kihniö
+kiikala:lle|for Kiikala
+kiikoinen:lle|for Kiikoinen
+kiiminki:lle|for Kiiminki
+kinnula:lle|for Kinnula
+kirkkonummi:lle|for Kirkkonummi
+kisko:lle|for Kisko
+kitee:lle|for Kitee
+kittila:lle|for Kittilä
+kiukainen:lle|for Kiukainen
+kiuruvesi:lle|for Kiuruvesi
+kivijarvi:lle|for Kivijärvi
+kodisjoki:lle|for Kodisjoki
+kokar:lle|for Kökar
+kokemaki:lle|for Kokemäki
+kokkola:lle|for Kokkola
+kolari:lle|for Kolari
+kontiolahti:lle|for Kontiolahti
+korpilahti:lle|for Korpilahti
+korppoo:lle|for Korppoo
+korsnas:lle|for Korsnäs
+kortesjarvi:lle|for Kortesjärvi
+koski_tl:lle|for Koski
+kotka:lle|for Kotka
+kouvola:lle|for Kouvola
+hollola:lle|for Hollola
+honkajoki:lle|for Honkajoki
+houtskari:lle|for Houtskari
+huittinen:lle|for Huittinen
+humppila:lle|for Humppila
+hyrynsalmi:lle|for Hyrynsalmi
+hyvinkaa:lle|for Hyvinkää
+ii:lle|for Ii
+iisalmi:lle|for Iisalmi
+iitti:lle|for Iitti
+ilmajoki:lle|for Ilmajoki
+ilomantsi:lle|for Ilomantsi
+imatra:lle|for Imatra
+inari:lle|for Inari
+inio:lle|for Iniö
+inkoo:lle|for Inkoo
+isojoki:lle|for Isojoki
+isokyro:lle|for Isokyrö
+jaala:lle|for Jaala
+jalasjarvi:lle|for Jalasjärvi
+jamijarvi:lle|for Jämijärvi
+jamsa:lle|for Jämsä
+jamsankoski:lle|for Jämsänkoski
+janakkala:lle|for Janakkala
+jarvenpaa:lle|for Järvenpää
+joensuu:lle|for Joensuu
+jokioinen:lle|for Jokioinen
+jomala:lle|for Jomala
+joroinen:lle|for Joroinen
+joutsa:lle|for Joutsa
+juankoski:lle|for Juankoski
+jurva:lle|for Jurva
+juuka:lle|for Juuka
+juupajoki:lle|for Juupajoki
+juva:lle|for Juva
+jyvaskyla:lle|for Jyväskylä
+jyvaskylan_mlk:lle|for Jyväskylän_mlk
+kaarina:lle|for Kaarina
+kaavi:lle|for Kaavi
+kajaani:lle|for Kajaani
+kalajoki:lle|for Kalajoki
+kalvia:lle|for Kälviä
+kalvola:lle|for Kalvola
+kangasala:lle|for Kangasala
+kangasniemi:lle|for Kangasniemi
+kankaanpaa:lle|for Kankaanpää
+kannonkoski:lle|for Kannonkoski
+kannus:lle|for Kannus
+karijoki:lle|for Karijoki
+karjaa:lle|for Karjaa
+karkkila:lle|for Karkkila
+karkola:lle|for Kärkölä
+karsamaki:lle|for Kärsämäki
+karstula:lle|for Karstula
+karttula:lle|for Karttula
+karvia:lle|for Karvia
+kaskinen:lle|for Kaskinen
+kauhajoki:lle|for Kauhajoki
+kauhava:lle|for Kauhava
+kauniainen:lle|for Kauniainen
+kaustinen:lle|for Kaustinen
+keitele:lle|for Keitele
+kemijarvi:lle|for Kemijärvi
+keminmaa:lle|for Keminmaa
+illasta|from the evening
+kuhmalahti:lle|for Kuhmalahti
+kuhmo:lle|for Kuhmo
+kuhmoinen:lle|for Kuhmoinen
+kuivaniemi:lle|for Kuivaniemi
+kumlinge:lle|for Kumlinge
+kuopio:lle|for Kuopio
+kurikka:lle|for Kurikka
+kuru:lle|for Kuru
+kustavi:lle|for Kustavi
+kuusamo:lle|for Kuusamo
+kuusankoski:lle|for Kuusankoski
+kuusjoki:lle|for Kuusjoki
+kylmakoski:lle|for Kylmäkoski
+kyyjarvi:lle|for Kyyjärvi
+lahti:lle|for Lahti
+laihia:lle|for Laihia
+laitila:lle|for Laitila
+lammi:lle|for Lammi
+langelmaki:lle|for Längelmäki
+lapin kuntaan:lle|for Lappi
+lapinjarvi:lle|for Lapinjärvi
+lapinlahti:lle|for Lapinlahti
+lappajarvi:lle|for Lappajärvi
+lapua:lle|for Lapua
+larsmo:lle|for Larsmo
+laukaa:lle|for Laukaa
+lavia:lle|for Lavia
+lehtimaki:lle|for Lehtimäki
+leivonmaki:lle|for Leivonmäki
+lemi:lle|for Lemi
+lemland:lle|for Lemland
+lempaala:lle|for Lempäälä
+lemu:lle|for Lemu
+leppavirta:lle|for Leppävirta
+lestijarvi:lle|for Lestijärvi
+lieksa:lle|for Lieksa
+lieto:lle|for Lieto
+liljendal:lle|for Liljendal
+liminka:lle|for Liminka
+liperi:lle|for Liperi
+lohja:lle|for Lohja
+lohtaja:lle|for Lohtaja
+loimaa:lle|for Loimaa
+loppi:lle|for Loppi
+loviisa:lle|for Loviisa
+luhanka:lle|for Luhanka
+lumijoki:lle|for Lumijoki
+luopioinen:lle|for Luopioinen
+luumaki:lle|for Luumäki
+luvia:lle|for Luvia
+maalahti:lle|for Maalahti
+maaninka:lle|for Maaninka
+maarianhamina:lle|for Maarianhamina
+maksamaa:lle|for Maksamaa
+mantsala:lle|for Mäntsälä
+mantta:lle|for Mänttä
+mantyharju:lle|for Mäntyharju
+marttila:lle|for Marttila
+masku:lle|for Masku
+mellila:lle|for Mellilä
+merijarvi:lle|for Merijärvi
+merikarvia:lle|for Merikarvia
+merimasku:lle|for Merimasku
+miehikkala:lle|for Miehikkälä
+mietoinen:lle|for Mietoinen
+mikkeli:lle|for Mikkeli
+mouhijarvi:lle|for Mouhijärvi
+muhos:lle|for Muhos
+multia:lle|for Multia
+mustasaari:lle|for Mustasaari
+muurame:lle|for Muurame
+muurla:lle|for Muurla
+mynamaki:lle|for Mynämäki
+myrskyla:lle|for Myrskylä
+naantali:lle|for Naantali
+nakkila:lle|for Nakkila
+narpio:lle|for Närpiö
+nastola:lle|for Nastola
+nauvo:lle|for Nauvo
+nilsia:lle|for Nilsiä
+nivala:lle|for Nivala
+nokia:lle|for Nokia
+noormarkku:lle|for Noormarkku
+nousiainen:lle|for Nousiainen
+nurmes:lle|for Nurmes
+nurmijarvi:lle|for Nurmijärvi
+nurmo:lle|for Nurmo
+oravainen:lle|for Oravainen
+orimattila:lle|for Orimattila
+oripaa:lle|for Oripää
+orivesi:lle|for Orivesi
+oulainen:lle|for Oulainen
+oulunsalo:lle|for Oulunsalo
+kristiinankaupunki:lle|for Kristiinankaupunki
+kronoby:lle|for Kronoby
+iltayosta|from the late evening
+paimio:lle|for Paimio
+palkane:lle|for Pälkäne
+paltamo:lle|for Paltamo
+parainen:lle|for Parainen
+parkano:lle|for Parkano
+pedersoren_kunta:lle|for Pedersöre
+pelkosenniemi:lle|for Pelkosenniemi
+pello:lle|for Pello
+perho:lle|for Perho
+pernaja:lle|for Pernaja
+pernio:lle|for Perniö
+pertteli:lle|for Pertteli
+pertunmaa:lle|for Pertunmaa
+petajavesi:lle|for Petäjävesi
+pieksanmaa:lle|for Pieksänmaa
+pielavesi:lle|for Pielavesi
+pietarsaari:lle|for Pietarsaari
+pihtipudas:lle|for Pihtipudas
+piikkio:lle|for Piikkiö
+piippola:lle|for Piippola
+pirkkala:lle|for Pirkkala
+pohja:lle|for Pohja
+polvijarvi:lle|for Polvijärvi
+pomarkku:lle|for Pomarkku
+pori:lle|for Pori
+porvoo:lle|for Porvoo
+posio:lle|for Posio
+poytya:lle|for Pöytyä
+pudasjarvi:lle|for Pudasjärvi
+pukkila:lle|for Pukkila
+pulkkila:lle|for Pulkkila
+punkaharju:lle|for Punkaharju
+punkalaidun:lle|for Punkalaidun
+puolanka:lle|for Puolanka
+puumala:lle|for Puumala
+pyhajarvi:lle|for Pyhäjärvi
+pyhajoki:lle|for Pyhäjoki
+pyhanta:lle|for Pyhäntä
+pyharanta:lle|for Pyhäranta
+pyhaselka:lle|for Pyhäselkä
+pyhtaa:lle|for Pyhtää
+pylkonmaki:lle|for Pylkönmäki
+raahe:lle|for Raahe
+raakkyla:lle|for Rääkkylä
+raisio:lle|for Raisio
+rantsila:lle|for Rantsila
+ranua:lle|for Ranua
+rauma:lle|for Rauma
+rautalampi:lle|for Rautalampi
+rautavaara:lle|for Rautavaara
+rautjarvi:lle|for Rautjärvi
+reisjarvi:lle|for Reisjärvi
+renko:lle|for Renko
+riihimaki:lle|for Riihimäki
+ristiina:lle|for Ristiina
+ristijarvi:lle|for Ristijärvi
+rovaniemen_mlk:lle|for Rovaniemen_mlk
+rovaniemi:lle|for Rovaniemi
+ruokolahti:lle|for Ruokolahti
+ruotsinpyhtaa:lle|for Ruotsinpyhtää
+ruovesi:lle|for Ruovesi
+rusko:lle|for Rusko
+ruukki:lle|for Ruukki
+rymattyla:lle|for Rymättylä
+sakyla:lle|for Säkylä
+salla:lle|for Salla
+salo:lle|for Salo
+saltvik:lle|for Saltvik
+sammatti:lle|for Sammatti
+sarkisalo:lle|for Särkisalo
+sauvo:lle|for Sauvo
+savitaipale:lle|for Savitaipale
+savonlinna:lle|for Savonlinna
+savonranta:lle|for Savonranta
+savukoski:lle|for Savukoski
+seinajoki:lle|for Seinäjoki
+sievi:lle|for Sievi
+siikainen:lle|for Siikainen
+siikajoki:lle|for Siikajoki
+siilinjarvi:lle|for Siilinjärvi
+simo:lle|for Simo
+sipoo:lle|for Sipoo
+siuntio:lle|for Siuntio
+sodankyla:lle|for Sodankylä
+soini:lle|for Soini
+somero:lle|for Somero
+sotkamo:lle|for Sotkamo
+sottunga:lle|for Sottunga
+sulkava:lle|for Sulkava
+sumiainen:lle|for Sumiainen
+sund:lle|for Sund
+suodenniemi:lle|for Suodenniemi
+outokumpu:lle|for Outokumpu
+padasjoki:lle|for Padasjoki
+B7|Northern Baltic
+B8|Middle Baltic
+keskiyosta|from the midnight
+yosta|from tonight
+3-aamupaivalla|on Wednesday before noon
+4-aamulla|on Thursday morning
+5-aamulla|on Friday morning
+7-aamulla|on Sunday morning
+haihdunta on erittain huono|evaporation very weak
+metsapaloindeksi|the forest fire warning index
+metsapalovaroitus on voimassa|forest fire warning in effect
+poudan todennakoisyys|probability of no precipitation
+suolahti:lle|for Suolahti
+suomenniemi:lle|for Suomenniemi
+suomusjarvi:lle|for Suomusjärvi
+suomussalmi:lle|for Suomussalmi
+suonenjoki:lle|for Suonenjoki
+sysma:lle|for Sysmä
+taipalsaari:lle|for Taipalsaari
+taivalkoski:lle|for Taivalkoski
+tammela:lle|for Tammela
+tammisaari:lle|for Tammisaari
+tampere:lle|for Tampere
+tarvasjoki:lle|for Tarvasjoki
+tervo:lle|for Tervo
+tervola:lle|for Tervola
+teuva:lle|for Teuva
+tohmajarvi:lle|for Tohmajärvi
+toholampi:lle|for Toholampi
+toijala:lle|for Toijala
+toivakka:lle|for Toivakka
+tornio:lle|for Tornio
+toysa:lle|for Töysä
+turku:lle|for Turku
+tuulos:lle|for Tuulos
+tuusniemi:lle|for Tuusniemi
+tuusula:lle|for Tuusula
+tyrnava:lle|for Tyrnävä
+ullava:lle|for Ullava
+ulvila:lle|for Ulvila
+urjala:lle|for Urjala
+utsjoki:lle|for Utsjoki
+uurainen:lle|for Uurainen
+uusikaarlepyy:lle|for Uusikaarlepyy
+uusikaupunki:lle|for Uusikaupunki
+vaala:lle|for Vaala
+vaasa:lle|for Vaasa
+vahakyro:lle|for Vähäkyrö
+vahto:lle|for Vahto
+valkeakoski:lle|for Valkeakoski
+valkeala:lle|for Valkeala
+valtimo:lle|for Valtimo
+vammala:lle|for Vammala
+vampula:lle|for Vampula
+vantaa:lle|for Vantaa
+vardo:lle|for Vårdö
+varkaus:lle|for Varkaus
+varpaisjarvi:lle|for Varpaisjärvi
+vehmaa:lle|for Vehmaa
+velkua:lle|for Velkua
+vesanto:lle|for Vesanto
+vesilahti:lle|for Vesilahti
+veteli:lle|for Veteli
+vierema:lle|for Vieremä
+vihanti:lle|for Vihanti
+vihti:lle|for Vihti
+viiala:lle|for Viiala
+viitasaari:lle|for Viitasaari
+viljakkala:lle|for Viljakkala
+vilppula:lle|for Vilppula
+vimpeli:lle|for Vimpeli
+virolahti:lle|for Virolahti
+virrat:lle|for Virrat
+voyri:lle|for Vöyri
+vuolijoki:lle|for Vuolijoki
+ylamaa:lle|for Ylämaa
+ylane:lle|for Yläne
+yliharma:lle|for Ylihärmä
+yliii:lle|for Yli-Ii
+ylikiiminki:lle|for Ylikiiminki
+ylistaro:lle|for Ylistaro
+ylitornio:lle|for Ylitornio
+ylojarvi:lle|for Ylöjärvi
+ypaja:lle|for Ypäjä
+B6|Gulf of Riga
+2-aamupaivalla|on Tuesday before noon
+2-aamulla|on Tuesday morning
+3-aamulla|on Wednesday morning
+6-aamulla|on Saturday morning
+haihdunta on erinomainen|evaporation very good
+haihdunta on huono|evaporation weak
+haihdunta on hyva|evaporation good
+haihdunta on tyydyttava|evaporation satisfactory
+kruunupyy:lle|for Kruunupyy
+luoto:lle|for Luoto
+kello [1]|[1] 'clock
+1-na kello [1]|on Monday [1] 'clock
+2-na kello [1]|on Tuesday[1] 'clock
+3-na kello [1]|on Wednesday [1] 'clock
+4-na kello [1]|on Thursday [1] 'clock
+5-na kello [1]|on Friday [1] 'clock
+6-na kello [1]|on Saturday [1] 'clock
+7-na kello [1]|on Sunday [1] 'clock
+5-aamupaivalla|on Friday before noon
+4-illalla|on Thursday evening
+5-iltapaivalla|on Friday afternoon
+7-aamupaivalla|on Sunday before noon
+6-illalla|on Saturday evening
+7-iltapaivalla|on Sunday afternoon
+[1] asteen tienoilla|round about [1] degrees
+[1] asteen tuntumassa|close to [1] degrees
+lahella [1] astetta|around [1] degrees
+lantinen-uusimaa:lle|for Western Uusimaa
+lounais-suomi:lle|for Southwestern Finland
+lumipyry|whirl
+lumisateen takia|because of snowfall
+lumisateesta|worse because of snowfall
+malaren:lle|for Mälaren
+marka|wet
+merilappi:lle|for Merilappi
+paakaupunkiseutu:lle|for Helsinki Metropolitan Area
+paine|pressure
+pakkasliukkaus|slipperiness because of frost
+pihlajavesi:lle|for Pihlajavesi
+pikkupakkasta|temperature a little below zero
+pohjois-pohjanmaa-itaosa:lle|for Eastern part of Northern Ostrobothnia
+pohjois-pohjanmaa-lansiosa:lle|for Western part of Northern Ostrobothia
+pohjois-suomi:lle|for Northern Finland
+pohjoispohjanmeri:lle|for Northern North Sea
+rantasade jaiselle|sleetfall to icy or partially icy road surface
+runsas lumisade|heavy snowfall
+suhteellinen kosteus|relative humidity
+suur-saimaa:lle|for Saimaa
+tie on muuttumassa|road surface becoming
+tienpinta muuttuu|road surface becomes
+ukkoskuurot paikoin mahdollisia|possible local thunder showers
+ukkoskuurot todennakoisia|probable thunder showers
+uusimaa_ita-uusim:lle|for Uusimaa
+vaikeuttaa liikennetta|hampers traffic
+vanern:lle|for Vänern
+voimakas puuskainen tuuli|strong gusty
+yksi millimetri|one millimeter
+yksittaiset rantakuurot mahdollisia|possibly scattered sleet showers
+yksittaiset sadekuurot mahdollisia|possibly scattered rain showers
+yksittaiset vesi- tai lumikuurot mahdollisia|possibly scattered rain or snow showers
+yksittaiset vesi- tai rantakuurot mahdollisia|possibly scattered rain or sleet showers
+yksittaiset vesikuurot mahdollisia|possibly scattered rain showers
+4-aamupaivalla|on Thursday before noon
+2-illalla|on Tuesday evening
+2-iltapaivalla|on Tuesday afternoon
+3-illalla|on Wednesday evening
+3-iltapaivalla|on Wednesday afternoon
+4-iltapaivalla|on Thursday afternoon
+6-aamupaivalla|on Saturday before noon
+5-illalla|on Friday evening
+6-iltapaivalla|on Saturday afternoon
+7-illalla|on Sunday evening
+alijaahtynyt sade|supercooled rain
+alle|below
+biskaja:lle|for Biscay
+etelapohjanmeri:lle|for Southern North Sea
+haukivesi:lle|for Haukivesi
+hehtopascalia|hectopascals
+ita-lappi:lle|for Eastern Lapland
+ita-suomi:lle|for Eastern Finland
+itainen-uusimaa:lle|for Eastern Uusimaa
+jaiseksi tai osittain jaiseksi|icy or partly icy
+jaiseksi vesisateesta johtuen|icy because of rain
+kaakkois-suomi:lle|for Southeast Finland
+kallavesi:lle|for Kallavesi
+kastepiste|dew point
+keli huononee|road condition becomes worse
+keli muuttuu|road condition becomes
+kelin nopea huononeminen|fast worsening of road condition
+koleaa|chilly
+kuuraiseksi|covered by frost
+lahella|near
+lampotila nousee|temperature rises
+lannesta alkaen|beginning from west
+lannesta|from west
+leutoa|mild
+lounaasta alkaen|beginning from southwest
+lounaasta|from southwest
+luoteesta alkaen|beginning from northwest
+luoteesta|from the northwest
+mahdollisesti|possibly
+melko selkea|almost clear
+nollan tienoilla|around zero
+paikkeilla|around
+pakkanen hellittaa|cold begins to ease
+pakkanen on erittain purevaa|very biting frost
+pakkanen on purevaa|biting frost
+pakkanen|frost
+pakkasta|cold
+pilvinen|cloudy
+pohjoisesta alkaen|beginning from north
+pohjoisesta|from north
+poikkeuksellisen|exceptionally
+poutainen|fair
+puolipilvinen|half cloudy
+rantakuuroja|sleet showers
+runsaita|heavy
+runsasta vesisadetta|heavy rain
+saa on helteista|very hot weather
+saadaan|obtains
+sade alkaa|precipitation begins
+sadekuuroja|rain showers
+sakeaa|dense
+sakeita|dense
+selkea|clear
+sisamaassa|inlands
+sumua|fog
+tienoilla|round about
+tihkusadetta|drizzle
+tuntumassa|close to
+tuuli saa saan tuntumaan kylmemmalta|the wind makes the weather feel colder
+tuuli saa saan tuntumaan viileammalta|the wind makes the weather feel cooler
+tuulinen|windy
+tuulista|windy
+vahan plussan puolella|a bit on the plus side
+vaihtelee puolipilvisesta pilviseen|varies from half cloudy to cloudy
+vajaat|almost
+verrattain pilvinen|comparatively cloudy
+vesikuuroja|rain showers
+voimakkaita sadekuuroja|strong rain showers
+voimakkaita vesikuuroja|intense rain showers
+yksittaiset lumikuurot mahdollisia|possibly scattered snow showers
+alueen itaosassa|in the east
+alueen kaakkoisosassa|in the southeast
+alueen koillisosassa|in the northeast
+alueen lansiosassa|in the west
+alueen lounaisosassa|in the southwest
+alueen luoteisosassa|in the northwest
+alueen pohjoisosassa|in the north
+asteen|degrees
+etelasta alkaen|beginning from south
+etelasta|from south
+hallaa|frost
+hallan vaara|frost danger
+harvinaisen|unusually
+heikkoa vesisadetta|weak rain
+heikkoja sadekuuroja|weak rain showers
+heikkoja vesikuuroja|weak rain showers
+heikkoja|weak
+hieman heikompaa|slightly weaker
+hieman kireampaa|slightly more intense
+hieman kylmempaa|slightly colder
+hieman lauhempaa|slightly milder
+huomattavasti|substantially
+idasta alkaen|beginning from east
+idasta|from east
+jaatavaa vesisadetta|freezing rain
+joka muuttuu lumisateeksi|which turns to snow
+joka muuttuu rantasateeksi|which turns to sleet
+joka muuttuu tihkusateeksi|which turns to drizzle
+joka muuttuu vesisateeksi|which turns to rain
+joka voi olla ankaraa|possibly severe
+joka voi olla jaatavaa|possibly icing
+joka voi olla sakeaa|possibly dense
+jotka voivat olla jaatavia|possibly icing
+kaakosta alkaen|beginning from southeast
+kaakosta|from southeast
+kirea|intense
+koillisesta|from northeast
+1-iltapaivalla ja illalla|on Monday afternoon and evening
+1-iltayolla|on Monday before midnight
+2-aamuyolla|on Tuesday early hours
+4-aamuyolla ja aamulla|on Thursday early hours and morning
+3-illalla ja iltayolla|on Wednesday evening and before midnight
+3-iltapaivalla ja illalla|on Wednesday afternoon and evening
+3-iltayolla|on Wednesday before midnight
+2-aamulla ja aamupaivalla|on Tuesday morning
+5-aamuyolla|on Friday early hours
+6-aamuyolla ja aamulla|on Saturday early hours and morning
+5-illalla ja iltayolla|on Friday evening and before midnight
+5-iltapaivalla ja illalla|on Friday afternoon and evening
+5-iltayolla|on Friday before midnight
+5-aamulla ja aamupaivalla|on Friday morning
+7-aamuyolla|on Sunday early hours
+1-aamuyolla ja aamulla|on Monday early hours and morning
+7-illalla ja iltayolla|on Sunday evening and before midnight
+7-iltapaivalla ja illalla|on Sunday afternoon and evening
+7-iltayolla|on Sunday before midnight
+[1-na] [saa lampenee]|[2] [1]
+[1-na] saa on [poikkeuksellisen] [kylmaa]|[2] [3] [1] weather
+myohemmin|later
+rannikolla lahella [N] [astetta]|near [1] [2] on the coastal area
+saa lampenee huomattavasti|the weather warms up considerably
+saa lampenee vahan|the weather warms up a bit
+saa on tuulinen|windy weather
+saa viilenee huomattavasti|weather cools down considerably
+saa viilenee vahan|weather cools down a bit
+2-aamuyolla ja aamulla|on Tuesday early hours and morning
+0 hehtopascalia|zero hectopascals
+1-aamuyolla|on Monday early hours
+3-aamuyolla ja aamulla|on Wednesday early hours and morning
+2-illalla ja iltayolla|on Tuesday evening and before midnight
+2-iltapaivalla ja illalla|on Tuesday afternoon and evening
+2-iltayolla|on Tuesday before midnight
+3-aamuyolla|on Wednesday early hours
+4-aamuyolla|on Thursday early hours
+5-aamuyolla ja aamulla|on Friday early hours and morning
+4-illalla ja iltayolla|on Thursday evening and before midnight
+4-iltapaivalla ja illalla|on Thursday afternoon and evening
+4-iltayolla|on Thursday before midnight
+4-aamulla ja aamupaivalla|on Thursday morning
+6-aamuyolla|on Saturday early hours
+7-aamuyolla ja aamulla|on Sunday early hours and morning
+6-illalla ja iltayolla|on Saturday evening and before midnight
+6-iltapaivalla ja illalla|on Saturday afternoon and evening
+6-iltayolla|on Saturday before midnight
+6-aamulla ja aamupaivalla|on Saturday morning
+aamulla ja aamupaivalla|in the morning
+[huomenna] [sisamaassa] [lampotila] on [N] asteen tuntumassa|[1] [3] close to [4] degrees [2]
+[huomenna] [sisamaassa] [lampotila] on lahella [N] [astetta]|[1] [3] near [4] [5] [2]
+[huomenna] [sisamaassa] [lampotila] on vahan yli [N] [astetta]|[1] [3] a little over [4] [5] [2]
+[huomenna] [sisamaassa] [lampotila] on vajaat [N] [astetta]|[1] [3] almost [4] [5] [2]
+[huomenna] [sisamaassa] [paikoin] sumua, joka voi olla sakeaa|[1] possibly dense fog [3] [2]
+[huomenna] [sisamaassa] [paikoin] sumua|[1] fog [3] [2]
+[huomenna] [sisamaassa] saa on [selkea]|[1] [3] [2] weather
+[huomenna] [sisamaassa] saa vaihtelee puolipilvisesta pilviseen|[1] partly cloudy or cloudy weather [2]
+[iltapaivalla] [rannikolla] on [tuulista]|[1] [3] [2]
+[iltapaivalla] [rannikolla] pakkanen on purevaa|biting frost [2] [1]
+[rannikolla] [paikoin] hallaa, joka voi olla ankaraa|possibly severe frost [2] [1]
+[rannikolla] [paikoin] hallaa|frost [2] [1]
+[rannikolla] mahdollisesti hallaa|possibly frost [1]
+[sisamaassa] hallan vaara|risk of frost [1]
+7-aamulla ja aamupaivalla|on Sunday morning
+aamuyolla ja aamulla|after midnight and in the morning
+alavilla mailla|in low-lying lands
+alueen etelaosassa|in the south
+empty_string|
+hyvin tuulinen|very windy
+hyvin tuulista|very windy
+illalla ja iltayolla|in the evening and before midnight
+iltapaivalla ja illalla|in the afternoon and evening
+iltayolla ja keskiyolla|before midnight and at midnight
+keskiyolla ja aamuyolla|at midnight and after midnight
+kirea pakkanen heikkenee|the intense cold weakens
+0 prosenttia|zero percent
+1 aste|one degree
+1 hehtopascal|one hectopascal
+1 metri sekunnissa|1 m/s
+1 millimetri|one millimeter
+1 prosentti|one percent
+1-aamuyosta alkaen|from early Monday morning
+1-iltapaivasta alkaen|from Monday afternoon
+1-iltayosta alkaen|from Monday late evening
+1-keskiyolla|on Monday midnight
+1-keskiyosta alkaen|from Monday midnight
+2-aamuyosta alkaen|from early Tuesday morning
+2-iltapaivasta alkaen|from Tuesday afternoon
+3-keskiyolla|on Wednesday midnight
+3-keskiyosta alkaen|from Wednesday midnight
+4-aamuyosta alkaen|from early Thursday morning
+4-iltapaivasta alkaen|from Thursday afternoon
+4-iltayosta alkaen|from Thursday late evening
+5-iltayosta alkaen|from Friday late evening
+5-keskiyolla|on Friday midnight
+5-keskiyosta alkaen|from Friday midnight
+6-aamuyosta alkaen|from early Saturday morning
+6-iltapaivasta alkaen|from Saturday afternoon
+7-keskiyolla|on Sunday midnight
+7-keskiyosta alkaen|from Sunday midnight
+[huomenna] [rannikolla] on pikkupakkasta|[1] [2] temperature a little below zero
+[huomenna] [sisamaassa] [M...N] [astetta]|[1] [3] [4] [2]
+rannikolla [M...N] [astetta]|[1] [2] on the coastal area
+rannikolla [N] asteen tienoilla|round about [1] degrees on the coastal area
+rannikolla [N] asteen tuntumassa|close to [1] degrees on the coastal area
+rannikolla [suunnilleen sama]|[1] on the coastal area
+rannikolla noin [N] [astetta]|about [1] [2] on the coastal area
+rannikolla vahan yli [N] [astetta]|a little over [1] [2] on the coastal area
+rannikolla vajaat [N] [astetta]|almost [1] [2] on the coastal area
+ranta- tai lumisadetta|sleet or snowfall
+ranta- tai vesisadetta|sleet or rain
+saa on poutainen|fair weather
+vesi- tai lumisadetta|rain or snowfall
+vesi- tai rantasadetta|rain or sleet
+0 metria sekunnissa|0 m/s
+0 millimetria|zero millimeters
+2-iltayosta alkaen|from Tuesday late evening
+2-keskiyolla|on Tuesday midnight
+2-keskiyosta alkaen|from Tuesday midnight
+3-aamuyosta alkaen|from early Wednesday morning
+3-iltayosta alkaen|from Wednesday late evening
+4-keskiyolla|on Thursday midnight
+4-keskiyosta alkaen|from Thursday midnight
+5-aamuyosta alkaen|from early Friday morning
+5-iltapaivasta alkaen|from Friday afternoon
+6-iltayosta alkaen|from Saturday late evening
+6-keskiyolla|on Saturday midnight
+6-keskiyosta alkaen|from Saturday midnight
+7-iltapaivasta alkaen|from Sunday afternoon
+7-iltayosta alkaen|from Sunday late evening
+[huomenna] [sisamaassa] [N] asteen tienoilla|[1] round about [3] degrees [2]
+[huomenna] [sisamaassa] [N] asteen tuntumassa|[1] close to [3] degrees [2]
+[huomenna] [sisamaassa] [lampotila] on [M...N] [astetta]|[1] [3] [4] [5] [2]
+[huomenna] [sisamaassa] [lampotila] on [suunnilleen sama]|[1] [3] [4] [2]
+[huomenna] [sisamaassa] [lampotila] on noin [N] [astetta]|[1] [3] about [4] [5] [2]
+[huomenna] [sisamaassa] [paikoin] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4] [5], possibly freezing
+[huomenna] [sisamaassa] [paikoin] [heikkoa] [sadetta]|[1] [4] [5] [3] [2]
+[huomenna] [sisamaassa] [paikoin] [heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3] [4] [5], possibly freezing
+[huomenna] [sisamaassa] [suunnilleen sama]|[1] [3] [2]
+[huomenna] [sisamaassa] lahella [N] [astetta]|[1] near [3] [4] [2]
+[huomenna] [sisamaassa] noin [N] [astetta]|[1] about [3] [4] [2]
+[huomenna] [sisamaassa] pakkanen on [hieman kireampaa]|[1] the cold is [3] [2]
+[huomenna] [sisamaassa] pakkasta on [M...N] [astetta]|[1] temperature [3] [4] [2]
+[huomenna] [sisamaassa] saa on enimmakseen poutainen, [yksittaiset sadekuurot mahdollisia]|mostly fair [2] [1] weather, [3]
+[huomenna] [sisamaassa] vahan yli [N] [astetta]|[1] a little over [3] [4] [2]
+[huomenna] [sisamaassa] vajaat [N] [astetta]|[1] almost [3] [4] [2]
+[sisamaassa] alavilla mailla hallan vaara|risk of frost on low-lying areas [1]
+[yolla] lampotila nousee|temperature rises [1]
+[yolla] on [hieman kylmempaa]|[2] [1]
+lumi- tai rantasadetta|snowfall or sleet
+lumi- tai vesisadetta|snowfall or rain
+paikoin myos ukkostaa|locally possibly thunder
+paikoin voi myos ukkostaa|also locally possibly thunder
+ranta- tai vesikuuroja|sleet or rain showers
+saa on [poikkeuksellisen] [kylmaa]|weather [1] [2]
+todennakoisesti myos ukkostaa|also likely thunder
+vesi- tai lumikuuroja|rain or snow showers
+vesi- tai rantakuuroja|rain or sleet showers
+[huomenna] [heikkoa] [sadetta]|[1] [2] [3]
+[huomenna] [paikoin] [heikkoa] [sadetta]|[1] [3] [4] [2]
+[huomenna] [paikoin] [sadetta]|[1] [3] [2]
+[huomenna] [paikoin] sumua, joka voi olla sakeaa|[1] possibly dense fog [2]
+[huomenna] [paikoin] sumua|[1] [2] fog
+[huomenna] [sadetta]|[1] [2]
+[huomenna] [sisamaassa] [heikkoa] [sadetta]|[1] [3] [4] [2]
+[huomenna] [sisamaassa] [paikoin] [sadetta]|[1] [4] [3] [2]
+[huomenna] [sisamaassa] [sadetta]|[1] [3] [2]
+[huomenna] [sisamaassa] pakkanen on [N] asteen tuntumassa|[1] temperature close to [3] degrees [2]
+[huomenna] [sisamaassa] pakkanen on lahella [N] [astetta]|[1] temperature near [3] [4] [2]
+[huomenna] [sisamaassa] pakkasta on noin [N] [astetta]|[1] temperature about [3] [4] [2]
+[huomenna] [sisamaassa] pakkasta on vahan yli [N] [astetta]|[1] temperature a little over [3] [4] [2]
+[huomenna] [sisamaassa] pakkasta on vajaat [N] [astetta]|[1] temperature almost [3] [4] [2]
+[huomenna] [sisamaassa] saa on [selkea] ja poutainen|[1] [3] and fair [2] weather
+[huomenna] [sisamaassa] saa on poutainen|fair weather [2] [1] 
+[huomenna] [sisamaassa] saa vaihtelee puolipilvisesta pilviseen ja on poutainen|[1] half cloudy or cloudy and fair weather [2]
+[huomenna] [sisamaassa] sumua, joka voi olla sakeaa|[1] possibly dense fog [2]
+[huomenna] [sisamaassa] sumua|[1] [2] fog
+[huomenna] saa on [selkea] ja poutainen|[1] fair and [2] weather
+[huomenna] saa on [selkea]|[1] [2] weather
+[huomenna] saa on enimmakseen poutainen, [yksittaiset sadekuurot mahdollisia]|mostly fair weather [1], [2]
+[huomenna] saa on poutainen|fair weather [1]
+[huomenna] saa vaihtelee puolipilvisesta pilviseen ja on poutainen|[1] half cloudy or cloudy and fair weather
+[huomenna] saa vaihtelee puolipilvisesta pilviseen|[1] partly cloudy or cloudy
+[huomenna] sumua, joka voi olla sakeaa|[1] possibly dense fog
+[huomenna] sumua|[1] fog
+[iltapaivalla] saa poutaantuu ja on [selkea]|becoming fair and [2] weather [1]
+[iltapaivalla] saa poutaantuu|weather becoming fair [1]
+[iltapaivasta alkaen] [pilvistyvaa]|[2] [1]
+[lampotila] on [M...N] [astetta]|[1] [2] [3]
+[lampotila] on [N] asteen tienoilla|[1] round about [2] degrees
+[lampotila] on [N] asteen tuntumassa|[1] close to [2] degrees
+[lampotila] on [suunnilleen sama]|[1] [2]
+[lampotila] on lahella [N] [astetta]|[1] near [2] [3]
+[lampotila] on noin [N] [astetta]|[1] about [2] [3]
+[lampotila] on vahan yli [N] [astetta]|[1] a little over [2] [3]
+[lampotila] on vajaat [N] [astetta]|[1] almost [2] [3]
+[paikoin] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3], possibly freezing
+[paikoin] [heikkoa] [sadetta]|[1] [2] [3]
+[paikoin] [heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3], possibly freezing
+[paikoin] [sadetta]|[2] [1]
+[paikoin] sumua, joka voi olla sakeaa|[1] possibly dense fog
+[paikoin] sumua|fog [1]
+[sisamaassa] [heikkoa] [sadetta]|[2] [3] [1]
+[sisamaassa] [paikoin] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4], possibly freezing
+[sisamaassa] [paikoin] [heikkoa] [sadetta]|[3] [4] [2] [1]
+[sisamaassa] [paikoin] [heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3] [4], possibly freezing
+[sisamaassa] [paikoin] [sadetta]|[3] [2] [1]
+[sisamaassa] [paikoin] sumua, joka voi olla sakeaa|possibly dense fog [2] [1]
+[sisamaassa] [paikoin] sumua|fog [2] [1]
+[sisamaassa] [sadetta]|[2] [1]
+[sisamaassa] saa on [selkea] ja poutainen|[2] and fair weather [1]
+[sisamaassa] saa on [selkea]|[2] weather [1]
+[sisamaassa] saa on enimmakseen poutainen, [yksittaiset sadekuurot mahdollisia]|mostly fair weather [1], [2]
+[sisamaassa] saa on poutainen|fair weather [1]
+[sisamaassa] saa vaihtelee puolipilvisesta pilviseen ja on poutainen|half cloudy or cloudy and fair weather [1]
+[sisamaassa] saa vaihtelee puolipilvisesta pilviseen|partly cloudy or cloudy weather [1]
+[sisamaassa] sumua, joka voi olla sakeaa|possibly dense fog [1]
+[sisamaassa] sumua|fog [1]
+mahdollisesti myos ukkostaa|also possibly some thunder
+myos ukkosta esiintyy|also possibly thunder
+pakkasta on [M...N] [astetta]|temperature [1] 2]
+pakkasta on noin [N] [astetta]|temperature about [1] [2]
+pakkasta on vahan yli [N] [astetta]|temperature a little below [1] [2]
+pakkasta on vajaat [N] [astetta]|temperature almost [1] [2]
+saa on [iltapaivalla] [rannikolla] [tuulinen]|[3] [2] [1]
+saa on hyvin tuulinen|very windy weather
+6-keskiyohon asti|until Saturday midnight
+[heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2], which may be freezing
+[heikkoa] [sadetta]|[1] [2]
+[heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2], which may be freezing
+[huomenna] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3], which may be freezing
+[huomenna] [heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3], which may be freezing
+[huomenna] [paikoin] [heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3] [4], possibly freezing
+[huomenna] [paikoin] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3], possibly freezing
+[huomenna] [paikoin] [sadetta], joka voi olla jaatavaa|[1] [2] [3], possibly freezing
+[huomenna] [sadekuuroja], jotka voivat olla jaatavia|[1] [2], possibly freezing
+[huomenna] [sadetta], joka voi olla jaatavaa|[1] [2], possibly freezing
+[huomenna] [sisamaassa] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4], possibly freezing
+[huomenna] [sisamaassa] [heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3] [4], possibly freezing
+[huomenna] [sisamaassa] [paikoin] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3] [4], possibly freezing
+[huomenna] [sisamaassa] [paikoin] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4], possibly freezing
+[huomenna] [sisamaassa] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3], possibly freezing
+[huomenna] [sisamaassa] [sadetta], joka voi olla jaatavaa|[1] [2] [3], possibly freezing
+[iltapaivalla] [rannikolla] [pakkanen on purevaa]|[1] [2] [1]
+[iltapaivalla] [rannikolla] pakkanen on erittain purevaa|very biting frost [2] [1]
+[iltapaivalla] [rannikolla] tuuli saa saan tuntumaan kylmemmalta|the wind makes the weather feel colder [2] [1]
+[iltapaivalla] [rannikolla] tuuli saa saan tuntumaan viileammalta|the wind makes the weather feel cooler [2] [1]
+[iltapaivalla] saa poutaantuu lumisateen jalkeen ja on pilvinen|weather becoming fair and cloudy [1]
+[iltapaivalla] saa poutaantuu lumisateen jalkeen ja on selkea|weather becoming fair and clear [1]
+[iltapaivalla] saa poutaantuu lumisateen jalkeen ja vaihtelee puolipilvisesta pilviseen|weather becoming fair varying from half cloudy to cloudy [1]
+[iltapaivalla] saa poutaantuu rantasateen jalkeen ja on selkea|weather becoming fair and clear [1]
+[iltapaivalla] saa poutaantuu rantasateen jalkeen ja vaihtelee puolipilvisesta pilviseen|weather becoming fair varying from half cloudy to cloudy [1]
+[iltapaivalla] saa poutaantuu tihkusateen jalkeen ja on selkea|weather becoming fair and clear [1]
+[iltapaivalla] saa poutaantuu tihkusateen jalkeen ja on verrattain pilvinen|weather becoming fair and comparatively cloudy [1]
+[iltapaivalla] saa poutaantuu tihkusateen jalkeen ja vaihtelee puolipilvisesta pilviseen|weather becoming fair varying from half cloudy to cloudy [1]
+[iltapaivalla] saa poutaantuu vesisateen jalkeen ja on selkea|weather becoming fair and clear [1]
+[iltapaivalla] saa poutaantuu vesisateen jalkeen ja vaihtelee puolipilvisesta pilviseen|weather becoming fair varying from half cloudy to cloudy [1]
+[paikoin] [sadetta], joka voi olla jaatavaa|[1] [2], possibly freezing
+[sadekuuroja], jotka voivat olla jaatavia|[1], possibly freezing
+[sadetta], joka voi olla jaatavaa|[1], possibly freezing
+[sisamaassa] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3], possibly freezing
+[sisamaassa] [heikkoja] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3], possibly freezing
+[sisamaassa] [paikoin] [sadekuuroja], jotka voivat olla jaatavia|[1] [2] [3], possibly freezing
+[sisamaassa] [paikoin] [sadetta], joka voi olla jaatavaa|[1] [2] [3], possibly freezing
+[sisamaassa] [sadekuuroja], jotka voivat olla jaatavia|[1] [2], possibly freezing
+[sisamaassa] [sadetta], joka voi olla jaatavaa|[1] [2], possibly freezing
+pakkanen on [N] asteen tuntumassa|temperature close to [1] degrees
+pakkanen on lahella [N] [astetta]|temperature near [1] [2]
+[iltapaivalla] saa poutaantuu lumisateen jalkeen|weather becoming fair [1]
+[iltapaivalla] saa poutaantuu rantasateen jalkeen ja on pilvinen|weather becoming fair and cloudy [1]
+[iltapaivalla] saa poutaantuu rantasateen jalkeen|weather becoming fair [1]
+[iltapaivalla] saa poutaantuu tihkusateen jalkeen ja on pilvinen|weather becoming fair and cloudy [1]
+[iltapaivalla] saa poutaantuu tihkusateen jalkeen|weather becoming fair [1]
+[iltapaivalla] saa poutaantuu vesisateen jalkeen ja on pilvinen|weather becoming fair and cloudy [1]
+[iltapaivalla] saa poutaantuu vesisateen jalkeen|weather becoming fair [1]
+[paikoin] [sadekuuroja], jotka voivat olla jaatavia|[1] [2], possibly freezing
+[huomenna] [lampotila] on [M...N] [astetta]|[1] [2] [3] [4]
+[huomenna] [lampotila] on [N] asteen tienoilla|[1] [2] around [3] degrees
+[huomenna] [lampotila] on [N] asteen tuntumassa|[1] [2] almost [3] degrees
+[huomenna] [lampotila] on [suunnilleen sama]|[1] [2] [3]
+[huomenna] [lampotila] on lahella [N] [astetta]|[1] [2] near [3]
+[huomenna] [lampotila] on noin [N] [astetta]|[1] the [2] about [3] [4]
+[huomenna] [lampotila] on vahan yli [N] [astetta]|[1] [2] a little over [3] [4]
+[huomenna] [lampotila] on vajaat [N] [astetta]|[1] [2] almost [3] [4]
+[huomenna] [suunnilleen sama]|[1] [2]
+[huomenna] noin [N] [astetta]|[1] about [2] [3]
+[huomenna] on pikkupakkasta|[1] temperature a little below zero
+[huomenna] pakkanen on [N] asteen tienoilla|[1] temperature round about [2] degrees
+[huomenna] pakkanen on [N] asteen tuntumassa|[1] temperature close to [2] degrees
+[huomenna] pakkanen on [hieman kireampaa]|[1] the cold is [2]
+[huomenna] pakkanen on lahella [N] [astetta]|[1] temperature near [2] [3]
+[huomenna] pakkasta on [M...N] [astetta]|[1] temperature [2] [3]
+[huomenna] pakkasta on noin [N] [astetta]|[1] temperature about [2] [3]
+[huomenna] pakkasta on vahan yli [N] [astetta]|[1] temperature a little below [2] [3]
+[huomenna] pakkasta on vajaat [N] [astetta]|[1] temperature a almost [2] [3]
+[iltapaivalla] on [tuulista]|[2] [1]
+[iltapaivalla] pakkanen on erittain purevaa|very biting frost [1]
+[iltapaivalla] pakkanen on purevaa|bioting frost [1]
+[iltapaivalla] saa poutaantuu lumisateen jalkeen ja on melko selkea|weather becoming fair and almost clear [1]
+[iltapaivalla] saa poutaantuu lumisateen jalkeen ja on puolipilvinen|weather becoming fair and half cloudy [1]
+[iltapaivalla] saa poutaantuu lumisateen jalkeen ja on verrattain pilvinen|weather becoming fair and almost cloudy [1]
+[iltapaivalla] saa poutaantuu rantasateen jalkeen ja on melko selkea|weather becoming fair and almost clear [1]
+[iltapaivalla] saa poutaantuu rantasateen jalkeen ja on puolipilvinen|weather becoming fair and half cloudy [1]
+[iltapaivalla] saa poutaantuu rantasateen jalkeen ja on verrattain pilvinen|weather becoming fair and almost cloudy [1]
+[iltapaivalla] saa poutaantuu tihkusateen jalkeen ja on melko selkea|weather becoming fair and almost clear [1]
+[iltapaivalla] saa poutaantuu tihkusateen jalkeen ja on puolipilvinen|weather becoming fair and half cloudy [1]
+[iltapaivalla] saa poutaantuu vesisateen jalkeen ja on melko selkea|weather becoming fair and almost clear [1]
+[iltapaivalla] saa poutaantuu vesisateen jalkeen ja on puolipilvinen|weather becoming fair and half cloudy [1]
+[iltapaivalla] saa poutaantuu vesisateen jalkeen ja on verrattain pilvinen|weather becoming fair and almost cloudy [1]
+[iltapaivalla] tuuli saa saan tuntumaan kylmemmalta|the wind makes the weather feel colder [1]
+[iltapaivalla] tuuli saa saan tuntumaan viileammalta|the wind makes the weather feel cooler [1]
+[rannikolla] on [tuulista]|[2] [1]
+[rannikolla] on pikkupakkasta|temperature a little below zero [1]
+[rannikolla] pakkanen on erittain purevaa|very biting frost [1]
+[rannikolla] pakkanen on purevaa|biting frost [1]
+[rannikolla] tuuli saa saan tuntumaan kylmemmalta|the wind makes the weather feel colder [1]
+[rannikolla] tuuli saa saan tuntumaan viileammalta|the wind makes the weather feel cooler [1]
+[sisamaassa] [M...N] [astetta]|[2] [3] [1]
+[sisamaassa] [N] asteen tienoilla|round about [2] degrees [1]
+[sisamaassa] [lampotila] on [M...N] [astetta]|[2] [3] [4] [1]
+[sisamaassa] [lampotila] on [N] asteen tienoilla|[2] round about [3] degrees [1]
+[sisamaassa] [lampotila] on [N] asteen tuntumassa|[2] close to [3] degrees [1]
+[sisamaassa] [lampotila] on [suunnilleen sama]|[2] [3] [1]
+[sisamaassa] [lampotila] on lahella [N] [astetta]|[2] near [3] [1]
+[sisamaassa] [lampotila] on noin [N] [astetta]|[2] about [3] [4] [1]
+[sisamaassa] [lampotila] on vahan yli [N] [astetta]|[2] a little over [3] [4] [1]
+[sisamaassa] [lampotila] on vajaat [N] [astetta]|[2] almost [3] [4] [1]
+[sisamaassa] [suunnilleen sama]|[2] [1]
+[sisamaassa] noin [N] [astetta]|about [2] [3] [1]
+[sisamaassa] pakkanen on [N] asteen tienoilla|temperature round about [2] degrees [1]
+[sisamaassa] pakkanen on [N] asteen tuntumassa|temperature close to [2] degrees [1]
+[sisamaassa] pakkanen on [hieman kireampaa]|the cold is [2] [1]
+[sisamaassa] pakkanen on lahella [N] [astetta]|temperature near [2] [3] [1]
+[sisamaassa] pakkasta on [M...N] [astetta]|temperature [2] [3] [1]
+[sisamaassa] pakkasta on noin [N] [astetta]|temperature about [2] [3] [1]
+[sisamaassa] pakkasta on vahan yli [N] [astetta]|temperature a little below [2] [3] [1]
+[sisamaassa] pakkasta on vajaat [N] [astetta]|temperature almost [2] [3] [1]
+[huomenna] [M...N] [astetta]|[1] [2] [3]
+rannikolla [N] [asteen] tuntumassa|close to [1] [2] on the coastal area
+saa on [selkea] ja poutainen|[1] and fair weather
+saa vaihtelee puolipilvisesta pilviseen ja on poutainen|half cloudy or cloudy and fair weather
+yon alin|the minimum night
+[1-na] [alueella] [saa lampenee]|[3] [1] [2]
+[1-na] [alueella] kirea pakkanen heikkenee|[1] the intense cold weakens [2]
+[1-na] [alueella] kirea pakkanen jatkuu|[1] intense cold continues [2]
+[1-na] [alueella] pakkanen heikkenee|[1] frost weakens [2]
+[1-na] [alueella] pakkanen hellittaa|[1] cold begins to ease [2]
+[1-na] [alueella] pakkanen kiristyy|[1] frost tightens up [2]
+[1-na] [alueella] saa lauhtuu|[1] weather becoming milder [2]
+[1-na] [alueella] saa on [poikkeuksellisen] [kylmaa]|[3] [4] [2] [1] weather
+[1-na] [alueella] saa on edelleen lauhaa|[1] still mild weather [2]
+[1-na] [alueella] saa on helteista|[1] very hot weather [2]
+[1-na] kirea pakkanen heikkenee|[1] intense cold weakens
+[1-na] kirea pakkanen jatkuu|[1] intense cold continues
+[1-na] pakkanen heikkenee|[1] frost weakens
+[1-na] pakkanen hellittaa|[1] cold begins to ease
+[1-na] pakkanen kiristyy|[1] frost tightens up
+[1-na] saa lauhtuu|[1] weather becoming milder
+[1-na] saa on ajankohtaan nahden tavanomaista lampimampaa|[1] clearly warmer than usually
+[1-na] saa on edelleen lauhaa|[1] still mild weather
+[1-na] saa on helteista|[1] very hot weather
+[N] [asteen] tienoilla|round about [1] [2]
+[N] [asteen] tuntumassa|close to [1] [2]
+[alueella] [saa lampenee]|[2] [1]
+[alueella] kirea pakkanen heikkenee|intense cold weakens [1]
+[alueella] kirea pakkanen jatkuu|intense cold continues [1]
+[alueella] pakkanen heikkenee|frost weakens [1]
+[alueella] pakkanen hellittaa|cold begins to ease [1]
+[alueella] pakkanen kiristyy|frost tightens up [1]
+[alueella] saa lauhtuu|weather becoming milder [1]
+[alueella] saa on [poikkeuksellisen] [kylmaa]|weather [2] [3] [1]
+[alueella] saa on ajankohtaan nahden tavanomaista lampimampaa|weather clearly warmer than usually [1]
+[alueella] saa on edelleen lauhaa|weather still mild [1]
+[alueella] saa on helteista|weather very hot [1]
+[huomenna] [N] [asteen] tienoilla|[1] close to [2] [3]
+[huomenna] [N] [asteen] tuntumassa|[1] close to [2] [3]
+[huomenna] [N] asteen tienoilla|[1] close to [2] degrees
+[huomenna] [N] asteen tuntumassa|[1] close to [2] degrees
+[huomenna] [lampotila] on [N] [asteen] tienoilla|[1] [2] around [3] [4]
+[huomenna] [lampotila] on [N] [asteen] tuntumassa|[1] [2] close to [3] [4]
+[huomenna] [sisamaassa] [N] [asteen] tienoilla|[1] round about [3] [4] [2]
+[huomenna] [sisamaassa] [N] [asteen] tuntumassa|[1] close to [3] [4] [2]
+[huomenna] [sisamaassa] [lampotila] on [N] [asteen] tienoilla|[1] [3] about [4] [5] [2]
+[huomenna] [sisamaassa] [lampotila] on [N] [asteen] tuntumassa|[1] [3] close to [4] [5] [2]
+[huomenna] [sisamaassa] pakkanen on [N] [asteen] tienoilla|temperature round about [3] [4] [2] [1]
+[huomenna] [sisamaassa] pakkanen on [N] [asteen] tuntumassa|[1] temperature close to [3] [4] [2]
+[huomenna] lahella [N] [astetta]|[1] near [2] [3]
+[huomenna] pakkanen on [N] [asteen] tienoilla|[1] temperature round about [2] [3]
+[huomenna] pakkanen on [N] [asteen] tuntumassa|[1] temperature close to [2] [3]
+[huomenna] vahan yli [N] [astetta]|[1] a little over [2] [3]
+[huomenna] vajaat [N] [astetta]|[1] almost [2] [3]
+[lampotila] on [N] [asteen] tienoilla|[1] round about [2] [3]
+[lampotila] on [N] [asteen] tuntumassa|[1] close to [2] [3]
+[sisamaassa] [N] [asteen] tienoilla|round about [2] [3] [1]
+[sisamaassa] [N] [asteen] tuntumassa|close to [2] [3] [1]
+[sisamaassa] [N] asteen tuntumassa|close to [2] degrees [1]
+[sisamaassa] [lampotila] on [N] [asteen] tienoilla|[2] round about [3] [4] [1]
+[sisamaassa] [lampotila] on [N] [asteen] tuntumassa|[2] close to [3] [4] [1]
+[sisamaassa] lahella [N] [astetta]|near [2] [3] [1]
+[sisamaassa] pakkanen on [N] [asteen] tienoilla|temperature round about [2] [3] [1]
+[sisamaassa] pakkanen on [N] [asteen] tuntumassa|temperature close to [2] [3] [1]
+[sisamaassa] vahan yli [N] [astetta]|a little over [2] [3] [1]
+[sisamaassa] vajaat [N] [astetta]|almost [2] [3] [1]
+asteen(tienoilla)|degrees
+asteen(tuntumassa)|degrees
+pakkanen on [N] [asteen] tuntumassa|temperature close to [1] [2]
+rannikolla [N] [asteen] tienoilla|round about [1] [2] on the coastal area
+7-keskiyolla ja aamuyolla|at Sunday midnight and after midnight
+[1-na] [alueella] kolea saa jatkuu|[1] bleak weather continues [2]
+2-keskiyolla ja aamuyolla|at Tuesday midnight and after midnight
+4-keskiyolla ja aamuyolla|at Thursday midnight and after midnight
+5-keskiyolla ja aamuyolla|at Friday midnight and after midnight
+6-keskiyolla ja aamuyolla|at Saturday midnight and after midnight
+[1-na] [alueella] helteinen saa jatkuu|[1] the hot weather continues [2]
+[1-na] [alueella] saa lampenee huomattavasti|[1] weather warms up considerably [2]
+[1-na] [alueella] saa lampenee vahan|[1] weather warms up a bit [2]
+[1-na] [alueella] saa lampenee|[1] weather becoming warmer [2]
+[1-na] [alueella] saa muuttuu helteiseksi|[1] weather becoming hot [2]
+[1-na] [alueella] saa viilenee huomattavasti|[1] weather cools down considerably [2]
+[1-na] [alueella] saa viilenee vahan|[1] weather cools down a bit [2]
+[1-na] [alueella] saa viilenee|[1] weather becoming cooler [2]
+[1-na] [alueella] viilea saa jatkuu|[1] cool weather continues [2]
+[1-na] helteinen saa jatkuu|[1] hot weather continues
+[1-na] kolea saa jatkuu|[1] bleak weather continues
+[1-na] saa lampenee huomattavasti|[1] weather warms up considerably
+[1-na] saa lampenee vahan|[1] weather warms up a bit
+[1-na] saa lampenee|[1] weather becoming warmer
+[1-na] saa muuttuu helteiseksi|[1] weather becoming hot
+[1-na] saa viilenee huomattavasti|[1] weather cools down considerably
+[1-na] saa viilenee vahan|[1] weather cools down a bit
+[1-na] saa viilenee|[1] weather becoming cooler
+[1-na] viilea saa jatkuu|[1] cool weather continues
+[alueella] helteinen saa jatkuu|hot weather continues [1]
+[alueella] kolea saa jatkuu|the bleak weather continues [1]
+[alueella] saa lampenee huomattavasti|weather warms up considerably [1]
+[alueella] saa lampenee vahan|weather warms up a bit [1]
+[alueella] saa lampenee|weather becoming warmer [1]
+[alueella] saa muuttuu helteiseksi|weather becoming hot [1]
+[alueella] saa viilenee huomattavasti|weather cools down considerably [1]
+[alueella] saa viilenee vahan|weather cools down a bit [1]
+[alueella] saa viilenee|weather becoming cooler [1]
+[alueella] viilea saa jatkuu|cool weather continues [1]
+[huomenna] [sisamaassa] on [hieman lauhempaa]|[1] [3] [2]
+[huomenna] [sisamaassa] yksittaiset lumi- tai rantakuurot mahdollisia|possibly scattered snow or sleet showers [2] [1]
+[huomenna] [sisamaassa] yksittaiset lumikuurot mahdollisia|possibly scattered snow showers [2] [1]
+[huomenna] [sisamaassa] yksittaiset ranta- tai vesikuurot mahdollisia|possibly scattered sleet or rain showers [2] [1]
+[huomenna] [sisamaassa] yksittaiset rantakuurot mahdollisia|possibly scattered sleet showers [2] [1]
+[huomenna] [sisamaassa] yksittaiset sadekuurot mahdollisia|possibly scattered rain showers [2] [1]
+[huomenna] [sisamaassa] yksittaiset vesi- tai lumikuurot mahdollisia|possibly scattered rain or snow showers [2] [1]
+[huomenna] [sisamaassa] yksittaiset vesi- tai rantakuurot mahdollisia|possibly scattered rain or sleet showers [2] [1]
+[huomenna] [sisamaassa] yksittaiset vesikuurot mahdollisia|possibly scattered rain showers [2] [1]
+[huomenna] on [hieman lauhempaa]|[1] [2]
+[huomenna] yksittaiset lumi- tai rantakuurot mahdollisia|[1] possibly scattered snow or sleet showers
+[huomenna] yksittaiset lumikuurot mahdollisia|[1] possibly scattered snow showers
+[huomenna] yksittaiset rantakuurot mahdollisia|[1] possibly scattered sleet showers
+[huomenna] yksittaiset sadekuurot mahdollisia|[1] possibly scattered rain showers
+[huomenna] yksittaiset vesi- tai lumikuurot mahdollisia|[1] possibly scattered rain or snow showers
+[huomenna] yksittaiset vesi- tai rantakuurot mahdollisia|[1] possibly scattered rain or sleet showers
+[huomenna] yksittaiset vesikuurot mahdollisia|[1] possibly scattered rain showers
+[lampotila] [M...N] [astetta]|[1] [2] [3]
+[sisamaassa] on [hieman lauhempaa]|[2] [1]
+[sisamaassa] yksittaiset lumi- tai rantakuurot mahdollisia|[1] possibly scattered snow or sleet showers
+[sisamaassa] yksittaiset lumikuurot mahdollisia|possibly scattered snow showers [1]
+[sisamaassa] yksittaiset ranta- tai vesikuurot mahdollisia|possibly scattered sleet or rain showers [1]
+[sisamaassa] yksittaiset rantakuurot mahdollisia|possibly scattered sleet showers [1]
+[sisamaassa] yksittaiset sadekuurot mahdollisia|possibly scattered rain showers [1]
+[sisamaassa] yksittaiset vesi- tai lumikuurot mahdollisia|possibly scattered rain or snow showers [1]
+[sisamaassa] yksittaiset vesi- tai rantakuurot mahdollisia|possibly scattered rain or sleet showers [1]
+[sisamaassa] yksittaiset vesikuurot mahdollisia|possibly scattered rain showers [1]
+paivan ylin|the maximum day
+B10|Southern Baltic
+2-puolelle|mainly northeast
+3- ja 4-valille|to the east to southeast
+3-puolelle|mainly east
+4-puolelle|mainly southeast
+5- ja 6-valille|to south to southwest
+5-puolelle|mainly south
+6-puolelle|mainly southwest
+7- ja 8-valille|to west to northwest
+7-puolelle|mainly west
+8-puolelle|mainly northwest
+kurzeme:lle|for Kurzeme region
+lanteen|to the west
+latgale:lle|for Latgale region
+latvia:lle|for Latvia
+lounaaseen|to the south-west
+luoteeseen|to the north-west
+pieksamaki:lle|for Pieksämäki
+pohjoiseen|to the north
+suunnaltaan vaihtelevaa tuulta|variable
+tuuli kaantyy|becoming
+tuuli muuttuu vaihtelevaksi|becoming variable
+vahitellen|gradually
+vidzeme:lle|for Vidzeme region
+voimistuvaa tuulta|increasing
+zemgale:lle|for Zemgale region
+kovimmillaan|up to
+1- ja 8-valille|to north to northwest
+1-puolelle|mainly north
+3- ja 2-valille|to the east to northeast
+5- ja 4-valille|to south to southeast
+7- ja 6-valille|to west to southwest
+[huomenna] [etelatuulta]|[1] [2]
+[iltapaivalla] [etelaan] kaantyvaa tuulta|the wind turns [2] [1]
+[iltapaivalla] [etelatuulta]|[2] [1]
+[iltapaivalla] [heikkenevaa tuulta]|[1] [2]
+[iltapaivalla] [heikkenevaa] [etelatuulta]|[1] [2] [3]
+[iltapaivalla] [nopeasti] [heikkenevaa tuulta]|[2] [3] [1]
+[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta]|[2] [3] [4] [1]
+[iltapaivalla] [pohjoistuuli] heikkenee ja muuttuu vaihtelevaksi|[1] [2] decreasing becoming variable
+[iltapaivalla] [pohjoistuuli] voimistuu ja kaantyy [etelaan]|[1] [2] increasing becoming [3]
+[iltapaivalla] [pohjoistuuli] voimistuu ja muuttuu vaihtelevaksi|[1] [2] increasing becoming variable
+[iltapaivalla] tuuli heikkenee ja kaantyy [etelaan]|[1] decreasing becoming [2]
+[iltapaivalla] tuuli heikkenee ja muuttuu vaihtelevaksi|[1] decreasing becoming variable
+[iltapaivalla] tuuli kaantyy [etelaan] ja heikkenee edelleen|[1] becoming [2] increasing further
+[iltapaivalla] tuuli kaantyy [etelaan] ja voimistuu edelleen|[1] becoming [2] decreasing further
+[iltapaivalla] tuuli kaantyy [etelaan]|becoming [2] [1]
+[iltapaivalla] tuuli muuttuu tilapaisesti vaihtelevaksi|becoming temporarily variable [1]
+[iltapaivalla] tuuli muuttuu vaihtelevaksi ja heikkenee edelleen|[1] becoming variable decreasing further
+[iltapaivalla] tuuli muuttuu vaihtelevaksi ja voimistuu edelleen|becoming variable increasing further [1]
+[iltapaivalla] tuuli muuttuu vaihtelevaksi|becoming variable [1]
+[iltapaivalla] tuuli voimistuu ja kaantyy [etelaan]|[1] increasing becoming [2]
+[iltapaivalla] tuuli voimistuu ja muuttuu vaihtelevaksi|increasing becoming variable [1]
+[lampotila] [N] [asteen] tienoilla|[1] round about [2] [3]
+[lampotila] [N] [asteen] tuntumassa|[1] close to [2] [3]
+[lampotila] [suunnilleen sama]|[1] [2]
+[lampotila] lahella [N] [astetta]|[1] near [2] [3]
+[lampotila] noin [N] [astetta]|[1] about [2] [3]
+[lampotila] vahan yli [N] [astetta]|[1] a little over [2] [3]
+[lampotila] vajaat [N] [astetta]|[1] almost [2] [3]
+[pohjoistuulta] [m...n] [metria sekunnissa], joka kaantyy [iltapaivalla] [etelaan]|[1] [2] [3], becoming [5] [4]
+[pohjoistuulta] [m...n] [metria sekunnissa], joka muuttuu [iltapaivalla] vaihtelevaksi|[1] [2] [3], becoming variable [4]
+aallonkorkeus on enimmillaan [N] [metria]|wave height at most [1] [2]
+astetta (0)|degrees
+astetta (1)|degree
+astetta (2)|degrees
+astetta (3)|degrees
+astetta (4)|degrees
+astetta (m...n)|degrees
+astetta (n)|degrees
+astetta (n...(mod 10=1))|degrees
+astetta (n...0)|degrees
+astetta (n...1)|degrees
+astetta (n...2)|degrees
+astetta (n...3)|degrees
+astetta (n...4)|degrees
+etelaan|to the south
+heikkenevaa tuulta|decreasing
+itaan|to the east
+ivalo:lle|for Ivalo
+kaakkoon|to the south-east
+koilliseen|to the north-east
+nopeasti|rapidly
+B11|Arkona Sea
+1- ja 8-valista tuulta|north to northwest
+1-puoleinen tuuli|mainly north
+1-tuuli|north
+3 astetta|3 degrees
+3- ja 2-valinen tuuli|east to northeast
+3- ja 2-valista tuulta|east to northeast
+3- ja 4-valinen tuuli|east to southeast
+3- ja 4-valista tuulta|east to southeast
+3-puoleinen tuuli|mainly east
+3-tuuli|east
+5- ja 4-valinen tuuli|south to southeast
+5- ja 4-valista tuulta|south to southeast
+5- ja 6-valinen tuuli|south to southwest
+5- ja 6-valista tuulta|south to southwest
+5-puoleinen tuuli|mainly south
+5-tuuli|south
+7- ja 6-valinen tuuli|west to southwest
+7- ja 6-valista tuulta|west to southwest
+7- ja 8-valinen tuuli|west to northwest
+7- ja 8-valista tuulta|west to northwest
+7-tuuli|west
+nolla|zero
+prosenttia (mod 10=1)|percent
+puuskittaista [etelatuulta]|gusty [1]
+suunnaltaan vaihteleva tuuli|variable
+7-puoleinen tuuli|mainly west
+1- ja 2-valille|to the north to northeast
+1- ja 2-valista tuulta|north to northeast
+1- ja 8-valinen tuuli|north to northwest
+2 astetta|2 degrees
+2-puoleinen tuuli|mainly northeast
+2-tuuli|northeast
+4 astetta|4 degrees
+4-puoleinen tuuli|mainly southeast
+4-tuuli|southeast wind 
+6-puoleinen tuuli|mainly southwest
+6-tuuli|southwest
+8-puoleinen tuuli|mainly northwest
+8-tuuli|northwest
+[iltapaivalla] [etelatuuli] alkaa heiketa [nopeasti]|[1] [2] starts decreasing [3]
+[iltapaivalla] [etelatuuli] alkaa voimistua [nopeasti]|[1] [2] starts increasing [3]
+[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [illalla] [pohjoiseen]|[1] [2] [3] [4] becoming [6] [5]
+[iltapaivalla] [nopeasti] [heikkenevaa] [etelatuulta], joka kaantyy [pohjoiseen]|[1] [2] [3] [4] becoming [5]
+[iltapaivalla] [pohjoistuuli] alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] starts decreasing [3] becoming [5] [4]
+[iltapaivalla] [pohjoistuuli] alkaa voimistua [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] starts increasing [3] becoming [5] [4]
+[iltapaivalla] [pohjoistuuli] heikkenee ja muuttuu tilapaisesti vaihtelevaksi|[1]  [2] decreasing becoming temporarily variable
+[iltapaivalla] [pohjoistuuli] voimistuu ja muuttuu tilapaisesti vaihtelevaksi|[1] [2] increasing becoming temporarily variable
+[iltapaivalla] edelleen [heikkenevaa] [pohjoistuulta]|[1] [3] [2] further
+[iltapaivalla] tuuli heikkenee ja muuttuu tilapaisesti vaihtelevaksi|[1] decreasing becoming temporarily variable
+[iltapaivalla] tuuli muuttuu tilapaisesti vaihtelevaksi ja heikkenee edelleen|[1] becoming temporarily variable decreasing further
+[iltapaivalla] tuuli muuttuu tilapaisesti vaihtelevaksi ja voimistuu edelleen|[1] becoming temporarily variable increasing further
+[iltapaivalla] tuuli voimistuu ja muuttuu tilapaisesti vaihtelevaksi|[1] increasing becoming temporarily variable
+[ip] [p-tuulta] [m...n] [m/s], joka alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] [3] [4] begins decreasing [5] becoming [7] [6]
+[pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa voimistua|[1] [2] [3], starts increasing
+aallonkorkeus on [N...M] [metria]|wave height [1] [2]
+aallonkorkeus on alle [N] [metria]|wave height less than [1] [2]
+aallonkorkeus on noin [N] [metria]|wave height around [1] [2]
+asteen(tienoilla (mod 10=1))|degrees
+asteen(tuntumassa (mod 10=1))|degrees
+astetta (mod 10=1)|degrees
+astetta(noin (mod 10=1))|degrees
+astetta(noin 0)|degrees
+astetta(noin 1)|degree
+astetta(noin 2)|degrees
+astetta(noin 3)|degrees
+astetta(noin 4)|degrees
+aste|degree
+hehtopascalia (mod 10=1)|hectopascals
+metria sekunnissa (mod 10=1)| m/s
+millimetria (mod 10=1)|millimeters
+[iltapaivalla] [pohjoistuuli] alkaa heiketa ja kaantya [etelaan]|[1] [2] starts decreasing becoming [3]
+[iltapaivalla] [pohjoistuuli] alkaa heiketa ja kaantyy [etelaan]|[1] [2] starts decreasing becoming [3]
+[iltapaivalla] [pohjoistuuli] alkaa voimistua ja kaantya [etelaan]|[1] [2] starts increasing becoming [3]
+[iltapaivalla] [pohjoistuuli] alkaa voimistua ja kaantyy [etelaan]|[1] [2] starts increasing becoming [3]
+[pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa heiketa|[1] [2] [3], starts decreasing
+1-asti|until Monday
+1-iltaan asti|until Monday evening
+1-iltapaivaan asti|until Monday afternoon
+1-iltayohon asti|until Monday late evening
+1-keskiyohon asti|until Monday midnight
+1-vastaiseen yohon asti|until Monday night
+2-aamupaivaan asti|until Tuesday forenoon
+3-aamuun asti|until Wednesday morning
+5-aamuyohon asti|until Friday early hours
+3-asti|until Wednesday
+3-iltaan asti|until Wednesday evening
+3-iltapaivaan asti|until Wednesday afternoon
+3-iltayohon asti|until Wednesday late evening
+3-keskiyohon asti|until Wednesday midnight
+3-vastaiseen yohon asti|until Wednesday night
+4-aamupaivaan asti|until Thursday forenoon
+5-aamuun asti|until Friday morning
+7-aamuyohon asti|until Sunday early hours
+5-asti|until Saturday
+5-iltaan asti|until Friday evening
+5-iltayohon asti|until Friday late evening
+5-keskiyohon asti|until Friday midnight
+5-vastaiseen yohon asti|until Friday night
+6-aamupaivaan asti|until Saturday forenoon
+7-aamuun asti|until Sunday morning
+1-aamuyohon asti|until Monday early hours
+7-asti|until Sunday
+7-iltaan asti|until Sunday evening
+7-iltapaivaan asti|until Friday afternoon
+7-iltayohon asti|until Sunday late evening
+7-keskiyohon asti|until Sunday midnight
+7-vastaiseen yohon asti|until Sunday night
+[iltapaivalla] [etelatuuli] voimistuu [nopeasti]|[2] increasing [3] [1]
+yohon asti|until night
+3-aamuyohon asti|until Wednesday early hours
+1-aamuun asti|until Monday morning
+2-aamuyohon asti|until Tuesday early hours
+2-aamuun asti|until Tuesday morning
+4-aamuyohon asti|until Thursday early hours
+2-asti|until Tuesday
+2-iltaan asti|until Tuesday evening
+2-iltayohon asti|until Tuesday late evening
+2-keskiyohon asti|until Tuesday midnight
+2-vastaiseen yohon asti|until Tuesday night
+3-aamupaivaan asti|until Wednesday forenoon
+4-aamuun asti|until Thursday morning
+6-aamuyohon asti|until Saturday early hours
+4-asti|until Thursday
+4-iltaan asti|until Thursday evening
+4-iltapaivaan asti|until Thursday afternoon
+4-iltayohon asti|until Thursday late evening
+4-keskiyohon asti|until Thursday midnight
+4-vastaiseen yohon asti|until Thursday night
+5-aamupaivaan asti|until Friday forenoon
+6-aamuun asti|until Saturday morning
+aamuyohon asti|until early hours
+6-asti|until Friday
+6-iltaan asti|until Saturday evening
+6-iltapaivaan asti|until Saturday afternoon
+6-iltayohon asti|until Saturday late evening
+6-vastaiseen yohon asti|until Saturday night
+7-aamupaivaan asti|until Sunday forenoon
+[iltapaivalla] [pohjoistuuli] alkaa voimistua ja muuttuu vaihtelevaksi|[1] [2] starts increasing becoming variable
+[iltapaivalla] [pohjoistuuli] voimistuu edelleen|[2] increasing further [1]
+[iltapaivalla] sade voi olla runsasta|rain can be heavy [1]
+[iltapaivalla] tuuli alkaa voimistua ja muuttuu tilapaisesti vaihtelevaksi|[1] starts increasing becoming temporarily variable
+[iltapaivalla] tuuli alkaa voimistua ja muuttuu vaihtelevaksi|[1] [2] begins increasing becoming variable
+[ip] [p-tuulta] [m...n] [m/s], joka alkaa voimistua [nopeasti] ja kaantyy [illalla] [etelaan]|[1] [2] [3] [4] begins increasing [5] becoming [7] [6]
+aamuun asti|until morning
+B12|Öresund and the Belts
+huomisaamupaivaan asti|until tomorrow forenoon
+huomisaamuun asti|until tomorrow morning
+huomiseen asti|until tomorrow
+huomisiltaan asti|until tomorrow evening
+iltaan asti|until evening
+iltapaivaan asti|until afternoon
+iltayohon asti|until late evening
+keskipaivaan asti|until noon
+keskiyohon asti|until midnight
+[iltapaivalla] [pohjoistuuli] heikkenee edelleen|[2] decreasing further [1]
+[iltapaivalla] kuurot voivat olla voimakkaita|showers can be heavy [1]
+B13|Kattegat
+B1N|Northern Bay of Bothnia
+B1S|Southern Bay of Bothnia
+B3N|Northern Bothnian Sea
+tiepiiri-o4:lle|for Oulu northern inland region
+voimakas 1- ja 2-valinen tuuli|strong north to northeast
+voimakas 1- ja 8-valinen tuuli|strong north to northwest
+voimakas 1-tuuli|strong north
+voimakas 1-puoleinen tuuli|strong mainly north
+voimakas 2-puoleinen tuuli|strong mainly northeast
+voimakas 2-tuuli|strong northeast
+voimakas 3- ja 2-valinen tuuli|strong east to northeast
+voimakas 3- ja 4-valinen tuuli|strong east to southeast
+voimakas 3-puoleinen tuuli|strong mainly east
+voimakas 3-tuuli|strong east
+voimakas 4-puoleinen tuuli|strong mainly southeast
+voimakas 4-tuuli|strong southeast
+voimakas 5- ja 4-valinen tuuli|strong south to southeast
+voimakas 5- ja 6-valinen tuuli|strong south to southwest
+voimakas 5-puoleinen tuuli|strong mainly south
+voimakas 5-tuuli|strong south
+voimakas 6-puoleinen tuuli|strong mainly southwest
+voimakas 6-tuuli|strong southwest
+voimakas 7- ja 6-valinen tuuli|strong west to southwest
+voimakas 7- ja 8-valinen tuuli|strong west to northwest
+voimakas 7-tuuli|strong west
+voimakas 8-puoleinen tuuli|strong mainly northwest
+voimakas 8-tuuli|strong northwest
+voimakas tuuli|gale
+voimakas|very strong
+voimakas 7-puoleinen tuuli|strong mainly west
+[iltapaivalla] [pohjoistuuli] alkaa heiketa ja muuttuu vaihtelevaksi|[1] [2] starts decreasing becoming variable
+[iltapaivalla] [voimakas pohjoistuuli] alkaa heiketa ja kaantyy [etelaan]|[2] starts decreasing becoming [3] [1]
+[iltapaivalla] [voimakas pohjoistuuli] alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[2] starts decreasing becoming temporarily variable [1]
+[iltapaivalla] [voimakas pohjoistuuli] heikkenee [nopeasti] ja kaantyy [illalla] [etelaan]|[2] decreasing [3] [1] becoming [5] [4]
+[iltapaivalla] [voimakas pohjoistuuli] heikkenee [nopeasti]|[2] decreasing [3] [1]
+[iltapaivalla] [voimakas pohjoistuuli] heikkenee edelleen|[2] decreasing further [1]
+[iltapaivalla] [voimakas pohjoistuuli] heikkenee ja kaantyy [etelaan]|[2] decreasing becoming [3] [1]
+[iltapaivalla] [voimakas pohjoistuuli] heikkenee ja muuttuu tilapaisesti vaihtelevaksi|[2] decreasing becoming temporarily variable [1]
+[iltapaivalla] tuuli alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] starts decreasing becoming temporarily variable
+[iltapaivalla] tuuli alkaa heiketa ja muuttuu vaihtelevaksi|[1] [2] starts decreasing becoming variable
+[pohjoistuuli] heikkenee [nopeasti]|[1] decreasing [2]
+[pohjoistuuli] heikkenee ja muuttuu vaihtelevaksi|[1] decreasing becoming variable
+[pohjoistuuli] voimistuu [nopeasti]|[1] increasing [2]
+[pohjoistuuli] voimistuu ja muuttuu vaihtelevaksi|[1] increasing becoming variable
+[voimakas pohjoistuuli] alkaa heiketa [nopeasti]|[1] decreasing [2]
+[voimakas pohjoistuuli] alkaa heiketa ja kaantyy [etelaan]|[1] decreasing becoming [2]
+[voimakas pohjoistuuli] alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] decreasing becoming temporarily varaible
+[voimakas pohjoistuuli] alkaa heiketa ja muuttuu vaihtelevaksi|[1] decreasing becoming variable
+[voimakas pohjoistuuli] heikkenee [nopeasti] ja kaantyy [etelaan]|[1] decreasing [2] turning [3]
+[voimakas pohjoistuuli] heikkenee [nopeasti] ja kaantyy [illalla] [etelaan]|[1] decreasing [2] becoming [4] [3]
+[voimakas pohjoistuuli] heikkenee [nopeasti]|[1] decreasing [2]
+[voimakas pohjoistuuli] heikkenee edelleen|[1] decreasing further
+[voimakas pohjoistuuli] heikkenee ja kaantyy [etelaan]|[1] decreasing becoming [2]
+[voimakas pohjoistuuli] heikkenee ja muuttuu tilapaisesti vaihtelevaksi|[1] decreasing becoming temporarily variable
+[voimakas pohjoistuuli] heikkenee ja muuttuu vaihtelevaksi|[1] decreasing becoming variable
+[voimakas pohjoistuuli] kaantyy [etelaan] ja heikkenee edelleen|[1] turns [2] decreasing further
+heikkenee|decreasing
+inari_utsjoki:lle|for Inari and Utsjoki
+ita_finnmark:lle|for Eastern Finnmark
+kasivarsi:lle|for KÃ¤sivarsi
+kuola:lle|for Kola Peninsula
+pohjois_ruotsi:lle|for Northern Sweden
+[iltapaivalla] [voimakas pohjoistuuli] alkaa heiketa [nopeasti]|[2] starts decreasing [3] [1]
+[iltapaivalla] [voimakas pohjoistuuli] alkaa heiketa ja muuttuu vaihtelevaksi|[2] starts decreasing becoming variable [1]
+[iltapaivalla] [voimakas pohjoistuuli] heikkenee [nopeasti] ja kaantyy [etelaan]|[2] decreasing [3] [1] becoming [4]
+[iltapaivalla] [voimakas pohjoistuuli] heikkenee ja muuttuu vaihtelevaksi|[2] decreasing becoming variable [1]
+[iltapaivalla] [voimakas pohjoistuuli] kaantyy [etelaan] ja heikkenee edelleen|[2] becoming [3] [1] decreasing further
+tiepiiri-t2:lle|for Finland inland region
+tiepiiri-t3:lle|for Finland eastern region
+elyalue-var:lle|for Finland ELY-area
+2-keskipaivasta|from Tuesday noon
+4-keskipaivaan|until Thursday noon
+4-keskipaivasta|from Thursday noon
+6-keskipaivaan|until Saturday noon
+6-keskipaivasta|from Saturday noon
+[etelatuuli] alkaa heiketa [nopeasti]|[1] starts decreasing [2]
+[etelatuuli] alkaa voimistua [nopeasti]|[1] starts increasing [2]
+tiepiiri-h1:lle|for Southern Häme
+tiepiiri-h2:lle|for Southern Päijänne-Häme
+tiepiiri-h3:lle|for Southern Pirkanmaa
+tiepiiri-h4:lle|for Northern Päijänne-Häme
+tiepiiri-h5:lle|for Northern Pirkanmaa
+tiepiiri-k1:lle|for Kymenmaa coastal region
+tiepiiri-k2:lle|for Kymenmaa inland region
+tiepiiri-k3:lle|for Southern Karelia
+tiepiiri-k4:lle|for Southern Savo
+tiepiiri-ke2:lle|for Central Finlands northern region
+tiepiiri-l1:lle|for Southwestern Lapland
+tiepiiri-l2:lle|for Southeastern Lapland
+tiepiiri-l3:lle|for Central Lapland
+tiepiiri-l4:lle|for Northwestern Lapland
+tiepiiri-l5:lle|for Northern Lapland
+tiepiiri-o1e:lle|for Oulu southern coastal region
+tiepiiri-o1p:lle|for Oulu northern coastal region
+tiepiiri-o2:lle|for Oulu southern inland region
+tiepiiri-o3:lle|for Kainuu
+tiepiiri-o5:lle|for Koillismaa
+tiepiiri-s1:lle|for Northern Karelia southern region
+tiepiiri-s2:lle|for Northern Savo southern region
+tiepiiri-s3:lle|for Northern Karelia central region
+tiepiiri-s4:lle|for Northern Savo northern region
+tiepiiri-s5:lle|for Northern Karelia northern region
+tiepiiri-t4:lle|for Satakunta coastal region
+tiepiiri-t5:lle|for Satakunta inland region
+tiepiiri-u1:lle|for Western Uusimaa coastal region
+tornionlaakso:lle|for Torne Valley
+tunturi-lappi:lle|for Tunturi-Lappi
+B3S|Southern Bothnian Sea
+1-keskipaivasta|from Monday noon
+2-keskipaivaan|until Tuesday noon
+3-keskipaivaan|until Wednesday noon
+3-keskipaivasta|from Wednesday noon
+5-keskipaivasta|from Friday noon
+7-keskipaivaan|until Sunday noon
+7-keskipaivasta|from Sunday noon
+[etelatuuli] heikkenee [nopeasti]|[1] decreasing [2]
+[etelatuuli] voimistuu [nopeasti]|[1] increasing [2]
+[iltapaivalla] [pohjoistuuli] tuuli alkaa voimistua ja muuttuu tilapaisesti vaihtelevaksi|[1] [2] starts increasing becoming temporarily variable
+[pohjoistuuli] alkaa heiketa ja kaantya [etelaan]|[1] begins decreasing becoming [2]
+[pohjoistuuli] alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] begins decreasing becoming temporarily varaible
+[pohjoistuuli] alkaa heiketa ja muuttuu vaihtelevaksi|[1] begins decreasing becoming variable
+[pohjoistuuli] alkaa voimistua [nopeasti] ja kaantyy [illalla] [etelaan]|[1] begins increasing [2] becoming [4] [3]
+[pohjoistuuli] alkaa voimistua ja kaantya [etelaan]|[1] begins increasing becoming [2]
+[pohjoistuuli] alkaa voimistua ja muuttuu tilapaisesti vaihtelevaksi|[1] begins increasing becoming temporarily variable
+[pohjoistuuli] alkaa voimistua ja muuttuu vaihtelevaksi|[1] begins increasing becoming variable
+[pohjoistuuli] heikkenee ja muuttuu tilapaisesti vaihtelevaksi|[1] decreasing becoming temporarily variable
+[pohjoistuuli] voimistuu ja kaantyy [etelaan]|[1] increasing becoming [2]
+[pohjoistuuli] voimistuu ja muuttuu tilapaisesti vaihtelevaksi|[1] increasing becoming temporarily variable
+elyalue-epo:lle|for Southern Ostrobothnia ELY-area
+elyalue-kas:lle|for Southeastern Finlands ELY-area
+elyalue-kes:lle|for Central Finlands ELY-area
+elyalue-lap:lle|for Laplands ELY-area
+elyalue-pir:lle|for Pirkanmaa ELY-area
+elyalue-pkp:lle|for Northern Ostrobothnia ELY-area
+elyalue-pos:lle|for Northern Savo ELY-area
+elyalue-uud:lle|for Uusimaa ELY-area
+kemi-tornio:lle|for Kemi-Tornio
+rovaniemen seutu:lle|for Rovaniemi area
+[iltapaivalla] tuuli alkaa voimistua ja kaantyy [etelaan]|starts increasing becoming [2] [1]
+B4E|Sea of Archipelago
+B4W|Sea of Åland
+B5W_B7:lle|for Western Gulf of Finland and Northern Baltic
+B5W_B7E:lle|for Western Gulf of Finland and Northeastern Baltic
+B5W_B7E_B4E:lle|for Western Gulf of Finland, Northeastern Baltic and Sea of Archipelago
+B5_B7:lle|for Gulf of Finland and Northern Baltic
+2-keskipaivalla|at Tuesday noon
+5-keskipaivaan asti|until Friday noon
+4-keskipaivalla|at Thursday noon
+7-keskipaivaan asti|until Sunday noon
+6-keskipaivalla|at Saturday noon
+B2_B1:lle|for the Quark and Bay of Bothnia
+B2_B1S:lle|for the Quark and Southern Bay of Bothnia
+rannikolla vahan nollan alapuolella|just below freezing on the coastal area
+ranta- tai tihkusadetta|sleet or drizzle
+tiepiiri-u2:lle|for capitol city region
+tiepiiri-u3:lle|for Eastern Uusimaa coastal region
+tiepiiri-u4:lle|for Western Uusimaa inland region
+tiepiiri-u5:lle|for Eastern Uusimaa inland region
+tiepiiri-v1:lle|for Ostrobothnia southern coastal regions
+tiepiiri-v2:lle|for Southern Ostrobothnia
+tiepiiri-v4:lle|for Ostrobothnia northern coastal regions
+tiepiiri-v5:lle|for Central Ostrobothnia
+vesi- tai tihkusadetta|rain or drizzle
+yolla ja aamulla|at night and in the morning
+huomisen keskipaivaan asti|until tomorrow noon
+1- ja 2-valinen tuuli|north to northeast
+B7E_B4E:lle|for Northeastern Baltic and Sea of Archipelago
+1-aamulla|on Monday morning
+1-aamuna|on Monday morning
+1-aamupaivaan asti|until Monday forenoon
+1-aamupaivasta alkaen|from Monday forenoon
+1-aamusta|from Monday morning
+1-alkaen|from Monday onwards
+1-illalla|on Monday evening
+1-keskipaivalla|at Monday noon
+4-keskipaivaan asti|until Thursday noon
+3-keskipaivalla|at Wednesday noon
+6-keskipaivaan asti|until Saturday noon
+5-keskipaivalla|at Friday noon
+huono nakyvyys|poor visibility
+7-keskipaivalla|at Sunday noon
+B3N_B2:lle|for Northern Bothnian Sea and the Quark
+B3_B2:lle|for Sea of Bothnia and the Quark
+B3_B2_B1:lle|for Sea of Bothnia, the Quark and Bay of Bothnia
+B4E_B3:lle|for Sea of Archipelago and Sea of Bothnia
+B4_B3:lle|for Sea of Archipelago and Sea of Åland and Sea of Bothnia
+B4_B3S:lle|for Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
+B7_B4:lle|for Northern Baltic, Sea of Archipelago and Sea of Åland
+B7_B4_B3:lle|for Northern Baltic, Sea of Archipelago and Sea of Åland and Sea of Bothnia
+B7_B4_B3S:lle|for Northern Baltic, Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
+B7W_B4:lle|for Western Gulf of Finland, Sea of Archipelago and Sea of Åland
+B7W_B4W:lle|for Western Gulf of Finland and Sea of Åland
+B7W_B4W_B3S:lle|for Western Gulf of Finland, Sea of Åland and Southern Bothnian Sea
+[huomenna] [lampotila] on vahan nollan alapuolella|[1] [2] just below freezing
+[huomenna] [sisamaassa] [lampotila] on vahan nollan alapuolella|[1] [3] just below freezing [2]
+[huomenna] [sisamaassa] vahan nollan alapuolella|[1] just below freezing [2]
+[huomenna] vahan nollan alapuolella|[1] just below freezing
+[iltap] [nop] [heikken] [tuulta] [m...n] [m sek], joka kaantyy [illalla] [pohj]|[1] [2] [3] [4] [5] [6] becoming [8] [7]
+[lampotila] on vahan nollan alapuolella|[1] just below freezing
+[lampotila] vahan nollan alapuolella|[1] just below freezing
+[sisamaassa] [lampotila] on vahan nollan alapuolella|[1] [2] just below freezing
+[sismaassa] vahan nollan alapuolella|[1] just below freezing
+aamulla ja paivalla|in the morning and during the day
+enimmakseen hyva nakyvyys|mostly good vis
+huomiseen iltapaivaan asti|until tomorrow afternoon
+2-keskipaivaan asti|until Tuesday noon
+1-aamulla ja aamupaivalla|on Monday morning
+hyva nakyvyys|good vis
+illalla ja yolla|in the evening and at night
+ja huono nakyvyys|and poor vis
+jaatavaa tihkusadetta|freezing drizzle
+jotka muuttuvat lumikuuroiksi|that turn into snow showers
+jotka muuttuvat rantakuuroiksi|that turn into sleet showers
+lumi- tai tihkusadetta|snowfall or drizzle
+muuten hyva nakyvyys|otherwise good vis
+3-keskipaivaan asti|until Wednesday noon
+1-keskipaivaan|until Monday noon
+1-keskiyolla ja aamuyolla|at Monday midnight and after midnight
+1-puoleiseksi tuuleksi|mainly north
+2-paivalla|on Tuesday during the day
+2-puoleista tuulta|mainly northeast
+3-iltapaivasta alkaen|from Wednesday afternoon
+4-vuorokauden saa|for the next four days
+5-iltapaivaan asti|until Friday afternoon
+5-keskipaivaan|until Friday noon
+keskiosiin|central parts
+kirea pakkanen jatkuu|intense cold continues
+koillisesta alkaen|beginning from northeast
+konnevesi:lle|for Konnevesi
+kova|strong
+koylio:lle|for Köyliö
+kuortane:lle|for Kuortane
+lansi-suomen-laani:lle|for the province of Western Finland
+lansi_finnmark:lle|for Western Finnmark
+lappeenranta:lle|for Lappeenranta
+lumi- tai vesikuuroja|snow or rain showers
+lumparland:lle|for Lumparland
+mahdollisesti ukkosta|possibly thunder
+muonio:lle|for Muonio
+murmanskin alueen lansiosa:lle|for Western part of Murmansk Oblast
+nummipusula:lle|for Nummi-Pusula
+osterbotten:lle|for Ostrobothnia
+oulu:lle|for Oulu
+paivalla ja illalla|during the day and in the evening
+pakkanen heikkenee|the frost weakens
+pakkanen on [N] [asteen] tienoilla|temperature round about [1] [2]
+pakkanen on [N] asteen tienoilla|temperature round about [1] degrees
+parikkala:lle|for Parikkala
+pornainen:lle|for Pornainen
+rannasta ja liukkaista|weakened by slippery road surfaces and sleetfall
+rantasalmi:lle|for Rantasalmi
+rigaregion:lle|for Lielriga region
+saa on ajankohtaan nahden tavanomaista lampimampaa|weather clearly warmer than usually
+saa on edelleen lauhaa|weather still mild
+saarijarvi:lle|for Saarijärvi
+seuraavana paivana|the following day
+sonkajarvi:lle|for Sonkajärvi
+taivassalo:lle|for Taivassalo
+tiepiiri-hame:lle|for Tavastia road district
+tiepiiri-ke1:lle|for Central Finlands southern region
+utajarvi:lle|for Utajärvi
+vastanfjard:lle|for Västanfjärd
+yksittaiset ranta- tai vesikuurot mahdollisia|possibly scattered sleet or rain showers
+ylivieska:lle|for Ylivieska
+1-keskipaivaan asti|until Monday noon
+1-illalla ja iltayolla|on Monday evening and before midnight
+1-iltapaivalla|on Monday afternoon
+1-vastaisesta yosta alkaen|from Monday night
+2-iltapaivaan asti|until Tuesday afternoon
+2-na kello|on Tuesday
+B1|Bay of Bothnia
+3-keskiyolla ja aamuyolla|at Wednesday midnight and after midnight
+6-vastaisena yona|on Saturday night
+7-aamuyosta alkaen|from early Sunday morning
+Lounais-Suomen yli|over Southwestern Finland
+[1-na] [alueella] saa on ajankohtaan nahden tavanomaista lampimampaa|[1] weather clearly warmer than usually [2]
+[huomenna] [paikoin] [heikkoa] [sadetta], joka voi olla jaatavaa|[1] [2] [3] [4], possibly freezing
+[huomenna] [sisamaassa] [lampotila] on [N] asteen tienoilla|[1] [3] about [4] degrees [2]
+[huomenna] [sisamaassa] pakkanen on [N] asteen tienoilla|temperature round about [3] degrees [2] [1]
+[huomenna] yksittaiset ranta- tai vesikuurot mahdollisia|[1] possibly scattered sleet or rain showers
+[iltapaivalla] [etelatuuli] heikkenee [nopeasti]|[2] decreasing [3] [1]
+[iltapaivalla] [pohjoistuuli] heikkenee ja kaantyy [etelaan]|[1] [2] decreasing becoming [3]
+[pohjoistuuli] alkaa heiketa [nopeasti] ja kaantyy [illalla] [etelaan]|[1] begins decreasing [2] becoming [4] [3]
+ahvenanmaan-laani:lle|for the province of Åland
+anjalankoski:lle|for Anjalankoski
+haapavesi:lle|for Haapavesi
+hirvensalmi:lle|for Hirvensalmi
+ikaalinen:lle|for Ikaalinen
+kemi:lle|for Kemi
+B2|the Quark
+B3|Sea of Bothnia
+B4|Sea of Archipelago and Sea of Åland
+B5|Gulf of Finland
+[iltapaivalla] [pohjoistuuli] alkaa heiketa ja muuttuu tilapaisesti vaihtelevaksi|[1] [2] starts decreasing becoming temporarily variable
+[iltapaivalla] [pohjoistuuli] alkaa voimistua ja muuttuu tilapaisesti vaihtelevaksi|[1] [2] starts increasing becoming temporarily variable
+[iltapaivalla] saa poutaantuu ja vaihtelee puolipilvisesta pilviseen|weather becoming fair varying from half cloudy to cloudy [1]
+joutseno:lle|for Joutseno
+karjalohja:lle|for Karjalohja
+kerimaki:lle|for Kerimäki
+keskimaarainen alin lampotila|mean minimum temperature
+kolea saa jatkuu|the bleak weather continues
+marka tienpinta muuttuu|wet road surface turns into
+metsapalovaroitus ei ole voimassa|forest fire warning not in effect
+pieni ukkosen todennakoisyys|small probability of thunder
+pohjanmaa-etela-pohjanmaa:lle|for Ostrobothnia and Southern Ostrobothnia
+yksittaiset lumi- tai rantakuurot mahdollisia|possibly scattered snow or sleet showers
+B5E|Eastern Gulf of Finland
+B5W|Western Gulf of Finland
+B8W|Gotland Sea
+B10N|Öland Sea
+B10S|Bornholm Sea
+B2_B1S|the Quark and Southern Bay of Bothnia
+B2_B1|the Quark and Bay of Bothnia
+B3N_B2|Northern Bothnian Sea and the Quark
+B3_B2_B1|Sea of Bothnia, the Quark and Bay of Bothnia
+B3_B2|Sea of Bothnia and the Quark
+B4E_B3|Sea of Archipelago and Sea of Bothnia
+B4_B3|Sea of Archipelago and Sea of Åland and Sea of Bothnia
+B4_B3S|Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
+B7W_B4W_B3S|Western Gulf of Finland, Sea of Åland and Southern Bothnian Sea
+B7W_B4W|Western Gulf of Finland and Sea of Åland
+B7W_B4|Western Gulf of Finland, Sea of Archipelago and Sea of Åland
+uusimaa|Uusimaa
+3-aamulla ja aamupaivalla|on Wednesday morning
+1-aamupaivalla|on Monday before noon
+aamupaivaan asti|until before noon
+B7E|Northeastern Baltic
+B7W|Northwestern Baltic
+B8E|Middle Baltic
+B7E_B4E_B3S|Northeastern Baltic, Sea of Archipelago and Southern Bothnian Sea
+B7E_B4E|Northeastern Baltic and Sea of Archipelago
+B7_B4_B3S|Northern Baltic, Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
+B7_B4|Northern Baltic, Sea of Archipelago and Sea of Åland
+B7_B4_B3|Northern Baltic, Sea of Archipelago and Sea of Åland and Sea of Bothnia
+B5W_B7E_B4E|Western Gulf of Finland, Northeastern Baltic and Sea of Archipelago
+B5W_B7E|Western Gulf of Finland and Northeastern Baltic
+B5W_B7|Western Gulf of Finland and Northern Baltic
+B5_B7|Gulf of Finland and Northern Baltic

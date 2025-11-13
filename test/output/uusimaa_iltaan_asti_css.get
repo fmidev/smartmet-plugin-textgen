@@ -1,26 +1,17 @@
 <div class="forecast">
+<div">Sääennuste Uudellemaalle <time datetime="2008-08-06T08:00:00">keskiviikkona kello 8</time></div>
 
-<div>
-Sääennuste Uudellemaalle keskiviikkona kello 8
-</div>
-
-<div>
-Odotettavissa iltaan asti:
-</div>
+<div">Odotettavissa iltaan asti:</div>
 
 <span>
-
 Sää on puolipilvinen ja poutainen.
 </span>
 <span>
-
 </span>
 <span>
-
 Päivän ylin lämpötila on 18...20 astetta.
 </span>
 <span>
-
 Kohtalaista pohjoistuulta.
 </span>
 
