@@ -276,7 +276,6 @@ iltayolla|before midnight
 kainuu:lle|for Kainuu
 kello|
 keski-pohjanmaa:lle|for Central Ostrobothnia
-B7E_B4E_B3S:lle|for Northeastern Baltic, Sea of Archipelago and Southern Bothnian Sea
 6-na kello|on Saturday
 Etela-Suomen yli|over Southern Finland
 keskiyosta alkaen|from midnight
@@ -452,8 +451,7 @@ kosteita|moist
 kuivia|dry
 B10:lle|for Southern Baltic
 B7:lle|for Northern Baltic
-B7E:lle|for Northeastern Baltic
-B7W:lle|for Northwestern Baltic
+B7W:lle|for Western part of Northern Baltic
 B8:lle|for Middle Baltic
 B10N:lle|for Öland Sea
 normaali|normal
@@ -476,8 +474,8 @@ B1N:lle|for Northern Bay of Bothnia
 B1S:lle|for Southern Bay of Bothnia
 B2:lle|for the Quark
 B3:lle|for Sea of Bothnia
-B3N:lle|for Northern Bothnian Sea
-B3S:lle|for Southern Bothnian Sea
+B3S:lle|for Southern Sea of Bothnia
+B7E:lle|for Eastern part of Northern Baltic
 B4:lle|for Sea of Archipelago and Sea of Åland
 B4E:lle|for Sea of Archipelago
 B4W:lle|for Sea of Åland
@@ -924,6 +922,8 @@ haihdunta on hyva|evaporation good
 haihdunta on tyydyttava|evaporation satisfactory
 kruunupyy:lle|for Kruunupyy
 luoto:lle|for Luoto
+B3N:lle|for Northern Sea of Bothnia
+B7E_B4E_B3S:lle|for Eastern part of Northern Baltic, Sea of Archipelago and Southern Sea of Bothnia
 kello [1]|[1] 'clock
 1-na kello [1]|on Monday [1] 'clock
 2-na kello [1]|on Tuesday[1] 'clock
@@ -1722,6 +1722,7 @@ millimetria (mod 10=1)|millimeters
 [iltapaivalla] [pohjoistuuli] alkaa voimistua ja kaantya [etelaan]|[1] [2] starts increasing becoming [3]
 [iltapaivalla] [pohjoistuuli] alkaa voimistua ja kaantyy [etelaan]|[1] [2] starts increasing becoming [3]
 [pohjoistuulta] [m...n] [metria sekunnissa], joka alkaa heiketa|[1] [2] [3], starts decreasing
+B3N|Northern Sea of Bothnia
 1-asti|until Monday
 1-iltaan asti|until Monday evening
 1-iltapaivaan asti|until Monday afternoon
@@ -1806,7 +1807,6 @@ keskiyohon asti|until midnight
 B13|Kattegat
 B1N|Northern Bay of Bothnia
 B1S|Southern Bay of Bothnia
-B3N|Northern Bothnian Sea
 tiepiiri-o4:lle|for Oulu northern inland region
 voimakas 1- ja 2-valinen tuuli|strong north to northeast
 voimakas 1- ja 8-valinen tuuli|strong north to northwest
@@ -1874,6 +1874,7 @@ pohjois_ruotsi:lle|for Northern Sweden
 tiepiiri-t2:lle|for Finland inland region
 tiepiiri-t3:lle|for Finland eastern region
 elyalue-var:lle|for Finland ELY-area
+B3S|Southern Sea of Bothnia
 2-keskipaivasta|from Tuesday noon
 4-keskipaivaan|until Thursday noon
 4-keskipaivasta|from Thursday noon
@@ -1911,7 +1912,6 @@ tiepiiri-t5:lle|for Satakunta inland region
 tiepiiri-u1:lle|for Western Uusimaa coastal region
 tornionlaakso:lle|for Torne Valley
 tunturi-lappi:lle|for Tunturi-Lappi
-B3S|Southern Bothnian Sea
 1-keskipaivasta|from Monday noon
 2-keskipaivaan|until Tuesday noon
 3-keskipaivaan|until Wednesday noon
@@ -1946,8 +1946,8 @@ rovaniemen seutu:lle|for Rovaniemi area
 B4E|Sea of Archipelago
 B4W|Sea of Åland
 B5W_B7:lle|for Western Gulf of Finland and Northern Baltic
-B5W_B7E:lle|for Western Gulf of Finland and Northeastern Baltic
-B5W_B7E_B4E:lle|for Western Gulf of Finland, Northeastern Baltic and Sea of Archipelago
+B7_B4_B3S:lle|for Northern Baltic, Sea of Archipelago and Sea of Åland and Southern Sea of Bothnia
+B5W_B7E:lle|for Western Gulf of Finland and Eastern part of Northern Baltic
 B5_B7:lle|for Gulf of Finland and Northern Baltic
 2-keskipaivalla|at Tuesday noon
 5-keskipaivaan asti|until Friday noon
@@ -1970,7 +1970,7 @@ vesi- tai tihkusadetta|rain or drizzle
 yolla ja aamulla|at night and in the morning
 huomisen keskipaivaan asti|until tomorrow noon
 1- ja 2-valinen tuuli|north to northeast
-B7E_B4E:lle|for Northeastern Baltic and Sea of Archipelago
+B7W_B4:lle|for Western Gulf of Finland, Sea of Archipelago and Sea of Åland
 1-aamulla|on Monday morning
 1-aamuna|on Monday morning
 1-aamupaivaan asti|until Monday forenoon
@@ -1985,18 +1985,18 @@ B7E_B4E:lle|for Northeastern Baltic and Sea of Archipelago
 5-keskipaivalla|at Friday noon
 huono nakyvyys|poor visibility
 7-keskipaivalla|at Sunday noon
-B3N_B2:lle|for Northern Bothnian Sea and the Quark
+B4_B3S:lle|for Sea of Archipelago and Sea of Åland and Southern Sea of Bothnia
 B3_B2:lle|for Sea of Bothnia and the Quark
 B3_B2_B1:lle|for Sea of Bothnia, the Quark and Bay of Bothnia
 B4E_B3:lle|for Sea of Archipelago and Sea of Bothnia
 B4_B3:lle|for Sea of Archipelago and Sea of Åland and Sea of Bothnia
-B4_B3S:lle|for Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
+B5W_B7E_B4E:lle|for Western Gulf of Finland, Eastern part of Northern Baltic and Sea of Archipelago
 B7_B4:lle|for Northern Baltic, Sea of Archipelago and Sea of Åland
 B7_B4_B3:lle|for Northern Baltic, Sea of Archipelago and Sea of Åland and Sea of Bothnia
-B7_B4_B3S:lle|for Northern Baltic, Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
-B7W_B4:lle|for Western Gulf of Finland, Sea of Archipelago and Sea of Åland
+B7E_B4E:lle|for Eastern part of Northern Baltic and Sea of Archipelago
+B3N_B2:lle|for Northern Sea of Bothnia and the Quark
+B7W_B4W_B3S:lle|for Western Gulf of Finland, Sea of Åland and Southern Sea of Bothnia
 B7W_B4W:lle|for Western Gulf of Finland and Sea of Åland
-B7W_B4W_B3S:lle|for Western Gulf of Finland, Sea of Åland and Southern Bothnian Sea
 [huomenna] [lampotila] on vahan nollan alapuolella|[1] [2] just below freezing
 [huomenna] [sisamaassa] [lampotila] on vahan nollan alapuolella|[1] [3] just below freezing [2]
 [huomenna] [sisamaassa] vahan nollan alapuolella|[1] just below freezing [2]
@@ -2117,28 +2117,28 @@ B10N|Öland Sea
 B10S|Bornholm Sea
 B2_B1S|the Quark and Southern Bay of Bothnia
 B2_B1|the Quark and Bay of Bothnia
-B3N_B2|Northern Bothnian Sea and the Quark
 B3_B2_B1|Sea of Bothnia, the Quark and Bay of Bothnia
 B3_B2|Sea of Bothnia and the Quark
 B4E_B3|Sea of Archipelago and Sea of Bothnia
 B4_B3|Sea of Archipelago and Sea of Åland and Sea of Bothnia
-B4_B3S|Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
-B7W_B4W_B3S|Western Gulf of Finland, Sea of Åland and Southern Bothnian Sea
-B7W_B4W|Western Gulf of Finland and Sea of Åland
-B7W_B4|Western Gulf of Finland, Sea of Archipelago and Sea of Åland
 uusimaa|Uusimaa
 3-aamulla ja aamupaivalla|on Wednesday morning
 1-aamupaivalla|on Monday before noon
 aamupaivaan asti|until before noon
-B7E|Northeastern Baltic
-B7W|Northwestern Baltic
 B8E|Middle Baltic
-B7E_B4E_B3S|Northeastern Baltic, Sea of Archipelago and Southern Bothnian Sea
-B7E_B4E|Northeastern Baltic and Sea of Archipelago
-B7_B4_B3S|Northern Baltic, Sea of Archipelago and Sea of Åland and Southern Bothnian Sea
 B7_B4|Northern Baltic, Sea of Archipelago and Sea of Åland
 B7_B4_B3|Northern Baltic, Sea of Archipelago and Sea of Åland and Sea of Bothnia
-B5W_B7E_B4E|Western Gulf of Finland, Northeastern Baltic and Sea of Archipelago
-B5W_B7E|Western Gulf of Finland and Northeastern Baltic
 B5W_B7|Western Gulf of Finland and Northern Baltic
 B5_B7|Gulf of Finland and Northern Baltic
+B3N_B2|Northern Sea of Bothnia and the Quark
+B4_B3S|Sea of Archipelago and Sea of Åland and Southern Sea of Bothnia
+B5W_B7E_B4E|Western Gulf of Finland, Eastern part of Northern Baltic and Sea of Archipelago
+B5W_B7E|Western Gulf of Finland and Eastern part of Northern Baltic
+B7_B4_B3S|Northern Baltic, Sea of Archipelago and Sea of Åland and Southern Sea of Bothnia
+B7E_B4E_B3S|Eastern part of Northern Baltic, Sea of Archipelago and Southern Sea of Bothnia
+B7E_B4E|Eastern part of Northern Baltic and Sea of Archipelago
+B7E|Eastern part of Northern Baltic
+B7W_B4W_B3S|Western Gulf of Finland, Sea of Åland and Southern Sea of Bothnia
+B7W_B4|Western Gulf of Finland, Sea of Archipelago and Sea of Åland
+B7W_B4W|Western Gulf of Finland and Sea of Åland
+B7W|Western part of Northern Baltic

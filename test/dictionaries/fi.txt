@@ -2078,7 +2078,6 @@ finnmarkin itaosa:lle|Finnmarkin itäosaan
 murmanskin alueen lansiosa:lle|Murmanskin alueen länsiosaan
 pohjois-ruotsi:lle|Pohjois-Ruotsiin
 voimakkaita sadekuuroja|rankkoja sadekuuroja
-huomisen keskipaivaan asti|huomisen keskipäivään asti
 [iltapaivalla] lumikuurot voivat olla sakeita|[1] lumikuurot voivat olla sakeita
 [iltapaivalla] lumisade voi olla sakeaa|[1] lumisade voi olla sakeaa
 1-keskipaivaan asti|maanantain keskipäivään asti
@@ -2122,3 +2121,4 @@ illasta|illasta
 iltayosta|iltayöstä
 keskiyosta|keskiyöstä
 yosta|yöstä
+huomisen keskipaivaan asti|huomiseen keskipäivään asti
