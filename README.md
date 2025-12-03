@@ -160,7 +160,6 @@ Contains miscellaneous parameters:
 
 * timeformat
 * language
-* locale
 * dictionary
 * formatter
 
@@ -170,7 +169,6 @@ Example:
 `{`<br>
  &emsp;`timeformat          = "iso";`<br>
  &emsp;`language            = "fi";`<br>
- &emsp;`locale              = "fi_FI.UTF-8";`<br>
  &emsp;`dictionary          = "multimysqlplusgeonames";`<br>
  &emsp;`formatter           = "html";`<br>
 `};`<br>
