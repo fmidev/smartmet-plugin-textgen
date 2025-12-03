@@ -3,7 +3,6 @@
 #include "FileDictionariesPlusGeonames.h"
 #include "FileDictionaryPlusGeonames.h"
 #include <boost/lexical_cast.hpp>
-#include <boost/locale.hpp>
 #include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
 #include <engines/gis/Engine.h>
@@ -30,7 +29,6 @@ namespace Textgen
 #define COAST_MASK_NAME "coast"
 #define PRODUCT_PARAM "product"
 #define DEFAULT_PRODUCT_NAME "default"
-#define LOCALE_PARAM "locale"
 #define AREA_PARAM "area"
 #define FORECASTTIME_PARAM "forecasttime"
 #define LANGUAGE_PARAM "language"
@@ -476,15 +474,6 @@ std::string Plugin::query(SmartMet::Spine::Reactor& /*theReactor*/,
       throw Fmi::Exception(BCP, errorMessage);
     }
 
-    // set locale
-    const std::string loc = mmap_string(queryParameters, LOCALE_PARAM, config.locale());
-
-    if (!loc.empty())
-    {
-      boost::locale::generator gen;
-      std::locale::global(gen(loc));
-    }
-
     std::string formatter_name(mmap_string(queryParameters, FORMATTER_PARAM));
 
     TextGenPosixTime forecasttime;
@@ -824,9 +813,6 @@ bool Plugin::verifyHttpRequestParameters(SmartMet::Spine::HTTP::ParamMap& queryP
 
     if (queryParameters.find(FORMATTER_PARAM) == queryParameters.end())
       queryParameters.insert(make_pair(FORMATTER_PARAM, config.formatter()));
-
-    if (queryParameters.find(LOCALE_PARAM) == queryParameters.end())
-      queryParameters.insert(make_pair(LOCALE_PARAM, config.locale()));
 
     return true;
   }

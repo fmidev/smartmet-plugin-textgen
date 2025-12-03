@@ -58,7 +58,6 @@ class ProductConfig
 
   const std::string& language() const { return itsLanguage; }
   const std::string& formatter() const { return itsFormatter; }
-  const std::string& locale() const { return itsLocale; }
   const std::string& timeFormat() const { return itsTimeFormat; }
   const std::string& forestfirewarning_directory() const { return itsForestFireWarningDirectory; }
   const libconfig::Config& config() const { return itsConfig; }
@@ -119,7 +118,6 @@ class ProductConfig
 
   std::string itsLanguage;
   std::string itsFormatter;
-  std::string itsLocale;
   std::string itsTimeFormat;
 
   std::string itsForestFireWarningDirectory;

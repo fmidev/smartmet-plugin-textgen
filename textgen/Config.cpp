@@ -38,7 +38,6 @@ namespace
 const char* default_url = "/textgen";
 const char* default_language = "fi";
 const char* default_supported_languages = "fi,sv,en";
-const char* default_locale = "fi_FI.UTF-8";
 const char* default_formatter = "html";
 const char* default_timeformat = "iso";
 const char* default_dictionary = "multimysql";
@@ -867,7 +866,6 @@ ProductConfig::ProductConfig(const std::string& configfile,
     itsConfig.lookupValue("misc.frostseason", itsFrostSeason);
     itsConfig.lookupValue("misc.timeformat", itsTimeFormat);
     itsConfig.lookupValue("misc.language", itsLanguage);
-    itsConfig.lookupValue("misc.locale", itsLocale);
     itsConfig.lookupValue("misc.formatter", itsFormatter);
     itsConfig.lookupValue("forestfirewarning.directory", itsForestFireWarningDirectory);
 
@@ -1210,9 +1208,6 @@ void ProductConfig::setDefaultConfig(const std::shared_ptr<ProductConfig>& pDefa
       if (itsFormatter.empty())
         itsFormatter = pDefaultConfig->itsFormatter;
 
-      if (itsLocale.empty())
-        itsLocale = pDefaultConfig->itsLocale;
-
       if (itsTimeFormat.empty())
         itsTimeFormat = pDefaultConfig->itsTimeFormat;
 
@@ -1221,8 +1216,6 @@ void ProductConfig::setDefaultConfig(const std::shared_ptr<ProductConfig>& pDefa
         itsLanguage = default_language;
       if (itsFormatter.empty())
         itsFormatter = default_formatter;
-      if (itsLocale.empty())
-        itsLocale = default_locale;
       if (itsTimeFormat.empty())
         itsTimeFormat = default_timeformat;
     }
