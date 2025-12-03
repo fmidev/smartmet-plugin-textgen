@@ -34,7 +34,10 @@ parameter | default value | description | example | valid values
 product | n/a | Name of the configuration to load | n/a |   The available names are read from settings file plugins/textgen.conf. Each referes to a separate configuration file in plugins/texgen/ -directory
 language | n/a | Define the generated text's language | en/fi/sv | Depends what is configured in database  
 area | n/a | location/area name | area=Etelä-Savo | any valid location/area name
-forcasttime | current time | time of forecast, format is YYYYMMDDHH[SS] | forecasttime=201712050900 | any valid date
+areasource | n/a | source schema for the area | areasource=counties | any valid source in the database
+bbox | n/a | WGS84 bounding box | bbox=lon1,lat1,lon2,lat2 | any valid bounding box
+wkt | n/a | WGS84 Well Known Text polygon | wkt=POLYGON%28%2822.8+59.8%2C+26.5+59.8%2C+26.5+60.8%2C+22.8+60.8%2C+22.8+59.8%29%29+as+Uusimaa
+forecasttime | current time | time of forecast, format is YYYYMMDDHH[SS] | forecasttime=201712050900 | any valid date
 formatter | defined in configuration file | output format | formatter=plainlines | plainlines, html, css
 geoid | n/a | geoid of location/area | geoid=647852 | any valid geoid
 language | defined in configuration file | language of output documant | language=en | fi,sv,en
@@ -45,11 +48,17 @@ postgis | defined in configuration file | parameters to access PostGIS database 
 
 In every query there must be area, lonlat or geoid parameter defined. All the other parameters must have default value defined in configuration file.
 
-## area
+## area / bbox / wkt
 
 area-parameter defines the area name. The name can be name of the county/city or some other geographical area, that is stored in PostGIS-database. The name must be in the same format as in PostGIS databse.
 
 Example: `area=Uusimaa,Kymenlaakso,Helsinki,Kotka`
+
+bbox-parameter defines a WGS bounding box.
+
+wkt-parameter defines a WGS84 Well Known Text polygon with an alias for the name
+
+Example: `wkt=POLYGON%28%2822.8+59.8%2C+26.5+59.8%2C+26.5+60.8%2C+22.8+60.8%2C+22.8+59.8%29%29+as+Uusimaa`
 
 ## forecasttime
 
