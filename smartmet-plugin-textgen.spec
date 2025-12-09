@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 25.12.3
+Version: 25.12.9
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -26,23 +26,23 @@ BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 25.11.7
-BuildRequires: smartmet-library-textgen-devel >= 25.12.2
+BuildRequires: smartmet-library-calculator-devel >= 25.12.9
+BuildRequires: smartmet-library-textgen-devel >= 25.12.8
 BuildRequires: smartmet-library-spine-devel >= 25.11.19
 BuildRequires: smartmet-engine-querydata-devel >= 25.9.17
-BuildRequires: smartmet-engine-geonames-devel >= 25.11.3
+BuildRequires: smartmet-engine-geonames-devel >= 25.12.2
 BuildRequires: smartmet-engine-gis-devel >= 25.9.29
-BuildRequires: smartmet-library-macgyver-devel >= 25.11.20
+BuildRequires: smartmet-library-macgyver-devel >= 25.12.2
 BuildRequires: smartmet-library-locus-devel >= 25.9.29
-Requires: smartmet-library-calculator >= 25.11.7
-Requires: smartmet-library-macgyver >= 25.11.20
+Requires: smartmet-library-calculator >= 25.12.9
+Requires: smartmet-library-macgyver >= 25.12.2
 Requires: smartmet-library-locus >= 25.9.29
-Requires: smartmet-library-textgen >= 25.12.2
+Requires: smartmet-library-textgen >= 25.12.8
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 25.11.3
+Requires: smartmet-engine-geonames >= 25.12.2
 Requires: smartmet-engine-querydata >= 25.9.17
 Requires: smartmet-engine-gis >= 25.9.29
-Requires: smartmet-server >= 25.10.27
+Requires: smartmet-server >= 25.12.2
 Requires: smartmet-library-spine >= 25.11.19
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
@@ -56,7 +56,7 @@ Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 25.11.27
 #TestRequires: smartmet-engine-gis >= 25.9.29
-#TestRequires: smartmet-engine-geonames >= 25.11.3
+#TestRequires: smartmet-engine-geonames >= 25.12.2
 #TestRequires: smartmet-library-spine-plugin-test >= 25.11.19
 #TestRequires: smartmet-library-newbase-devel >= 25.3.20
 #TestRequires: smartmet-test-data
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Tue Dec  9 2025 Mika Heiskanen <mika.heiskanen@fmi.fi> - 25.12.9-1.fmi
+- Repackaged due to API changes
+
 * Wed Dec  3 2025 Mika Heiskanen <mika.heiskanen@fmi.fi> - 25.12.3-1.fmi
 - Remove "locale" option for not being safe and for not really ever being used
 
