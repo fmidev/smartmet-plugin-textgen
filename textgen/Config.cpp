@@ -204,13 +204,9 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
                                  config_item_container);
         }
       }
-      else if (setting.isArray())
+      else if (setting.isArray() || setting.isList())
       {
-        // cout << key << " is an array\n";
-      }
-      else if (setting.isList())
-      {
-        // cout << key << " is a list\n";
+        // cout << key << " is an array or list\n";
       }
       else
       {
