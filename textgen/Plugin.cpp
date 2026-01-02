@@ -599,7 +599,7 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
       if (!isdebug)
         theResponse.setContent(response);
       else
-        theResponse.setContent(response + "\n<pre>" + logger.str() + "</pre>");
+        theResponse.setContent(response + "\n<pre>" + MessageLogger::str() + "</pre>");
 
       // Build cache expiration time info
       auto t_expires = t_now + Fmi::Seconds(expires_seconds);
@@ -632,13 +632,13 @@ void Plugin::requestHandler(SmartMet::Spine::Reactor& theReactor,
       handle_exception(theRequest,
                        theResponse,
                        exception.what(),
-                       logger.str(),
+                       MessageLogger::str(),
                        SmartMet::Spine::HTTP::Status::ok,
                        isdebug);
     }
 
     if (print_log)
-      std::cout << logger.str() << '\n';
+      std::cout << MessageLogger::str() << '\n';
 
     // delete textgen settings of current thread
     Settings::release();
