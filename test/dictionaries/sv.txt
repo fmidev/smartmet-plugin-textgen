@@ -88,6 +88,7 @@ paivan ylin lampotila|dagens högsta temperatur
 yon alin lampotila|nattens lägsta temperatur
 noin|cirka
 seuraavana paivana|följande dag
+SAIMAA|Saimen
 paivien ylin lampotila|dagens högsta temperatur
 keskimaarainen alin lampotila|lägsta temperaturen i medeltal
 1-illalla ja iltayolla|på måndag kväll och senare under kvällen
