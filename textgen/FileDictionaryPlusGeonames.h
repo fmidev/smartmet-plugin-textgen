@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <memory>
 #include <textgen/FileDictionary.h>
+#include <memory>
 #include <string>
 
 namespace SmartMet
@@ -30,10 +30,12 @@ class FileDictionaryPlusGeonames : public TextGen::FileDictionary
   void geoinit(void* theGeoengine) override;
   bool geocontains(const std::string& theKey) const override;
   bool geocontains(const double& theLongitude,
-                           const double& theLatitude,
-                           const double& theMaxDistance) const override;
+                   const double& theLatitude,
+                   const double& theMaxDistance) const override;
   std::string geofind(const std::string& theKey) const override;
-  std::string geofind(double theLongitude, double theLatitude, double theMaxDistance) const override;
+  std::string geofind(double theLongitude,
+                      double theLatitude,
+                      double theMaxDistance) const override;
 
  private:
   class Impl;
