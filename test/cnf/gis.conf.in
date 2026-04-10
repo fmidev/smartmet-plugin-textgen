@@ -9,7 +9,6 @@ postgis:
         username        = "gis_user";
         password        = "gis_pw";
         encoding        = "UTF8";
-
 };
 
 cache:
