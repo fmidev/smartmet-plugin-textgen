@@ -2,6 +2,7 @@
 #include "DatabaseDictionariesPlusGeonames.h"
 #include "FileDictionariesPlusGeonames.h"
 #include "FileDictionaryPlusGeonames.h"
+#include "PoDictionariesPlusGeonames.h"
 #include <boost/lexical_cast.hpp>
 #include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
@@ -703,10 +704,13 @@ void Plugin::init()
       itsDictionary = std::make_shared<DatabaseDictionariesPlusGeonames>("postgresql");
     else if (dictionary_name == "multifileplusgeonames")
       itsDictionary = std::make_shared<FileDictionariesPlusGeonames>();
+    else if (dictionary_name == "multipoplusgeonames")
+      itsDictionary = std::make_shared<PoDictionariesPlusGeonames>();
     else
       itsDictionary = static_cast<std::shared_ptr<TextGen::Dictionary>>(
           (TextGen::DictionaryFactory::create(dictionary_name)));
     Settings::set("textgen::filedictionaries", itsConfig.fileDictionaries());
+    Settings::set("textgen::podictionaries", itsConfig.fileDictionaries());
 
     const std::string dictionaryId = itsDictionary->getDictionaryId();
     if (dictionaryId == "mysql" || dictionaryId == "postgresql")
