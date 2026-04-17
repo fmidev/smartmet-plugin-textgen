@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.4.14
+Version: 26.4.17
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -27,7 +27,7 @@ BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 26.4.13
-BuildRequires: smartmet-library-textgen-devel >= 26.4.13
+BuildRequires: smartmet-library-textgen-devel >= 26.4.17
 BuildRequires: smartmet-library-spine-devel >= 26.4.13
 BuildRequires: smartmet-engine-querydata-devel >= 26.4.13
 BuildRequires: smartmet-engine-geonames-devel >= 26.4.13
@@ -37,7 +37,7 @@ BuildRequires: smartmet-library-locus-devel >= 26.4.13
 Requires: smartmet-library-calculator >= 26.4.13
 Requires: smartmet-library-macgyver >= 26.4.13
 Requires: smartmet-library-locus >= 26.4.13
-Requires: smartmet-library-textgen >= 26.4.13
+Requires: smartmet-library-textgen >= 26.4.17
 Requires: libconfig17
 Requires: smartmet-engine-geonames >= 26.4.13
 Requires: smartmet-engine-querydata >= 26.4.13
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri Apr 17 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.4.17-1.fmi
+- Updated textgen requirement to guarantee installed po dictionaries
+
 * Tue Apr 14 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.4.14-1.fmi
 - Repackaged due to API changes
 
