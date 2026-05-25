@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.4.17
+Version: 26.5.25
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Mon May 25 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.5.25-1.fmi
+- Default the dictionary path to /usr/share/smartmet/textgen so tests and unconfigured deployments pick up the library's installed po files
+
 * Fri Apr 17 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.4.17-1.fmi
 - Updated textgen requirement to guarantee installed po dictionaries
 

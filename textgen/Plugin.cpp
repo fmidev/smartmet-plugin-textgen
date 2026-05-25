@@ -709,8 +709,14 @@ void Plugin::init()
     else
       itsDictionary = static_cast<std::shared_ptr<TextGen::Dictionary>>(
           (TextGen::DictionaryFactory::create(dictionary_name)));
-    Settings::set("textgen::filedictionaries", itsConfig.fileDictionaries());
-    Settings::set("textgen::podictionaries", itsConfig.fileDictionaries());
+    // Fall back to the path where smartmet-library-textgen installs its .po
+    // files so that unconfigured deployments — including the integration tests
+    // — pick up the library's dictionaries automatically.
+    const std::string& dictionaries = itsConfig.fileDictionaries().empty()
+                                          ? std::string("/usr/share/smartmet/textgen")
+                                          : itsConfig.fileDictionaries();
+    Settings::set("textgen::filedictionaries", dictionaries);
+    Settings::set("textgen::podictionaries", dictionaries);
 
     const std::string dictionaryId = itsDictionary->getDictionaryId();
     if (dictionaryId == "mysql" || dictionaryId == "postgresql")
