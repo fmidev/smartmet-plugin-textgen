@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.5.25
+Version: 26.6.24
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -27,23 +27,23 @@ BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 26.4.13
-BuildRequires: smartmet-library-textgen-devel >= 26.4.17
-BuildRequires: smartmet-library-spine-devel >= 26.4.13
-BuildRequires: smartmet-engine-querydata-devel >= 26.4.13
-BuildRequires: smartmet-engine-geonames-devel >= 26.4.13
-BuildRequires: smartmet-engine-gis-devel >= 26.4.13
-BuildRequires: smartmet-library-macgyver-devel >= 26.4.13
+BuildRequires: smartmet-library-textgen-devel >= 26.5.25
+BuildRequires: smartmet-library-spine-devel >= 26.6.24
+BuildRequires: smartmet-engine-querydata-devel >= 26.6.24
+BuildRequires: smartmet-engine-geonames-devel >= 26.6.24
+BuildRequires: smartmet-engine-gis-devel >= 26.6.24
+BuildRequires: smartmet-library-macgyver-devel >= 26.6.15
 BuildRequires: smartmet-library-locus-devel >= 26.4.13
 Requires: smartmet-library-calculator >= 26.4.13
-Requires: smartmet-library-macgyver >= 26.4.13
+Requires: smartmet-library-macgyver >= 26.6.15
 Requires: smartmet-library-locus >= 26.4.13
-Requires: smartmet-library-textgen >= 26.4.17
+Requires: smartmet-library-textgen >= 26.5.25
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 26.4.13
-Requires: smartmet-engine-querydata >= 26.4.13
-Requires: smartmet-engine-gis >= 26.4.13
-Requires: smartmet-server >= 26.4.13
-Requires: smartmet-library-spine >= 26.4.13
+Requires: smartmet-engine-geonames >= 26.6.24
+Requires: smartmet-engine-querydata >= 26.6.24
+Requires: smartmet-engine-gis >= 26.6.24
+Requires: smartmet-server >= 26.6.24
+Requires: smartmet-library-spine >= 26.6.24
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-filesystem
@@ -54,11 +54,11 @@ Requires: %{smartmet_boost}-timer
 Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
-#TestRequires: smartmet-utils-devel >= 26.2.4
-#TestRequires: smartmet-engine-gis >= 26.4.13
-#TestRequires: smartmet-engine-geonames >= 26.4.13
-#TestRequires: smartmet-library-spine-plugin-test >= 26.4.13
-#TestRequires: smartmet-library-newbase-devel >= 26.2.4
+#TestRequires: smartmet-utils-devel >= 26.6.17
+#TestRequires: smartmet-engine-gis >= 26.6.24
+#TestRequires: smartmet-engine-geonames >= 26.6.24
+#TestRequires: smartmet-library-spine-plugin-test >= 26.6.24
+#TestRequires: smartmet-library-newbase-devel >= 26.6.24
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Jun 24 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.6.24-1.fmi
+- Mass rebuild
+
 * Mon May 25 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.5.25-1.fmi
 - Default the dictionary path to /usr/share/smartmet/textgen so tests and unconfigured deployments pick up the library's installed po files
 
