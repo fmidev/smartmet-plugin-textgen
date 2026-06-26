@@ -502,7 +502,7 @@ void Config::init(SmartMet::Engine::Gis::Engine* pGisEngine)
     }
 
     config_update_task.reset(
-        new Fmi::AsyncTask("[TextGen] config update watch", [this]() { itsMonitor.run(); }));
+        new Fmi::AsyncTask("upd-tgen-cfg", [this]() { itsMonitor.run(); }));
 
     // Wait for a full scan to complete before registering ready for the Reactor
     while (!itsMonitor.ready() || config_update_task->ended())
