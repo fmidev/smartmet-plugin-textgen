@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.6.26
+Version: 26.9.6
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -27,7 +27,7 @@ BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 26.4.13
-BuildRequires: smartmet-library-textgen-devel >= 26.5.25
+BuildRequires: smartmet-library-textgen-devel >= 26.9.6
 BuildRequires: smartmet-library-spine-devel >= 26.6.24
 BuildRequires: smartmet-engine-querydata-devel >= 26.6.24
 BuildRequires: smartmet-engine-geonames-devel >= 26.6.24
@@ -37,7 +37,7 @@ BuildRequires: smartmet-library-locus-devel >= 26.4.13
 Requires: smartmet-library-calculator >= 26.4.13
 Requires: smartmet-library-macgyver >= 26.6.15
 Requires: smartmet-library-locus >= 26.4.13
-Requires: smartmet-library-textgen >= 26.5.25
+Requires: smartmet-library-textgen >= 26.9.6
 Requires: libconfig17
 Requires: smartmet-engine-geonames >= 26.6.24
 Requires: smartmet-engine-querydata >= 26.6.24
@@ -84,6 +84,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Sun Sep  6 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.6-1.fmi
+- Added marine (merivaroitusalueet) product test configuration and wind_overview
+  regression requests (WKT/bbox areas, fi/sv/en, period override, and the new
+  wind_speed_intermediate_report_limit setting); requires smartmet-library-textgen >= 26.9.6
+
 * Fri Jun 26 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> 26.6.26-1.fmi
 - Thread naming: Renamed the config update watch task
 
