@@ -1,0 +1,1 @@
+GET /textgen?formatter=plainlines&bbox=19.3,60.6,21.6,63.3+as+B3&product=marine_sea&forecasttime=200808070800&part1%3A%3Aperiod%3A%3Astarthour=18&part1%3A%3Aperiod%3A%3Aendhour=18 HTTP/1.0
