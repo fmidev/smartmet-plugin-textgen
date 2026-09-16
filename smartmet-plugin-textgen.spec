@@ -2,8 +2,8 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.9.6
-Release: 2%{?dist}.fmi
+Version: 26.9.16
+Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -32,10 +32,10 @@ BuildRequires: smartmet-library-spine-devel >= 26.6.24
 BuildRequires: smartmet-engine-querydata-devel >= 26.6.24
 BuildRequires: smartmet-engine-geonames-devel >= 26.6.24
 BuildRequires: smartmet-engine-gis-devel >= 26.6.24
-BuildRequires: smartmet-library-macgyver-devel >= 26.6.15
+BuildRequires: smartmet-library-macgyver-devel >= 26.9.16
 BuildRequires: smartmet-library-locus-devel >= 26.4.13
 Requires: smartmet-library-calculator >= 26.4.13
-Requires: smartmet-library-macgyver >= 26.6.15
+Requires: smartmet-library-macgyver >= 26.9.16
 Requires: smartmet-library-locus >= 26.4.13
 Requires: smartmet-library-textgen >= 26.9.6-2
 Requires: libconfig17
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Sep 16 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.16-1.fmi
+- Repackaged due to Fmi::Cache::Cache locking changes
+
 * Sun Sep  6 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.6-2.fmi
 - Added marine_sea test product using the new wind_sea_overview story and the matching
   regression requests; requires smartmet-library-textgen >= 26.9.6-2
