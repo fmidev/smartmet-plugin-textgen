@@ -3,7 +3,7 @@
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
 Version: 26.9.24
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -84,8 +84,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Sep 24 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.24-2.fmi
+- Security: restrict request-parameter overrides of textgen settings to whole "::"
+  segment boundaries, so a short parameter name can no longer override an unrelated
+  configured setting via a loose suffix match.
+
 * Thu Sep 24 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.24-1.fmi
 - Repackaged due to base library ABI changes
+
 * Wed Sep 16 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.16-1.fmi
 - Repackaged due to Fmi::Cache::Cache locking changes
 

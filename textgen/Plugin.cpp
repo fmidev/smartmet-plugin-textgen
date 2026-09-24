@@ -283,7 +283,12 @@ std::string get_setting_string(const std::string& key,
 {
   for (const auto& p : params)
   {
-    if (boost::iends_with(key, p.first))
+    // A request parameter may override a configured setting only when its name matches
+    // the setting key on a "::" segment boundary (or the whole key). The previous plain
+    // suffix match let a short parameter name (e.g. "mat") override an unrelated setting
+    // (e.g. "...::format"), giving the request control over settings it should not reach.
+    if (!p.first.empty() &&
+        (boost::iequals(key, p.first) || boost::iends_with(key, "::" + p.first)))
     {
       if (p.second != default_value)
       {
