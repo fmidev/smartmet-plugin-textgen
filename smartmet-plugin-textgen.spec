@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.9.13
+Version: 26.9.24
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -27,9 +27,9 @@ BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 26.9.21
-BuildRequires: smartmet-library-textgen-devel >= 26.9.21
+BuildRequires: smartmet-library-textgen-devel >= 26.9.23
 BuildRequires: smartmet-library-spine-devel >= 26.9.23
-BuildRequires: smartmet-engine-querydata-devel >= 26.9.16
+BuildRequires: smartmet-engine-querydata-devel >= 26.9.23
 BuildRequires: smartmet-engine-geonames-devel >= 26.9.23
 BuildRequires: smartmet-engine-gis-devel >= 26.9.23
 BuildRequires: smartmet-library-macgyver-devel >= 26.9.23
@@ -37,10 +37,10 @@ BuildRequires: smartmet-library-locus-devel >= 26.4.13
 Requires: smartmet-library-calculator >= 26.9.21
 Requires: smartmet-library-macgyver >= 26.9.23
 Requires: smartmet-library-locus >= 26.4.13
-Requires: smartmet-library-textgen >= 26.9.21
+Requires: smartmet-library-textgen >= 26.9.23
 Requires: libconfig17
 Requires: smartmet-engine-geonames >= 26.9.23
-Requires: smartmet-engine-querydata >= 26.9.16
+Requires: smartmet-engine-querydata >= 26.9.23
 Requires: smartmet-engine-gis >= 26.9.23
 Requires: smartmet-server >= 26.9.2
 Requires: smartmet-library-spine >= 26.9.23
@@ -84,14 +84,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
-* Wed Sep 23 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.13-1.fmi
+* Thu Sep 24 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.24-1.fmi
 - Repackaged due to base library ABI changes
 * Wed Sep 16 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.16-1.fmi
 - Repackaged due to Fmi::Cache::Cache locking changes
 
 * Sun Sep  6 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.6-2.fmi
 - Added marine_sea test product using the new wind_sea_overview story and the matching
-  regression requests; requires smartmet-library-textgen >= 26.9.21
+  regression requests; requires smartmet-library-textgen >= 26.9.23
 
 * Sun Sep  6 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.6-1.fmi
 - Added marine (merivaroitusalueet) product test configuration and wind_overview
