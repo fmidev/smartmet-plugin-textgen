@@ -2,8 +2,8 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.9.24
-Release: 2%{?dist}.fmi
+Version: 26.10.2
+Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -32,10 +32,10 @@ BuildRequires: smartmet-library-spine-devel >= 26.9.23
 BuildRequires: smartmet-engine-querydata-devel >= 26.9.23
 BuildRequires: smartmet-engine-geonames-devel >= 26.9.23
 BuildRequires: smartmet-engine-gis-devel >= 26.9.23
-BuildRequires: smartmet-library-macgyver-devel >= 26.9.23
+BuildRequires: smartmet-library-macgyver-devel >= 26.10.2
 BuildRequires: smartmet-library-locus-devel >= 26.4.13
 Requires: smartmet-library-calculator >= 26.9.21
-Requires: smartmet-library-macgyver >= 26.9.23
+Requires: smartmet-library-macgyver >= 26.10.2
 Requires: smartmet-library-locus >= 26.4.13
 Requires: smartmet-library-textgen >= 26.9.23
 Requires: libconfig17
@@ -84,6 +84,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Fri Oct 02 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.10.2-1.fmi
+- Rebuilt against macgyver 26.10.2 where Fmi::Cache::Cache uses CLOCK eviction instead of LRU.
+  CLOCK is faster than LRU since a cache hit only takes a shared lock (ABI change)
+
 * Thu Sep 24 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.9.24-2.fmi
 - Security: restrict request-parameter overrides of textgen settings to whole "::"
   segment boundaries, so a short parameter name can no longer override an unrelated
