@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.10.2
+Version: 26.10.3
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -26,24 +26,24 @@ BuildRequires: %{smartmet_boost}-devel
 BuildRequires: libconfig17-devel
 BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
-BuildRequires: smartmet-library-calculator-devel >= 26.9.21
-BuildRequires: smartmet-library-textgen-devel >= 26.9.23
-BuildRequires: smartmet-library-spine-devel >= 26.9.23
-BuildRequires: smartmet-engine-querydata-devel >= 26.9.23
-BuildRequires: smartmet-engine-geonames-devel >= 26.9.23
+BuildRequires: smartmet-library-calculator-devel >= 26.10.3
+BuildRequires: smartmet-library-textgen-devel >= 26.10.3
+BuildRequires: smartmet-library-spine-devel >= 26.10.3
+BuildRequires: smartmet-engine-querydata-devel >= 26.10.3
+BuildRequires: smartmet-engine-geonames-devel >= 26.10.3
 BuildRequires: smartmet-engine-gis-devel >= 26.9.23
-BuildRequires: smartmet-library-macgyver-devel >= 26.10.2
-BuildRequires: smartmet-library-locus-devel >= 26.4.13
-Requires: smartmet-library-calculator >= 26.9.21
-Requires: smartmet-library-macgyver >= 26.10.2
-Requires: smartmet-library-locus >= 26.4.13
-Requires: smartmet-library-textgen >= 26.9.23
+BuildRequires: smartmet-library-macgyver-devel >= 26.10.3
+BuildRequires: smartmet-library-locus-devel >= 26.10.3
+Requires: smartmet-library-calculator >= 26.10.3
+Requires: smartmet-library-macgyver >= 26.10.3
+Requires: smartmet-library-locus >= 26.10.3
+Requires: smartmet-library-textgen >= 26.10.3
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 26.9.23
-Requires: smartmet-engine-querydata >= 26.9.23
+Requires: smartmet-engine-geonames >= 26.10.3
+Requires: smartmet-engine-querydata >= 26.10.3
 Requires: smartmet-engine-gis >= 26.9.23
 Requires: smartmet-server >= 26.9.2
-Requires: smartmet-library-spine >= 26.9.23
+Requires: smartmet-library-spine >= 26.10.3
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-filesystem
@@ -56,9 +56,9 @@ Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 26.9.3
 #TestRequires: smartmet-engine-gis >= 26.9.23
-#TestRequires: smartmet-engine-geonames >= 26.9.23
+#TestRequires: smartmet-engine-geonames >= 26.10.3
 #TestRequires: smartmet-library-spine-plugin-test >= 26.9.23
-#TestRequires: smartmet-library-newbase-devel >= 26.9.23
+#TestRequires: smartmet-library-newbase-devel >= 26.10.3
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
 
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Sat Oct 03 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.10.3-1.fmi
+- Repackaged due to the macgyver AtomicSharedPtr ABI change
+
 * Fri Oct 02 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.10.2-1.fmi
 - Rebuilt against macgyver 26.10.2 where Fmi::Cache::Cache uses CLOCK eviction instead of LRU.
   CLOCK is faster than LRU since a cache hit only takes a shared lock (ABI change)
