@@ -35,6 +35,7 @@ class Plugin : public SmartMetPlugin
   Plugin(SmartMet::Spine::Reactor* theReactor, const char* theConfig);
   ~Plugin() override = default;
   Plugin& operator=(const Plugin& other) = delete;
+  Plugin(const Plugin&) = default;
 
   const std::string& getPluginName() const override;
   int getRequiredAPIVersion() const override;

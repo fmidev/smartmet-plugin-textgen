@@ -55,6 +55,7 @@ class ProductConfig
                 const std::string& dictionary);
   ProductConfig(const ProductConfig& other) = delete;
   ProductConfig& operator=(const ProductConfig& other) = delete;
+  ~ProductConfig() = default;
 
   const std::string& language() const { return itsLanguage; }
   const std::string& formatter() const { return itsFormatter; }
@@ -139,6 +140,8 @@ class Config : private boost::noncopyable
  public:
   Config(std::string configfile);
   virtual ~Config();
+  Config(const Config&) = delete;
+  Config& operator=(const Config&) = delete;
   void init(SmartMet::Engine::Gis::Engine* pGisEngine);
   void shutdown();
 
