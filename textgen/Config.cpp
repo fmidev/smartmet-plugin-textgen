@@ -583,6 +583,51 @@ ConfigItemVector Config::readMainConfig() const
   }
 }
 
+namespace
+{
+// The configured products (name -> config file), relative paths made absolute
+std::map<std::string, std::string> configured_products(const ConfigItemVector& configItems,
+                                                       const std::string& mainConfigFile)
+{
+  std::filesystem::path config_path(mainConfigFile);
+  std::map<std::string, std::string> products;  // name -> config file
+  for (const auto& item : configItems)
+  {
+    std::string config_key(item.first);
+    std::string product_name = config_key.substr(config_key.find('.') + 1);
+    std::string product_file = item.second;
+
+    // Make relative paths absolute
+    if (!product_file.empty() && product_file[0] != '/')
+      product_file = config_path.parent_path().string() + "/" + product_file;
+    products[product_name] = product_file;
+  }
+  return products;
+}
+
+// Report deleted, successfully updated and successfully created files
+void report_file_changes(const std::set<std::string>& deletedFiles,
+                         const std::set<std::string>& modifiedFiles,
+                         const std::set<std::string>& newFiles,
+                         const std::set<std::string>& erroneousFiles)
+{
+  for (const auto& f : deletedFiles)
+    std::cout << ANSI_FG_RED << "File '" << f << "' deleted!" << ANSI_FG_DEFAULT << '\n';
+  for (const auto& f : modifiedFiles)
+  {
+    // Report successful update
+    if (erroneousFiles.find(f) == erroneousFiles.end())
+      std::cout << ANSI_FG_GREEN << "File '" << f << "' updated!" << ANSI_FG_DEFAULT << '\n';
+  }
+  for (const auto& f : newFiles)
+  {
+    // Report successful update
+    if (erroneousFiles.find(f) == erroneousFiles.end())
+      std::cout << ANSI_FG_GREEN << "New file '" << f << "' created!" << ANSI_FG_DEFAULT << '\n';
+  }
+}
+}  // namespace
+
 std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
     const ConfigItemVector& configItems,
     const std::set<std::string>& deletedFiles,
@@ -596,20 +641,9 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
 
   try
   {
-    std::filesystem::path config_path(itsMainConfigFile);
     // Read configured products
-    std::map<std::string, std::string> products;  // name -> config file
-    for (const auto& item : configItems)
-    {
-      std::string config_key(item.first);
-      std::string product_name = config_key.substr(config_key.find('.') + 1);
-      std::string product_file = item.second;
-
-      // Make relative paths absolute
-      if (!product_file.empty() && product_file[0] != '/')
-        product_file = config_path.parent_path().string() + "/" + product_file;
-      products[product_name] = product_file;
-    }
+    const std::map<std::string, std::string> products =
+        configured_products(configItems, itsMainConfigFile);  // name -> config file
 
     auto newProductConfigs = std::unique_ptr<ProductConfigMap>(new ProductConfigMap());
     std::shared_ptr<ProductConfig> pDefultConfig;
@@ -668,23 +702,7 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
       return newProductConfigs;
 
     if (itsShowFileMessages)
-    {
-      for (const auto& f : deletedFiles)
-        std::cout << ANSI_FG_RED << "File '" << f << "' deleted!" << ANSI_FG_DEFAULT << '\n';
-      for (const auto& f : modifiedFiles)
-      {
-        // Report successful update
-        if (erroneousFiles.find(f) == erroneousFiles.end())
-          std::cout << ANSI_FG_GREEN << "File '" << f << "' updated!" << ANSI_FG_DEFAULT << '\n';
-      }
-      for (const auto& f : newFiles)
-      {
-        // Report successful update
-        if (erroneousFiles.find(f) == erroneousFiles.end())
-          std::cout << ANSI_FG_GREEN << "New file '" << f << "' created!" << ANSI_FG_DEFAULT
-                    << '\n';
-      }
-    }
+      report_file_changes(deletedFiles, modifiedFiles, newFiles, erroneousFiles);
     itsShowFileMessages = true;
 
     Fmi::AsyncTask::interruption_point();
