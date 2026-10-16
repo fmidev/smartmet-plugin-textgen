@@ -101,6 +101,142 @@ bool parse_forecasttime_parameter(const std::string& forecasttime_string,
   }
 }
 
+// Convert a bbox parameter value 'lon,lat,lon,lat[:radius] [as name]' to a WKT polygon
+std::string bbox_to_wkt(const std::string& bbox_value)
+{
+  std::string bbox_name;
+  std::string bbox_string = bbox_value;
+  size_t name_pos = bbox_string.find(" as ");
+  if (name_pos != std::string::npos)
+  {
+    bbox_name = bbox_string.substr(name_pos + 4);
+    bbox_string = bbox_string.substr(0, name_pos);
+  }
+  size_t radius_pos = bbox_string.find(':');
+  std::string radius;
+  if (radius_pos != std::string::npos)
+  {
+    radius = bbox_string.substr(radius_pos + 1);
+    bbox_string = bbox_string.substr(0, radius_pos);
+  }
+  std::vector<std::string> parts;
+  boost::algorithm::split(parts, bbox_string, boost::algorithm::is_any_of(","));
+  if (parts.size() != 4)
+    throw Fmi::Exception(BCP,
+                         "Invalid bbox parameter " + bbox_string +
+                             ", should be in format 'lon,lat,lon,lat[:radius] [as name]'!");
+
+  std::string wktString("POLYGON((");
+  wktString += (parts[0] + " " + parts[1] + ", ");
+  wktString += (parts[0] + " " + parts[3] + ", ");
+  wktString += (parts[2] + " " + parts[3] + ", ");
+  wktString += (parts[2] + " " + parts[1] + ", ");
+  wktString += (parts[0] + " " + parts[1] + "))");
+  if (!radius.empty())
+    wktString += (":" + radius);
+  if (!bbox_name.empty())
+    wktString += (" as " + bbox_name);
+  return wktString;
+}
+
+using NamedWeatherAreas = std::vector<std::pair<std::string, TextGen::WeatherArea>>;
+
+// Add the area of a place or a coordinate point
+void add_place_area(const Spine::Location& loc,
+                    const Config& config,
+                    const std::string& areasource,
+                    NamedWeatherAreas& weatherAreaVector)
+{
+  if (loc.feature.substr(0, 3) == "ADM" && config.geoObjectExists(loc.name, areasource))
+    weatherAreaVector.emplace_back(loc.name + areasource + "_place1",
+                                   config.makePostGisArea(loc.name, areasource));
+  else
+  {
+    auto geoname = loc.name;
+    Engine::Gis::normalize_string(geoname);
+    weatherAreaVector.emplace_back(
+        geoname + "_" + Fmi::to_string(loc.longitude) + "_" + Fmi::to_string(loc.latitude) +
+            "_place2",
+        TextGen::WeatherArea(NFmiPoint(loc.longitude, loc.latitude),
+                             geoname,
+                             (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
+  }
+}
+
+// Add a named area from the PostGIS database, false if it is not found
+bool add_named_area(const Spine::Location& loc,
+                    const Config& config,
+                    const std::string& areasource,
+                    NamedWeatherAreas& weatherAreaVector,
+                    std::string& errorMessage)
+{
+  if (config.geoObjectExists(loc.name, areasource))
+  {
+    weatherAreaVector.emplace_back(loc.name + areasource + "_area1",
+                                   config.makePostGisArea(loc.name, areasource));
+  }
+  else
+  {
+    if (!areasource.empty())
+      errorMessage += "Area " + loc.name + " (areasource: " + areasource +
+                      ") not found in PostGIS database!";
+    else
+      errorMessage += "Area " + loc.name + " not found in PostGIS database!";
+    return false;
+  }
+  return true;
+}
+
+// Add an area given as WKT, false if the WKT type is not supported
+bool add_wkt_area(const Spine::Location& loc,
+                  const SmartMet::Engine::Geonames::Engine& geoEngine,
+                  const Engine::Geonames::LocationOptions& tagged_locations,
+                  const std::string& language,
+                  NamedWeatherAreas& weatherAreaVector)
+{
+  Engine::Geonames::WktGeometries wktGeometries =
+      geoEngine.getWktGeometries(tagged_locations, language);
+
+  Spine::LocationPtr wktLocation = wktGeometries.getLocation(loc.name);
+  Spine::Location::LocationType wktType = wktLocation->type;
+  //        TextGen::WeatherArea wktWeatherArea(NFmiPoint(0.0, 0.0));
+  std::string wktName = loc.name;
+  size_t wktNamePos = wktName.find(" as ");
+  if (wktNamePos != std::string::npos)
+    wktName = wktName.substr(wktNamePos + 4);
+  switch (wktType)
+  {
+    case Spine::Location::LocationType::CoordinatePoint:
+    {
+      int coordinate_string_len = (loc.name.find(')') - loc.name.find('(')) - 1;
+      std::string coordinates =
+          loc.name.substr(loc.name.find('(') + 1, coordinate_string_len);
+      double lon = Fmi::stod(coordinates.substr(0, coordinates.find(' ')));
+      double lat = Fmi::stod(coordinates.substr(coordinates.find(' ') + 1));
+      weatherAreaVector.emplace_back(
+          wktName + "_wkt1",
+          TextGen::WeatherArea(NFmiPoint(lon, lat),
+                               wktName,
+                               (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
+      break;
+    }
+    case Spine::Location::LocationType::Area:
+    case Spine::Location::LocationType::Path:
+    {
+      weatherAreaVector.emplace_back(
+          wktName + "_wkt2",
+          TextGen::WeatherArea(wktGeometries.getSvgPath(loc.name), wktName));
+      break;
+    }
+    default:
+    {
+      std::cout << "WKT type not supported: " << wktType << '\n';
+      return false;
+    }
+  }
+  return true;
+}
+
 bool parse_location_parameters(
     const Spine::HTTP::Request& theRequest,
     const Config& config,
@@ -117,38 +253,7 @@ bool parse_location_parameters(
     std::optional<std::string> bbox_param_value = httpRequest.getParameter("bbox");
     if (bbox_param_value)
     {
-      std::string bbox_name;
-      std::string bbox_string = *bbox_param_value;
-      size_t name_pos = bbox_string.find(" as ");
-      if (name_pos != std::string::npos)
-      {
-        bbox_name = bbox_string.substr(name_pos + 4);
-        bbox_string = bbox_string.substr(0, name_pos);
-      }
-      size_t radius_pos = bbox_string.find(':');
-      std::string radius;
-      if (radius_pos != std::string::npos)
-      {
-        radius = bbox_string.substr(radius_pos + 1);
-        bbox_string = bbox_string.substr(0, radius_pos);
-      }
-      std::vector<std::string> parts;
-      boost::algorithm::split(parts, bbox_string, boost::algorithm::is_any_of(","));
-      if (parts.size() != 4)
-        throw Fmi::Exception(BCP,
-                             "Invalid bbox parameter " + bbox_string +
-                                 ", should be in format 'lon,lat,lon,lat[:radius] [as name]'!");
-
-      std::string wktString("POLYGON((");
-      wktString += (parts[0] + " " + parts[1] + ", ");
-      wktString += (parts[0] + " " + parts[3] + ", ");
-      wktString += (parts[2] + " " + parts[3] + ", ");
-      wktString += (parts[2] + " " + parts[1] + ", ");
-      wktString += (parts[0] + " " + parts[1] + "))");
-      if (!radius.empty())
-        wktString += (":" + radius);
-      if (!bbox_name.empty())
-        wktString += (" as " + bbox_name);
+      std::string wktString = bbox_to_wkt(*bbox_param_value);
 
       httpRequest.removeParameter("bbox");
       httpRequest.setParameter("wkt", wktString);
@@ -176,38 +281,13 @@ bool parse_location_parameters(
         case Spine::Location::LocationType::Place:
         case Spine::Location::LocationType::CoordinatePoint:
         {
-          if (loc.feature.substr(0, 3) == "ADM" && config.geoObjectExists(loc.name, *areasource))
-            weatherAreaVector.emplace_back(loc.name + *areasource + "_place1",
-                                           config.makePostGisArea(loc.name, *areasource));
-          else
-          {
-            auto geoname = loc.name;
-            Engine::Gis::normalize_string(geoname);
-            weatherAreaVector.emplace_back(
-                geoname + "_" + Fmi::to_string(loc.longitude) + "_" + Fmi::to_string(loc.latitude) +
-                    "_place2",
-                TextGen::WeatherArea(NFmiPoint(loc.longitude, loc.latitude),
-                                     geoname,
-                                     (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
-          }
+          add_place_area(loc, config, *areasource, weatherAreaVector);
           break;
         }
         case Spine::Location::LocationType::Area:
         {
-          if (config.geoObjectExists(loc.name, *areasource))
-          {
-            weatherAreaVector.emplace_back(loc.name + *areasource + "_area1",
-                                           config.makePostGisArea(loc.name, *areasource));
-          }
-          else
-          {
-            if (!(*areasource).empty())
-              errorMessage += "Area " + loc.name + " (areasource: " + *areasource +
-                              ") not found in PostGIS database!";
-            else
-              errorMessage += "Area " + loc.name + " not found in PostGIS database!";
+          if (!add_named_area(loc, config, *areasource, weatherAreaVector, errorMessage))
             return false;
-          }
           break;
         }
         case Spine::Location::LocationType::BoundingBox:
@@ -218,46 +298,8 @@ bool parse_location_parameters(
         }
         case Spine::Location::LocationType::Wkt:
         {
-          Engine::Geonames::WktGeometries wktGeometries =
-              geoEngine.getWktGeometries(tagged_locations, language);
-
-          Spine::LocationPtr wktLocation = wktGeometries.getLocation(loc.name);
-          Spine::Location::LocationType wktType = wktLocation->type;
-          //        TextGen::WeatherArea wktWeatherArea(NFmiPoint(0.0, 0.0));
-          std::string wktName = loc.name;
-          size_t wktNamePos = wktName.find(" as ");
-          if (wktNamePos != std::string::npos)
-            wktName = wktName.substr(wktNamePos + 4);
-          switch (wktType)
-          {
-            case Spine::Location::LocationType::CoordinatePoint:
-            {
-              int coordinate_string_len = (loc.name.find(')') - loc.name.find('(')) - 1;
-              std::string coordinates =
-                  loc.name.substr(loc.name.find('(') + 1, coordinate_string_len);
-              double lon = Fmi::stod(coordinates.substr(0, coordinates.find(' ')));
-              double lat = Fmi::stod(coordinates.substr(coordinates.find(' ') + 1));
-              weatherAreaVector.emplace_back(
-                  wktName + "_wkt1",
-                  TextGen::WeatherArea(NFmiPoint(lon, lat),
-                                       wktName,
-                                       (loc.radius && loc.radius >= 5.0) ? loc.radius : 0.0));
-              break;
-            }
-            case Spine::Location::LocationType::Area:
-            case Spine::Location::LocationType::Path:
-            {
-              weatherAreaVector.emplace_back(
-                  wktName + "_wkt2",
-                  TextGen::WeatherArea(wktGeometries.getSvgPath(loc.name), wktName));
-              break;
-            }
-            default:
-            {
-              std::cout << "WKT type not supported: " << wktType << '\n';
-              return false;
-            }
-          }
+          if (!add_wkt_area(loc, geoEngine, tagged_locations, language, weatherAreaVector))
+            return false;
           break;
         }
         case Spine::Location::LocationType::Path:
