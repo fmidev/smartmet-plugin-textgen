@@ -105,6 +105,20 @@ class ProductConfig
   bool isModified(size_t interval) const;
 
  private:
+  void readParameterMappings();
+  void readAdditionalGeometryTables(const std::string& default_server,
+                                    const std::string& default_schema,
+                                    const std::string& default_table,
+                                    const std::string& default_field,
+                                    const Engine::Gis::postgis_identifier& default_postgis_id,
+                                    std::string& exceptionDetails);
+  void readMasks();
+  void readForestFireWarningAreaCodes();
+  void addSectionContent(const std::string& section_name,
+                         std::vector<std::string>& allowed_sections,
+                         ConfigItemVector& output_document_config_item_container);
+  void readOutputDocument();
+  void readAreaConfig();
   void inheritPostGISIdentifiers();
   void inheritDefaultSettings();
 

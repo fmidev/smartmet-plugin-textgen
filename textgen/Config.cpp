@@ -848,6 +848,253 @@ TextGen::WeatherArea Config::makePostGisArea(const std::string& postGISName,
  */
 // ----------------------------------------------------------------------
 
+// Read the parameter mappings
+void ProductConfig::readParameterMappings()
+{
+  ConfigItemVector parameter_mappings;
+  std::vector<std::string> allowed_sections;
+  allowed_sections.emplace_back("*");
+  parseConfigurationItem(itsConfig, "parameter_mapping", allowed_sections, parameter_mappings);
+  for (const auto& item : parameter_mappings)
+  {
+    std::string configname = item.first;
+    std::string qdname = item.second;
+    boost::algorithm::replace_all(configname, "parameter_mapping.", "textgen::");
+    itsParameterMappings[configname] = qdname;
+  }
+}
+
+// Read the additional geometry tables
+void ProductConfig::readAdditionalGeometryTables(
+    const std::string& default_server,
+    const std::string& default_schema,
+    const std::string& default_table,
+    const std::string& default_field,
+    const Engine::Gis::postgis_identifier& default_postgis_id,
+    std::string& exceptionDetails)
+{
+  libconfig::Setting& additionalTables =
+      itsConfig.lookup("geometry_tables.additional_tables");
+
+  for (int i = 0; i < additionalTables.getLength(); i++)
+  {
+    libconfig::Setting& tableConfig = additionalTables[i];
+    std::string source_name;
+    std::string server =
+        (default_server.empty() ? default_postgis_id.pgname : default_server);
+    std::string schema =
+        (default_schema.empty() ? default_postgis_id.schema : default_schema);
+    std::string table = (default_table.empty() ? default_postgis_id.table : default_table);
+    std::string field = (default_field.empty() ? default_postgis_id.field : default_field);
+
+    tableConfig.lookupValue("name", source_name);
+    tableConfig.lookupValue("server", server);
+    tableConfig.lookupValue("schema", schema);
+    tableConfig.lookupValue("table", table);
+    tableConfig.lookupValue("field", field);
+
+    Engine::Gis::postgis_identifier postgis_id;
+    postgis_id.source_name = source_name;
+    postgis_id.pgname = server;
+    postgis_id.schema = schema;
+    postgis_id.table = table;
+    postgis_id.field = field;
+
+    std::string key(postgis_id.key());
+    if (itsDefaultPostGISIdentifierKey.empty())
+      itsDefaultPostGISIdentifierKey = key;
+    postgis_identifiers.insert(std::make_pair(key, postgis_id));
+
+    std::string err_msg;
+    if (default_schema.empty() && schema.empty())
+      err_msg = "No 'schema' defined. ";
+    if (default_table.empty() && table.empty())
+      err_msg += "No 'table' defined. ";
+    if (default_field.empty() && field.empty())
+      err_msg += "No 'field' defined.";
+
+    if (!err_msg.empty())
+    {
+      exceptionDetails =
+          "Textgenplugin configuration error in geometry_tables section: " + err_msg;
+      throw Fmi::Exception(BCP, "Textgenplugin configuration error!");
+    }
+  }
+}
+
+// Read the masks
+void ProductConfig::readMasks()
+{
+  libconfig::Setting& setting = itsConfig.lookup("mask");
+  if (setting.isGroup())
+  {
+    int length(setting.getLength());
+    for (int i = 0; i < length; i++)
+    {
+      libconfig::Setting& childSetting = setting[i];
+      if (childSetting.getType() == libconfig::Setting::TypeString)
+      {
+        std::string maskName = childSetting.getName();
+        std::string maskValue = itsConfig.lookup("mask." + maskName);
+        masks.emplace_back(std::make_pair(maskName, maskValue));
+      }
+    }
+  }
+}
+
+// Read the forest fire warning area codes
+void ProductConfig::readForestFireWarningAreaCodes()
+{
+  libconfig::Setting& setting = itsConfig.lookup("forestfirewarning.areacodes");
+  if (setting.isGroup())
+  {
+    int length(setting.getLength());
+    for (int i = 0; i < length; i++)
+    {
+      libconfig::Setting& childSetting = setting[i];
+      std::string name(childSetting.getName());
+      std::string key(std::string("forestfirewarning.areacodes.") + childSetting.getName());
+      int value = itsConfig.lookup(key);
+      std::stringstream ss;
+      ss << value;
+      forestfirewarning_areacodes.emplace_back(
+          std::make_pair("qdtext::forestfirewarning::areacodes::" + name, ss.str()));
+    }
+  }
+}
+
+// Read the area configuration
+void ProductConfig::readAreaConfig()
+{
+  ConfigItemVector area_config_item_container;
+  std::vector<std::string> allowed_sections;
+  allowed_sections.emplace_back("*");
+  // sections
+  parseConfigurationItem(itsConfig, "area", allowed_sections, area_config_item_container);
+
+  for (ConfigItem& ci : area_config_item_container)
+  {
+    std::string config_key(ci.first);
+    std::string config_value(ci.second);
+
+    if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
+      continue;
+
+    boost::algorithm::replace_all(config_key, ".", "::");
+    boost::algorithm::replace_all(config_key, "area", "qdtext");
+    if (config_key.compare(0, 18, "qdtext::timezone::") == 0)
+      area_timezones.insert(std::make_pair(config_key, config_value));
+    else
+      area_config_items.emplace_back(std::make_pair(config_key, config_value));
+  }
+}
+
+// Read the allowed sections and the content stories of an output document section
+void ProductConfig::addSectionContent(const std::string& section_name,
+                                      std::vector<std::string>& allowed_sections,
+                                      ConfigItemVector& output_document_config_item_container)
+{
+  bool contentExists(itsConfig.exists("output_document." + section_name + ".content"));
+
+  // content
+  if (contentExists)
+  {
+    libconfig::Setting& content =
+        itsConfig.lookup("output_document." + section_name + ".content");
+    if (!content.isArray())
+    {
+      if (content.getType() == libconfig::Setting::TypeString)
+      {
+        std::string story_name = content;
+        if (story_name == "none")
+          allowed_sections.emplace_back("output_document." + section_name);
+        else
+        {
+          allowed_sections.emplace_back("output_document." + section_name + ".story." +
+                                        story_name);
+          allowed_sections.emplace_back("output_document." + section_name + ".day1.story." +
+                                        story_name);
+          allowed_sections.emplace_back("output_document." + section_name + ".day2.story." +
+                                        story_name);
+        }
+      }
+    }
+    else
+    {
+      std::string content_parameter_value;
+      for (int k = 0; k < content.getLength(); ++k)
+      {
+        std::string story_name = content[k];
+        if (k > 0)
+          content_parameter_value += ",";
+        content_parameter_value += story_name;
+
+        allowed_sections.emplace_back("output_document." + section_name + ".story." +
+                                      story_name);
+        if (story_name == "temperature_max36hours")
+          allowed_sections.emplace_back("output_document." + section_name +
+                                        ".story.frost_onenight");
+      }
+      output_document_config_item_container.emplace_back(std::make_pair(
+          "output_document." + section_name + ".content", content_parameter_value));
+    }
+  }
+}
+
+// Read the output document configuration
+void ProductConfig::readOutputDocument()
+{
+  ConfigItemVector output_document_config_item_container;
+  // sections
+  libconfig::Setting& sections = itsConfig.lookup("output_document.sections");
+
+  if (!sections.isArray())
+  {
+    throw Fmi::Exception(
+        BCP,
+        "output_document.sections not an array in textgenplugin configuration file line " +
+            Fmi::to_string(sections.getSourceLine()));
+  }
+
+  std::string sections_parameter_value;
+  std::vector<std::string> allowed_sections;
+  // allowed_sections.clear();
+  for (int i = 0; i < sections.getLength(); ++i)
+  {
+    std::string section_name = sections[i];
+
+    if (i > 0)
+      sections_parameter_value += ",";
+    sections_parameter_value += section_name;
+    allowed_sections.emplace_back("output_document." + section_name + ".period");
+    allowed_sections.emplace_back("output_document." + section_name + ".subperiod");
+    allowed_sections.emplace_back("output_document." + section_name + ".header");
+
+    addSectionContent(section_name, allowed_sections, output_document_config_item_container);
+    parseConfigurationItem(itsConfig,
+                           "output_document." + section_name,
+                           allowed_sections,
+                           output_document_config_item_container);
+  }
+  output_document_config_item_container.emplace_back(
+      std::make_pair("output_document.sections", sections_parameter_value));
+
+  handleIncludedSections(itsConfig, output_document_config_item_container);
+
+  for (ConfigItem& ci : output_document_config_item_container)
+  {
+    std::string config_key(ci.first);
+    std::string config_value(ci.second);
+
+    if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
+      continue;
+
+    boost::algorithm::replace_all(config_key, ".", "::");
+    boost::algorithm::replace_all(config_key, "output_document", "textgen");
+    output_document_config_items.emplace_back(std::make_pair(config_key, config_value));
+  }
+}
+
 ProductConfig::ProductConfig(const std::string& configfile,
                              const std::shared_ptr<ProductConfig>& pDefaultConf,
                              const std::string& /*dictionary*/)
@@ -869,19 +1116,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
 
     // Parameter mappings
     if (itsConfig.exists("parameter_mapping"))
-    {
-      ConfigItemVector parameter_mappings;
-      std::vector<std::string> allowed_sections;
-      allowed_sections.emplace_back("*");
-      parseConfigurationItem(itsConfig, "parameter_mapping", allowed_sections, parameter_mappings);
-      for (const auto& item : parameter_mappings)
-      {
-        std::string configname = item.first;
-        std::string qdname = item.second;
-        boost::algorithm::replace_all(configname, "parameter_mapping.", "textgen::");
-        itsParameterMappings[configname] = qdname;
-      }
-    }
+      readParameterMappings();
 
     // Miscellaneous parameters
     itsConfig.lookupValue("misc.frostseason", itsFrostSeason);
@@ -924,97 +1159,21 @@ ProductConfig::ProductConfig(const std::string& configfile,
       }
 
       if (itsConfig.exists("geometry_tables.additional_tables"))
-      {
-        libconfig::Setting& additionalTables =
-            itsConfig.lookup("geometry_tables.additional_tables");
-
-        for (int i = 0; i < additionalTables.getLength(); i++)
-        {
-          libconfig::Setting& tableConfig = additionalTables[i];
-          std::string source_name;
-          std::string server =
-              (default_server.empty() ? default_postgis_id.pgname : default_server);
-          std::string schema =
-              (default_schema.empty() ? default_postgis_id.schema : default_schema);
-          std::string table = (default_table.empty() ? default_postgis_id.table : default_table);
-          std::string field = (default_field.empty() ? default_postgis_id.field : default_field);
-
-          tableConfig.lookupValue("name", source_name);
-          tableConfig.lookupValue("server", server);
-          tableConfig.lookupValue("schema", schema);
-          tableConfig.lookupValue("table", table);
-          tableConfig.lookupValue("field", field);
-
-          Engine::Gis::postgis_identifier postgis_id;
-          postgis_id.source_name = source_name;
-          postgis_id.pgname = server;
-          postgis_id.schema = schema;
-          postgis_id.table = table;
-          postgis_id.field = field;
-
-          std::string key(postgis_id.key());
-          if (itsDefaultPostGISIdentifierKey.empty())
-            itsDefaultPostGISIdentifierKey = key;
-          postgis_identifiers.insert(std::make_pair(key, postgis_id));
-
-          std::string err_msg;
-          if (default_schema.empty() && schema.empty())
-            err_msg = "No 'schema' defined. ";
-          if (default_table.empty() && table.empty())
-            err_msg += "No 'table' defined. ";
-          if (default_field.empty() && field.empty())
-            err_msg += "No 'field' defined.";
-
-          if (!err_msg.empty())
-          {
-            exceptionDetails =
-                "Textgenplugin configuration error in geometry_tables section: " + err_msg;
-            throw Fmi::Exception(BCP, "Textgenplugin configuration error!");
-          }
-        }
-      }
+        readAdditionalGeometryTables(default_server,
+                                     default_schema,
+                                     default_table,
+                                     default_field,
+                                     default_postgis_id,
+                                     exceptionDetails);
     }
 
     // masks
     if (itsConfig.exists("mask"))
-    {
-      libconfig::Setting& setting = itsConfig.lookup("mask");
-      if (setting.isGroup())
-      {
-        int length(setting.getLength());
-        for (int i = 0; i < length; i++)
-        {
-          libconfig::Setting& childSetting = setting[i];
-          if (childSetting.getType() == libconfig::Setting::TypeString)
-          {
-            std::string maskName = childSetting.getName();
-            std::string maskValue = itsConfig.lookup("mask." + maskName);
-            masks.emplace_back(std::make_pair(maskName, maskValue));
-          }
-        }
-      }
-    }
+      readMasks();
 
     // forestfirewarning
     if (itsConfig.exists("forestfirewarning"))
-    {
-      libconfig::Setting& setting = itsConfig.lookup("forestfirewarning.areacodes");
-      if (setting.isGroup())
-      {
-        int length(setting.getLength());
-        for (int i = 0; i < length; i++)
-        {
-          libconfig::Setting& childSetting = setting[i];
-          std::string name(childSetting.getName());
-          std::string key(std::string("forestfirewarning.areacodes.") + childSetting.getName());
-          int value = itsConfig.lookup(key);
-          std::stringstream ss;
-          ss << value;
-          forestfirewarning_areacodes.emplace_back(
-              std::make_pair("qdtext::forestfirewarning::areacodes::" + name, ss.str()));
-        }
-      }
-    }
+      readForestFireWarningAreaCodes();
 
     // forecast data
     if (itsConfig.exists("forecast_data"))
@@ -1030,127 +1189,11 @@ ProductConfig::ProductConfig(const std::string& configfile,
 
     // ouput document
     if (itsConfig.exists("output_document"))
-    {
-      ConfigItemVector output_document_config_item_container;
-      // sections
-      libconfig::Setting& sections = itsConfig.lookup("output_document.sections");
-
-      if (!sections.isArray())
-      {
-        throw Fmi::Exception(
-            BCP,
-            "output_document.sections not an array in textgenplugin configuration file line " +
-                Fmi::to_string(sections.getSourceLine()));
-      }
-
-      std::string sections_parameter_value;
-      std::vector<std::string> allowed_sections;
-      // allowed_sections.clear();
-      for (int i = 0; i < sections.getLength(); ++i)
-      {
-        std::string section_name = sections[i];
-
-        if (i > 0)
-          sections_parameter_value += ",";
-        sections_parameter_value += section_name;
-        allowed_sections.emplace_back("output_document." + section_name + ".period");
-        allowed_sections.emplace_back("output_document." + section_name + ".subperiod");
-        allowed_sections.emplace_back("output_document." + section_name + ".header");
-
-        bool contentExists(itsConfig.exists("output_document." + section_name + ".content"));
-
-        // content
-        if (contentExists)
-        {
-          libconfig::Setting& content =
-              itsConfig.lookup("output_document." + section_name + ".content");
-          if (!content.isArray())
-          {
-            if (content.getType() == libconfig::Setting::TypeString)
-            {
-              std::string story_name = content;
-              if (story_name == "none")
-                allowed_sections.emplace_back("output_document." + section_name);
-              else
-              {
-                allowed_sections.emplace_back("output_document." + section_name + ".story." +
-                                              story_name);
-                allowed_sections.emplace_back("output_document." + section_name + ".day1.story." +
-                                              story_name);
-                allowed_sections.emplace_back("output_document." + section_name + ".day2.story." +
-                                              story_name);
-              }
-            }
-          }
-          else
-          {
-            std::string content_parameter_value;
-            for (int k = 0; k < content.getLength(); ++k)
-            {
-              std::string story_name = content[k];
-              if (k > 0)
-                content_parameter_value += ",";
-              content_parameter_value += story_name;
-
-              allowed_sections.emplace_back("output_document." + section_name + ".story." +
-                                            story_name);
-              if (story_name == "temperature_max36hours")
-                allowed_sections.emplace_back("output_document." + section_name +
-                                              ".story.frost_onenight");
-            }
-            output_document_config_item_container.emplace_back(std::make_pair(
-                "output_document." + section_name + ".content", content_parameter_value));
-          }
-        }
-        parseConfigurationItem(itsConfig,
-                               "output_document." + section_name,
-                               allowed_sections,
-                               output_document_config_item_container);
-      }
-      output_document_config_item_container.emplace_back(
-          std::make_pair("output_document.sections", sections_parameter_value));
-
-      handleIncludedSections(itsConfig, output_document_config_item_container);
-
-      for (ConfigItem& ci : output_document_config_item_container)
-      {
-        std::string config_key(ci.first);
-        std::string config_value(ci.second);
-
-        if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
-          continue;
-
-        boost::algorithm::replace_all(config_key, ".", "::");
-        boost::algorithm::replace_all(config_key, "output_document", "textgen");
-        output_document_config_items.emplace_back(std::make_pair(config_key, config_value));
-      }
-    }
+      readOutputDocument();
 
     // area configuration
     if (itsConfig.exists("area"))
-    {
-      ConfigItemVector area_config_item_container;
-      std::vector<std::string> allowed_sections;
-      allowed_sections.emplace_back("*");
-      // sections
-      parseConfigurationItem(itsConfig, "area", allowed_sections, area_config_item_container);
-
-      for (ConfigItem& ci : area_config_item_container)
-      {
-        std::string config_key(ci.first);
-        std::string config_value(ci.second);
-
-        if (config_value.size() > 4 && config_value.substr(0, 4) == "use ")
-          continue;
-
-        boost::algorithm::replace_all(config_key, ".", "::");
-        boost::algorithm::replace_all(config_key, "area", "qdtext");
-        if (config_key.compare(0, 18, "qdtext::timezone::") == 0)
-          area_timezones.insert(std::make_pair(config_key, config_value));
-        else
-          area_config_items.emplace_back(std::make_pair(config_key, config_value));
-      }
-    }
+      readAreaConfig();
     // add default timezone if it doesn't exists
     if (area_timezones.find("qdtext::timezone::default") == area_timezones.end())
       area_timezones.insert(std::make_pair("qdtext::timezone::default", default_timezone));
