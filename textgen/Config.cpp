@@ -161,6 +161,70 @@ std::unique_ptr<ProductWeatherAreaMap> readMasks(
   }
 }
 
+// Test whether the group key is within the allowed sections ("*" allows all)
+bool is_allowed_section(const std::string& key, const std::vector<std::string>& allowed_sections)
+{
+  for (auto allowed_key : allowed_sections)
+  {
+    std::string section_key = key;
+    if (allowed_key.size() > section_key.size())
+      allowed_key = allowed_key.substr(0, section_key.size());
+    else if (allowed_key.size() < section_key.size())
+      section_key = section_key.substr(0, allowed_key.size());
+
+    if (allowed_key == section_key || allowed_key == "*")
+      return true;
+  }
+  return false;
+}
+
+// The value of a scalar setting as a string
+std::string scalar_setting_value(const libconfig::Config& itsConfig,
+                                 const std::string& key,
+                                 const libconfig::Setting& setting)
+{
+  std::stringstream ss;
+  switch (setting.getType())
+  {
+    case libconfig::Setting::TypeInt:
+    {
+      int intValue = itsConfig.lookup(key);
+      ss << intValue;
+      break;
+    }
+    case libconfig::Setting::TypeInt64:
+    {
+      long longValue = itsConfig.lookup(key);
+      ss << longValue;
+      break;
+    }
+    case libconfig::Setting::TypeFloat:
+    {
+      float floatValue = itsConfig.lookup(key);
+      ss << floatValue;
+      break;
+    }
+    case libconfig::Setting::TypeString:
+    {
+      std::string stringValue = itsConfig.lookup(key);
+      ss << stringValue;
+      break;
+    }
+    case libconfig::Setting::TypeBoolean:
+    {
+      bool boolValue = itsConfig.lookup(key);
+      ss << (boolValue ? "true" : "false");
+      break;
+    }
+    case libconfig::Setting::TypeNone:
+    case libconfig::Setting::TypeGroup:
+    case libconfig::Setting::TypeArray:
+    case libconfig::Setting::TypeList:
+      throw Fmi::Exception(BCP, "TextGen: Invalid setting type for '" + key + "'");
+  }
+  return ss.str();
+}
+
 void parseConfigurationItem(const libconfig::Config& itsConfig,
                             const std::string& key,
                             const std::vector<std::string>& allowed_sections,
@@ -168,90 +232,32 @@ void parseConfigurationItem(const libconfig::Config& itsConfig,
 {
   try
   {
-    if (itsConfig.exists(key))
+    if (!itsConfig.exists(key))
+      return;
+
+    if (itsConfig.lookup(key).isGroup() && !is_allowed_section(key, allowed_sections))
+      return;
+
+    libconfig::Setting& setting = itsConfig.lookup(key);
+    if (setting.isGroup())
     {
-      if (itsConfig.lookup(key).isGroup())
+      int length(setting.getLength());
+      for (int i = 0; i < length; i++)
       {
-        bool processSection(false);
-        for (auto allowed_key : allowed_sections)
-        {
-          std::string section_key = key;
-          if (allowed_key.size() > section_key.size())
-            allowed_key = allowed_key.substr(0, section_key.size());
-          else if (allowed_key.size() < section_key.size())
-            section_key = section_key.substr(0, allowed_key.size());
-
-          if (allowed_key == section_key || allowed_key == "*")
-          {
-            processSection = true;
-            break;
-          }
-        }
-        if (!processSection)
-          return;
+        libconfig::Setting& childSetting = setting[i];
+        parseConfigurationItem(itsConfig,
+                               key + "." + childSetting.getName(),
+                               allowed_sections,
+                               config_item_container);
       }
-
-      libconfig::Setting& setting = itsConfig.lookup(key);
-      if (setting.isGroup())
-      {
-        int length(setting.getLength());
-        for (int i = 0; i < length; i++)
-        {
-          libconfig::Setting& childSetting = setting[i];
-          parseConfigurationItem(itsConfig,
-                                 key + "." + childSetting.getName(),
-                                 allowed_sections,
-                                 config_item_container);
-        }
-      }
-      else if (setting.isArray() || setting.isList())
-      {
-        // cout << key << " is an array or list\n";
-      }
-      else
-      {
-        std::stringstream ss;
-        switch (setting.getType())
-        {
-          case libconfig::Setting::TypeInt:
-          {
-            int intValue = itsConfig.lookup(key);
-            ss << intValue;
-            break;
-          }
-          case libconfig::Setting::TypeInt64:
-          {
-            long longValue = itsConfig.lookup(key);
-            ss << longValue;
-            break;
-          }
-          case libconfig::Setting::TypeFloat:
-          {
-            float floatValue = itsConfig.lookup(key);
-            ss << floatValue;
-            break;
-          }
-          case libconfig::Setting::TypeString:
-          {
-            std::string stringValue = itsConfig.lookup(key);
-            ss << stringValue;
-            break;
-          }
-          case libconfig::Setting::TypeBoolean:
-          {
-            bool boolValue = itsConfig.lookup(key);
-            ss << (boolValue ? "true" : "false");
-            break;
-          }
-          case libconfig::Setting::TypeNone:
-          case libconfig::Setting::TypeGroup:
-          case libconfig::Setting::TypeArray:
-          case libconfig::Setting::TypeList:
-            throw Fmi::Exception(BCP, "TextGen: Invalid setting type for '" + key + "'");
-        }
-
-        config_item_container.emplace_back(key, ss.str());
-      }
+    }
+    else if (setting.isArray() || setting.isList())
+    {
+      // cout << key << " is an array or list\n";
+    }
+    else
+    {
+      config_item_container.emplace_back(key, scalar_setting_value(itsConfig, key, setting));
     }
   }
   catch (...)
