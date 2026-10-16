@@ -321,6 +321,24 @@ void handleIncludedSections(const libconfig::Config& itsConfig,
   }
 }
 
+// add a string type setting, resolving a "use <path>" reference to the referred value
+void addStringConfigurationItem(const libconfig::Config& itsConfig,
+                                const libconfig::Setting& childSettings,
+                                ConfigItemVector& config_item_container)
+{
+  if (childSettings.getType() != libconfig::Setting::TypeString)
+    return;
+
+  std::string name = childSettings.getName();
+  std::string value = childSettings;
+  if (value.size() > 4 && value.substr(0, 4) == "use ")
+  {
+    std::string included_value = itsConfig.lookup(value.substr(4));
+    value = included_value;
+  }
+  config_item_container.emplace_back(name, value);
+}
+
 // read all string type parameters
 void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
                                      const std::string& key,
@@ -328,45 +346,28 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
 {
   try
   {
-    if (itsConfig.exists(key))
+    if (!itsConfig.exists(key))
+      return;
+
+    libconfig::Setting& settings = itsConfig.lookup(key);
+    if (settings.isGroup())
     {
-      libconfig::Setting& settings = itsConfig.lookup(key);
-      if (settings.isGroup())
+      int length(settings.getLength());
+      for (int i = 0; i < length; i++)
       {
-        int length(settings.getLength());
-        for (int i = 0; i < length; i++)
-        {
-          libconfig::Setting& childSettings = settings[i];
-          if (childSettings.isGroup())
-          {
-            parseTypeStringConfiguationItem(
-                itsConfig, childSettings.getName(), config_item_container);
-          }
-          else
-          {
-            if (childSettings.getType() == libconfig::Setting::TypeString)
-            {
-              std::string name = childSettings.getName();
-              std::string value = childSettings;
-              if (value.size() > 4 && value.substr(0, 4) == "use ")
-              {
-                std::string included_value = itsConfig.lookup(value.substr(4));
-                value = included_value;
-              }
-              config_item_container.emplace_back(name, value);
-            }
-          }
-        }
+        libconfig::Setting& childSettings = settings[i];
+        if (childSettings.isGroup())
+          parseTypeStringConfiguationItem(
+              itsConfig, childSettings.getName(), config_item_container);
+        else
+          addStringConfigurationItem(itsConfig, childSettings, config_item_container);
       }
-      else
-      {
-        if (settings.getType() == libconfig::Setting::TypeString)
-        {
-          std::string name = settings.getName();
-          std::string value = settings;
-          config_item_container.emplace_back(name, value);
-        }
-      }
+    }
+    else if (settings.getType() == libconfig::Setting::TypeString)
+    {
+      std::string name = settings.getName();
+      std::string value = settings;
+      config_item_container.emplace_back(name, value);
     }
   }
   catch (...)
