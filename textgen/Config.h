@@ -105,6 +105,9 @@ class ProductConfig
   bool isModified(size_t interval) const;
 
  private:
+  void inheritPostGISIdentifiers();
+  void inheritDefaultSettings();
+
   libconfig::Config itsConfig;
   std::map<std::string, std::string> area_timezones;
   std::map<std::string, Engine::Gis::postgis_identifier> postgis_identifiers;

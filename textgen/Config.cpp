@@ -1166,6 +1166,57 @@ ProductConfig::ProductConfig(const std::string& configfile,
   }
 }
 
+// Use the PostGIS identifiers of the default configuration, if there are any
+void ProductConfig::inheritPostGISIdentifiers()
+{
+  if (!pDefaultConfig || pDefaultConfig->numberOfPostGISIdentifiers() == 0)
+  {
+    // not fatal
+  }
+  else
+  {
+    postgis_identifiers = pDefaultConfig->postgis_identifiers;
+    itsDefaultPostGISIdentifierKey = pDefaultConfig->itsDefaultPostGISIdentifierKey;
+  }
+}
+
+// Use the settings of the default configuration for the settings which are not set
+void ProductConfig::inheritDefaultSettings()
+{
+  if (unit_format_config_items.empty())
+    unit_format_config_items = pDefaultConfig->unit_format_config_items;
+
+  if (forecast_data_config_items.empty())
+    forecast_data_config_items = pDefaultConfig->forecast_data_config_items;
+
+  if (area_config_items.empty())
+    area_config_items = pDefaultConfig->area_config_items;
+
+  // area timezones
+  for (const auto& timezone_item : pDefaultConfig->area_timezones)
+  {
+    if (area_timezones.find(timezone_item.first) == area_timezones.end())
+      area_timezones.insert(timezone_item);
+  }
+
+  if (itsLanguage.empty())
+    itsLanguage = pDefaultConfig->itsLanguage;
+
+  if (itsFormatter.empty())
+    itsFormatter = pDefaultConfig->itsFormatter;
+
+  if (itsTimeFormat.empty())
+    itsTimeFormat = pDefaultConfig->itsTimeFormat;
+
+  // Use hard-coded default values
+  if (itsLanguage.empty())
+    itsLanguage = default_language;
+  if (itsFormatter.empty())
+    itsFormatter = default_formatter;
+  if (itsTimeFormat.empty())
+    itsTimeFormat = default_timeformat;
+}
+
 void ProductConfig::setDefaultConfig(const std::shared_ptr<ProductConfig>& pDefaultConf)
 {
   try
@@ -1177,17 +1228,7 @@ void ProductConfig::setDefaultConfig(const std::shared_ptr<ProductConfig>& pDefa
         itsParameterMappings[item.first] = item.second;
 
     if (postgis_identifiers.empty())
-    {
-      if (!pDefaultConfig || pDefaultConfig->numberOfPostGISIdentifiers() == 0)
-      {
-        // not fatal
-      }
-      else
-      {
-        postgis_identifiers = pDefaultConfig->postgis_identifiers;
-        itsDefaultPostGISIdentifierKey = pDefaultConfig->itsDefaultPostGISIdentifierKey;
-      }
-    }
+      inheritPostGISIdentifiers();
 
     if (forecast_data_config_items.empty())
     {
@@ -1206,40 +1247,7 @@ void ProductConfig::setDefaultConfig(const std::shared_ptr<ProductConfig>& pDefa
     }
 
     if (pDefaultConfig)
-    {
-      if (unit_format_config_items.empty())
-        unit_format_config_items = pDefaultConfig->unit_format_config_items;
-
-      if (forecast_data_config_items.empty())
-        forecast_data_config_items = pDefaultConfig->forecast_data_config_items;
-
-      if (area_config_items.empty())
-        area_config_items = pDefaultConfig->area_config_items;
-
-      // area timezones
-      for (const auto& timezone_item : pDefaultConfig->area_timezones)
-      {
-        if (area_timezones.find(timezone_item.first) == area_timezones.end())
-          area_timezones.insert(timezone_item);
-      }
-
-      if (itsLanguage.empty())
-        itsLanguage = pDefaultConfig->itsLanguage;
-
-      if (itsFormatter.empty())
-        itsFormatter = pDefaultConfig->itsFormatter;
-
-      if (itsTimeFormat.empty())
-        itsTimeFormat = pDefaultConfig->itsTimeFormat;
-
-      // Use hard-coded default values
-      if (itsLanguage.empty())
-        itsLanguage = default_language;
-      if (itsFormatter.empty())
-        itsFormatter = default_formatter;
-      if (itsTimeFormat.empty())
-        itsTimeFormat = default_timeformat;
-    }
+      inheritDefaultSettings();
   }
   catch (...)
   {
