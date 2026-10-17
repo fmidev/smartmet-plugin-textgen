@@ -64,13 +64,14 @@ All source is in `textgen/`:
 - **FileDictionaryPlusGeonames.cpp/h** — File-based dictionary extended with geonames engine for location-aware lookups
 - **FileDictionariesPlusGeonames.cpp/h** — Multi-language variant of the above
 - **DatabaseDictionariesPlusGeonames.cpp/h** — Database-backed (PostgreSQL/MySQL) dictionary with geonames integration
+- **PoDictionariesPlusGeonames.cpp/h** — Gettext `.po` file dictionaries with geonames integration
 
 ### Configuration
 
 Uses libconfig++ format. Main config is `textgen.conf`, which references per-product config files:
 
-- `dictionary` setting chooses backend: `multifileplusgeonames`, `multimysqlplusgeonames`, or `multipostgresqlplusgeonames`
-- `product_config` maps product names to config files (each defines formatter, language, forecast data sources, area definitions, unit formats)
+- `dictionary` setting chooses backend: `multifileplusgeonames`, `multimysqlplusgeonames`, `multipostgresqlplusgeonames` or `multipoplusgeonames`; any other name is passed to `TextGen::DictionaryFactory` (default `multimysql`)
+- `products` lists the product config files (the product name is the file name without the extension), or the older `product_config` group maps product names to config files (each defines formatter, language, forecast data sources, area definitions, unit formats)
 - Product configs are hot-reloaded when files change on disk
 
 ### HTTP API parameters
