@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.10.16
+Version: 26.10.17
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -35,15 +35,15 @@ BuildRequires: smartmet-engine-gis-devel >= 26.10.16
 BuildRequires: smartmet-library-macgyver-devel >= 26.10.16
 BuildRequires: smartmet-library-locus-devel >= 26.10.16
 Requires: smartmet-library-calculator >= 26.10.16
-Requires: smartmet-library-macgyver >= 26.10.16
+Requires: smartmet-library-macgyver >= 26.10.17
 Requires: smartmet-library-locus >= 26.10.16
-Requires: smartmet-library-textgen >= 26.10.16
+Requires: smartmet-library-textgen >= 26.10.17
 Requires: libconfig17
-Requires: smartmet-engine-geonames >= 26.10.16
-Requires: smartmet-engine-querydata >= 26.10.16
-Requires: smartmet-engine-gis >= 26.10.16
-Requires: smartmet-server >= 26.10.16
-Requires: smartmet-library-spine >= 26.10.16
+Requires: smartmet-engine-geonames >= 26.10.17
+Requires: smartmet-engine-querydata >= 26.10.17
+Requires: smartmet-engine-gis >= 26.10.17
+Requires: smartmet-server >= 26.10.17
+Requires: smartmet-library-spine >= 26.10.17
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-filesystem
@@ -55,8 +55,8 @@ Provides: %{SPECNAME}
 Obsoletes: smartmet-brainstorm-textgenplugin < 16.11.1
 Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 26.9.3
-#TestRequires: smartmet-engine-gis >= 26.10.16
-#TestRequires: smartmet-engine-geonames >= 26.10.16
+#TestRequires: smartmet-engine-gis >= 26.10.17
+#TestRequires: smartmet-engine-geonames >= 26.10.17
 #TestRequires: smartmet-library-spine-plugin-test >= 26.10.16
 #TestRequires: smartmet-library-newbase-devel >= 26.10.16
 #TestRequires: smartmet-test-data
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Sat Oct 17 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.10.17-1.fmi
+- Split functions with a cognitive complexity above 25 into smaller helpers, no functional changes
+
 * Fri Oct 16 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.10.16-1.fmi
 - Rebuilt due to ABI changes in macgyver, spine, newbase and other libraries
 
