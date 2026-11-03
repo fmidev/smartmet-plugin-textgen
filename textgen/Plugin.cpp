@@ -204,6 +204,16 @@ bool add_wkt_area(const Spine::Location& loc,
   size_t wktNamePos = wktName.find(" as ");
   if (wktNamePos != std::string::npos)
     wktName = wktName.substr(wktNamePos + 4);
+  // The ' as <name>' alias is request-controlled and ends up in the text/html
+  // response (debug log and the HTML formatter header) unescaped. Drop HTML
+  // metacharacters so it cannot inject markup/script. (Reflected XSS.)
+  wktName.erase(std::remove_if(wktName.begin(),
+                               wktName.end(),
+                               [](char c) {
+                                 return c == '<' || c == '>' || c == '&' || c == '"' ||
+                                        c == '\'';
+                               }),
+                wktName.end());
   switch (wktType)
   {
     case Spine::Location::LocationType::CoordinatePoint:

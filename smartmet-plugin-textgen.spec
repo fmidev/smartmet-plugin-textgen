@@ -3,7 +3,7 @@
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
 Version: 26.11.5
-Release: 1%{?dist}.fmi
+Release: 2%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Thu Nov 5 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.11.5-2.fmi
+- Strip HTML metacharacters from the request-supplied wkt ... as <name> area name
+
 * Thu Nov  5 2026 Andris Pavēnis <andris.pavenis@fmi.fi> 26.11.5-1.fmi
 - Repackage due to ABI changes
 
