@@ -28,22 +28,22 @@ BuildRequires: mysql++-devel
 BuildRequires: bzip2-devel
 BuildRequires: smartmet-library-calculator-devel >= 26.10.16
 BuildRequires: smartmet-library-textgen-devel >= 26.10.16
-BuildRequires: smartmet-library-spine-devel >= 26.10.16
-BuildRequires: smartmet-engine-querydata-devel >= 26.10.16
+BuildRequires: smartmet-library-spine-devel >= 26.11.4
+BuildRequires: smartmet-engine-querydata-devel >= 26.11.5
 BuildRequires: smartmet-engine-geonames-devel >= 26.10.16
 BuildRequires: smartmet-engine-gis-devel >= 26.10.16
-BuildRequires: smartmet-library-macgyver-devel >= 26.10.16
+BuildRequires: smartmet-library-macgyver-devel >= 26.11.3
 BuildRequires: smartmet-library-locus-devel >= 26.10.16
 Requires: smartmet-library-calculator >= 26.10.16
-Requires: smartmet-library-macgyver >= 26.10.17
+Requires: smartmet-library-macgyver >= 26.11.3
 Requires: smartmet-library-locus >= 26.10.16
 Requires: smartmet-library-textgen >= 26.10.17
 Requires: libconfig17
 Requires: smartmet-engine-geonames >= 26.10.17
-Requires: smartmet-engine-querydata >= 26.10.17
+Requires: smartmet-engine-querydata >= 26.11.5
 Requires: smartmet-engine-gis >= 26.10.17
 Requires: smartmet-server >= 26.10.17
-Requires: smartmet-library-spine >= 26.10.17
+Requires: smartmet-library-spine >= 26.11.4
 %if 0%{rhel} >= 7
 Requires: %{smartmet_boost}-chrono
 Requires: %{smartmet_boost}-filesystem
@@ -57,7 +57,7 @@ Obsoletes: smartmet-brainstorm-textgenplugin-debuginfo < 16.11.1
 #TestRequires: smartmet-utils-devel >= 26.9.3
 #TestRequires: smartmet-engine-gis >= 26.10.17
 #TestRequires: smartmet-engine-geonames >= 26.10.17
-#TestRequires: smartmet-library-spine-plugin-test >= 26.10.16
+#TestRequires: smartmet-library-spine-plugin-test >= 26.11.4
 #TestRequires: smartmet-library-newbase-devel >= 26.10.16
 #TestRequires: smartmet-test-data
 #TestRequires: smartmet-test-db
