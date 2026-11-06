@@ -3,6 +3,7 @@
 #include "FileDictionariesPlusGeonames.h"
 #include "FileDictionaryPlusGeonames.h"
 #include "PoDictionariesPlusGeonames.h"
+#include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
