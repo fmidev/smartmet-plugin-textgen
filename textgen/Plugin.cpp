@@ -611,7 +611,9 @@ std::string Plugin::query(const SmartMet::Spine::Reactor& /*theReactor*/,
 
         cache_item ci;
         ci.member = forecast_text_area;
-        itsForecastTextCache.insert(cache_key, ci);
+        // upsert, not insert: after a configuration change the old text is
+        // still cached under the same key and insert would keep it
+        itsForecastTextCache.upsert(cache_key, ci);
       }
       forecast_text += forecast_text_area;
     }
