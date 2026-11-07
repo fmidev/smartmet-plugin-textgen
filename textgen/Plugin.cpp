@@ -19,6 +19,8 @@
 #include <textgen/TextFormatter.h>
 #include <textgen/TextFormatterFactory.h>
 #include <textgen/TextGenerator.h>
+#include <set>
+#include <stdexcept>
 
 namespace SmartMet
 {
@@ -188,16 +190,14 @@ bool add_named_area(const Spine::Location& loc,
   return true;
 }
 
+// Maximum number of wkt parameters in a request
+const std::size_t max_wkt_parameters = 20;
+
 // Add an area given as WKT, false if the WKT type is not supported
 bool add_wkt_area(const Spine::Location& loc,
-                  const SmartMet::Engine::Geonames::Engine& geoEngine,
-                  const Engine::Geonames::LocationOptions& tagged_locations,
-                  const std::string& language,
+                  const Engine::Geonames::WktGeometries& wktGeometries,
                   NamedWeatherAreas& weatherAreaVector)
 {
-  Engine::Geonames::WktGeometries wktGeometries =
-      geoEngine.getWktGeometries(tagged_locations, language);
-
   Spine::LocationPtr wktLocation = wktGeometries.getLocation(loc.name);
   Spine::Location::LocationType wktType = wktLocation->type;
   //        TextGen::WeatherArea wktWeatherArea(NFmiPoint(0.0, 0.0));
@@ -270,6 +270,12 @@ bool parse_location_parameters(
       httpRequest.setParameter("wkt", wktString);
     }
 
+    if (httpRequest.getParameterList("wkt").size() > max_wkt_parameters)
+    {
+      errorMessage += "Too many wkt parameters, maximum is " + std::to_string(max_wkt_parameters);
+      return false;
+    }
+
     auto tagged_locations = geoEngine.parseLocations(httpRequest);
 
     if (tagged_locations.empty())
@@ -281,6 +287,9 @@ bool parse_location_parameters(
     std::optional<std::string> areasource = httpRequest.getParameter("areasource");
     if (!areasource)
       areasource = "";
+
+    // WKT geometries are built once for all wkt locations when first needed
+    std::optional<Engine::Geonames::WktGeometries> wktGeometries;
 
     for (const auto& tagged_loc : tagged_locations.locations())
     {
@@ -309,7 +318,9 @@ bool parse_location_parameters(
         }
         case Spine::Location::LocationType::Wkt:
         {
-          if (!add_wkt_area(loc, geoEngine, tagged_locations, language, weatherAreaVector))
+          if (!wktGeometries)
+            wktGeometries = geoEngine.getWktGeometries(tagged_locations, language);
+          if (!add_wkt_area(loc, *wktGeometries, weatherAreaVector))
             return false;
           break;
         }
@@ -329,6 +340,52 @@ bool parse_location_parameters(
   }
 }
 
+// Limits for request overrides of configured settings. The shipped product configurations
+// use at most 4 days and 9 sections, these limits only stop requests which would make
+// the text generator allocate and process huge periods or section/content lists.
+const int max_override_days = 31;
+const std::size_t max_override_list_size = 10;
+
+// Validate a request value which overrides the configured value of the given setting
+void validate_setting_override(const std::string& key, const std::string& value)
+{
+  if (boost::iends_with(key, "::days") || boost::iends_with(key, "::startday"))
+  {
+    int n = 0;
+    try
+    {
+      std::size_t pos = 0;
+      n = std::stoi(value, &pos);
+      if (pos != value.size())
+        throw std::invalid_argument("trailing characters");
+    }
+    catch (...)
+    {
+      throw Fmi::Exception(BCP, "Invalid value for setting " + key + ": not an integer");
+    }
+    if (n < -max_override_days || n > max_override_days)
+      throw Fmi::Exception(BCP,
+                           "Value for setting " + key + " is out of range, maximum is " +
+                               std::to_string(max_override_days));
+  }
+  else if (boost::iends_with(key, "::sections") || boost::iends_with(key, "::content"))
+  {
+    std::vector<std::string> items;
+    boost::algorithm::split(items, value, boost::algorithm::is_any_of(","));
+    if (items.size() > max_override_list_size)
+      throw Fmi::Exception(BCP,
+                           "Too many values for setting " + key + ", maximum is " +
+                               std::to_string(max_override_list_size));
+    std::set<std::string> unique_items;
+    for (auto& item : items)
+    {
+      boost::algorithm::trim(item);
+      if (!unique_items.insert(item).second)
+        throw Fmi::Exception(BCP, "Duplicate value '" + item + "' for setting " + key);
+    }
+  }
+}
+
 std::string get_setting_string(const std::string& key,
                                const std::string& default_value,
                                const SmartMet::Spine::HTTP::ParamMap& params,
@@ -345,6 +402,7 @@ std::string get_setting_string(const std::string& key,
     {
       if (p.second != default_value)
       {
+        validate_setting_override(key, p.second);
 #ifdef MYDEBUG
         std::cout << key << " -> replacing " << default_value << " with " << p.second << '\n';
 #endif
@@ -512,10 +570,12 @@ std::string Plugin::query(const SmartMet::Spine::Reactor& /*theReactor*/,
     SmartMet::Spine::HTTP::ParamMap queryParameters(theRequest.getParameterMap());
     std::string errorMessage;
 
+    // Take the lock before verifyHttpRequestParameters, which reads the product configurations
+    // that a configuration reload may replace
+    SmartMet::Spine::ReadLock lock(itsConfig.itsConfigUpdateMutex);
+
     if (!verifyHttpRequestParameters(queryParameters, errorMessage))
       throw Fmi::Exception(BCP, errorMessage);
-
-    SmartMet::Spine::ReadLock lock(itsConfig.itsConfigUpdateMutex);
 
     std::string product_name(mmap_string(queryParameters, PRODUCT_PARAM, DEFAULT_PRODUCT_NAME));
     const ProductConfig& config = itsConfig.getProductConfig(product_name);

@@ -744,9 +744,11 @@ void Config::update(Fmi::DirectoryMonitor::Watcher /*id*/,
   catch (const Fmi::Exception& e)
   {
     std::string details = e.getDetailByIndex(0);
-    std::cout << ANSI_FG_RED << details << " Textgen plugin is now inactive!" << ANSI_FG_DEFAULT
-              << '\n';
-    itsProductConfigs->clear();
+    // Keep the previous configuration: requests may still be using it, and clearing it
+    // without the lock would be a use-after-free. A half-written file is retried on the
+    // next change.
+    std::cout << ANSI_FG_RED << details << " Textgen plugin keeps using the previous configuration!"
+              << ANSI_FG_DEFAULT << '\n';
     return;
   }
 

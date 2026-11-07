@@ -2,8 +2,8 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.11.6
-Release: 2%{?dist}.fmi
+Version: 26.11.7
+Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
 URL: https://github.com/fmidev/smartmet-plugin-textgen
@@ -84,6 +84,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Sat Nov 7 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.11.7-1.fmi
+- Fixed a configuration reload race
+- Keep the previous configuration if reloading fails
+- Limit request overrides of days, sections and content
+- Build WKT geometries only once and limit the number of wkt parameters
+
 * Fri Nov 6 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.11.6-2.fmi
 - Fixed forecast text cache to replace entries regenerated after a configuration change
 
