@@ -11,7 +11,7 @@ include $(shell echo $${PREFIX-/usr})/share/smartmet/devel/makefile.inc
 DEFINES = -DUNIX -D_REENTRANT
 
 INCLUDES += -isystem $(includedir)/mysql
-# Compile options in detault, debug and profile modes
+# Compile options in default, debug and profile modes
 
 LIBS += $(PREFIX_LDFLAGS) \
 	-lsmartmet-macgyver \

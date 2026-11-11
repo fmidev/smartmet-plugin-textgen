@@ -603,7 +603,7 @@ std::string Plugin::query(const SmartMet::Spine::Reactor& /*theReactor*/,
     }
     TextGenPosixTime timestamp;
     std::stringstream timestamp_cachekey_ss;
-    // generate forecast at least every CACHE_EXPIRATION_TIME_SEC secods
+    // generate forecast at least every CACHE_EXPIRATION_TIME_SEC seconds
     timestamp_cachekey_ss << (forecasttime.EpochTime() / CACHE_EXPIRATION_TIME_SEC);
     timestamp_cachekey_ss << ";" << (timestamp.EpochTime() / CACHE_EXPIRATION_TIME_SEC);
 

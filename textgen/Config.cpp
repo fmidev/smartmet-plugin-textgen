@@ -1189,7 +1189,7 @@ ProductConfig::ProductConfig(const std::string& configfile,
       parseTypeStringConfiguationItem(itsConfig, "unit_format", unit_format_config_items);
     }
 
-    // ouput document
+    // output document
     if (itsConfig.exists("output_document"))
       readOutputDocument();
 
