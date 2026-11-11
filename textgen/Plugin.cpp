@@ -876,7 +876,7 @@ void Plugin::init()
       itsDictionary->init(lang);
 
     if (!itsReactor->addContentHandler(this,
-                                       itsConfig.defaultUrl(),
+                                       Spine::Reactor::HandlerOptions(itsConfig.defaultUrl()),
                                        boost::bind(&Plugin::callRequestHandler, this, _1, _2, _3)))
       throw Fmi::Exception(BCP, "Failed to register textgen content handler");
   }
