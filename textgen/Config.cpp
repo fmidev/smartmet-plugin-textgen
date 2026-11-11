@@ -346,7 +346,7 @@ void addStringConfigurationItem(const libconfig::Config& itsConfig,
 }
 
 // read all string type parameters
-void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
+void parseTypeStringConfigurationItem(const libconfig::Config& itsConfig,
                                      const std::string& key,
                                      ConfigItemVector& config_item_container)
 {
@@ -363,7 +363,7 @@ void parseTypeStringConfiguationItem(const libconfig::Config& itsConfig,
       {
         libconfig::Setting& childSettings = settings[i];
         if (childSettings.isGroup())
-          parseTypeStringConfiguationItem(
+          parseTypeStringConfigurationItem(
               itsConfig, childSettings.getName(), config_item_container);
         else
           addStringConfigurationItem(itsConfig, childSettings, config_item_container);
@@ -646,18 +646,18 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
         configured_products(configItems, itsMainConfigFile);  // name -> config file
 
     auto newProductConfigs = std::unique_ptr<ProductConfigMap>(new ProductConfigMap());
-    std::shared_ptr<ProductConfig> pDefultConfig;
+    std::shared_ptr<ProductConfig> defaultProductConfig;
     if (products.find(default_textgen_config_name) != products.end())
     {
       std::shared_ptr<ProductConfig> productConfig(new ProductConfig(
-          products.at(default_textgen_config_name), pDefultConfig, itsDictionary));
+          products.at(default_textgen_config_name), defaultProductConfig, itsDictionary));
       newProductConfigs->insert(std::make_pair(default_textgen_config_name, productConfig));
       if (modifiedFiles.find(default_textgen_config_name) != modifiedFiles.end())
       {
         TextGenPosixTime timestamp;
         productConfig->itsLastModifiedTime = timestamp.EpochTime();
       }
-      pDefultConfig = newProductConfigs->at(default_textgen_config_name);
+      defaultProductConfig = newProductConfigs->at(default_textgen_config_name);
     }
 
     std::string config_file;
@@ -673,8 +673,8 @@ std::unique_ptr<ProductConfigMap> Config::updateProductConfigs(
         Fmi::AsyncTask::interruption_point();
 
         std::shared_ptr<ProductConfig> productConfig(
-            new ProductConfig(config_file, pDefultConfig, itsDictionary));
-        productConfig->setDefaultConfig(pDefultConfig);
+            new ProductConfig(config_file, defaultProductConfig, itsDictionary));
+        productConfig->setDefaultConfig(defaultProductConfig);
         newProductConfigs->insert(std::make_pair(config_name, productConfig));
         if (modifiedFiles.find(config_file) != modifiedFiles.end())
         {
@@ -1180,13 +1180,13 @@ ProductConfig::ProductConfig(const std::string& configfile,
     // forecast data
     if (itsConfig.exists("forecast_data"))
     {
-      parseTypeStringConfiguationItem(itsConfig, "forecast_data", forecast_data_config_items);
+      parseTypeStringConfigurationItem(itsConfig, "forecast_data", forecast_data_config_items);
     }
 
     // unit formats
     if (itsConfig.exists("unit_format"))
     {
-      parseTypeStringConfiguationItem(itsConfig, "unit_format", unit_format_config_items);
+      parseTypeStringConfigurationItem(itsConfig, "unit_format", unit_format_config_items);
     }
 
     // output document
