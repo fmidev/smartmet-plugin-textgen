@@ -42,17 +42,9 @@
 
 #include "FileDictionariesPlusGeonames.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
-#include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
 #include <macgyver/Exception.h>
-#include <mysql++/mysql++.h>
-#include <mysql++/mystring.h>
-#include <spine/Reactor.h>
-#include <cassert>
-#include <map>
-#include <sstream>
-#include <stdexcept>
+#include <spine/Location.h>
 
 using namespace std;
 using namespace boost;

@@ -7,17 +7,30 @@
 #ifndef TEXTGEN_CONFIG_H
 #define TEXTGEN_CONFIG_H
 
+#include <boost/range/adaptors.hpp>
+#include <boost/thread.hpp>
 #include <calculator/WeatherArea.h>
-#include <engines/gis/Engine.h>
 #include <engines/gis/GeometryStorage.h>
-#include <macgyver/AsyncTask.h>
 #include <macgyver/DirectoryMonitor.h>
 #include <spine/Thread.h>
+#include <cstddef>
+#include <filesystem>
 #include <libconfig.h++>
 #include <map>
 #include <memory>
+#include <set>
 #include <string>
+#include <utility>
 #include <vector>
+
+namespace Fmi
+{
+class AsyncTask;
+}  // namespace Fmi
+namespace SmartMet::Engine::Gis
+{
+class Engine;
+}  // namespace SmartMet::Engine::Gis
 
 namespace SmartMet
 {
@@ -26,6 +39,7 @@ namespace Plugin
 namespace Textgen
 {
 class ProductConfig;
+
 using ConfigItem = std::pair<std::string, std::string>;
 using ConfigItemVector = std::vector<ConfigItem>;
 using ProductConfigMap = std::map<std::string, std::shared_ptr<ProductConfig> >;

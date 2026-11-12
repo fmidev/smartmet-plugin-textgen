@@ -6,23 +6,24 @@
 
 #include "Config.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/replace.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/tokenizer.hpp>
 #include <calculator/TextGenPosixTime.h>
 #include <engines/gis/Engine.h>
 #include <engines/gis/Normalize.h>
 #include <macgyver/AnsiEscapeCodes.h>
+#include <macgyver/AsyncTask.h>
 #include <macgyver/Exception.h>
 #include <macgyver/StringConversion.h>
 #include <newbase/NFmiFileSystem.h>
+#include <newbase/NFmiPoint.h>
+#include <newbase/NFmiSvgPath.h>
 #include <spine/ConfigTools.h>
-#include <spine/Convenience.h>
 #include <spine/Exceptions.h>
+#include <algorithm>
 #include <filesystem>
+#include <functional>
 #include <iostream>
 #include <memory>
-#include <stdexcept>
+#include <sstream>
 
 namespace SmartMet
 {

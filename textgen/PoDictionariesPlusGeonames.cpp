@@ -7,10 +7,9 @@
 
 #include "PoDictionariesPlusGeonames.h"
 #include <boost/algorithm/string.hpp>
-#include <calculator/Settings.h>
 #include <engines/geonames/Engine.h>
 #include <macgyver/Exception.h>
-#include <spine/Reactor.h>
+#include <spine/Location.h>
 
 using namespace std;
 using namespace boost;

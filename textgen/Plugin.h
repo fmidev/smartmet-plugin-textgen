@@ -1,12 +1,21 @@
 #pragma once
 
 #include "Config.h"
-
 #include <macgyver/Cache.h>
+#include <macgyver/CacheStats.h>
 #include <spine/HTTP.h>
-#include <spine/Reactor.h>
 #include <spine/SmartMetPlugin.h>
-#include <textgen/DictionaryFactory.h>
+#include <memory>
+#include <string>
+
+namespace SmartMet::Spine
+{
+class Reactor;
+}  // namespace SmartMet::Spine
+namespace TextGen
+{
+class Dictionary;
+}  // namespace TextGen
 
 namespace SmartMet
 {
@@ -26,7 +35,6 @@ namespace Plugin
 {
 namespace Textgen
 {
-class PluginImpl;
 
 class Plugin : public SmartMetPlugin
 {
