@@ -367,6 +367,13 @@ const std::size_t max_override_list_size = 10;
 // Validate a request value which overrides the configured value of the given setting
 void validate_setting_override(const std::string& key, const std::string& value)
 {
+  // A configured value starting with '@' names a file whose contents (or output) is
+  // inserted into the text. A request may change the text but not the file.
+  const auto first = value.find_first_not_of(" \t\r\n");
+  if (first != std::string::npos && value[first] == '@')
+    throw Fmi::Exception(BCP,
+                         "Invalid value for setting " + key + ": file references not allowed");
+
   if (boost::iends_with(key, "::days") || boost::iends_with(key, "::startday"))
   {
     int n = 0;

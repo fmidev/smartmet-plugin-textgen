@@ -2,7 +2,7 @@
 %define SPECNAME smartmet-plugin-%{DIRNAME}
 Summary: SmartMet TextGen plugin
 Name: %{SPECNAME}
-Version: 26.11.13
+Version: 26.11.18
 Release: 1%{?dist}.fmi
 License: FMI
 Group: SmartMet/Plugins
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmet/plugins/%{DIRNAME}.so
 
 %changelog
+* Wed Nov 18 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.11.18-1.fmi
+- Request parameters can no longer change a configured text into a file reference
+
 * Fri Nov 13 2026 Mika Heiskanen <mika.heiskanen@fmi.fi> - 26.11.13-1.fmi
 - Include cleanup: files include what they use, unnecessary includes removed. No functional changes
 
